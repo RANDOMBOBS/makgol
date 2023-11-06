@@ -35,7 +35,7 @@ dependencies {
 	implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
 
 	// 웹 애플리케이션 자동화 및 테스트를 위한 Selenium WebDriver 라이브러리
-	implementation 'org.seleniumhq.selenium:selenium-java:4.1.4'
+	implementation 'org.seleniumhq.selenium:selenium-java:4.15.0'
 
 	// JavaMail API를 통해 이메일을 보내거나 받기 위한 라이브러리
 	implementation 'javax.mail:mail:1.4.7'

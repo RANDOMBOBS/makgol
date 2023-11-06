@@ -28,7 +28,6 @@ public class UsersService {
         HashMap<String, Object> hashMap = crawller.new_crawller(storeRequestVoList);
         System.out.println("after storeInfoSize --> : "+ hashMap.size()/2);
 
-        /*
         for(int index=0; index<(hashMap.size()/2); index ++){
             StoreRequestVo storeRequestVo = (StoreRequestVo) hashMap.get("store_info_" + index);
 
@@ -44,9 +43,8 @@ public class UsersService {
             System.out.println();
         }
 
-         */
 
-        storesDao.insertStore(hashMap);
-        System.out.println("storesDao.insertStore(hashMap);");
+        //storesDao.insertStore(hashMap);
+        //System.out.println("storesDao.insertStore(hashMap);");
     }
 }
