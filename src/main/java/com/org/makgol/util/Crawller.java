@@ -17,10 +17,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
+import org.springframework.beans.factory.annotation.Value;
 
 
 public class Crawller {
+
+    private int thread_count = 10;
 	/**
 	 * @param storeRequestVos<StoreRequestVo> storeRequestVos
 	 * 				------StoreRequestVo---------
@@ -36,8 +38,12 @@ public class Crawller {
 	 * 				-----------------------------
 	 * @throws Exception
 	 */
+
+
     public HashMap<String, Object> new_crawller(List<StoreRequestVo> storeRequestVos) throws Exception {
-    	
+
+
+
     	// 결과를 저장할 HashMap 생성
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -51,43 +57,51 @@ public class Crawller {
 
 
         //스레드를 종료하기위한 List
-    	//List<Thread> jobThreads = new ArrayList<>();
+    	List<Thread> jobThreads = new ArrayList<>();
 
-        int crawllerCount = storeRequestVos.size();
+        int storesSize = storeRequestVos.size() / thread_count;
 
 
-    	//storeRequestVos의 사이즈 많금스레드를 생성하겠다.
-    	for(int i=0; i < crawllerCount; i++) {
-    		//스레드에 주소값을 넘겨줌
-            Runnable target = new JobThread(driverPath, storeRequestVos.get(i).getPlace_url(), storeRequestVos.get(i), hashMap, i);
-            Thread jobThread = new Thread(target);
-            //JobThread jobThread = new JobThread(driverPath, storeRequestVos.get(i).getPlace_url(), storeRequestVos.get(i), hashMap, i);
-            jobThread.start();
+            //storeRequestVos의 사이즈 많금스레드를 생성하겠다.
+            for (int i = 1; i <= thread_count; i++) {
+                //스레드에 주소값을 넘겨줌
+                Runnable target = new JobThread(driverPath, storeRequestVos, hashMap, i, storesSize);
+                Thread jobThread = new Thread(target);
+                //JobThread jobThread = new JobThread(driverPath, storeRequestVos.get(i).getPlace_url(), storeRequestVos.get(i), hashMap, i);
+                jobThread.start();
+                jobThreads.add(jobThread);
 
-            //jobThreads.add(jobThread);
-    	}
-        
-    	// 스레드 종료
-        //for(Thread jobThread: jobThreads) { jobThread.join(); }
-        
+
+            }
+
+            // 스레드 종료
+            for (Thread jobThread : jobThreads) {
+                jobThread.join();
+            }
+
+            Runnable target = new JobThread(driverPath, storeRequestVos, hashMap, thread_count+1, storesSize);
+            Thread lastThread = new Thread(target);
+
+            lastThread.join();
+
         return hashMap;
     }
     
     private class JobThread implements Runnable {
     	
     	private String driverPath;
-    	private String detailPage;
-    	private StoreRequestVo storeRequestVo;
+    	private List<StoreRequestVo> storeRequestVos;
     	private HashMap<String, Object> hashMap;
-    	private int thread_count;
+    	private int thread_num;
+        private int storeSize;
     	
-    	public JobThread(String driverPath, String detailPage, StoreRequestVo storeRequestVo, HashMap<String, Object> hashMap,int thread_count) {
+    	public JobThread(String driverPath, List<StoreRequestVo> storeRequestVos, HashMap<String, Object> hashMap,int thread_num, int storeSize) {
     		
     		this.driverPath = driverPath;
-    		this.detailPage = detailPage;
-    		this.storeRequestVo = storeRequestVo;
+    		this.storeRequestVos = storeRequestVos;
     		this.hashMap = hashMap;
-    		this.thread_count = thread_count;
+    		this.thread_num = thread_num;
+            this.storeSize = storeSize;
     	}
     	
     	@Override
@@ -95,10 +109,8 @@ public class Crawller {
     	
     	
     	public void processCawller() {
-
-    		// 식당의 메뉴들를 저장할 List
-    		List<StoreRequestMenuVo> storeRequestMenuVos = new ArrayList<StoreRequestMenuVo>();
-
+            int index = storeSize*(thread_num-1);
+            for(; index<storeSize*thread_num; index++){
             Random r = new Random();
 
     		//chrome driver 경로 세팅
@@ -106,7 +118,7 @@ public class Crawller {
             // 크롬 옵션 설정
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");	//브라우저가 다른 출처(origin)의 리소스에 대한 요청을 수행할 수있음.
-            //options.addArguments("headless"); 					//브라우저 창을 표시하지 않고 백그라운드에서 웹 페이지를 실행하는 모드.
+            options.addArguments("headless"); 					//브라우저 창을 표시하지 않고 백그라운드에서 웹 페이지를 실행하는 모드.
             options.addArguments("--disable-popup-blocking");	//팝업 차단을 비활성화하는 옵션.
             options.addArguments("--blink-settings=imagesEnabled=false");//웹 페이지에서 이미지 로딩을 비활성화.
 
@@ -114,6 +126,14 @@ public class Crawller {
 
             driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS); // 30초로 시간 초과 설정
 
+
+
+                // 식당의 메뉴들를 저장할 List
+                List<StoreRequestMenuVo> storeRequestMenuVos = new ArrayList<StoreRequestMenuVo>();
+
+                StoreRequestVo storeRequestVo = storeRequestVos.get(index);
+
+                String detailPage = storeRequestVo.getPlace_url();
             // 웹 페이지로 이동 후 코드 가져옴
             driver.get(detailPage);
 
@@ -217,21 +237,16 @@ public class Crawller {
             } catch (Exception e) {System.out.println("update_date");}
 
 
-
-
-
-
-
             //데이터 확인
-            //System.out.println("thread "+ thread_count +": 이름 : "+ storeRequestVo.getName());
-            //System.out.println("thread "+ thread_count +": 주소 : "+ storeRequestVo.getAddress());
-            //System.out.println("thread "+ thread_count +": 도로명 : "+ storeRequestVo.getLoad_address());
-            //System.out.println("thread "+ thread_count +": 전화번호 : "+ storeRequestVo.getPhone());
-            //System.out.println("thread "+ thread_count +": 카테고리 : "+ storeRequestVo.getCategory());
-            //System.out.println("thread "+ thread_count +": 상세페이지 : "+ storeRequestVo.getPlace_url());
-            //System.out.println("thread "+ thread_count +": 업데이트 : "+ storeRequestVo.getUpdate_date());
-            //System.out.println("thread "+ thread_count +": 영업시간 : "+ storeRequestVo.getOpening_hours());
-            //System.out.println("thread "+ thread_count +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            System.out.println("thread "+ thread_num +": 이름 : "+ storeRequestVo.getName());
+            System.out.println("thread "+ thread_num +": 주소 : "+ storeRequestVo.getAddress());
+            System.out.println("thread "+ thread_num +": 도로명 : "+ storeRequestVo.getLoad_address());
+            System.out.println("thread "+ thread_num +": 전화번호 : "+ storeRequestVo.getPhone());
+            System.out.println("thread "+ thread_num +": 카테고리 : "+ storeRequestVo.getCategory());
+            System.out.println("thread "+ thread_num +": 상세페이지 : "+ storeRequestVo.getPlace_url());
+            System.out.println("thread "+ thread_num +": 업데이트 : "+ storeRequestVo.getUpdate_date());
+            System.out.println("thread "+ thread_num +": 영업시간 : "+ storeRequestVo.getOpening_hours());
+            System.out.println("thread "+ thread_num +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
 
             // 메뉴 정보 가져오기
             List<WebElement> element_menu = element.findElements(By.cssSelector("#mArticle > div.cont_menu > ul > li"));
@@ -269,23 +284,23 @@ public class Crawller {
                 }
 
                 //식당의 메뉴를 저장할 객체
-
-
                 //메뉴 객체에 담기
-
-
                 storeRequestMenuVos.add(storeRequestMenuVo);
             }
 
-         // HashMap에 결과 저장
+            // HashMap에 결과 저장
                 //System.out.println("before hash put : " + thread_count + " : " + storeRequestVo.getName());
-                hashMap.put("store_menu_" + thread_count, storeRequestMenuVos);
-                hashMap.put("store_info_" + thread_count, storeRequestVo);
 
+                hashMap.put("store_menu_" + index, storeRequestMenuVos);
+                hashMap.put("store_info_" + index, storeRequestVo);
+                System.out.println("hashMap.size() --> : " + hashMap.size()/2);
+
+                driver.close();
+                try{Thread.sleep(500);}catch(Exception e){}
+                driver.quit();
+                try{Thread.sleep(500);}catch(Exception e){}
+            }
             // WebDriver 종료
-                    driver.close();
-                    driver.quit();
     	}
     }
-
 }
