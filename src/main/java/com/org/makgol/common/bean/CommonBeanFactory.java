@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 public class CommonBeanFactory {
 
     @Bean
-    public ResponseEntity<String> responseEntity() {
-        return new ResponseEntity<String>("ok", HttpStatus.OK);
+    public ResponseEntity<String> successResponse() {
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
 }
