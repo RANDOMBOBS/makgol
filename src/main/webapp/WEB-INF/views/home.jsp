@@ -136,7 +136,7 @@ h1 {
 		<h1>Footer</h1>
 	</footer>
 
-	<jsp:include page="/resources/static/jsp/main.jsp"></jsp:include>
+	<jsp:include page="script/jsp/main.jsp"></jsp:include>
 
 
 	<script>
