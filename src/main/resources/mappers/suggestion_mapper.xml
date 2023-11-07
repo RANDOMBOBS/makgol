@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.org.makgol.boards.repository.BoardSuggestionRepository">
+    <resultMap id="boardResult" type="boardVo">
+        <result property="b_id" column="id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="hit" column="hit"/>
+        <result property="title" column="title"/>
+        <result property="date" column="date"/>
+        <result property="contents" column="contents"/>
+        <result property="category" column="category"/>
+        <result property="sympathy" column="sympathy"/>
+        <result property="name" column="name"/>
+        <result property="attachment" column="attachment"/>
+    </resultMap>
+
+
+    <select id="selectAllSuggestionBoard" resultMap="boardResult" parameterType="boardVo">
+        SELECT b.id,
+               b.user_id,
+               b.hit,
+               b.title,
+               b.date,
+               b.contents,
+               b.category,
+               b.sympathy,
+               u.name,
+               u.photo
+        FROM boards AS b
+                 JOIN users AS u ON b.user_id = u.id
+        WHERE category = 'suggestion'
+        ORDER BY date DESC
+    </select>
+</mapper>

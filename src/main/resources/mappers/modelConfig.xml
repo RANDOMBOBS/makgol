@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.org.makgol.boards.vo.BoardVo" alias="boardVo"/>
+        <typeAlias type="com.org.makgol.comment.vo.CommentVo" alias="commentVo"/>
+        <typeAlias type="com.org.makgol.users.vo.UserVo" alias="userVo"/>
+        <typeAlias type="com.org.makgol.category.vo.CategoryListVo" alias="categoryListVo"/>
+    </typeAliases>
+</configuration>

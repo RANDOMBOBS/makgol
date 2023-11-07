@@ -34,8 +34,8 @@ dependencies {
     // Log4j 2.x의 코어 구성 요소, 고급 로깅을 지원
     implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
 
-	// 웹 애플리케이션 자동화 및 테스트를 위한 Selenium WebDriver 라이브러리
-	implementation 'org.seleniumhq.selenium:selenium-java:4.15.0'
+    // 웹 애플리케이션 자동화 및 테스트를 위한 Selenium WebDriver 라이브러리
+    implementation 'org.seleniumhq.selenium:selenium-java:4.15.0'
 
 
     // JavaMail API를 통해 이메일을 보내거나 받기 위한 라이브러리
@@ -65,6 +65,7 @@ dependencies {
     // MyBatis 라이브러리 의존성 추가
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
     runtimeOnly 'mysql:mysql-connector-java:8.0.28'
+
 }
 
 tasks.named('test') {

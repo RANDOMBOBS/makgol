@@ -1,33 +1,24 @@
 package com.org.makgol.main.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 
 import com.org.makgol.category.vo.CategoryListVo;
+import com.org.makgol.main.repository.MainRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Repository;
 
-@Component
+import java.util.List;
 
+
+@Repository
+@RequiredArgsConstructor
 public class MainDao {
 
-	@Autowired
-	JdbcTemplate jdbcTemplate;
-	
-	public List<CategoryListVo> selectAllCategory() {
-		String sql = "SELECT DISTINCT category FROM stores";
-		List <CategoryListVo> categorys = new ArrayList<CategoryListVo>();
-		try {
-		RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);
-		categorys = jdbcTemplate.query(sql, rowMapper);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    private final MainRepository mainRepository;
 
-		return categorys;
-	}
+    public List<CategoryListVo> selectAllCategory() throws DataAccessException {
+        List<CategoryListVo> categoryVos = null;
+        categoryVos = mainRepository.selectAllCategory();
+        return categoryVos;
+    }
 }
