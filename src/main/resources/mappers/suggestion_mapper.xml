@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.org.makgol.boards.repository.BoardSuggestionRepository">
-    <resultMap id="boardResult" type="boardVo">
+    <resultMap id="boardResult" type="com.org.makgol.boards.vo.BoardVo">
         <result property="b_id" column="id"/>
         <result property="user_id" column="user_id"/>
         <result property="hit" column="hit"/>
@@ -18,7 +18,7 @@
     </resultMap>
 
 
-    <select id="selectAllSuggestionBoard" resultMap="boardResult" parameterType="boardVo">
+    <select id="selectAllSuggestionBoard" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
         SELECT b.id,
                b.user_id,
                b.hit,
@@ -35,13 +35,13 @@
         ORDER BY date DESC
     </select>
 
-    <insert id="insertSuggestionBoard" parameterType="boardVo">
+    <insert id="insertSuggestionBoard" parameterType="com.org.makgol.boards.vo.BoardVo">
         INSERT INTO boards (user_id, title, date, contents, category, attachment)
         VALUES (#{user_id}, #{title}, NOW(), #{contents}, #{category}, #{attachment})
     </insert>
 
     <select id="showDetailSuggestionBoard" resultMap="boardResult"
-            parameterType="boardVo">
+            parameterType="com.org.makgol.boards.vo.BoardVo">
         SELECT b.id,
                b.user_id,
                b.hit,
@@ -65,13 +65,13 @@
         WHERE id = #{id}
     </update>
 
-    <insert id="insertComment" parameterType="commentVo">
+    <insert id="insertComment" parameterType="com.org.makgol.comment.vo.CommentVo">
         INSERT INTO comments(user_id, board_id, date, content, nickname)
         VALUES (#{user_id},
                 #{board_id}, now(), #{content}, #{nickname})
     </insert>
 
-    <select id="selectCommentList" resultType="commentVo"
+    <select id="selectCommentList" resultType="com.org.makgol.comment.vo.CommentVo"
             parameterType="int">
         SELECT *
         FROM comments
@@ -80,7 +80,7 @@
         where board_id = #{board_id}
     </select>
 
-    <update id="updateComment" parameterType="commentVo">
+    <update id="updateComment" parameterType="com.org.makgol.comment.vo.CommentVo">
         UPDATE comments
         SET nickname=#{nickname},
             content=#{content},
@@ -100,7 +100,7 @@
         WHERE id = #{b_id}
     </select>
 
-    <update id="updateBoard" parameterType="boardVo">
+    <update id="updateBoard" parameterType="com.org.makgol.boards.vo.BoardVo">
 
         UPDATE boards
         SET title=#{title},
@@ -138,7 +138,7 @@
         </choose>
     </select>
 
-    <select id="selectUserLikeStatus" resultType="int" parameterType="boardVo">
+    <select id="selectUserLikeStatus" resultType="int" parameterType="com.org.makgol.boards.vo.BoardVo">
         SELECT count(*)
         FROM board_like
         WHERE b_id = #{b_id}
@@ -146,12 +146,12 @@
     </select>
 
 
-    <insert id="insertBoardLike" parameterType="boardVo">
+    <insert id="insertBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
         INSERT INTO board_like(b_id, user_id)
         VALUES (#{b_id}, #{user_id})
     </insert>
 
-    <delete id="deleteBoardLike" parameterType="boardVo">
+    <delete id="deleteBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
         DELETE
         FROM board_like
         WHERE b_id = #{b_id}
