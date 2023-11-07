@@ -1,10 +1,8 @@
 package com.org.makgol.boards.vo;
 
 import lombok.Data;
-import org.apache.ibatis.type.Alias;
 
 @Data
-@Alias(value = "boardVo")
 public class BoardVo {
 
 

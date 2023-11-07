@@ -37,7 +37,7 @@ public class BoardSuggestionDao {
      **/
     public int insertSuggestionBoard(BoardVo boardVo) {
         int result = -1;
-        result = sqlSession.insert("mapper.boardSuggestion.insertSuggestionBoard", boardVo);
+        result = boardSuggestionRepository.insertSuggestionBoard();
         return result;
 
     }

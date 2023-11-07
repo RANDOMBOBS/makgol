@@ -8,4 +8,8 @@ import java.util.List;
 @Mapper
 public interface BoardSuggestionRepository {
     List<BoardVo> selectAllSuggestionBoard();
+
+    int insertSuggestionBoard();
+
+    BoardVo showDetailSuggestionBoard();
 }
