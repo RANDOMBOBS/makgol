@@ -11,7 +11,7 @@ var jQ = jQuery;
 
 	function resultMenu(menu) {
 		jQ.ajax({
-			url : "/makgol/main/resultMenu/"+menu,
+			url : "/main/resultMenu/"+menu,
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {   

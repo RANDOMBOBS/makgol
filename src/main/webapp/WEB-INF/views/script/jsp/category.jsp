@@ -13,7 +13,7 @@
 	function menuList() {
 		console.log("${pageContext.request.contextPath}")
 		jQ.ajax({
-			url : "/makgol/category/categoryList", // controller에 해당되는 경로 이동
+			url : "/category/categoryList", // controller에 해당되는 경로 이동
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {   //category_list 데이터 값을 가져와 성공하면
@@ -28,7 +28,7 @@
 	// 한식 클릭시 한식관련 메뉴 
 	function korMenu(){
 		jQ.ajax({
-			url: "/makgol/category/categoryKor",
+			url: "/category/categoryKor",
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
@@ -43,7 +43,7 @@
 	// 양식 클릭시 양식관련 메뉴 
 	function westMenu(){
 		jQ.ajax({
-			url: "/makgol/category/categoryWest",
+			url: "/category/categoryWest",
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
@@ -58,7 +58,7 @@
 	// 중식 클릭시 중식관련 메뉴 
 	function chiMenu(){
 		jQ.ajax({
-			url: "/makgol/category/categoryChi",
+			url: "/category/categoryChi",
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
@@ -73,7 +73,7 @@
 	// 분식 클릭시 분식관련 메뉴 
 	function snackMenu(){
 		jQ.ajax({
-			url: "/makgol/category/categorySnack",
+			url: "/category/categorySnack",
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
@@ -88,7 +88,7 @@
 	// 일식 클릭시 일식관련 메뉴 
 	function jpnMenu(){
 		jQ.ajax({
-			url: "/makgol/category/categoryJpn",
+			url: "/category/categoryJpn",
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
@@ -103,7 +103,7 @@
 	// 카페 클릭시 카페관련 메뉴 
 	function cafeMenu(){
 		jQ.ajax({
-			url: "/makgol/category/categoryCafe",
+			url: "/category/categoryCafe",
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {

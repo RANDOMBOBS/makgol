@@ -144,7 +144,7 @@ h1 {
 		var jQ = jQuery;
 		function getAllcategory() {
 			jQ.ajax({
-				url : "/makgol/main/allCategory",
+				url : "/main/allCategory",
 				type : "GET",
 				dataType : "html",
 				success : function(rdata) {

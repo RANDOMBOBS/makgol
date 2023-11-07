@@ -31,7 +31,7 @@
 				grade : grade,
 			};
 			jQ.ajax({
-				url : "/makgol/admin/modifyGrade",
+				url : "/admin/modifyGrade",
 				type : "POST",
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=utf-8",

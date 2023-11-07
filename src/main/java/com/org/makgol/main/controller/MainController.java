@@ -33,9 +33,11 @@ public class MainController {
 	 */
 	@RequestMapping(value = "/allCategory", method = { RequestMethod.GET, RequestMethod.POST })
 	public String allCategory(Model model) {
+		System.out.println("컨트롤러 들어옴");
 		List<CategoryListVo> categorys = mainService.getAllCategory();
+		System.out.println("카테고리는?"+categorys);
 		model.addAttribute("categorys", categorys);
-		return "main/random_wheel";
+		return "jsp/main/random_wheel";
 	}
 	
 	
@@ -48,7 +50,7 @@ public class MainController {
 	@RequestMapping(value = "/resultMenu/{menu}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String resultMenu(@PathVariable("menu") String menu, Model model) {
 		model.addAttribute("menu", menu);
-		return "main/roulette_result";		
+		return "jsp/main/roulette_result";
 		
 	}
 }

@@ -7,6 +7,7 @@
 	var jQ = jQuery;
 
 	function allBoardList() {
+	alert("함수들어옴")
 		jQuery.ajax({
 			url : "/board/suggestion/showAllList",
 			type : "GET",
