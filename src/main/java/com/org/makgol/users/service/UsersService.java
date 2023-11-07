@@ -30,7 +30,7 @@ public class UsersService {
 
         for(int index=0; index<(hashMap.size()/2); index ++){
             StoreRequestVo storeRequestVo = (StoreRequestVo) hashMap.get("store_info_" + index);
-
+            if(storeRequestVo == null){ continue; }
             System.out.println("thread "+ index +": 이름 : "+ storeRequestVo.getName());
             System.out.println("thread "+ index +": 주소 : "+ storeRequestVo.getAddress());
             System.out.println("thread "+ index +": 도로명 : "+ storeRequestVo.getLoad_address());
@@ -43,8 +43,7 @@ public class UsersService {
             System.out.println();
         }
 
-
-        //storesDao.insertStore(hashMap);
-        //System.out.println("storesDao.insertStore(hashMap);");
+        storesDao.insertStore(hashMap);
+        System.out.println("storesDao.insertStore(hashMap);");
     }
 }
