@@ -8,7 +8,7 @@
 
 	function allBoardList() {
 		jQuery.ajax({
-			url : "/makgol/board/suggestion/showAllList",
+			url : "/board/suggestion/showAllList",
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
@@ -23,7 +23,7 @@
 	function comList() {
 		let board_id = parseInt(jQ("input[name=board_id]").val());
 		jQ.ajax({
-			url : "/makgol/board/suggestion/commentList/" + board_id,
+			url : "/board/suggestion/commentList/" + board_id,
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
@@ -56,7 +56,7 @@
 				user_id : user_id,
 			};
 			jQ.ajax({
-				url : "/makgol/board/suggestion/commentCreate",
+				url : "/board/suggestion/commentCreate",
 				type : "POST",
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=utf-8",
@@ -96,7 +96,7 @@
 				id : id
 			};
 			jQ.ajax({
-				url : "/makgol/board/suggestion/commentModifyConfirm",
+				url : "/board/suggestion/commentModifyConfirm",
 				type : "POST",
 				data : JSON.stringify(modData),
 				contentType : "application/json; charset=utf-8",
@@ -123,7 +123,7 @@
 	function delComment(id) {
 		if (window.confirm('삭제하시겠습니까?')) {
 			jQ.ajax({
-				url : "/makgol/board/suggestion/commentDelete/" + id,
+				url : "/board/suggestion/commentDelete/" + id,
 				type : "GET",
 				dataType : "html",
 				success : function(result) {
@@ -161,7 +161,7 @@
 			}
 			console.log(data); //성공
 			jQ.ajax({
-				url : "/makgol/board/suggestion/search",
+				url : "/board/suggestion/search",
 				type : "POST",
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=utf-8",

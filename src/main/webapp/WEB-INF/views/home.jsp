@@ -83,7 +83,7 @@ h1 {
 }
 </style>
 </head>
-<body background="/resources/static/image/chick.jpg">
+<body>
 	<h1 id="header">Header</h1>
 
 	<div id="pratice">

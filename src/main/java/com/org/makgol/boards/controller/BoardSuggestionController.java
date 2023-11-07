@@ -44,7 +44,8 @@ public class BoardSuggestionController {
 	 */
 	@GetMapping({ "/", "" })
 	public String showmain() {
-		String nextPage = "board/suggestion/suggestion";
+		System.out.println("컨트롤러 들어옴");
+		String nextPage = "jsp/board/suggestion/suggestion";
 		return nextPage;
 	}
 
@@ -55,7 +56,7 @@ public class BoardSuggestionController {
 		if (boardVos != null) {
 			model.addAttribute("boardVos", boardVos);
 		}
-		return "board/suggestion/all_suggestion_list";
+		return "jsp/board/suggestion/all_suggestion_list";
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class BoardSuggestionController {
 	 */
 	@GetMapping("/create")
 	public String create(Model model, HttpSession session) {
-		String nextPage = "board/suggestion/create_board_form";
+		String nextPage = "jsp/board/suggestion/create_board_form";
 		UserVo loginedUsersRequestVo = (UserVo) session.getAttribute("loginedUsersRequestVo");
 		String userName = loginedUsersRequestVo.getName();
 		int userId = loginedUsersRequestVo.getId();
@@ -89,7 +90,7 @@ public class BoardSuggestionController {
 	 */
 	@PostMapping("/createConfirm")
 	public String createConfirm(BoardVo boardVo, @RequestParam("file") MultipartFile file) {
-	    String nextPage = "board/suggestion/create_board_ok";
+	    String nextPage = "jsp/board/suggestion/create_board_ok";
 	    
 	    if (!file.isEmpty()) { // 파일이 업로드되었는지 확인
 	        String fileName = uploadFileService.boardUpload(file);
@@ -99,7 +100,7 @@ public class BoardSuggestionController {
 	    int result = boardService.createBoardConfirm(boardVo);
 	    
 	    if (result < 1) {
-	        nextPage = "board/suggestion/create_board_ng";
+	        nextPage = "jsp/board/suggestion/create_board_ng";
 	    }
 	    
 	    return nextPage;
@@ -116,7 +117,7 @@ public class BoardSuggestionController {
 	 */
 	@RequestMapping(value = "/detail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String detail(@RequestParam("b_id") int b_id, Model model, HttpSession httpSession) {
-		String nextPage = "board/suggestion/suggestion_board_detail";
+		String nextPage = "jsp/board/suggestion/suggestion_board_detail";
 		BoardVo boardVo = boardService.readSuggestionBoard(b_id);
 		boardService.addHit(b_id);
 
@@ -188,7 +189,7 @@ public class BoardSuggestionController {
 	 */
 	@GetMapping("/modify")
 	public String modify(@RequestParam("b_id") int b_id, @RequestParam("name") String name, Model model, @RequestParam("attachment") String attachment) {
-		String nextPage = "board/suggestion/modify_board_form";
+		String nextPage = "jsp/board/suggestion/modify_board_form";
 		BoardVo boardVo = boardService.modifyBoard(b_id);
 		boardVo.setName(name);
 		model.addAttribute("boardVo", boardVo);
@@ -204,7 +205,7 @@ public class BoardSuggestionController {
 	 */
 	@PostMapping("/modifyConfirm")
 	public String modifyConfirm(BoardVo boardVo, @RequestParam("file") MultipartFile file, @RequestParam("trash") String trash) {
-		String nextPage = "board/suggestion/modify_board_ok";
+		String nextPage = "jsp/board/suggestion/modify_board_ok";
 
 		
 		if (!file.isEmpty()) { 
@@ -214,7 +215,7 @@ public class BoardSuggestionController {
 		
 		int result = boardService.modifyBoardConfirm(boardVo);
 		if (result < 1) {
-			nextPage = "board/suggestion/modify_board_ng";
+			nextPage = "jsp/board/suggestion/modify_board_ng";
 		}else {
 			String deleteFile = "C:\\makgol\\board\\upload\\"+trash;
 			File oldfile= new File(deleteFile);
@@ -231,11 +232,11 @@ public class BoardSuggestionController {
 	 */
 	@GetMapping("/delete")
 	public String delete(@RequestParam("b_id") int b_id, @RequestParam("attachment") String attachment) {
-		String nextPage = "board/suggestion/delete_board_ok";
+		String nextPage = "jsp/board/suggestion/delete_board_ok";
 		int result = boardService.deleteBoard(b_id);
 		String deleteFile = "C:\\makgol\\board\\upload\\"+attachment;
 		if (result < 1) {
-			nextPage = "board/suggestion/delete_board_ng";
+			nextPage = "jsp/board/suggestion/delete_board_ng";
 		} else {
 			File file = new File(deleteFile);
 			file.delete();
@@ -246,7 +247,7 @@ public class BoardSuggestionController {
 	/** suggestion 글 검색 **/
 	@RequestMapping(value = "/search", method = { RequestMethod.GET, RequestMethod.POST })
 	public String search(@RequestBody Map<String, String> map, Model model) {
-		String nextPage = "board/suggestion/search_suggestion_list";
+		String nextPage = "jsp/board/suggestion/search_suggestion_list";
 		String searchOption = (String) map.get("searchOption");
 		String searchWord = (String) map.get("searchWord");
 		List<BoardVo> boardVos = boardService.searchBoard(searchOption, searchWord);
