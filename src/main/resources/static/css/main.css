@@ -1,0 +1,137 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#article1 {
+  width: 100%;
+  position: relative;
+  height: 800px;
+  background-image: url(../image/background.jpeg);
+  background-size:cover;
+  background-position:center;
+}
+
+body::-webkit-scrollbar{
+	display:none;
+}
+
+.roulette_pin {
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  transform: translate(-50%);
+  z-index: 10;
+  border-radius: 10%;
+  width: 50px;
+  height: 70px;
+  background-color: #ffa500;
+  clip-path: polygon(50% 100%, 100% 50%, 100% 0%, 0% 0%, 0% 50%);
+}
+
+#spin {
+  position: absolute;
+  display: block;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background-color: white;
+  border: 8px solid #ffa500;
+  font-weight: bold;
+  font-size: 23px;
+  color: #a2a2a2;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  letter-spacing: 1px;
+}
+
+.roullette_position {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.roullette_position .roulette {
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  height: 500px;
+  background-color: #ccc;
+  border-radius: 50%;
+  border: 15px solid #ffa500;
+  position: relative;
+  overflow: hidden;
+  transition: 4s;
+  box-shadow : 5px 5px 10px rgba(0, 0, 0, 0.7);
+  
+}
+
+.roulette .onePiece {
+  padding-top: 15%;
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  height: 50%;
+  width: 58%;
+  position: absolute;
+  color: #888;
+  font-size: 23px;
+  font-weight: bold;
+  text-align: center;
+  transform-origin: bottom center;
+}
+
+.roulette .onePiece:nth-child(odd) {
+  background-color: #ffeeaa;
+}
+
+.roulette .onePiece:nth-child(even) {
+  background-color: #ffd400;
+}
+
+.roulette .onePiece:nth-child(2) {
+  transform: rotate(60deg);
+}
+
+.roulette .onePiece:nth-child(3) {
+  transform: rotate(120deg);
+}
+
+.roulette .onePiece:nth-child(4) {
+  transform: rotate(180deg);
+}
+
+.roulette .onePiece:nth-child(5) {
+  transform: rotate(240deg);
+}
+
+.roulette .onePiece:nth-child(6) {
+  transform: rotate(300deg);
+}
+
+.resultMenu {
+  width: 150px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.selectedCategory {
+  padding: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+
+.letsMenu {
+  margin: 0 20px;
+  background-color: transparent;
+}
