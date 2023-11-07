@@ -100,13 +100,14 @@
         WHERE id = #{b_id}
     </select>
 
-
     <update id="updateBoard" parameterType="boardVo">
+
         UPDATE boards
         SET title=#{title},
             contents=#{contents},
             attachment=#{attachment}
-        WHERE id = #{b_id}
+        WHERE id = #{id}
+
     </update>
 
 
@@ -137,6 +138,14 @@
         </choose>
     </select>
 
+    <select id="selectUserLikeStatus" resultType="int" parameterType="boardVo">
+        SELECT count(*)
+        FROM board_like
+        WHERE b_id = #{b_id}
+          AND user_id = #{user_id}
+    </select>
+
+
     <insert id="insertBoardLike" parameterType="boardVo">
         INSERT INTO board_like(b_id, user_id)
         VALUES (#{b_id}, #{user_id})
@@ -161,13 +170,6 @@
         SET sympathy=#{totalLike}
         WHERE id = #{b_id}
     </update>
-
-    <select id="selectuserLikeStatus" resultType="int" parameterType="boardVo">
-        SELECT count(*)
-        FROM board_like
-        WHERE b_id = #{b_id}
-          AND user_id = #{user_id}
-    </select>
 
 
 </mapper>

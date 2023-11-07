@@ -4,9 +4,7 @@ import com.org.makgol.boards.repository.BoardSuggestionRepository;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentVo;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -20,8 +18,6 @@ public class BoardSuggestionDao {
 
 
     private final BoardSuggestionRepository boardSuggestionRepository;
-    JdbcTemplate jdbcTemplate;
-    private SqlSession sqlSession;
 
     /**
      * suggestion 게시판 가져오기
@@ -37,7 +33,7 @@ public class BoardSuggestionDao {
      **/
     public int insertSuggestionBoard(BoardVo boardVo) {
         int result = -1;
-        result = boardSuggestionRepository.insertSuggestionBoard();
+        result = boardSuggestionRepository.insertSuggestionBoard(boardVo);
         return result;
 
     }
@@ -47,7 +43,7 @@ public class BoardSuggestionDao {
      **/
     public BoardVo showDetailSuggestionBoard(int b_id) {
         List<BoardVo> boardVo = null;
-        boardVo = sqlSession.selectList("mapper.boardSuggestion.showDetailSuggestionBoard", b_id);
+        boardVo = boardSuggestionRepository.showDetailSuggestionBoard(b_id);
         return boardVo.size() > 0 ? boardVo.get(0) : null;
     }
 
@@ -56,7 +52,7 @@ public class BoardSuggestionDao {
      **/
     public int updateHit(int b_id) {
         int result = -1;
-        result = sqlSession.update("mapper.boardSuggestion.updateHit", b_id);
+        result = boardSuggestionRepository.updateHit(b_id);
         return result;
     }
 
@@ -65,7 +61,7 @@ public class BoardSuggestionDao {
      **/
     public int insertComment(CommentVo commentVo) {
         int result = -1;
-        result = sqlSession.insert("mapper.boardSuggestion.insertComment", commentVo);
+        result = boardSuggestionRepository.insertComment(commentVo);
         return result;
     }
 
@@ -74,7 +70,7 @@ public class BoardSuggestionDao {
      **/
     public List<CommentVo> selectCommentList(int board_id) {
         List<CommentVo> CommentVos = null;
-        CommentVos = sqlSession.selectList("mapper.boardSuggestion.selectCommentList", board_id);
+        CommentVos = boardSuggestionRepository.selectCommentList(board_id);
         return CommentVos.size() > 0 ? CommentVos : null;
     }
 
@@ -83,7 +79,7 @@ public class BoardSuggestionDao {
      **/
     public int updateComment(CommentVo commentVo) {
         int result = -1;
-        result = sqlSession.update("mapper.boardSuggestion.updateComment", commentVo);
+        result = boardSuggestionRepository.updateComment(commentVo);
         return result;
     }
 
@@ -92,7 +88,7 @@ public class BoardSuggestionDao {
      **/
     public int deleteComment(int id) {
         int result = -1;
-        result = sqlSession.delete("mapper.boardSuggestion.deleteComment", id);
+        result = boardSuggestionRepository.deleteComment(id);
         return result;
     }
 
@@ -101,7 +97,7 @@ public class BoardSuggestionDao {
      **/
     public BoardVo selectBoard(int b_id) {
         List<BoardVo> boardVo = null;
-        boardVo = sqlSession.selectList("mapper.boardSuggestion.selectBoard", b_id);
+        boardVo = boardSuggestionRepository.selectBoard(b_id);
         return boardVo.size() > 0 ? boardVo.get(0) : null;
     }
 
@@ -110,16 +106,8 @@ public class BoardSuggestionDao {
      **/
 //	실패
     public int updateBoard(BoardVo boardVo) {
-        String sql = "UPDATE boards SET title=?, contents=?, attachment=? WHERE id=? ";
         int result = -1;
-
-        try {
-            result = jdbcTemplate.update(sql, boardVo.getTitle(), boardVo.getContents(), boardVo.getAttachment(),
-                    boardVo.getB_id());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        result = boardSuggestionRepository.updateBoard(boardVo);
         return result;
     }
 
@@ -128,8 +116,7 @@ public class BoardSuggestionDao {
      **/
     public int deleteBoard(int b_id) {
         int result = -1;
-        result = sqlSession.delete("mapper.boardSuggestion.deleteBoard", b_id);
-//		글 삭제할때 폴더에 있는 사진도 지워지게 하기!(폴더 경로 잡히면 진행하기)
+        result = boardSuggestionRepository.deleteBoard(b_id);
         return result;
     }
 
@@ -141,34 +128,34 @@ public class BoardSuggestionDao {
         Map<String, String> map = new HashMap<>();
         map.put("searchOption", searchOption);
         map.put("searchWord", searchWord);
-        boardVos = sqlSession.selectList("mapper.boardSuggestion.selectSearchBoard", map);
+        boardVos = boardSuggestionRepository.selectSearchBoard(map);
         return boardVos.size() > 0 ? boardVos : null;
     }
 
-    public int selectuserLikeStatus(BoardVo boardVo) {
-        int status = sqlSession.selectOne("mapper.boardSuggestion.selectuserLikeStatus", boardVo);
+    public int selectUserLikeStatus(BoardVo boardVo) {
+        int status = boardSuggestionRepository.selectUserLikeStatus(boardVo);
         return status;
     }
 
     public int insertBoardLike(BoardVo boardVo) {
         int result = -1;
-        result = sqlSession.insert("mapper.boardSuggestion.insertBoardLike", boardVo);
+        result = boardSuggestionRepository.insertBoardLike(boardVo);
         return result;
     }
 
     public int deleteBoardLike(BoardVo boardVo) {
         int result = -1;
-        result = sqlSession.delete("mapper.boardSuggestion.deleteBoardLike", boardVo);
+        result = boardSuggestionRepository.deleteBoardLike(boardVo);
         return result;
     }
 
     public int selectCountLike(int b_id) {
-        int totalLike = sqlSession.selectOne("mapper.boardSuggestion.selectLikeCount", b_id);
+        int totalLike = boardSuggestionRepository.selectCountLike(b_id);
         return totalLike;
     }
 
     public void updateBoardSympathy(Map<String, Integer> map) {
-        sqlSession.update("mapper.boardSuggestion.updateBoardSympathy", map);
+        boardSuggestionRepository.updateBoardSympathy(map);
     }
 }
 
