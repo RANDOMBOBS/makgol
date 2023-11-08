@@ -135,7 +135,7 @@ $(document).ready(function() {
 
         $.ajax({
             type		: "POST",
-            url			: "${pageContext.request.contextPath}/user/join",
+            url			: "http://localhost:8090/user/join",
             data		: JSON.stringify(form),
             dataType	: "json",
             contentType : "application/json; charset=utf-8",
@@ -191,8 +191,6 @@ $(document).ready(function() {
 	
 });//$(document).ready(function()_END
 </script>
-
-
 
 </head>
 

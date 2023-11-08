@@ -18,5 +18,4 @@ public class UserVo {
 	
 	String grade;
 
-	
 }
