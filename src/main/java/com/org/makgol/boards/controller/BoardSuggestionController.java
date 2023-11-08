@@ -44,7 +44,6 @@ public class BoardSuggestionController {
 	 */
 	@GetMapping({ "/", "" })
 	public String showmain() {
-		System.out.println("컨트롤러 들어옴");
 		String nextPage = "jsp/board/suggestion/suggestion";
 		return nextPage;
 	}

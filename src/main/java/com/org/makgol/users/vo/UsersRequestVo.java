@@ -46,5 +46,16 @@ public class UsersRequestVo {
     double longitude = 127.027589;
     //위도
     double latitude = 37.498102;
-	
+
+	// ID
+	int id;
+
+	@NotBlank(message = "회원등급(필수)")
+	@NotEmpty
+	String grade;
+
+	String date;
+	String address;
+
+
 }

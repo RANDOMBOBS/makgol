@@ -33,9 +33,7 @@ public class MainController {
 	 */
 	@RequestMapping(value = "/allCategory", method = { RequestMethod.GET, RequestMethod.POST })
 	public String allCategory(Model model) {
-		System.out.println("컨트롤러 들어옴");
 		List<CategoryListVo> categorys = mainService.getAllCategory();
-		System.out.println("카테고리는?"+categorys);
 		model.addAttribute("categorys", categorys);
 		return "jsp/main/random_wheel";
 	}

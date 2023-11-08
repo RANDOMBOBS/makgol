@@ -55,7 +55,7 @@
 </head>
 <body>
     <h1>LOGIN</h1>
-    <form method="post" action="/makgol/user/loginConfirm">
+    <form method="post" action="/user/loginConfirm">
         <label for="email">이메일:</label>
         <input type="text" id="email" name="email" required><br><br>
         
