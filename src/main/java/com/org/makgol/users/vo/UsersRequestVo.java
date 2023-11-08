@@ -40,7 +40,7 @@ public class UsersRequestVo {
 	String phone;
 	
 	// 프로필사진경로
-	MultipartFile photo;
+	String photo;
 
 	//경도
     double longitude = 127.027589;

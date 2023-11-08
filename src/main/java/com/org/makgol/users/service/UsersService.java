@@ -79,7 +79,7 @@ public class UsersService {
 
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if(userDao.createDao(usersRequestVo)) {
+        if(userDao.createUser(usersRequestVo)) {
             HashMap<String, Object> storeMap = new HashMap<String, Object>();
 
             usersRequestVo = userDao.findXY(usersRequestVo);
@@ -117,6 +117,7 @@ public class UsersService {
             System.out.println(storeRequestVoList.size());
 
             int i=0;
+            //확인하기
             for(StoreRequestVo storeRequestVo: storeRequestVoList) {
                 i++;
                 System.out.println("index"+ i +" --> : " +storeRequestVo.getPlace_url());
@@ -124,12 +125,12 @@ public class UsersService {
             }
 
             try {
-                storeMap = kakaoMapSearch.restApiCrawller(storeRequestVoList);
-
                 //업장 중복 체크
                 System.out.println("before storeRequestVoList --> : "+storeRequestVoList.size());
                 System.out.println(storesDao.checkStore(storeRequestVoList));
                 System.out.println("after storeRequestVoList --> : "+storeRequestVoList.size());
+
+                storeMap = kakaoMapSearch.restApiCrawller(storeRequestVoList);
 
                 storesDao.insertStore(storeMap);
             } catch(Exception e) {}

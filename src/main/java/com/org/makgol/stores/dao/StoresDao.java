@@ -34,8 +34,9 @@ public class StoresDao {
             int store_id = 0;
 
             try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url()); } catch (Exception e) {}
+
             if (store_id > 0) {
-                System.out.println("storeRequestVo.getPlace_url() --> :"+storeRequestVo.getPlace_url());
+                System.out.println("이미 존제 함. storeRequestVo.getPlace_url() --> :"+storeRequestVo.getPlace_url());
                 continue;
             }
 

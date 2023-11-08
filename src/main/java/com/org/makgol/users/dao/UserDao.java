@@ -3,6 +3,7 @@ package com.org.makgol.users.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.org.makgol.users.repository.UsersRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -19,8 +20,9 @@ import lombok.RequiredArgsConstructor;
 public class UserDao {
 		
 	private final JdbcTemplate jdbcTemplate;
+	private final UsersRepository usersRepository;
 	
-	
+
 	//db insert 쿼리 전송
 	public boolean insertAuthNumber(int auth_number) {
 		boolean result = false;
@@ -30,7 +32,7 @@ public class UserDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	} // insertAuthNumber_END
 	
@@ -51,27 +53,12 @@ public class UserDao {
 	    }
 	}
 
-
-
-	public Boolean createDao(UsersRequestVo usersRequestVo) {
+	public Boolean createUser(UsersRequestVo usersRequestVo) {
 		Boolean result = false;
-		
-		String name = usersRequestVo.getName();
-		String email = usersRequestVo.getEmail();
-		String password = usersRequestVo.getPassword();
-		String phone = usersRequestVo.getPhone();
-		String photo = "C:\\images\\599e8a0b6a171389b7bc5383e9599175.jpg";
-		Double longitude = usersRequestVo.getLongitude();
-		Double latitude = usersRequestVo.getLatitude();
-		
-		
-		try {
-		String sql = "INSERT INTO users (name, email, password, phone, photo, date, longitude, latitude) VALUES (?, ?, ?, ?, ?, now(), ?, ?)";
-        result = (jdbcTemplate.update(sql, name, email, password, phone, photo, longitude, latitude) > 0);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
+
+		usersRequestVo.setPhoto("C:\\images\\599e8a0b6a171389b7bc5383e9599175.jpg");
+		result = usersRepository.insertUser(usersRequestVo);
+
 		return result;
 	}
 
