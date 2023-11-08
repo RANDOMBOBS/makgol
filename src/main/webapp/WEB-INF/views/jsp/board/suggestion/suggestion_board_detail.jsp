@@ -1,4 +1,3 @@
-<%@page import="com.org.makgol.users.vo.UsersRequestVo"%>
 <%@page import="io.opentelemetry.exporter.logging.SystemOutLogExporter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -45,9 +44,6 @@ label {
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
 
-	<%
-	UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
-	%>
 
 	<table>
 		<tr>
