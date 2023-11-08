@@ -97,7 +97,7 @@ UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("lo
             </ul>
           </li>
           <c:choose>
-              <c:when test="loginedUsersRequestVo == null">
+              <c:when test="${loginedUsersRequestVo == null}">
                 <li><a href="<c:url value='/user/join'/>">JOIN</a></li>
                 <li><a href="<c:url value='/user/login'/>">LOGIN</a></li>
               </c:when>
