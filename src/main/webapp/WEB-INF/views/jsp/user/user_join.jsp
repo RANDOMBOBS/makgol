@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet"
+    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
+
 <script>
 $(document).ready(function() {
 	$('#mail-Check-Btn').click(function() {
@@ -195,6 +201,8 @@ $(document).ready(function() {
 </head>
 
 <body>
+	<jsp:include page="../include/header.jsp"></jsp:include>
+
 <div class="form-group email-form">
     <label>회원가입!</label>
    <form action = "makgol/user/join" method="post" enctype="multipart/form-data">

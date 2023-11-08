@@ -23,7 +23,7 @@
 	type="text/css" />
 
 </head>
-<body background="/resources/image/chick.jpg">
+<body>
 	<jsp:include page="jsp/include/header.jsp"></jsp:include>
 	<section>
 		<article id="article1">

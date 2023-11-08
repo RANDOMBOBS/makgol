@@ -17,10 +17,12 @@ request.setCharacterEncoding("utf-8");
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
 	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet"
+    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
+
 <style>
 ul {
 	text-align: left;
@@ -41,6 +43,8 @@ label {
 </style>
 </head>
 <body>
+	<jsp:include page="../../include/header.jsp"></jsp:include>
+
 	<%
 	UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
 	%>
