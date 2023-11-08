@@ -2,6 +2,8 @@ package com.org.makgol.users.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -141,5 +143,20 @@ public class UserDao {
 	        return usersRequestVo;
 	    }
 	}
-	
+
+
+	// 사용자 정보 조회 (로그인)
+	public UsersRequestVo selectUser(UsersRequestVo usersRequestVo) {
+		System.out.println("유저정보?"+usersRequestVo);
+		String sql = "SELECT * FROM users WHERE email = ?";
+		List<UsersRequestVo> list = null;
+		try {
+			RowMapper<UsersRequestVo> rowMapper = BeanPropertyRowMapper.newInstance(UsersRequestVo.class);
+			list = jdbcTemplate.query(sql, rowMapper, usersRequestVo.getEmail());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("리스트?"+list);
+		return list.size()>0 ? list.get(0) : null;
+	}
 }

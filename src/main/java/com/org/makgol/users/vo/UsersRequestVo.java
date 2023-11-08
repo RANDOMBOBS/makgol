@@ -40,11 +40,22 @@ public class UsersRequestVo {
 	String phone;
 	
 	// 프로필사진경로
-	MultipartFile photo;
+	String photo;
 
 	//경도
     double longitude = 127.027589;
     //위도
     double latitude = 37.498102;
-	
+
+	// ID
+	int id;
+
+	@NotBlank(message = "회원등급(필수)")
+	@NotEmpty
+	String grade;
+
+	String date;
+	String address;
+
+
 }
