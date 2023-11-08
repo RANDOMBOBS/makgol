@@ -151,7 +151,7 @@ public class BoardSuggestionController {
 	public String commentList(@PathVariable("board_id") int board_id, Model model) {
 		List<CommentVo> commentVos = boardService.getCommentList(board_id);
 		model.addAttribute("commentVos", commentVos);
-		return "board/suggestion/board_comment_list";
+		return "jsp/board/suggestion/board_comment_list";
 	}
 
 	/**

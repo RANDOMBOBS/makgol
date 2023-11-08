@@ -51,4 +51,4 @@
 
 
 
-<jsp:include page="script/jsp/suggestion.jsp"></jsp:include>
+	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>

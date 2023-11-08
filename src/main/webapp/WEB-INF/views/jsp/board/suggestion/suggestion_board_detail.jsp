@@ -122,7 +122,7 @@ label {
 				<input type="text" name="nickname" placeholder="로그인 후 댓글 작성이 가능합니다."
 					disabled />
 				<br />
-				<a href="/makgol/user/login">로그인하러가기</a>
+				<a href="/user/login">로그인하러가기</a>
 				<br />
 
 			</c:otherwise>
@@ -130,7 +130,7 @@ label {
 	</form>
 
 	<div class="boardCommentList"></div>
-<jsp:include page="script/jsp/suggestion.jsp"></jsp:include>
+	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>
 
 
 

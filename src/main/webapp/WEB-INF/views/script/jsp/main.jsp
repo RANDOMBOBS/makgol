@@ -6,8 +6,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-$.noConflict();
-var jQ = jQuery;
+
 
 	function resultMenu(menu) {
 		jQ.ajax({

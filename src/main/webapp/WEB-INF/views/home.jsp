@@ -9,7 +9,10 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
 	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 <title>막내야 골라봐 | 메인 (MAIN)</title>
@@ -17,90 +20,16 @@
 <link href="<c:url value='/resources/static/css/main.css' />" rel="stylesheet"
 	type="text/css" />
 
-<style>
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
 
-h2 {
-	text-align: center;
-}
-
-#header {
-	height: 100px;
-	line-height: 100px;
-	border: 1px solid #000;
-}
-
-#todaymenu {
-	height: 300px;
-	line-height: 300px;
-	border: 1px solid #000;
-	margin: 100px;
-}
-
-#top {
-	height: 300px;
-	line-height: 300px;
-	border: 1px solid #000;
-	margin: 0 100px 100px 100px;
-}
-
-#event {
-	height: 200px;
-	line-height: 200px;
-	border: 1px solid #000;
-	margin: 0 100px;
-}
-
-h1 {
-	text-align: center;
-}
-
-#random {
-	height: 650px;
-	line-height: 650px;
-}
-
-#footer {
-	height: 400px;
-	line-height: 400px;
-	border: 1px solid #000;
-}
-
-#pratice {
-	display: flex;
-	justify-content: space-around;
-}
-
-#boards {
-	display: flex;
-	justify-content: space-around;
-	height: 800px;
-	line-height: 800px;
-}
-</style>
 </head>
-<body>
-	<h1 id="header">Header</h1>
-
-	<div id="pratice">
-		<h2>이동용</h2>
-		<a href="<c:url value='/board/Notice'/>">공지사항</a>
-		<a href="<c:url value='/board/suggestion'/>">건의사항</a>
-		<a href="<c:url value='/board/vent'/>">하소연게시판</a>
-		<a href="<c:url value='/user/login'/>">로그인</a>
-		<a href="<c:url value='/user/join'/>">회원가입</a>
-	</div>
-
+<body background="/resources/image/chick.jpg">
+	<jsp:include page="jsp/include/header.jsp"></jsp:include>
 	<section>
 		<article id="article1">
 			<p class="selectedCategory">오늘의 점심 메뉴는 ?</p>
 			<p class="roulette_pin"></p>
 			<button id="spin">시작!</button>
-			<div class="roullette_position">
+			<div class="roulette_position">
 				<div class="roulette"></div>
 			</div>
 		</article>
@@ -117,20 +46,7 @@ h1 {
 			<h1>광고배너 / 이벤트</h1>
 		</div>
 
-		<div id="boards">
-			<div>
-				<a href="<c:url value='/board/Notice'/>">공지사항</a>
-			</div>
-			<div>
-				<a href="<c:url value='/category/categoryMain'/>">카테고리 리스트 </a>
-			</div>
-			<div>
-				<a href="<c:url value='/board/suggestion'/>">건의사항</a>
-			</div>
-			<div>
-				<a href="<c:url value='#'/>">하소연게시판 아직 구현 X </a>
-			</div>
-		</div>
+
 	</section>
 	<footer id="footer">
 		<h1>Footer</h1>
@@ -157,6 +73,7 @@ h1 {
 		}
 
 		getAllcategory();
+	</script>
 	</script>
 </body>
 </html>
