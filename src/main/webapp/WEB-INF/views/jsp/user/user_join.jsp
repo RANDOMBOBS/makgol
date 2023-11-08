@@ -82,7 +82,7 @@ $(document).ready(function() {
 	});// 인증번호 비교
 	
 	// 회원가입 버튼 
-	/* $("#joinButton").click(function () {
+	 $("#joinButton").click(function () {
 		
         const formData = new FormData();
         const email 	= $("#userEmail1").val()+$("#userEmail2").val();
@@ -98,11 +98,11 @@ $(document).ready(function() {
         formData.append("name",  	name);
         formData.append("password", password);
         formData.append("phone", 	phone);
-        formData.append("photo", 	photo); 
+        formData.append("photoFile", 	photo);
 
         $.ajax({
             type		: "POST",
-            url			: "makgol/user/join",
+            url			: "http://localhost:8090/user/join",
             data		: formData,
             processData : false,
             contentType : false,
@@ -115,9 +115,10 @@ $(document).ready(function() {
                 }
             }
         });
-    });// 회원가입 버튼_END  */
+    });// 회원가입 버튼_END
 	
- 	// 회원가입 버튼 
+ 	// 회원가입 버튼
+ 	/*
 	$("#joinButton").click(function () {
 		
         const email 	= $("#userEmail1").val()+$("#userEmail2").val();

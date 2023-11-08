@@ -4,6 +4,8 @@ import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +29,21 @@ public class UsersController {
 
     } // userFindPassword_END
 
-
+/*
     //joinUser
     @PostMapping("/join")
     public ResponseEntity<?> joinUser(@RequestBody @Valid UsersRequestVo usersRequestVo) {
         Boolean result = userService.joinUser(usersRequestVo);
 
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }// ResponseEntity_END
+*/
+
+    //joinUser
+    @PostMapping("/join")
+    public ResponseEntity<?> joinUser(@ModelAttribute @Valid UsersRequestVo usersRequestVo) {
+
+        Boolean result = userService.joinUser(usersRequestVo);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }// ResponseEntity_END
 

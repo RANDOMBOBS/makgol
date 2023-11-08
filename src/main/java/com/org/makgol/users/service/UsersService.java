@@ -7,12 +7,15 @@ import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.util.KakaoMapSearch;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.mail.MailSendUtil;
 import com.org.makgol.util.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -76,8 +79,15 @@ public class UsersService {
     //joinUser
     public Boolean joinUser(UsersRequestVo usersRequestVo) {
         //사용자 패스워드 암호화
-
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
+
+        FileUpload fileUpload = new FileUpload();
+        List<FileInfo> fileInfoList = fileUpload.fileListUpload(usersRequestVo.getPhotoFile());
+
+        for(int index = 0; index < fileInfoList.size(); index ++){
+            usersRequestVo.setPhoto_path(fileInfoList.get(index).getPhotoPath());
+            usersRequestVo.setPhoto(fileInfoList.get(index).getPhotoName());
+        }
 
         if(userDao.createUser(usersRequestVo)) {
             HashMap<String, Object> storeMap = new HashMap<String, Object>();

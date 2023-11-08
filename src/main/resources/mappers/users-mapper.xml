@@ -6,8 +6,8 @@
 <mapper namespace="com.org.makgol.users.repository.UsersRepository">
 
     <insert id="insertUser" parameterType="com.org.makgol.users.vo.UsersRequestVo">
-        INSERT INTO users (name, email, password, phone, photo, date, longitude, latitude)
-        VALUES (#{name}, #{email}, #{password}, #{phone}, #{photo}, now(), #{longitude}, #{latitude})
+        INSERT INTO users (name, email, password, phone, photo, photo_path, date, longitude, latitude)
+        VALUES (#{name}, #{email}, #{password}, #{phone}, #{photo}, #{photo_path}, now(), #{longitude}, #{latitude})
     </insert>
 
     <select id="selectUserEmail" resultType="String" parameterType="com.org.makgol.users.vo.UsersRequestVo">

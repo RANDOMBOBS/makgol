@@ -57,8 +57,6 @@ public class UserDao {
 
 	public Boolean createUser(UsersRequestVo usersRequestVo) {
 		Boolean result = false;
-
-		usersRequestVo.setPhoto("C:\\images\\599e8a0b6a171389b7bc5383e9599175.jpg");
 		result = usersRepository.insertUser(usersRequestVo);
 
 		return result;
