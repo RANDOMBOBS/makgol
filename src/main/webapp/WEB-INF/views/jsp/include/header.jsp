@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="com.org.makgol.users.vo.UsersRequestVo"%>
 
-    
+<%
+UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
+%>
+
+
      <header id="header">
       <div class="all_category">
         <div class="show_category">
@@ -91,10 +96,17 @@
               <li><a href="<c:url value='/board/vent'/>">하소연 게시판</a></li>
             </ul>
           </li>
-          <li>
-            <a href="<c:url value='/user/join'/>">JOIN</a>
-          </li>
-          <li><a href="<c:url value='/user/login'/>">LOGIN</a></li>
+          <c:choose>
+              <c:when test="${loginedUsersRequestVo == null}">
+                <li><a href="<c:url value='/user/join'/>">JOIN</a></li>
+                <li><a href="<c:url value='/user/login'/>">LOGIN</a></li>
+              </c:when>
+              <c:otherwise>
+                <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
+                <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
+                <li><a href="<c:url value='/user/logout'/>">LOGOUT</a></li>
+              </c:otherwise>
+          </c:choose>
         </ul>
       </div>
     </header>

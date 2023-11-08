@@ -11,16 +11,12 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
 	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<style>
-img {
-	border-radius: 50%;
-	width: 50px;
-	height: 50px;
-	border: 1px solid;
-}
-</style>
+	<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
+	<jsp:include page="../include/header.jsp"></jsp:include>
+
 	<h2>회원목록</h2>
 	<div>
 		<span>선택한 회원을</span> <select name="grade">
@@ -33,7 +29,8 @@ img {
 		<button type="button" onclick="updateGrade()">변경하기</button>
 	</div>
 	<div class="allUserList"></div>
-	<jsp:include page="script/jsp/user_management.jsp"></jsp:include>
+
+	<jsp:include page="../../script/jsp/user_management.jsp"></jsp:include>
 
 	<script>
 		userList()

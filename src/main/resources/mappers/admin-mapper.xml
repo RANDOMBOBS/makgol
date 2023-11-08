@@ -5,15 +5,15 @@
 
 
 <mapper namespace="com.org.makgol.admin.repository.AdminRepository">
-    <select id="selectAllUserList" resultType="com.org.makgol.users.vo.UserVo"
-            parameterType="com.org.makgol.users.vo.UserVo">
+    <select id="selectAllUserList" resultType="com.org.makgol.users.vo.UsersRequestVo"
+            parameterType="com.org.makgol.users.vo.UsersRequestVo">
         SELECT *
         FROM users
         ORDER BY id ASC
     </select>
 
 
-    <update id="UpdateGrade" parameterType="com.org.makgol.users.vo.UserVo">
+    <update id="UpdateGrade" parameterType="com.org.makgol.users.vo.UsersRequestVo">
         UPDATE users
         SET grade = #{grade}
         where id = #{id}

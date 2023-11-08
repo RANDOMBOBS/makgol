@@ -8,7 +8,7 @@
 
 	function userList() {
 		jQ.ajax({
-			url : "${pageContext.request.contextPath}/admin/userList",
+			url : "/admin/userList",
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
