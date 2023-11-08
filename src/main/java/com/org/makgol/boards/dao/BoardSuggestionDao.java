@@ -124,7 +124,7 @@ public class BoardSuggestionDao {
      * suggestion 글 검색
      **/
     public List<BoardVo> selectSearchBoard(String searchOption, String searchWord) {
-        List<BoardVo> boardVos = new ArrayList<BoardVo>();
+        List<BoardVo> boardVos = null;
         Map<String, String> map = new HashMap<>();
         map.put("searchOption", searchOption);
         map.put("searchWord", searchWord);
@@ -150,7 +150,7 @@ public class BoardSuggestionDao {
     }
 
     public int selectCountLike(int b_id) {
-        int totalLike = boardSuggestionRepository.selectCountLike(b_id);
+        int totalLike = boardSuggestionRepository.selectLikeCount(b_id);
         return totalLike;
     }
 

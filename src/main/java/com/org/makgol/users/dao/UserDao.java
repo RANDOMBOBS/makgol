@@ -147,7 +147,6 @@ public class UserDao {
 
 	// 사용자 정보 조회 (로그인)
 	public UsersRequestVo selectUser(UsersRequestVo usersRequestVo) {
-		System.out.println("유저정보?"+usersRequestVo);
 		String sql = "SELECT * FROM users WHERE email = ?";
 		List<UsersRequestVo> list = null;
 		try {
@@ -156,7 +155,6 @@ public class UserDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("리스트?"+list);
 		return list.size()>0 ? list.get(0) : null;
 	}
 }

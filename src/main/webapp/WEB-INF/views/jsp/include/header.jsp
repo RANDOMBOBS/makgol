@@ -91,6 +91,9 @@
               <li><a href="<c:url value='/board/vent'/>">하소연 게시판</a></li>
             </ul>
           </li>
+           <li>
+            <a href="<c:url value='/admin/userManagement'/>">회원관리</a>
+          </li>
           <li>
             <a href="<c:url value='/user/join'/>">JOIN</a>
           </li>
