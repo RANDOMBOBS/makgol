@@ -124,4 +124,11 @@ public class UsersController {
         return nextPage;
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "home";
+    }
+
+
 }

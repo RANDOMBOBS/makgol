@@ -96,17 +96,20 @@ UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("lo
               <li><a href="<c:url value='/board/vent'/>">하소연 게시판</a></li>
             </ul>
           </li>
-          <c:choose>
-              <c:when test="${loginedUsersRequestVo == null}">
-                <li><a href="<c:url value='/user/join'/>">JOIN</a></li>
-                <li><a href="<c:url value='/user/login'/>">LOGIN</a></li>
-              </c:when>
-              <c:otherwise>
-                <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
-                <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
-                <li><a href="<c:url value='/user/logout'/>">LOGOUT</a></li>
-              </c:otherwise>
-          </c:choose>
+      <c:choose>
+          <c:when test="${loginedUsersRequestVo != null}">
+              <c:if test="${loginedUsersRequestVo.getGrade() == '관리자'}">
+                  <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
+              </c:if>
+              <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
+              <li><a href="<c:url value='/user/logout'/>">LOGOUT</a></li>
+          </c:when>
+          <c:otherwise>
+              <li><a href="<c:url value='/user/join'/>">JOIN</a></li>
+              <li><a href="<c:url value='/user/login'/>">LOGIN</a></li>
+          </c:otherwise>
+      </c:choose>
+
         </ul>
       </div>
     </header>
