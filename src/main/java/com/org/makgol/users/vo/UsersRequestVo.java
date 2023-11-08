@@ -45,7 +45,7 @@ public class UsersRequestVo {
 	String phone;
 	
 	//photo file
-	List<MultipartFile> photoFile;
+	MultipartFile photoFile;
 
 	//파일 이름
 	String photo;

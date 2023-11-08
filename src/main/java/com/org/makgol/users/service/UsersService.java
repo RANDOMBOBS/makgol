@@ -82,7 +82,7 @@ public class UsersService {
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
         FileUpload fileUpload = new FileUpload();
-        List<FileInfo> fileInfoList = fileUpload.fileListUpload(usersRequestVo.getPhotoFile());
+        List<FileInfo> fileInfoList = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
 
         for(int index = 0; index < fileInfoList.size(); index ++){
             usersRequestVo.setPhoto_path(fileInfoList.get(index).getPhotoPath());
