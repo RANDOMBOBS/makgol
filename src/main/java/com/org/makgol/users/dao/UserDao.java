@@ -144,4 +144,15 @@ public class UserDao {
 		}
 		return list.size()>0 ? list.get(0) : null;
 	}
+
+	public int updateUserInfo(UsersRequestVo usersRequestVo){
+		String sql = "UPDATE users SET password=?, phone=? WHERE id=?";
+		int result = -1;
+		try {
+			result = jdbcTemplate.update(sql, usersRequestVo.getPassword(), usersRequestVo.getPhone(), usersRequestVo.getId());
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

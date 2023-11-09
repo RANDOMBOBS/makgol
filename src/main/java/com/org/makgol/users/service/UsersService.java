@@ -173,4 +173,11 @@ public class UsersService {
 
         return !result;
     }
+
+    public int modifyUserInfo(UsersRequestVo usersRequestVo){
+        return userDao.updateUserInfo(usersRequestVo);
+    }
+
+
 }
+

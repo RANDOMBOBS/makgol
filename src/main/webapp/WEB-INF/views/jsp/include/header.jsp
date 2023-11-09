@@ -102,7 +102,7 @@ UsersRequestVo blackList = (UsersRequestVo) session.getAttribute("blackList");
               <c:if test="${loginedUsersRequestVo.getGrade() == '관리자'}">
                   <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
               </c:if>
-              <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
+              <li><a href="<c:url value='/user/modify_user'/>">MYPAGE</a></li>
               <li><a href="<c:url value='/user/logout'/>">LOGOUT</a></li>
           </c:when>
           <c:otherwise>
