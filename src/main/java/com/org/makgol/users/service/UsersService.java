@@ -5,7 +5,9 @@ import com.org.makgol.stores.vo.Category;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.users.dao.UserDao;
+import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.KakaoMapSearch;
 import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
@@ -31,6 +33,7 @@ public class UsersService {
     private final RedisUtil redisUtil;
     private final KakaoMapSearch kakaoMapSearch;
     private final StoresDao storesDao;
+    private final UsersRepository usersRepository;
 
     public String userFindId(String userEmail){
         return userEmail;
@@ -61,9 +64,12 @@ public class UsersService {
     public boolean checkEmail(String email) {
         int authNumber= mailSendUtil.makeRandomNumber();
         String key = String.valueOf(authNumber);
-        mailSendUtil.sendMail(authNumber, email);
-
-        return redisUtil.setDataExpire(key, email, 60 * 3L);
+        if(mailSendUtil.sendMail(authNumber, email)){
+            System.out.println("return redisUtil.setDataExpire(key, email, 60 * 3L);");
+            return redisUtil.setDataExpire(key, email, 60 * 3L);
+        }
+        System.out.println("false");
+        return false;
 
     } //checkEmail_END
 
@@ -82,22 +88,22 @@ public class UsersService {
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
         FileUpload fileUpload = new FileUpload();
-        List<FileInfo> fileInfoList = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+        FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
 
-        for(int index = 0; index < fileInfoList.size(); index ++){
-            usersRequestVo.setPhoto_path(fileInfoList.get(index).getPhotoPath());
-            usersRequestVo.setPhoto(fileInfoList.get(index).getPhotoName());
-        }
+        usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+        usersRequestVo.setPhoto(fileInfo.getPhotoName());
+
+
 
         if(userDao.createUser(usersRequestVo)) {
             HashMap<String, Object> storeMap = new HashMap<String, Object>();
 
-            usersRequestVo = userDao.findXY(usersRequestVo);
+            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
 
             KakaoLocalRequestVo kakaoLocalRequestVo = new KakaoLocalRequestVo();
 
-            kakaoLocalRequestVo.setY(String.valueOf(usersRequestVo.getLatitude()));
-            kakaoLocalRequestVo.setX(String.valueOf(usersRequestVo.getLongitude()));
+            kakaoLocalRequestVo.setY(String.valueOf(usersResponseVo.getLatitude()));
+            kakaoLocalRequestVo.setX(String.valueOf(usersResponseVo.getLongitude()));
 
 
             //String[] foodCategories = Arrays.stream(Category.CategoryFood.values())
@@ -163,5 +169,12 @@ public class UsersService {
         }
 
         return loginedInUsersRequestVo;
+    }
+
+    public Boolean mailCheckDuplication(String email) {
+
+        Boolean result = email.equals(usersRepository.duplicationUserEmail(email));
+
+        return !result;
     }
 }

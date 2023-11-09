@@ -37,6 +37,32 @@ public class StoresDao {
 
             if (store_id > 0) {
                 System.out.println("이미 존제 함. storeRequestVo.getPlace_url() --> :"+storeRequestVo.getPlace_url());
+
+                store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url());
+
+                if (!storeRequestVo.getMenuName().equals("empty")) {
+                    String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name) VALUES (?, ?, ?)";
+                    jdbcTemplate.update(insertStoresMenuSql,
+                            store_id,
+                            storeRequestVo.getKeyword(),
+                            storeRequestVo.getMenuName()
+                    );
+                }
+
+                for (int menuIndex = 0; menuIndex < storeRequestMenuVoList.size(); menuIndex++) {
+                    if (storeRequestMenuVoList.get(menuIndex).getMenu() == null) {
+                        continue;
+                    }
+                    String insertStoresMenuSql = "INSERT INTO Menus (store_id, menu, price) \n"
+                            + "VALUES (?, ?, ?)";
+
+                    jdbcTemplate.update(insertStoresMenuSql,
+                            store_id,
+                            storeRequestMenuVoList.get(menuIndex).getMenu(),
+                            storeRequestMenuVoList.get(menuIndex).getPrice()
+                    );
+                }
+
                 continue;
             }
 

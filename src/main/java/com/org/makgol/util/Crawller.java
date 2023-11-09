@@ -61,7 +61,10 @@ public class Crawller {
 
         int storesSize = storeRequestVos.size() / thread_count;
 
-
+        
+        if(storeRequestVos.size() < thread_count){
+            thread_count = storeRequestVos.size();
+        }
             //storeRequestVos의 사이즈 많금스레드를 생성하겠다.
             for (int i = 1; i <= thread_count; i++) {
                 //스레드에 주소값을 넘겨줌
@@ -110,7 +113,7 @@ public class Crawller {
     	
     	public void processCawller() {
             int index = storeSize*(thread_num-1);
-            for(; index<storeSize*thread_num; index++){
+            for(; index<=storeSize*thread_num; index++){
             Random r = new Random();
 
     		//chrome driver 경로 세팅

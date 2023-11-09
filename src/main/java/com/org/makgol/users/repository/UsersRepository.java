@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UsersRepository {
 
     Boolean insertUser(UsersRequestVo usersRequestVo);
+    String duplicationUserEmail(String email);
 }

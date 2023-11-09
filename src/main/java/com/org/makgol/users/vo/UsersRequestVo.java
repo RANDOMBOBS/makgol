@@ -54,15 +54,17 @@ public class UsersRequestVo {
 	String photo_path;
 
 	//경도
-    double longitude = 127.027589;
+    double longitude;
     //위도
-    double latitude = 37.498102;
-
+    double latitude;
 
 	@NotBlank(message = "회원등급(필수)")
 	@NotEmpty
 	String grade;
 
 	String date;
+
+	@NotBlank(message = "주소")
+	@NotEmpty
 	String address;
 }

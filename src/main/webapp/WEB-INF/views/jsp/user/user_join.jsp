@@ -12,21 +12,48 @@
     	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>
+
 <script>
-$(document).ready(function() {
-	$('#mail-Check-Btn').click(function() {
-		
-		const email = $('#userEmail1').val() + $('#userEmail2').val(); // 이메일 주소값 얻어오기!
-		const auth_number = $('.mail-check-input') // 인증번호 입력하는곳 
-		
+jQuery(document).ready(function() {
+
+    jQuery('#mail-Check-duplication').click(function() {
+
+		const email = jQuery('#userEmail1').val() + jQuery('#userEmail2').val(); // 이메일 주소값 얻어오기!
+
+		jQuery.ajax({
+			type : 'POST',
+			url : '<c:url value ="/user/mailCheckDuplication"/>', // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+			data : {email : email},
+			dataType: "json",
+			success : function (data, status) {
+				if(status === "success" ){
+					if(data === true){
+						alert('이메일 중복 되지 않습니다.');
+
+					} else if(data === false)  {
+						alert('이미 가입한 이메일 입니다.');
+					}
+				} else {
+					console.error("통신 오류: " + status);
+				}
+			}
+		}); // end ajax
+	}); // end send eamil
+
+	jQuery('#mail-Check-Btn').click(function() {
+
+		const email = jQuery('#userEmail1').val() + jQuery('#userEmail2').val(); // 이메일 주소값 얻어오기!
+		const auth_number = jQuery('.mail-check-input') // 인증번호 입력하는곳
+
 		var authNumber = {
 			email : email,
 		};
-		
-		
-		$.ajax({
+
+
+		jQuery.ajax({
 			type : 'POST',
 			url : '<c:url value ="/user/mailCheck"/>', // GET방식이라 Url 뒤에 email을 뭍힐수있다.
 			data : JSON.stringify(authNumber),
@@ -39,28 +66,28 @@ $(document).ready(function() {
 						checkInput.attr('disabled',false);
 					} else if(data === false)  {
 						alert('이메일을 다시 확인해 주세요.')
-					} 
+					}
 				} else {
 					console.error("통신 오류: " + status);
 				}
 			}
 		}); // end ajax
 	}); // end send eamil
-	
-	
-	// 인증번호 비교 
+
+
+	// 인증번호 비교
 	// blur -> focus가 벗어나는 경우 발생
-	$('#mail-Check-Btn2').click(function () {
-		const email = $('#userEmail1').val() + $('#userEmail2').val(); // 이메일 주소값 얻어오기!
-		const auth_number = $('#mail-Check-text').val(); //인증번호 얻어오기!
-		
+	jQuery('#mail-Check-Btn2').click(function () {
+		const email = jQuery('#userEmail1').val() + jQuery('#userEmail2').val(); // 이메일 주소값 얻어오기!
+		const auth_number = jQuery('#mail-Check-text').val(); //인증번호 얻어오기!
+
 		var authNumber = {
 				email : email,
 				auth_number : auth_number
 			};
-			
-		
-		$.ajax({
+
+
+		jQuery.ajax({
 			type : 'POST',
 			url : '<c:url value ="/user/authNumberCheck"/>',// GET방식이라 Url 뒤에 email을 뭍힐수있다.
 			data : JSON.stringify(authNumber),
@@ -72,111 +99,82 @@ $(document).ready(function() {
 		            if (data === true) {
 		                // 인증 성공
 		                alert("인증성공");
-		    			$('#mail-Check-Btn').attr('disabled',true);
-		    			
-		    	         
+		    			jQuery('#mail-Check-Btn').attr('disabled',true);
+
+
 		            } else if(data === false){
 		                // 인증 실패
-					alert("인증실패")		    			
-		            } 
+					alert("인증실패")
+		            }
 			    } else {
 			        // 서버와 통신 중 문제 발생
 			        console.error("통신 오류: " + status);
-			        
+
 			    }
 			}
 		}); // end ajax
 	});// 인증번호 비교
-	
-	// 회원가입 버튼 
-	 $("#joinButton").click(function () {
-		
-        const formData = new FormData();
-        const email 	= $("#userEmail1").val()+$("#userEmail2").val();
-        const name		= $("#name").val();
-        const password 	= $("#password").val();
-        const phone 	= $("#phone").val();
-        const photo 	= $("#photo")[0].files[0];
-        
-        const imageInput = $("#photo")[0];
-        console.log("photo", photo.files)
-        
-        formData.append("email",	email);
-        formData.append("name",  	name);
-        formData.append("password", password);
-        formData.append("phone", 	phone);
-        formData.append("photoFile", 	photo);
 
-        $.ajax({
+	// 회원가입 버튼
+	 jQuery("#joinButton").click(function () {
+
+        const formData = new FormData();
+        const email 	= jQuery("#userEmail1").val()+jQuery("#userEmail2").val();
+        const name		= jQuery("#name").val();
+        const password 	= jQuery("#password").val();
+        const phone 	= jQuery("#phone").val();
+        const photo 	= jQuery("#photo")[0].files[0];
+        const address   = jQuery("#sample5_address").val();
+        const longitude = jQuery("#longitude").val();
+        const latitude  = jQuery("#latitude").val();
+
+        formData.append("name",  	 name);
+        formData.append("email",	 email);
+        formData.append("phone", 	 phone);
+        formData.append("address", 	 address);
+        formData.append("password",  password);
+        formData.append("photoFile", photo);
+        formData.append("longitude", longitude);
+        formData.append("latitude",  latitude);
+
+        jQuery.ajax({
             type		: "POST",
             url			: "http://localhost:8090/user/join",
             data		: formData,
             processData : false,
             contentType : false,
-            success		: 
-            	function (data) {
+            success		:
+            	function (data, status) {
                 if (status === "success") {
-                    // Process the response data, e.g., show a success message
+                    if(data === true){
+                        alert(data);
+                    } else {
+                        alert(data);
+                    }
                 } else {
-                    console.error("통신 오류: " + status);
+                    alert("실패!ㅋ : "+data);
+                    console.error("통신 오류 : " + status);
                 }
             }
         });
     });// 회원가입 버튼_END
-	
- 	// 회원가입 버튼
- 	/*
-	$("#joinButton").click(function () {
-		
-        const email 	= $("#userEmail1").val()+$("#userEmail2").val();
-        const name		= $("#name").val();
-        const password 	= $("#password").val();
-        const phone 	= $("#phone").val();
-        const photo 	= $("#photo")[0].files[0];
-        
-        let form = {
-        		email 	 : email,
-        		name  	 : name,
-        		password : password,
-        		phone	 : phone,
-        };
 
-        $.ajax({
-            type		: "POST",
-            url			: "http://localhost:8090/user/join",
-            data		: JSON.stringify(form),
-            dataType	: "json",
-            contentType : "application/json; charset=utf-8",
-            success 	: function (data, status) {
-                if (status === "success") {
-                	if (data === true) {
-                		alert("성공!ㅋ");
-                	} else {
-                		alert("실패!ㅋ");
-                	}
-                } else {
-                	alert(data);
-                    console.error("통신 오류: " + status);
-                }
-            }
-        });
-        
-    });// 회원가입 버튼_END */
-	
-	// 비밀번호 비교 
-	$('#passwordCheckBtn').click(function () {
-		const password =  $('#password').val();
-		const passwordCheck = $('#passwordCheck').val();
-		
+
+
+	// 비밀번호 비교
+	jQuery('#passwordCheckBtn').click(function () {
+		const password =  jQuery('#password').val();
+		const passwordCheck = jQuery('#passwordCheck').val();
+
 		if(password === passwordCheck){
 			alert("비밀번호가 일치합니다");
 		} else {
 			alert("비밀번호가 일치하지 않습니다");
 		}
 	});// 비밀번호 비교_END
-	
-	
-	//비밀번호 유효성 검사 
+
+
+	//비밀번호 유효성 검사
 	function validatePassword() {
         const password = document.getElementById("password").value;
         const massage  = document.getElementById("메시지");
@@ -194,10 +192,7 @@ $(document).ready(function() {
         	massage.innerHTML = "비밀번호가 유효합니다.";
         }
     }//비밀번호 유효성 검사_END
-	
-	
-	
-});//$(document).ready(function()_END
+});//jQuery(document).ready(function()_END
 </script>
 
 </head>
@@ -207,7 +202,7 @@ $(document).ready(function() {
 
 <div class="form-group email-form">
     <label>회원가입!</label>
-   <form action = "makgol/user/join" method="post" enctype="multipart/form-data">
+   <form action = "/user/join" method="post" enctype="multipart/form-data">
     <div class="input-group">
         <input type="text" class="form-control" name="userEmail1" id="userEmail1" placeholder="이메일">
         <select class="form-control" name="userEmail2" id="userEmail2">
@@ -218,6 +213,9 @@ $(document).ready(function() {
             <option value = "@yahoo.co.kr" >@yahoo.co.kr</option>
         </select>
     </div>
+    <div>
+    <button type="button" id="mail-Check-duplication">중복확인</button>
+    <div>
     <div class="input-group-addon">
         <button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
     </div>
@@ -232,8 +230,13 @@ $(document).ready(function() {
         <button type="button" id="passwordCheckBtn" name="passwordCheckBtn">비밀번호 확인</button><br />
         <input placeholder="핸드폰" id="phone" name="phone"><br />
         <input type="text" id="sample5_address" placeholder="주소">
+        <input type="hidden" id="longitude" >
+        <input type="hidden" id="latitude" >
+
+
         <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
         <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+
         <input type="file" id="photo" name="photo">
         <button type="button" id="joinButton">가입</button>
     </div>
@@ -270,6 +273,9 @@ $(document).ready(function() {
                     if (status === daum.maps.services.Status.OK) {
 
                         var result = results[0]; //첫번째 결과의 값을 활용
+
+                        document.getElementById("longitude").value = result.x;
+                        document.getElementById("latitude").value = result.y;
 
                         // 해당 주소에 대한 좌표를 받아서
                         var coords = new daum.maps.LatLng(result.y, result.x);

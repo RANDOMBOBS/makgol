@@ -62,7 +62,7 @@ public class FileUpload {
         return fileInfo;
     }
 
-    public List<FileInfo> fileUpload(MultipartFile fileList) {
+    public FileInfo fileUpload(MultipartFile fileList) {
         FileInfo fileInfo = new FileInfo();
         List<FileInfo> fileInfoList = new ArrayList<>();
 
@@ -77,6 +77,9 @@ public class FileUpload {
             String currentDirectory = System.getProperty("user.dir");
             System.out.println("현재 디렉토리: " + currentDirectory);
 
+            //mac 경로
+            //String uploadFolder = currentDirectory+"/src/main/resources/static/image";
+            //windows 경로
             String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image";
 
 		/*
@@ -102,15 +105,20 @@ public class FileUpload {
 
             try {
                 fileList.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-                fileInfo.setPhotoPath(uploadFolder+"\\"+uniqueName + fileExtension);
+                String path = uploadFolder+"\\"+uniqueName + fileExtension;
+                path = path.replace("\\","/");
+                int startIndex = path.indexOf("resources/static/image/");
+                path = path.substring(startIndex);
+
+                fileInfo.setPhotoPath(path);
                 fileInfo.setPhotoName(fileRealName);
-                fileInfoList.add(fileInfo);
+
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-        return fileInfoList;
+        return fileInfo;
     }
 }
