@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.org.makgol.users.repository.UsersRepository">
+
+    <insert id="insertUser" parameterType="com.org.makgol.users.vo.UsersRequestVo">
+        INSERT INTO users (name, email, password, phone, photo, photo_path, date, address, longitude, latitude)
+        VALUES (#{name}, #{email}, #{password}, #{phone}, #{photo}, #{photo_path}, now(), #{address}, #{longitude}, #{latitude})
+    </insert>
+
+    <select id="duplicationUserEmail" resultType="String" parameterType="String">
+        SELECT email FROM users WHERE email = #{email}
+    </select>
+</mapper>

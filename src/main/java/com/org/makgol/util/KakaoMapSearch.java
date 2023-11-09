@@ -28,6 +28,22 @@ public class KakaoMapSearch {
 
 	private final StoreService storeService;
 
+	public void addressSearch(String address, KakaoLocalRequestVo kakaoLocalRequestVo) throws Exception {
+
+			kakaoLocalRequestVo.setKeyword(address);
+			KakaoLocalResponseJSON kakaoResponseJSON = storeService.callKakaoLocalAPI(kakaoLocalRequestVo);
+			// ShopInfo 리스트를 가져온다
+			List<KakaoLocalResponseJSON.ShopInfo> shopInfoList = kakaoResponseJSON.documents;
+			// logger.logResponseJson(kakaoResponseJSON);
+			//HttpTransactionLogger httpTransactionLogger = new HttpTransactionLogger();
+			//httpTransactionLogger.logResponseJson(kakaoResponseJSON);
+
+			// ShopInfo를 StoreRequestVo로 매핑
+			List<StoreRequestVo> storeRequestVoListAdd = shopInfoList.stream().map(KakaoLocalResponseJSON.ShopInfo::mapToStoreRequestVo)
+					.collect(Collectors.toList());
+
+	}
+
 	public void search(String[] categories, KakaoLocalRequestVo kakaoLocalRequestVo) throws Exception {
 		List<StoreRequestVo> storeRequestVoList = new ArrayList<StoreRequestVo>();
 
@@ -89,7 +105,6 @@ public class KakaoMapSearch {
 	}
 	
 	public HashMap<String, Object> restApiCrawller(List<StoreRequestVo> storeRequestVoList) throws Exception {
-
 
 
 		Crawller crawller = new Crawller();

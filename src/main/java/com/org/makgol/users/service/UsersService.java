@@ -5,14 +5,19 @@ import com.org.makgol.stores.vo.Category;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.users.dao.UserDao;
+import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.KakaoMapSearch;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.mail.MailSendUtil;
 import com.org.makgol.util.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,6 +33,7 @@ public class UsersService {
     private final RedisUtil redisUtil;
     private final KakaoMapSearch kakaoMapSearch;
     private final StoresDao storesDao;
+    private final UsersRepository usersRepository;
 
     public String userFindId(String userEmail){
         return userEmail;
@@ -58,9 +64,12 @@ public class UsersService {
     public boolean checkEmail(String email) {
         int authNumber= mailSendUtil.makeRandomNumber();
         String key = String.valueOf(authNumber);
-        mailSendUtil.sendMail(authNumber, email);
-
-        return redisUtil.setDataExpire(key, email, 60 * 3L);
+        if(mailSendUtil.sendMail(authNumber, email)){
+            System.out.println("return redisUtil.setDataExpire(key, email, 60 * 3L);");
+            return redisUtil.setDataExpire(key, email, 60 * 3L);
+        }
+        System.out.println("false");
+        return false;
 
     } //checkEmail_END
 
@@ -76,18 +85,25 @@ public class UsersService {
     //joinUser
     public Boolean joinUser(UsersRequestVo usersRequestVo) {
         //사용자 패스워드 암호화
-
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if(userDao.createDao(usersRequestVo)) {
+        FileUpload fileUpload = new FileUpload();
+        FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+
+        usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+        usersRequestVo.setPhoto(fileInfo.getPhotoName());
+
+
+
+        if(userDao.createUser(usersRequestVo)) {
             HashMap<String, Object> storeMap = new HashMap<String, Object>();
 
-            usersRequestVo = userDao.findXY(usersRequestVo);
+            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
 
             KakaoLocalRequestVo kakaoLocalRequestVo = new KakaoLocalRequestVo();
 
-            kakaoLocalRequestVo.setY(String.valueOf(usersRequestVo.getLatitude()));
-            kakaoLocalRequestVo.setX(String.valueOf(usersRequestVo.getLongitude()));
+            kakaoLocalRequestVo.setY(String.valueOf(usersResponseVo.getLatitude()));
+            kakaoLocalRequestVo.setX(String.valueOf(usersResponseVo.getLongitude()));
 
 
             //String[] foodCategories = Arrays.stream(Category.CategoryFood.values())
@@ -117,6 +133,7 @@ public class UsersService {
             System.out.println(storeRequestVoList.size());
 
             int i=0;
+            //확인하기
             for(StoreRequestVo storeRequestVo: storeRequestVoList) {
                 i++;
                 System.out.println("index"+ i +" --> : " +storeRequestVo.getPlace_url());
@@ -124,12 +141,12 @@ public class UsersService {
             }
 
             try {
-                storeMap = kakaoMapSearch.restApiCrawller(storeRequestVoList);
-
                 //업장 중복 체크
                 System.out.println("before storeRequestVoList --> : "+storeRequestVoList.size());
                 System.out.println(storesDao.checkStore(storeRequestVoList));
                 System.out.println("after storeRequestVoList --> : "+storeRequestVoList.size());
+
+                storeMap = kakaoMapSearch.restApiCrawller(storeRequestVoList);
 
                 storesDao.insertStore(storeMap);
             } catch(Exception e) {}
@@ -148,5 +165,12 @@ public class UsersService {
         }
 
         return loginedInUsersRequestVo;
+    }
+
+    public Boolean mailCheckDuplication(String email) {
+
+        Boolean result = email.equals(usersRepository.duplicationUserEmail(email));
+
+        return !result;
     }
 }

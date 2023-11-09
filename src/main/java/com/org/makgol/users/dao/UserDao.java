@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.org.makgol.users.repository.UsersRepository;
+import com.org.makgol.users.vo.UsersResponseVo;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -21,8 +23,9 @@ import lombok.RequiredArgsConstructor;
 public class UserDao {
 		
 	private final JdbcTemplate jdbcTemplate;
+	private final UsersRepository usersRepository;
 	
-	
+
 	//db insert 쿼리 전송
 	public boolean insertAuthNumber(int auth_number) {
 		boolean result = false;
@@ -32,7 +35,7 @@ public class UserDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	} // insertAuthNumber_END
 	
@@ -53,27 +56,10 @@ public class UserDao {
 	    }
 	}
 
-
-
-	public Boolean createDao(UsersRequestVo usersRequestVo) {
+	public Boolean createUser(UsersRequestVo usersRequestVo) {
 		Boolean result = false;
-		
-		String name = usersRequestVo.getName();
-		String email = usersRequestVo.getEmail();
-		String password = usersRequestVo.getPassword();
-		String phone = usersRequestVo.getPhone();
-		String photo = "C:\\images\\599e8a0b6a171389b7bc5383e9599175.jpg";
-		Double longitude = usersRequestVo.getLongitude();
-		Double latitude = usersRequestVo.getLatitude();
-		
-		
-		try {
-		String sql = "INSERT INTO users (name, email, password, phone, photo, date, longitude, latitude) VALUES (?, ?, ?, ?, ?, now(), ?, ?)";
-        result = (jdbcTemplate.update(sql, name, email, password, phone, photo, longitude, latitude) > 0);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
+		result = usersRepository.insertUser(usersRequestVo);
+
 		return result;
 	}
 
@@ -106,41 +92,42 @@ public class UserDao {
 	} // updatePassword_END
 	
 	// find x, y
-	public UsersRequestVo findXY(UsersRequestVo usersRequestVo) {
+	public UsersResponseVo findXY(UsersRequestVo usersRequestVo) {
 	    // 사용자 이메일 주소 가져오기
 	    String userEmail = usersRequestVo.getEmail();
 
 	    String sql = "SELECT * FROM users WHERE email = ?";
 
+		UsersResponseVo usersResponseVo = new UsersResponseVo();
+
 	    try {
 	        // queryForObject 메서드를 사용하여 사용자 정보를 조회합니다.
 	        // 사용자 정보는 UsersRequestVo 클래스의 객체로 반환됩니다.
 	        // 쿼리 결과가 없을 경우 DataAccessException이 발생할 수 있으므로 try-catch 블록으로 처리합니다.
-	        UsersRequestVo userFromDB = jdbcTemplate.queryForObject(sql, new Object[] { userEmail }, new UsersRequestVoRowMapper());
+			usersResponseVo = jdbcTemplate.queryForObject(sql, new Object[] { userEmail }, new UsersResponseVoRowMapper());
 
-	        // 데이터베이스에서 조회한 사용자 정보로 사용자 객체를 업데이트합니다.
-	        usersRequestVo = userFromDB;
+
 	    } catch (EmptyResultDataAccessException e) {
 	        // 사용자를 찾지 못한 경우 예외 처리할 수 있습니다.
 	        // 예를 들어, 로깅 또는 다른 작업을 수행할 수 있습니다.
 	    }
 
-	    return usersRequestVo;
+	    return usersResponseVo;
 	}
 
 	// RowMapper 클래스를 정의하여 ResultSet에서 데이터를 매핑합니다.
-	private static final class UsersRequestVoRowMapper implements RowMapper<UsersRequestVo> {
-	    public UsersRequestVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-	        UsersRequestVo usersRequestVo = new UsersRequestVo();
-	        usersRequestVo.setName(rs.getString("name"));
-	        usersRequestVo.setEmail(rs.getString("email"));
-	        usersRequestVo.setPassword(rs.getString("password"));
-	        usersRequestVo.setPhone(rs.getString("phone"));
-	        usersRequestVo.setLatitude(Double.parseDouble(rs.getString("latitude")));
-	        usersRequestVo.setLongitude(Double.parseDouble(rs.getString("longitude")));
+	private static final class UsersResponseVoRowMapper implements RowMapper<UsersResponseVo> {
+	    public UsersResponseVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			UsersResponseVo usersResponseVo = new UsersResponseVo();
+			usersResponseVo.setName(rs.getString("name"));
+			usersResponseVo.setEmail(rs.getString("email"));
+			usersResponseVo.setPassword(rs.getString("password"));
+			usersResponseVo.setPhone(rs.getString("phone"));
+			usersResponseVo.setLatitude(Double.parseDouble(rs.getString("latitude")));
+			usersResponseVo.setLongitude(Double.parseDouble(rs.getString("longitude")));
 	        // 필요한 다른 사용자 속성들을 추가로 매핑하실 수 있습니다.
 
-	        return usersRequestVo;
+	        return usersResponseVo;
 	    }
 	}
 

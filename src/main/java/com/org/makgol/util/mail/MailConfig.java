@@ -11,13 +11,15 @@ import java.util.Properties;
 @Configuration
 @RequiredArgsConstructor
 public class MailConfig {
-    Properties pt = new Properties();
+    //Properties pt = new Properties();
 
-    private final MailProperties mailProperties;
+    //private final MailProperties mailProperties;
 
     @Bean
-    public JavaMailSender javaMailService() {
+    public JavaMailSender javaMailSender() {
+
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+        /*
         javaMailSender.setHost(this.mailProperties.getHost());
         javaMailSender.setUsername(this.mailProperties.getAccount());
         javaMailSender.setPassword(this.mailProperties.getPassword());
@@ -32,7 +34,7 @@ public class MailConfig {
 
         javaMailSender.setJavaMailProperties(pt);
         javaMailSender.setDefaultEncoding("UTF-8");
-
+        */
         return javaMailSender;
     }
 }
