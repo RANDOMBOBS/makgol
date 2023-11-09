@@ -130,6 +130,7 @@ label {
 	</form>
 
 	<div class="boardCommentList"></div>
+
 	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>
 
 
@@ -137,7 +138,6 @@ label {
 	<script>
 		let b_id = jQ('input[type=checkbox]').attr("data-b_id")
 		let user_id = jQ('input[type=checkbox]').attr("data-user_id")
-		console.log("게시글번호"+b_id+"유저"+user_id)
 		let likeData = { b_id : b_id, user_id : user_id }
 		if (user_id) {
 			userLikeStatus(b_id, user_id);

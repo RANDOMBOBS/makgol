@@ -63,8 +63,7 @@
 
 		if (closestCategory) {
 			var menu = closestCategory.textContent;
-			console.log(menu);
-			
+
 			resultMenu(menu);
 		}
 	}

@@ -140,14 +140,10 @@ public class UsersService {
     }// joinUser_END
 
     public UsersRequestVo loginConfirm(UsersRequestVo usersRequestVo) {
-        UsersRequestVo searchMem = userDao.selectUser(usersRequestVo);
-        UsersRequestVo loginedInUsersRequestVo = searchMem;
-        if (searchMem.getGrade() != null && "블랙리스트".equals(searchMem.getGrade())) {
-            // 블랙리스트 회원이라면 로그인 실패
-            return null;
-        }
+        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(usersRequestVo);
 
-        if (!BCrypt.checkpw(usersRequestVo.getPassword(), searchMem.getPassword())) {
+
+        if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
             loginedInUsersRequestVo = null;
         }
 

@@ -75,7 +75,6 @@
 
 		getAllcategory();
 	</script>
-	</script>
 </body>
 </html>
 

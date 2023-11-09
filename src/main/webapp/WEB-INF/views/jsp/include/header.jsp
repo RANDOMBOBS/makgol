@@ -5,6 +5,7 @@
 
 <%
 UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
+UsersRequestVo blackList = (UsersRequestVo) session.getAttribute("blackList");
 %>
 
 
@@ -118,6 +119,22 @@ UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("lo
     <script>
     $.noConflict();
     var jQ = jQuery;
+
+    let black = "${blackList}";
+   if(black) {
+    alert("블랙리스트입니다.")
+
+    jQ.ajax({
+    url : "/user/logout",
+    type : "GET",
+    success : function(rdata) {
+              console.log("세션 초기화 성공")
+	           },
+	error : function(error) {
+			console.log("세션 초기화 실패")
+			}
+			 });
+   }
 
     jQ(".show_category").on("click", function () {
         jQ(this).next().toggleClass("on");

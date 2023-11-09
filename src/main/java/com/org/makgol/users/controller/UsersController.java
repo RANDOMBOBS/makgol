@@ -99,23 +99,21 @@ public class UsersController {
             // 로그인 실패 시 'login_ng' 화면을 표시
             nextPage = "jsp/user/user_login_ng";
         } else {
-            // 로그인 성공 시 사용자 정보를 세션에 저장하고 세션
-            session.setAttribute("loginedUsersRequestVo", loginedUsersRequestVo);
-
-            // 세션에 저장된 "loginedUsersRequestVo" 객체를 확인
-            UsersRequestVo retrievedUser = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
-            if (retrievedUser != null) {
-            } else {
-                System.out.println("로그인된 사용자 정보가 세션에 저장되어 있지 않습니다.");
+            if (!(loginedUsersRequestVo.getGrade() != null && "블랙리스트".equals(loginedUsersRequestVo.getGrade()))) {
+                // 로그인 성공 시 사용자 정보를 세션에 저장하고 세션
+                session.setAttribute("loginedUsersRequestVo", loginedUsersRequestVo);
+            } else{
+                session.setAttribute("blackList", loginedUsersRequestVo);
             }
         }
-
         return nextPage;
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
+        session.removeAttribute("blackList");
         session.invalidate();
+
         return "home";
     }
 
