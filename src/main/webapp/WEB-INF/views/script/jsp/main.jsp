@@ -85,4 +85,37 @@
 		}, 4500); 	}
 
 	btn.addEventListener("click", handleButtonClick);
+
+	   function todayMenuList() {
+        		jQ.ajax({
+        			url : "/main/todayMenuList",
+        			type : "GET",
+        			dataType : "html",
+        			success : function(rdata) {
+        				jQ(".todaymenu_list_div").html(rdata);
+        				slickTodaySlider()
+        			},
+        			error : function(error) {
+        				alert('today 오류');
+        			}
+        		});
+        	}
+
+	function topMenuList() {
+    		jQ.ajax({
+    			url : "/main/topMenuList",
+    			type : "GET",
+    			dataType : "html",
+    			success : function(rdata) {
+    				jQ(".topmenu_list_div").html(rdata);
+    				slickTopSlider()
+    			},
+    			error : function(error) {
+    				alert('TOP 오류');
+    			}
+    		});
+    	}
+
+
+
 </script>

@@ -30,8 +30,6 @@ public class CategoryListController {
 		return nextPage;
 	}
 
-	
-
 	@RequestMapping(value = "/categoryMain", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categoryMain() {
 		return "category/category";

@@ -18,9 +18,6 @@ public class CategoryListDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	
-
-
 	public List<CategoryListVo> selectCategory(String where) {
 		String sql = "SELECT menu FROM category_list " + where;
 		List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();

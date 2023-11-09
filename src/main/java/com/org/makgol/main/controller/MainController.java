@@ -25,6 +25,7 @@ public class MainController {
 	public String showList(Model model) {
 		return "main/main";
 	}
+
 	
 	/**
 	 * 음식점의 모든 카테고리 가져오기
@@ -51,4 +52,25 @@ public class MainController {
 		return "jsp/main/roulette_result";
 		
 	}
+
+	// 오늘의 추천 메뉴
+	@RequestMapping(value = "/todayMenuList", method = { RequestMethod.GET, RequestMethod.POST })
+	public String todayMenuList(Model model) {
+		String nextPage = "jsp/main/todayMenu";
+		List<CategoryListVo> categoryVo = mainService.todayMenuList();
+		model.addAttribute("categoryVo",categoryVo);
+		return nextPage;
+	}
+
+	// Top5 메뉴 
+	@RequestMapping(value = "/topMenuList", method = { RequestMethod.GET, RequestMethod.POST })
+	public String topMenuList(Model model) {
+		String nextPage = "jsp/main/topMenu";
+		List<CategoryListVo> categoryVo = mainService.topMenuList();
+		model.addAttribute("categoryVo", categoryVo);
+		return nextPage;
+	}
+
+
 }
+

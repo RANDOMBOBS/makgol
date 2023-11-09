@@ -6,8 +6,8 @@ import lombok.Data;
 public class CategoryListVo {
 
     int id;
+    int store_id;
+    String menu_name;
     String category;
-    String menu;
-
 
 }
