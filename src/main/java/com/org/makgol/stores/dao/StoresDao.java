@@ -77,10 +77,10 @@ public class StoresDao {
                     storeRequestVo.getSite(), storeRequestVo.getMenu_update(), storeRequestVo.getPlace_url(),
                     storeRequestVo.getUpdate_date());
 
-            System.out.println("storeRequestVo.getPlace_url() --> : " + storeRequestVo.getPlace_url());
+            System.out.println("insert storeInfo --> : " + storeRequestVo.getPlace_url());
 
 
-            store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url());
+            try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url()); } catch (Exception e) {}
 
             if (!storeRequestVo.getMenuName().equals("empty")) {
                 String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name) VALUES (?, ?, ?)";

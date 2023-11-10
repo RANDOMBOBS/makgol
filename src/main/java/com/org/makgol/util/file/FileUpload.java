@@ -115,7 +115,7 @@ public class FileUpload {
                 int startIndex = path.indexOf("resources/static/image/");
                 path = path.substring(startIndex);
 
-                fileInfo.setPhotoPath(path);
+                fileInfo.setPhotoPath("/fileUpload/"+uniqueName + fileExtension);
                 fileInfo.setPhotoName(fileRealName);
 
             } catch (IllegalStateException e) {
