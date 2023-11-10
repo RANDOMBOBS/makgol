@@ -7,11 +7,7 @@
 
 
 <script>
-	$.noConflict();
-	var jQ = jQuery;
-
 	function menuList() {
-		console.log("${pageContext.request.contextPath}")
 		jQ.ajax({
 			url : "/category/categoryList", // controller에 해당되는 경로 이동
 			type : "GET",

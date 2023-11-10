@@ -40,7 +40,7 @@ public interface BoardSuggestionRepository {
 
     int deleteBoardLike(BoardVo boardVo);
 
-    int selectCountLike(int b_id);
+    int selectLikeCount(int b_id);
 
     void updateBoardSympathy(Map<String, Integer> map);
 }

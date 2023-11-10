@@ -12,12 +12,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Valid
 @ToString
 public class UsersRequestVo {
+	// ID
+	int id;
+
 	// 이름
 	@NotBlank(message = "이름(필수)")
 	@NotEmpty
@@ -39,7 +44,27 @@ public class UsersRequestVo {
 	@NotEmpty
 	String phone;
 	
+	//photo file
+	MultipartFile photoFile;
+
+	//파일 이름
+	String photo;
+
 	// 프로필사진경로
-	MultipartFile photo;
-	
+	String photo_path;
+
+	//경도
+    double longitude;
+    //위도
+    double latitude;
+
+	@NotBlank(message = "회원등급(필수)")
+	@NotEmpty
+	String grade;
+
+	String date;
+
+	@NotBlank(message = "주소")
+	@NotEmpty
+	String address;
 }

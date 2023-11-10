@@ -1,4 +1,3 @@
-<%@page import="com.org.makgol.users.vo.UserVo"%>
 <%@page import="io.opentelemetry.exporter.logging.SystemOutLogExporter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -17,10 +16,12 @@ request.setCharacterEncoding("utf-8");
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
 	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet"
+    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
+
 <style>
 ul {
 	text-align: left;
@@ -41,9 +42,8 @@ label {
 </style>
 </head>
 <body>
-	<%
-	UserVo loginedUsersRequestVo = (UserVo) session.getAttribute("loginedUsersRequestVo");
-	%>
+	<jsp:include page="../../include/header.jsp"></jsp:include>
+
 
 	<table>
 		<tr>
@@ -69,7 +69,7 @@ label {
 
 		<c:if test="${not empty boardVo.attachment}">
 			<tr>
-				<img src="<c:url value="/boardUploadImg/${boardVo.attachment}"/>">
+				<img src="<c:url value="file:///C:/makgol/board/upload//${boardVo.attachment}"/>">
 			</tr>
 		</c:if>
 	</table>
@@ -122,7 +122,7 @@ label {
 				<input type="text" name="nickname" placeholder="로그인 후 댓글 작성이 가능합니다."
 					disabled />
 				<br />
-				<a href="/makgol/user/login">로그인하러가기</a>
+				<a href="/user/login">로그인하러가기</a>
 				<br />
 
 			</c:otherwise>
@@ -130,14 +130,14 @@ label {
 	</form>
 
 	<div class="boardCommentList"></div>
-<jsp:include page="script/jsp/suggestion.jsp"></jsp:include>
+
+	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>
 
 
 
 	<script>
 		let b_id = jQ('input[type=checkbox]').attr("data-b_id")
 		let user_id = jQ('input[type=checkbox]').attr("data-user_id")
-		console.log("게시글번호"+b_id+"유저"+user_id)
 		let likeData = { b_id : b_id, user_id : user_id }
 		if (user_id) {
 			userLikeStatus(b_id, user_id);

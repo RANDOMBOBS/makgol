@@ -3,11 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
-	$.noConflict();
-	var jQ = jQuery;
+
 
 	function allBoardList() {
-	alert("함수들어옴")
 		jQuery.ajax({
 			url : "/board/suggestion/showAllList",
 			type : "GET",
@@ -160,7 +158,6 @@
 				searchOption : searchOption,
 				searchWord : searchWord
 			}
-			console.log(data); //성공
 			jQ.ajax({
 				url : "/board/suggestion/search",
 				type : "POST",

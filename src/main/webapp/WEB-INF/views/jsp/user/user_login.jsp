@@ -1,61 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>로그인</title>
-    
-    <style>
-    /* Style the form container */
-    h1 {
-        text-align: center;
-    }
-
-    form {
-        max-width: 300px;
-        margin: 0 auto;
-        padding: 20px;
-        background: #f5f5f5;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Style form labels and input fields */
-    label {
-        display: block;
-        margin-top: 10px;
-        font-weight: bold;
-        margin-right : 10px;
-        width: 100%;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-        width: 90%;
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    /* Style the submit button */
-    input[type="submit"] {
-        display: block;
-        width: 98%;
-        padding: 10px;
-        background: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 15px;
-    }
-</style>
-    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet"
+    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
+<link href="<c:url value='/resources/static/css/login.css' />" rel="stylesheet" type="text/css" />
 </head>
 <body>
+	<jsp:include page="../include/header.jsp"></jsp:include>
+
     <h1>LOGIN</h1>
-    <form method="post" action="/makgol/user/loginConfirm">
+    <form method="post" action="/user/loginConfirm">
         <label for="email">이메일:</label>
         <input type="text" id="email" name="email" required><br><br>
         

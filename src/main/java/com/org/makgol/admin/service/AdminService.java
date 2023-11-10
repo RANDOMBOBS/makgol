@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.org.makgol.admin.dao.AdminDao;
-import com.org.makgol.users.vo.UserVo;
+import com.org.makgol.users.vo.UsersRequestVo;
 
 @Service
 
 public class AdminService {
 	@Autowired
 	AdminDao adminDao;
-	
-	public List<UserVo> getUserList() {
+
+	public List<UsersRequestVo> getUserList() {
 		return adminDao.selectAllUserList();
 	}
-	
-	public int modGrade(UserVo userVo) {
+
+	public int modGrade(UsersRequestVo userVo) {
 		return adminDao.UpdateGrade(userVo);
 	}
 }

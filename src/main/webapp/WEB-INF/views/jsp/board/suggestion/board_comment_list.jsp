@@ -15,7 +15,7 @@
 	<div class="one_comment">
 		<ul>
 			<li><img
-				src="<c:url value="/userUploadImg/${item.getPhoto()}"/>"></li>
+				src="<c:url value="file:///C:/makgol/user/upload//${item.getPhoto()}"/>"></li>
 			<li>닉네임은 ${item.getNickname()}</li>
 			<li>내용은 ${item.getContent()}</li>
 			<li>작성일은 ${item.getDate()}</li>
@@ -38,4 +38,3 @@
 		</div>
 	</div>
 </c:forEach>
-<jsp:include page="script/jsp/suggestion.jsp"></jsp:include>

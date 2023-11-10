@@ -23,7 +23,7 @@
 				<td>${item.name}</td>
 				<td>${item.email}</td>
 				<td>${item.phone}</td>
-				<td><img src="<c:url value="/userUploadImg/${item.photo}"/>"></td>
+				<td><img src="<c:url value="http://localhost:8090/${item.photo_path}"/>"></td>
 				<td>${item.grade}</td>
 			</tr>
 		</c:forEach>
@@ -31,4 +31,4 @@
 </table>
 
 
-<jsp:include page="script/jsp/user_management.jsp"></jsp:include>
+<jsp:include page="../../script/jsp/user_management.jsp"></jsp:include>

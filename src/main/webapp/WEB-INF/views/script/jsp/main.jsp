@@ -6,8 +6,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-$.noConflict();
-var jQ = jQuery;
+
 
 	function resultMenu(menu) {
 		jQ.ajax({
@@ -64,8 +63,7 @@ var jQ = jQuery;
 
 		if (closestCategory) {
 			var menu = closestCategory.textContent;
-			console.log(menu);
-			
+
 			resultMenu(menu);
 		}
 	}

@@ -39,7 +39,8 @@ dependencies {
 
 
     // JavaMail API를 통해 이메일을 보내거나 받기 위한 라이브러리
-    implementation 'javax.mail:mail:1.4.7'
+    //implementation 'javax.mail:mail:1.4.7'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     // Bean 유효성 검사를 위한 자바 API, 입력 데이터 유효성 검사 등에 사용
     implementation 'javax.validation:validation-api:2.0.1.Final'
@@ -54,6 +55,16 @@ dependencies {
     implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.60'
 
+    //BCrypt 사용하기위한 종속성
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.jetbrains:annotations:24.0.0'
+
+    //file upload
+    implementation 'commons-fileupload:commons-fileupload:1.4'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'

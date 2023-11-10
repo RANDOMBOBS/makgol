@@ -1,26 +1,28 @@
 package com.org.makgol.admin.dao;
 
-import com.org.makgol.admin.repository.AdminRepository;
-import com.org.makgol.users.vo.UserVo;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
+import java.util.ArrayList;
 import java.util.List;
+
+import com.org.makgol.admin.repository.AdminRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import com.org.makgol.users.vo.UsersRequestVo;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
 public class AdminDao {
 
-
     private final AdminRepository adminRepository;
 
-    public List<UserVo> selectAllUserList() {
-        List<UserVo> userVos = null;
+    public List<UsersRequestVo> selectAllUserList() {
+        List<UsersRequestVo> userVos = new ArrayList<UsersRequestVo>();
         userVos = adminRepository.selectAllUserList();
         return userVos;
     }
 
-    public int UpdateGrade(UserVo userVo) {
+    public int UpdateGrade(UsersRequestVo userVo) {
         int result = -1;
         result = adminRepository.UpdateGrade(userVo);
         return result;

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.org.makgol.users.vo.UsersRequestVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,6 @@ import com.org.makgol.boards.UploadFileService;
 import com.org.makgol.boards.service.BoardSuggestionService;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentVo;
-import com.org.makgol.users.vo.UserVo;
 
 @Controller
 @RequestMapping("/board/suggestion")
@@ -44,7 +44,6 @@ public class BoardSuggestionController {
 	 */
 	@GetMapping({ "/", "" })
 	public String showmain() {
-		System.out.println("컨트롤러 들어옴");
 		String nextPage = "jsp/board/suggestion/suggestion";
 		return nextPage;
 	}
@@ -70,7 +69,7 @@ public class BoardSuggestionController {
 	@GetMapping("/create")
 	public String create(Model model, HttpSession session) {
 		String nextPage = "jsp/board/suggestion/create_board_form";
-		UserVo loginedUsersRequestVo = (UserVo) session.getAttribute("loginedUsersRequestVo");
+		UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
 		String userName = loginedUsersRequestVo.getName();
 		int userId = loginedUsersRequestVo.getId();
 		if (loginedUsersRequestVo != null) {
@@ -151,7 +150,7 @@ public class BoardSuggestionController {
 	public String commentList(@PathVariable("board_id") int board_id, Model model) {
 		List<CommentVo> commentVos = boardService.getCommentList(board_id);
 		model.addAttribute("commentVos", commentVos);
-		return "board/suggestion/board_comment_list";
+		return "jsp/board/suggestion/board_comment_list";
 	}
 
 	/**

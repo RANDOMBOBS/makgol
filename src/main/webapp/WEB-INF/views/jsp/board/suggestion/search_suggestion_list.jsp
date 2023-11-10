@@ -10,7 +10,7 @@
 
 
 <c:choose>
-<c:when test="${boardVos} != null">
+<c:when test="${not empty boardVos}">
 <h3>검색하신 글 목록입니다.</h3>
 <table>
 	<thead>
@@ -24,7 +24,6 @@
 		</tr>
 	</thead>
 	<tbody>
-
 		<c:forEach var="item" items="${boardVos}" varStatus="status">
 			<tr>
 				<td>${fn:length(boardVos)-(status.index)}</td>
@@ -37,18 +36,17 @@
 				<td>${item.hit}</td>
 			</tr>
 		</c:forEach>
-
-
 	</tbody>
 </table>
 </c:when>
 
+
 <c:otherwise>
-<h3>검색된 정보가 없습니다.</h3>
+<h3>검색된 정보가 없습니다.  ${boardVos}</h3>
 </c:otherwise>
 </c:choose>
 <a href="#javascript" onclick="allBoardList()">전체목록보기</a><br>
 
 
 
-<jsp:include page="script/jsp/suggestion.jsp"></jsp:include>
+	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>
