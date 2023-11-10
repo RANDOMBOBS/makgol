@@ -9,6 +9,7 @@ import java.util.Map;
 
 @Mapper
 public interface BoardSuggestionRepository {
+
     List<BoardVo> selectAllSuggestionBoard();
 
     int insertSuggestionBoard(BoardVo boardVo);

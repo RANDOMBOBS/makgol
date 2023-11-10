@@ -7,14 +7,15 @@ import java.util.List;
 
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersResponseVo;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
 import com.org.makgol.users.vo.UsersRequestVo;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -147,9 +148,10 @@ public class UserDao {
 
 	public int updateUserInfo(UsersRequestVo usersRequestVo){
 		String sql = "UPDATE users SET password=?, phone=? WHERE id=?";
+		usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 		int result = -1;
 		try {
-			result = jdbcTemplate.update(sql, usersRequestVo.getPassword(), usersRequestVo.getPhone(), usersRequestVo.getId());
+			result = jdbcTemplate.update(sql,usersRequestVo.getPassword(), usersRequestVo.getPhone(), usersRequestVo.getId());
 		} catch (Exception e){
 			e.printStackTrace();
 		}
