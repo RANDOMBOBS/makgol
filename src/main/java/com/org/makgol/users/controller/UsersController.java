@@ -86,7 +86,7 @@ public class UsersController {
 
         // 사용자 로그인 정보를 서비스를 통해 확인
         UsersRequestVo loginedUsersRequestVo = userService.loginConfirm(usersRequestVo);
-
+        System.out.println(loginedUsersRequestVo);
         if (loginedUsersRequestVo == null) {
             // 로그인 실패 시 'login_ng' 화면을 표시
             nextPage = "jsp/user/user_login_ng";
@@ -109,16 +109,22 @@ public class UsersController {
         return "home";
     }
 
-    @GetMapping("modify_user")
+    @GetMapping("/myPage")
+    public String myPage(){
+        return "jsp/user/my_page";
+    }
+
+    @GetMapping("/modifyUser")
     public String modify_user(){
         return "jsp/user/modify_user";
     }
 
     @PostMapping("/modifyUserConfirm")
     public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo){
-        System.out.println(usersRequestVo.toString());
         int result = userService.modifyUserInfo(usersRequestVo);
-        System.out.println("결과는?"+result);
-        return "home";
+        return "jsp/user/my_page";
     }
+
+
+
 }
