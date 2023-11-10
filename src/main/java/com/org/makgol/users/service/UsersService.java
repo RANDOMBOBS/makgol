@@ -34,6 +34,7 @@ public class UsersService {
     private final KakaoMapSearch kakaoMapSearch;
     private final StoresDao storesDao;
     private final UsersRepository usersRepository;
+    private final FileUpload fileUpload;
 
     public String userFindId(String userEmail){
         return userEmail;
@@ -85,7 +86,7 @@ public class UsersService {
         //사용자 패스워드 암호화
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        FileUpload fileUpload = new FileUpload();
+
         FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
 
         usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
