@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MailSendUtil {
 
+	private final MailProperties mailProperties;
 	private final JavaMailSender mailSender;
 	// 난수 발생(여러분들 맘대러)
 
@@ -27,8 +28,7 @@ public class MailSendUtil {
 
 	public Boolean sendMail(int randomNumber, String eMail) {
 		Boolean result = false;
-		System.out.println("result --> : "+ result);
-		String setFrom = "tjsgus223@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력
+		String setFrom = this.mailProperties.getAccount(); // email-config에 설정한 자신의 이메일 주소를 입력
 		String toMail = eMail;
 		String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목
 		String content =
@@ -40,7 +40,7 @@ public class MailSendUtil {
 		try {
 
 			result = mailSend(setFrom, toMail, title, content);
-			System.out.println("result --> : "+ result);
+
 			return result;
 		} catch (Exception e) {
 			return result;
@@ -53,21 +53,15 @@ public class MailSendUtil {
 	public Boolean mailSend(String setFrom, String toMail, String title, String content) {
 
 		Boolean result = false;
-		System.out.println("result2 --> : "+ result);
 		MimeMessage message = mailSender.createMimeMessage();
-		System.out.println("result3 --> : "+ result);
+
 		try {
-			System.out.println("result4 --> : "+ result);
 			// true 매개값을 전달하면 multipart 형식의 메세지 전달이 가능.문자 인코딩 설정도 가능하다.
 			message.setFrom(setFrom);
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(toMail));
 			message.setSubject(title);
-			System.out.println("result5 --> : "+ result);
 			message.setText(content, "UTF-8", "html");
-			System.out.println("result6 --> : "+ result);
 			mailSender.send(message);
-			System.out.println("result7 --> : "+ result);
-			System.out.println("여기는 mailSend");
 			result = true;
 
 			return result;

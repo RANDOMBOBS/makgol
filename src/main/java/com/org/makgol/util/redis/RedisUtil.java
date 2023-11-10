@@ -2,6 +2,7 @@ package com.org.makgol.util.redis;
 
 import java.time.Duration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -9,10 +10,11 @@ import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class RedisUtil {
  
-	@Autowired
-	private RedisTemplate<String, String> redisTemplate;
+
+	private final RedisTemplate<String, String> redisTemplate;
 	
 
 	public String getData(String key) {

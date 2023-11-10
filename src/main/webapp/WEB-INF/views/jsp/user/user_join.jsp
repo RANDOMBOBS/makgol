@@ -19,6 +19,7 @@
 <script>
 jQuery(document).ready(function() {
 
+    //이메일 중복확인
     jQuery('#mail-Check-duplication').click(function() {
 
 		const email = jQuery('#userEmail1').val() + jQuery('#userEmail2').val(); // 이메일 주소값 얻어오기!
@@ -31,7 +32,11 @@ jQuery(document).ready(function() {
 			success : function (data, status) {
 				if(status === "success" ){
 					if(data === true){
-						alert('이메일 중복 되지 않습니다.');
+						alert('사용가능한 이메일 입니다');
+
+                        jQuery('#mail-Check-Btn').attr('disabled',false);
+                        jQuery('#mail-Check-text').attr('disabled',false);
+                        jQuery('#mail-Check-Btn2').attr('disabled',false);
 
 					} else if(data === false)  {
 						alert('이미 가입한 이메일 입니다.');
@@ -43,15 +48,15 @@ jQuery(document).ready(function() {
 		}); // end ajax
 	}); // end send eamil
 
+    // 이메일 인증번호 전송
 	jQuery('#mail-Check-Btn').click(function() {
-
+        alert('인증번호가 전송되었습니다.')
 		const email = jQuery('#userEmail1').val() + jQuery('#userEmail2').val(); // 이메일 주소값 얻어오기!
 		const auth_number = jQuery('.mail-check-input') // 인증번호 입력하는곳
 
 		var authNumber = {
 			email : email,
 		};
-
 
 		jQuery.ajax({
 			type : 'POST',
@@ -62,8 +67,7 @@ jQuery(document).ready(function() {
 			success : function (data, status) {
 				if(status === "success" ){
 					if(data === true){
-						alert('인증번호가 전송되었습니다.')
-						checkInput.attr('disabled',false);
+
 					} else if(data === false)  {
 						alert('이메일을 다시 확인해 주세요.')
 					}
@@ -94,13 +98,16 @@ jQuery(document).ready(function() {
 			contentType: "application/json",
 			dataType: "json",
 			success : function (data, status) {
+			    // 서버로부터 응답을 성공적으로 받았습니다.
 				if (status === "success") {
-		            // 서버로부터 응답을 성공적으로 받았습니다.
+		            // 인증 성공
 		            if (data === true) {
-		                // 인증 성공
 		                alert("인증성공");
+		                jQuery('#userEmail1').attr('disabled',true);
+                        jQuery('#userEmail2').attr('disabled',true);
 		    			jQuery('#mail-Check-Btn').attr('disabled',true);
-
+		    			jQuery('#mail-Check-text').attr('disabled',true);
+		    			jQuery('#mail-Check-Btn2').attr('disabled',true);
 
 		            } else if(data === false){
 		                // 인증 실패
@@ -118,15 +125,69 @@ jQuery(document).ready(function() {
 	// 회원가입 버튼
 	 jQuery("#joinButton").click(function () {
 
+        //이름관련 정규식
+	    let reg_name1 = /^[가-힣]+$/; // 한글만
+        let reg_name2 = /^[a-zA-Z]+$/; // 영문만
+        let reg_name3 = /^[a-z]+$/; // 영문 소문자만
+        let reg_name4 = /^[A-Z]+$/; // 영문 대문자만
+        let reg_name5 = /^[가-힣a-zA-Z]+$/; // 한글 + 영문만
+
+        // 아이디관련 정규식
+        let reg_id1 = /^[a-z0-9_-]{4,20}$/; // 소문자 + 숫자 + 언더바/하이픈 허용 4~20자리
+        let reg_id2 = /^[A-Za-z]{1}[A-Za-z0-9_-]{3,19}$/ // 반드시 영문으로 시작 숫자+언더바/하이픈 허용 4~2
+
+        // 비밀번호 관련 정규식
+        let reg_pw1 = /^[a-z0-9_-]{6,18}$/; // 단순 6~18자리
+        let reg_pw2 = /(?=.*[a-zA-ZS])(?=.*?[#?!@$%^&*-]).{6,24}/; // 문자와 특수문자 조합의 6~24 자리
+        let reg_pw3 = /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/; // 문자, 숫자 1개이상 포함, 8자리 이상
+
+        // 이메일 관련 정규식
+        let reg_email =/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+
+        // 전화번호 관련 정규식
+        let reg_num = /^[0-9]{8,13}$/; // 전화번호 숫자만
+        let reg_mobile = /^\d{3}-\d{3,4}-\d{4}$/; // 휴대폰 번호
+        let reg_tel = /^\d{2,3}-\d{3,4}-\d{4}$/; // 일반 전화 번호
+
+        // 주민등록번호 정규식
+        let reg_jumin = /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/;
+
+        // URL 관련 정규식
+        let reg_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/; // URL 검사식
+
         const formData = new FormData();
         const email 	= jQuery("#userEmail1").val()+jQuery("#userEmail2").val();
         const name		= jQuery("#name").val();
-        const password 	= jQuery("#password").val();
         const phone 	= jQuery("#phone").val();
         const photo 	= jQuery("#photo")[0].files[0];
         const address   = jQuery("#sample5_address").val();
-        const longitude = jQuery("#longitude").val();
         const latitude  = jQuery("#latitude").val();
+        const password 	= jQuery("#password").val();
+        const longitude = jQuery("#longitude").val();
+
+        const passwordCheck = jQuery('#passwordCheck').val();
+
+        if (!reg_name1.test(name)) {
+            jQuery('#name').focus();
+            return;
+
+        }  else if (!reg_pw2.test(password)) {
+            jQuery('#password').focus();
+            return;
+
+        } else if(password !== passwordCheck){
+            jQuery('#passwordCheck').focus();
+            return;
+
+        } else if (!reg_num.test(phone)) {
+            jQuery('#phone').focus();
+            return;
+
+        }
+
+
+
+
 
         formData.append("name",  	 name);
         formData.append("email",	 email);
@@ -146,8 +207,11 @@ jQuery(document).ready(function() {
             success		:
             	function (data, status) {
                 if (status === "success") {
+                    // 회원가입 성공
                     if(data === true){
                         alert(data);
+                        window.location.href = "http://localhost:8090";
+                    // 실패
                     } else {
                         alert(data);
                     }
@@ -217,18 +281,18 @@ jQuery(document).ready(function() {
     <button type="button" id="mail-Check-duplication">중복확인</button>
     <div>
     <div class="input-group-addon">
-        <button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
+        <button type="button" class="btn btn-primary" id="mail-Check-Btn" disabled>본인인증</button>
     </div>
     <div class="mail-check-box">
-        <input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" id="mail-Check-text">
+        <input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" id="mail-Check-text" disabled>
         <div class="input-group-addon">
-            <button type="button" class="btn btn-primary" id="mail-Check-Btn2">인증확인</button>
+            <button type="button" class="btn btn-primary" id="mail-Check-Btn2" disabled>인증확인</button>
         </div>
         <input placeholder="이름" id="name" name="name"><br />
         <input type="password" placeholder="비밀번호" id="password" name="password"><br />
         <input type="password" placeholder="비밀번호 확인" id="passwordCheck" name="password">
         <button type="button" id="passwordCheckBtn" name="passwordCheckBtn">비밀번호 확인</button><br />
-        <input placeholder="핸드폰" id="phone" name="phone"><br />
+        <input placeholder="ex) 01012345678" id="phone" name="phone"><br />
         <input type="text" id="sample5_address" placeholder="주소">
         <input type="hidden" id="longitude" >
         <input type="hidden" id="latitude" >

@@ -65,10 +65,8 @@ public class UsersService {
         int authNumber= mailSendUtil.makeRandomNumber();
         String key = String.valueOf(authNumber);
         if(mailSendUtil.sendMail(authNumber, email)){
-            System.out.println("return redisUtil.setDataExpire(key, email, 60 * 3L);");
             return redisUtil.setDataExpire(key, email, 60 * 3L);
         }
-        System.out.println("false");
         return false;
 
     } //checkEmail_END
