@@ -119,7 +119,6 @@ public class FileUpload {
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
 
-                System.out.println("filePathMatcher --> " + filePathMatcher);
                 fileInfo.setPhotoPath(filePathMatcher+uniqueName+fileExtension);
                 fileInfo.setPhotoName(fileRealName);
 
