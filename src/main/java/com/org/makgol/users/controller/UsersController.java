@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -115,6 +116,7 @@ public class UsersController {
     }
 
     @PostMapping("/modifyUserConfirm")
+    
     public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo){
         System.out.println(usersRequestVo.toString());
         int result = userService.modifyUserInfo(usersRequestVo);

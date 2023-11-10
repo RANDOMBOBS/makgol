@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
+import net.bytebuddy.implementation.bind.annotation.Empty;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -45,7 +46,7 @@ public class UsersRequestVo {
 	String phone;
 	
 	//photo file
-	MultipartFile photoFile;
+	MultipartFile photoFile = null;
 
 	//파일 이름
 	String photo;
