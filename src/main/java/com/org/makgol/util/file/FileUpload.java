@@ -62,12 +62,12 @@ public class FileUpload {
         return fileInfo;
     }
 
-    public FileInfo fileUpload(MultipartFile fileList) {
+    public FileInfo fileUpload(MultipartFile file) {
         FileInfo fileInfo = new FileInfo();
         List<FileInfo> fileInfoList = new ArrayList<>();
 
-            String fileRealName = fileList.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
-            long size = fileList.getSize(); //파일 사이즈
+            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
+            long size = file.getSize(); //파일 사이즈
 
             System.out.println("파일명 : "  + fileRealName);
             System.out.println("용량크기(byte) : " + size);
@@ -104,7 +104,7 @@ public class FileUpload {
             File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
 
             try {
-                fileList.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
                 String path = uploadFolder+"\\"+uniqueName + fileExtension;
                 path = path.replace("\\","/");
                 int startIndex = path.indexOf("resources/static/image/");
