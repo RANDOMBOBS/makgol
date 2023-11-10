@@ -5,22 +5,31 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
-<title>막내야 골라봐 | 메인 (MAIN)</title>
 
 <link href="<c:url value='/resources/static/css/main.css' />" rel="stylesheet"
 	type="text/css" />
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet"
 	type="text/css" />
+<link href="<c:url value='/resources/static/css/todaymenu.css' />" rel="stylesheet"
+    type="text/css" />
+<link href="<c:url value='/resources/static/css/topmenu.css' />" rel="stylesheet"
+    type="text/css" />
+    <link href="<c:url value='/resources/static/css/slick.css' />" rel="stylesheet"
+        type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+	integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<title>막내야 골라봐 | 메인 (MAIN)</title>
+
+
+
 
 </head>
 <body>
@@ -35,17 +44,46 @@
 			</div>
 		</article>
 
-		<div id="todaymenu">
-			<h1>오늘의 메뉴</h1>
-		</div>
+		<div id="article2">
+        			<div class="today_menu">
+        				<div class="todaymenu_main_div">
+        					<ul class="todaymenu_main_ul">
+        						<li class="today">오늘의메뉴</li>
+        						<li><button class="todayBtn" type="button"
+        								onclick="korToday()">한식</button></li>
+        						<li><button class="todayBtn" type="button"
+        								onclick="westToday()">양식</button></li>
+        						<li><button class="todayBtn" type="button"
+        								onclick="chiToday()">중식</button></li>
+        						<li><button class="todayBtn" type="button"
+        								onclick="snackToday()">분식</button></li>
+        						<li><button class="todayBtn" type="button"
+        								onclick="jpnToday()">일식</button></li>
+        						<li><button class="todayBtn" type="button"
+        								onclick="cafeToday()">카페</button></li>
+        					</ul>
+        				</div>
+        				<div class="todaymenu_list">
+        					<div class="todaymenu_list_div"></div>
+        				</div>
+        			</div>
+        		</div>
 
-		<div id="top">
-			<h1>TOP 5</h1>
-		</div>
+        		<div id="article3">
+        			<div class="top_menu">
+        				<div class="topmenu_main_div">
+        				<span>Top 5</span>
+        				</div>
+        				<div class="topmenu_list">
+        				<div class="topmenu_list_div">
+        				</div>
+        				</div>
+        			</div>
+        		</div>
 
-		<div id="event">
-			<h1>광고배너 / 이벤트</h1>
-		</div>
+        		<div id="event">
+        			<div><img src="<c:url value='/resources/static/image/Christmas.png' />"></div>
+        		</div>
 
 
 	</section>
@@ -53,8 +91,10 @@
 		<h1>Footer</h1>
 	</footer>
 
+
 	<jsp:include page="script/jsp/main.jsp"></jsp:include>
 
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 	<script>
 		$.noConflict();
@@ -74,6 +114,46 @@
 		}
 
 		getAllcategory();
+
+		todayMenuList();
+
+		topMenuList();
+
+    function slickTodaySlider() {
+          jQ(".todaymenu_list_ul").slick({
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            dotsClass: "custom-dots",
+            dots: true,
+            autoplay: true,
+            speed: 2000,
+            prevArrow:
+              "<i class='fa-solid fa-circle-arrow-left'></i>",
+            nextArrow:
+              "<i class='fa-solid fa-circle-arrow-right'></i>",
+          });
+        }
+
+        function slickTopSlider() {
+          jQ(".topmenu_list_ul").slick({
+          prevArrow: "<i class='fa-solid fa-chevron-left'></i>",
+          nextArrow: "<i class='fa-solid fa-chevron-right'></i>",
+            adaptiveHeight: true,
+                centerMode: true,
+                centerPadding: '380px',
+            }).on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+                if (currentSlide !== nextSlide) {
+                    jQ('.slick-center + .slick-cloned').each(function (index, node) {
+                        var $node = jQ(node);
+
+                        setTimeout(function () {
+                            $node.addClass('slick-current');
+                            $node.addClass('slick-center');
+                        });
+                    });
+                }
+            });
+        }
 	</script>
 </body>
 </html>

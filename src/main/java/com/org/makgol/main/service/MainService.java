@@ -18,4 +18,12 @@ public class MainService {
 	public List<CategoryListVo> getAllCategory() {
 		return mainDao.selectAllCategory();
 	}
+
+	public List<CategoryListVo> todayMenuList() {
+		return mainDao.selectTodayMenu();
+	}
+
+	public List<CategoryListVo> topMenuList() {
+		return mainDao.selectTopMenu();
+	}
 }
