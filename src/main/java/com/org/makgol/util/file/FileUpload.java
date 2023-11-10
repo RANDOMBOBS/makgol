@@ -10,9 +10,11 @@ import java.util.UUID;
 
 public class FileUpload {
 
-    public FileInfo fileListUpload(List<MultipartFile> fileList) {
-        FileInfo fileInfo = new FileInfo();
+    public List<FileInfo> fileListUpload(List<MultipartFile> fileList) {
+        List<FileInfo> fileInfoList = new ArrayList<>();
+
         for(int index=0; index < fileList.size(); index++){
+            FileInfo fileInfo = new FileInfo();
 
             String fileRealName = fileList.get(index).getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
             long size = fileList.get(index).getSize(); //파일 사이즈
@@ -51,7 +53,7 @@ public class FileUpload {
                 fileList.get(index).transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
                 fileInfo.setPhotoPath(uploadFolder+"\\"+uniqueName + fileExtension);
                 fileInfo.setPhotoName(fileRealName);
-
+                fileInfoList.add(fileInfo);
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -59,7 +61,7 @@ public class FileUpload {
             }
 
         }
-        return fileInfo;
+        return fileInfoList;
     }
 
     public FileInfo fileUpload(MultipartFile file) {
