@@ -77,6 +77,8 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
     runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 
+    // 핫리로딩 종속성
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 tasks.named('test') {
