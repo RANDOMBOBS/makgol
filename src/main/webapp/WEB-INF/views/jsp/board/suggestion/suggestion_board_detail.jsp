@@ -51,7 +51,7 @@ request.setCharacterEncoding("utf-8");
 
 		<c:if test="${not empty boardVo.attachment}">
 			<tr>
-				<img src="<c:url value="file:///C:/makgol/board/upload//${boardVo.attachment}"/>">
+				<img src="http://localhost:8090${boardVo.attachment}">
 			</tr>
 		</c:if>
 	</table>

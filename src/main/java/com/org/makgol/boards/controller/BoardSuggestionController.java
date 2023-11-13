@@ -1,14 +1,13 @@
 package com.org.makgol.boards.controller;
 
 import java.io.File;
-import java.net.http.HttpResponse;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.org.makgol.comment.vo.CommentRequestVo;
 import com.org.makgol.users.vo.UsersRequestVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +25,7 @@ import org.springframework.ui.Model;
 import com.org.makgol.boards.UploadFileService;
 import com.org.makgol.boards.service.BoardSuggestionService;
 import com.org.makgol.boards.vo.BoardVo;
-import com.org.makgol.comment.vo.CommentVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 
 @Controller
 @RequestMapping("/board/suggestion")
@@ -127,14 +126,14 @@ public class BoardSuggestionController {
 	/**
 	 * suggestion 댓글 INSERT
 	 * 
-	 * @param commentVo : 댓글 폼에서 가져온 정보(board_id, nickname, content)
+	 * @param commentRequestVo : 댓글 폼에서 가져온 정보(board_id, nickname, content)
 	 * 
 	 * @return result값(INSERT 쿼리문 성공여부)를 가지고 suggestion_board_detail.jsp로 이동
 	 */
 	@ResponseBody
 	@PostMapping("/commentCreate")
-	public int createComment(@RequestBody CommentVo commentVo) {
-		int result = boardService.addComment(commentVo);
+	public int createComment(@RequestBody CommentRequestVo commentRequestVo) {
+		int result = boardService.addComment(commentRequestVo);
 		return result;
 	}
 
@@ -148,21 +147,21 @@ public class BoardSuggestionController {
 	 */
 	@RequestMapping(value = "/commentList/{board_id}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String commentList(@PathVariable("board_id") int board_id, Model model) {
-		List<CommentVo> commentVos = boardService.getCommentList(board_id);
-		model.addAttribute("commentVos", commentVos);
+		List<CommentResponseVo> commentResponseVos = boardService.getCommentList(board_id);
+		model.addAttribute("commentVos", commentResponseVos);
 		return "jsp/board/suggestion/board_comment_list";
 	}
 
 	/**
 	 * suggestion 댓글 수정 폼 제출
 	 * 
-	 * @param commentVo : 수정폼에서 가져온 데이터(nickname, contents, id)
+	 * @param commentResponseVo : 수정폼에서 가져온 데이터(nickname, contents, id)
 	 * @return result값(UPDATE 쿼리문 성공여부)를 가지고 board_comment_list.jsp로 이동
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/commentModifyConfirm", method = { RequestMethod.GET, RequestMethod.POST })
-	public int commentModifyConfirm(@RequestBody CommentVo commentVo) {
-		int result = boardService.modifyCommentConfirm(commentVo);
+	public int commentModifyConfirm(@RequestBody CommentResponseVo commentResponseVo) {
+		int result = boardService.modifyCommentConfirm(commentResponseVo);
 		return result;
 	}
 
