@@ -39,6 +39,7 @@ public class StoresDao {
             //try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url()); } catch (Exception e) {e.printStackTrace();}
             storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
 
+
             if (storeResponseVo != null) {
                 System.out.println("이미 존제 함. storeRequestVo.getPlace_url() --> :"+storeRequestVo.getPlace_url());
 
@@ -46,7 +47,7 @@ public class StoresDao {
                 storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
 
                 if (!storeRequestVo.getMenuName().equals("empty")) {
-                    String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name) VALUES (?, ?, ?)";
+                    String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name, date) VALUES (?, ?, ?, now())";
                     jdbcTemplate.update(insertStoresMenuSql,
                             storeResponseVo.getId(),
                             storeRequestVo.getKeyword(),
@@ -58,8 +59,8 @@ public class StoresDao {
                     if (storeRequestMenuVoList.get(menuIndex).getMenu() == null) {
                         continue;
                     }
-                    String insertStoresMenuSql = "INSERT INTO Menus (store_id, menu, price) \n"
-                            + "VALUES (?, ?, ?)";
+                    String insertStoresMenuSql = "INSERT INTO Menus (store_id, menu, price, date) \n"
+                            + "VALUES (?, ?, ?, now())";
 
                     jdbcTemplate.update(insertStoresMenuSql,
                             storeResponseVo.getId(),
@@ -74,7 +75,7 @@ public class StoresDao {
             String insertStoresSql = "INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            int result = 0;
+            //int result = 0;
             jdbcTemplate.update(insertStoresSql,
                     storeRequestVo.getName(), storeRequestVo.getLikes(), storeRequestVo.getLongitude(),
                     storeRequestVo.getLatitude(), storeRequestVo.getAddress(), storeRequestVo.getLoad_address(),
@@ -88,8 +89,9 @@ public class StoresDao {
             //try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url()); } catch (Exception e) {e.printStackTrace();}
             storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
 
+
             if (!storeRequestVo.getMenuName().equals("empty")) {
-                String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name) VALUES (?, ?, ?)";
+                String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name, date) VALUES (?, ?, ?, now())";
                 jdbcTemplate.update(insertStoresMenuSql,
                         storeResponseVo.getId(),
                         storeRequestVo.getKeyword(),
@@ -101,8 +103,7 @@ public class StoresDao {
                 if (storeRequestMenuVoList.get(menuIndex).getMenu() == null) {
                     continue;
                 }
-                String insertStoresMenuSql = "INSERT INTO Menus (store_id, menu, price) \n"
-                        + "VALUES (?, ?, ?)";
+                String insertStoresMenuSql = "INSERT INTO Menus (store_id, menu, price, date) VALUES (?, ?, ?, now())";
 
                 jdbcTemplate.update(insertStoresMenuSql,
                         storeResponseVo.getId(),

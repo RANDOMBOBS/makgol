@@ -42,6 +42,7 @@ public class UsersService {
 
     //userFindPassword
     public String userFindPassword(String userEmail){
+
         if(userDao.findUserEmail(userEmail)) {
 
             int randomNumber= mailSendUtil.makeRandomNumber();
@@ -86,58 +87,19 @@ public class UsersService {
         //사용자 패스워드 암호화
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-
-        FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
-
-        usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
-        usersRequestVo.setPhoto(fileInfo.getPhotoName());
-
-
+        if(usersRequestVo.getPhotoFile() != null){
+            FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+            usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+            usersRequestVo.setPhoto(fileInfo.getPhotoName());
+        } else {
+            usersRequestVo.setPhoto_path("/fileUpload/default.jpg");
+            usersRequestVo.setPhoto("default.jpg");
+        }
 
         if(userDao.createUser(usersRequestVo)) {
-            HashMap<String, Object> storeMap = new HashMap<String, Object>();
 
             UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
-
-            KakaoLocalRequestVo kakaoLocalRequestVo = new KakaoLocalRequestVo();
-
-            kakaoLocalRequestVo.setY(String.valueOf(usersResponseVo.getLatitude()));
-            kakaoLocalRequestVo.setX(String.valueOf(usersResponseVo.getLongitude()));
-
-
-            //String[] foodCategories = Arrays.stream(Category.CategoryFood.values())
-            //      .map(Enum::name)
-            //    .toArray(String[]::new);
-
-            // CategoryMenukorea의 값을 String 배열로 변환
-            String[] CategoryKoreaStewMenu = Arrays.stream(Category.CategoryKoreaStewMenu.values())
-                    .map(Enum::name)
-                    .toArray(String[]::new);
-
-            String[] CategoryKoreaRoastMenu = Arrays.stream(Category.CategoryKoreaRoastMenu.values())
-                    .map(Enum::name)
-                    .toArray(String[]::new);
-
-            String[] CategoryKoreaRiceMenu = Arrays.stream(Category.CategoryKoreaRiceMenu.values())
-                    .map(Enum::name)
-                    .toArray(String[]::new);
-
-
-            //kakaoMapSearch.search(foodCategories, kakaoLocalRequestVo);
-            List<StoreRequestVo> storeRequestVoList = new ArrayList<StoreRequestVo>();
-            storeRequestVoList = kakaoMapSearch.searchMenu(CategoryKoreaStewMenu, kakaoLocalRequestVo, storeRequestVoList);
-            storeRequestVoList = kakaoMapSearch.searchMenu(CategoryKoreaRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
-            storeRequestVoList = kakaoMapSearch.searchMenu(CategoryKoreaRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
-
-            System.out.println(storeRequestVoList.size());
-
-            int i=0;
-            //확인하기
-            for(StoreRequestVo storeRequestVo: storeRequestVoList) {
-                i++;
-                System.out.println("index"+ i +" --> : " +storeRequestVo.getPlace_url());
-                System.out.println("index"+ i +" --> : " +storeRequestVo.getMenuName());
-            }
+            List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
             try {
                 //업장 중복 체크
@@ -145,8 +107,7 @@ public class UsersService {
                 System.out.println(storesDao.checkStore(storeRequestVoList));
                 System.out.println("after storeRequestVoList --> : "+storeRequestVoList.size());
 
-                storeMap = kakaoMapSearch.restApiCrawller(storeRequestVoList);
-
+                HashMap<String, Object> storeMap = kakaoMapSearch.storeInfoRequest(storeRequestVoList);
                 storesDao.insertStore(storeMap);
             } catch(Exception e) {}
 
