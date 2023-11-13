@@ -54,7 +54,7 @@
 			</select><br>
 			<span>제목</span>
 			<input type="text" name="title"	placeholder="글제목">
-			
+
 			<span>작성자</span>
 			<input type="text" name="name" value="${name}" readonly disabled> <br>
 			<input type="hidden" name="user_id" value="${user_id}">			
