@@ -19,6 +19,7 @@
 <script>
 jQuery(document).ready(function() {
 
+    let result = false;
     //이메일 중복확인
     jQuery('#mail-Check-duplication').click(function() {
 
@@ -166,7 +167,7 @@ jQuery(document).ready(function() {
         const longitude = jQuery("#longitude").val();
 
         const passwordCheck = jQuery('#passwordCheck').val();
-
+/*
         if (!reg_name1.test(name)) {
             jQuery('#name').focus();
             return;
@@ -183,12 +184,12 @@ jQuery(document).ready(function() {
             jQuery('#phone').focus();
             return;
 
+        } else if(!result){
+            jQuery('#mail-Check-text').focus();
+            return;
         }
 
-
-
-
-
+*/
         formData.append("name",  	 name);
         formData.append("email",	 email);
         formData.append("phone", 	 phone);

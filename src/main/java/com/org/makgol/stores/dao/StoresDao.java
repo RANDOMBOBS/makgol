@@ -1,8 +1,10 @@
 package com.org.makgol.stores.dao;
 
 
+import com.org.makgol.stores.repository.StoresReposiory;
 import com.org.makgol.stores.vo.StoreRequestMenuVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
+import com.org.makgol.stores.vo.StoreResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -15,9 +17,10 @@ import java.util.List;
 public class StoresDao {
 
     private final JdbcTemplate jdbcTemplate;
-
+    private final StoresReposiory storesReposiory;
     public void insertStore(HashMap<String, Object> storeMap) throws Exception {
         System.out.println(storeMap.size()/2);
+        StoreResponseVo storeResponseVo;
         for (int index = 0; index < storeMap.size() / 2; index++) {
             System.out.println("------" + index + "-------");
 
@@ -33,17 +36,19 @@ public class StoresDao {
             String sql = "SELECT id FROM stores WHERE place_url = ? ";
             int store_id = 0;
 
-            try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url()); } catch (Exception e) {}
+            //try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url()); } catch (Exception e) {e.printStackTrace();}
+            storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
 
-            if (store_id > 0) {
+            if (storeResponseVo != null) {
                 System.out.println("이미 존제 함. storeRequestVo.getPlace_url() --> :"+storeRequestVo.getPlace_url());
 
-                store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url());
+                //store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url());
+                storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
 
                 if (!storeRequestVo.getMenuName().equals("empty")) {
                     String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name) VALUES (?, ?, ?)";
                     jdbcTemplate.update(insertStoresMenuSql,
-                            store_id,
+                            storeResponseVo.getId(),
                             storeRequestVo.getKeyword(),
                             storeRequestVo.getMenuName()
                     );
@@ -57,7 +62,7 @@ public class StoresDao {
                             + "VALUES (?, ?, ?)";
 
                     jdbcTemplate.update(insertStoresMenuSql,
-                            store_id,
+                            storeResponseVo.getId(),
                             storeRequestMenuVoList.get(menuIndex).getMenu(),
                             storeRequestMenuVoList.get(menuIndex).getPrice()
                     );
@@ -77,15 +82,16 @@ public class StoresDao {
                     storeRequestVo.getSite(), storeRequestVo.getMenu_update(), storeRequestVo.getPlace_url(),
                     storeRequestVo.getUpdate_date());
 
-            System.out.println("storeRequestVo.getPlace_url() --> : " + storeRequestVo.getPlace_url());
+            System.out.println("insert storeInfo --> : " + storeRequestVo.getPlace_url());
 
 
-            store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url());
+            //try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url()); } catch (Exception e) {e.printStackTrace();}
+            storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
 
             if (!storeRequestVo.getMenuName().equals("empty")) {
                 String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name) VALUES (?, ?, ?)";
                 jdbcTemplate.update(insertStoresMenuSql,
-                        store_id,
+                        storeResponseVo.getId(),
                         storeRequestVo.getKeyword(),
                         storeRequestVo.getMenuName()
                 );
@@ -99,7 +105,7 @@ public class StoresDao {
                         + "VALUES (?, ?, ?)";
 
                 jdbcTemplate.update(insertStoresMenuSql,
-                        store_id,
+                        storeResponseVo.getId(),
                         storeRequestMenuVoList.get(menuIndex).getMenu(),
                         storeRequestMenuVoList.get(menuIndex).getPrice()
                 );
@@ -107,17 +113,26 @@ public class StoresDao {
         }
     }
     public int checkStore(List<StoreRequestVo> storeRequestVos) throws Exception {
+
+
         int count=0;
         for(int i=storeRequestVos.size()-1; i >= 0; i--){
             String sql = "SELECT id FROM stores WHERE place_url = ? ";
             int store_id = 0;
 
-            try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVos.get(i).getPlace_url()); } catch (Exception e) {}
+            //try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVos.get(i).getPlace_url()); } catch (Exception e) {}
+            try {
+                StoreResponseVo storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVos.get(i).getPlace_url());
 
-            if (store_id > 0) {
-                storeRequestVos.remove(i);
-                count++;
+                if (storeResponseVo != null) {
+                    storeRequestVos.remove(i);
+                    count++;
+                }
+            } catch (Exception e){
+                e.printStackTrace();
             }
+
+
         }
         return count;
     }
