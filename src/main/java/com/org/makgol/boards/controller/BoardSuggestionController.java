@@ -198,13 +198,14 @@ public class BoardSuggestionController {
 		String nextPage = "jsp/board/suggestion/modify_board_ok";
 		MultipartFile file = boardVo.getFile();
 		String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
+		String currentDirectory = System.getProperty("user.dir");
 		if (!file.isEmpty()) {
 			FileInfo fileInfo = fileUpload.fileUpload(file);
 			boardVo.setAttachment(fileInfo.getPhotoPath());
 		}
 		
 		int result = boardService.modifyBoardConfirm(boardVo);
-		String currentDirectory = System.getProperty("user.dir");
+
 		if (result < 1) {
 			nextPage = "jsp/board/suggestion/modify_board_ng";
 		}else {

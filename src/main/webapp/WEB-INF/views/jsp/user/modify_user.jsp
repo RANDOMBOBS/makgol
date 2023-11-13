@@ -25,7 +25,8 @@
 
 <div class="form-group email-form">
   <label>회원정보 수정</label>
-  <form action="<c:url value='/user/modifyUserConfirm'/>" method="post" name="modify_user_info" enctype="multipart/form-data">
+  <form action="<c:url value='/user/modifyUserConfirm'><c:param name="oldFile" value="${loginedUsersRequestVo.photo_path}"/></c:url>"
+ method="post" name="modify_user_info" enctype="multipart/form-data">
     <div class="input-group">
       <input type="text" class="form-control" name="userEmail1" id="userEmail1" value="${emailId}" readonly disabled>
       <select class="form-control" name="userEmail2" id="userEmail2" readonly disabled>
@@ -41,7 +42,11 @@
     <input type="password" placeholder="비밀번호 확인" id="passwordCheck" name="passwordCheck">
     <button type="button" id="passwordCheckBtn" name="passwordCheckBtn">비밀번호 확인</button><br />
     <input placeholder="전화번호" id="phone" name="phone" value="${loginedUsersRequestVo.phone}"><br />
+    <input type="text" id="sample5_address" value="${loginedUsersRequestVo.address}"><br>
     <input type="file" id="photoFile" name="photoFile">
+    <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
+    <input type="hidden" id="longitude" >
+    <input type="hidden" id="latitude" >
     <input type="hidden" name="id" value="${loginedUsersRequestVo.id}">
     <button type="button" onclick="ModifyUserInfo()">회원정보수정</button>
   </form>
@@ -77,6 +82,38 @@
     } else {
       form.submit();
     }
+  }
+
+  function sample5_execDaumPostcode() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        var addr = data.address; // 최종 주소 변수
+
+        // 주소 정보를 해당 필드에 넣는다.
+        document.getElementById("sample5_address").value = addr;
+        // 주소로 상세 정보를 검색
+        geocoder.addressSearch(data.address, function(results, status) {
+          // 정상적으로 검색이 완료됐으면
+          if (status === daum.maps.services.Status.OK) {
+
+            var result = results[0]; //첫번째 결과의 값을 활용
+
+            document.getElementById("longitude").value = result.x;
+            document.getElementById("latitude").value = result.y;
+
+            // 해당 주소에 대한 좌표를 받아서
+            var coords = new daum.maps.LatLng(result.y, result.x);
+            // 지도를 보여준다.
+            mapContainer.style.display = "block";
+            map.relayout();
+            // 지도 중심을 변경한다.
+            map.setCenter(coords);
+            // 마커를 결과값으로 받은 위치로 옮긴다.
+            marker.setPosition(coords)
+          }
+        });
+      }
+    }).open();
   }
 </script>
 </body>

@@ -27,12 +27,12 @@
 >
     <div id="my_info">
         <span>내 정보</span>
-        <span><a href="#">수정하기</a></span>
+        <span><a href="<c:url value='/user/modifyUser'/>">수정하기</a></span>
 
         <table>
             <tr>
                 <td>
-                <img src="http://localhost:8090${loginedUsersRequestVo.photo_path}"/>
+                <img src="http://localhost:8090${loginedUsersRequestVo.photo_path}" alt="프로필사진"/>
                 </td>
             </tr>
             <tr>

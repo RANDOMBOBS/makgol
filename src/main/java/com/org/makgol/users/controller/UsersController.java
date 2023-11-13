@@ -3,6 +3,8 @@ package com.org.makgol.users.controller;
 import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UsersController {
     private final UsersService userService;
-
+    private final FileUpload fileUpload;
     //joinUser_POST
     @PostMapping("/join")
     public ResponseEntity<?> joinUser(@ModelAttribute @Valid UsersRequestVo usersRequestVo) {
@@ -121,9 +124,19 @@ public class UsersController {
     }
 
     @PostMapping("/modifyUserConfirm")
-    
-    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo){
+    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile, HttpSession session){
+        String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
+        String currentDirectory = System.getProperty("user.dir");
+        FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+        usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+        usersRequestVo.setPhoto(fileInfo.getPhotoName());
         int result = userService.modifyUserInfo(usersRequestVo);
+        if(result>0){
+            session.setAttribute("loginedUsersRequestVo", usersRequestVo);
+            String deleteFile = currentDirectory+"\\src\\main\\resources\\static\\image\\"+oldFileName;
+            File oldfile= new File(deleteFile);
+            oldfile.delete();
+        }
         return "jsp/user/my_page";
     }
 

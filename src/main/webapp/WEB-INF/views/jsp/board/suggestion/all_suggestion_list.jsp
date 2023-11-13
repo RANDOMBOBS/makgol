@@ -40,7 +40,7 @@
 
 
 	<%
-	UsersRequestVo loginedUserVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
+	UsersRequestVo loginedUserVo = (UsersRequestVo) session.getAttribute("loginedUsersResponseVoVo");
 	if (loginedUserVo != null) {
 	%>
 	<a href="<c:url value='/board/suggestion/create'/>">글쓰기</a>
