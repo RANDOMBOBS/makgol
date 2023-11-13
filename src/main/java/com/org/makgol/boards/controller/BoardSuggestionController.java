@@ -119,7 +119,6 @@ public class BoardSuggestionController {
 		String nextPage = "jsp/board/suggestion/suggestion_board_detail";
 		BoardVo boardVo = boardService.readSuggestionBoard(b_id);
 		boardService.addHit(b_id);
-
 		model.addAttribute("boardVo", boardVo);
 		return nextPage;
 	}

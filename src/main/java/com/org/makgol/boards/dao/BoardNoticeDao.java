@@ -30,7 +30,7 @@ public class BoardNoticeDao {
     } // end
 
     // 글쓰기버튼하여 게시글 추가
-    // Notice insert -> mybatis ( insertNotice )
+    // Notice insert
     public int insertNotice(BoardVo boardVo) throws DataAccessException {
         int result = -1;
         result= boardNoticeRepository.insertNotice(boardVo);
@@ -38,10 +38,10 @@ public class BoardNoticeDao {
     } // end
 
     // 게시글 내용 수정 페이지
-    // Notice detail page -> mybatis ( selectModNotice )
-    public BoardVo selectDetailNotice(int b_id) throws DataAccessException {
-        List<BoardVo> boards = null;
-        boards = boardNoticeRepository.selectDetailNotice(b_id);
-        return boards.size() > 0 ? boards.get(0) : null;
+    // Notice detail page
+    public BoardVo selectDetailNotice(int b_id) {
+        List<BoardVo> boardVo = null;
+        boardVo = boardNoticeRepository.selectDetailNotice(b_id);
+        return boardVo.size() > 0 ? boardVo.get(0) : null;
     } // end
 }

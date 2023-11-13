@@ -13,18 +13,20 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   
   </style>
     <meta charset="UTF-8" />
-
+<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
-
       function deleteBoard(b_id,title) {
-      	console.log('deleteNotice() CALLED!!');
       	let result = confirm('공지사항 ['+ title +'] 를(을) 정말 삭제 하시겠습니까?');
       	if (result){
       		location.href = "<c:url value='/board/deleteNotice?b_id="+ b_id +"'/>";
       }
+     }
     </script>
   </head>
   <body>
+
+    <jsp:include page="../../include/header.jsp"></jsp:include>
+
     <section>
       <div id="section_wrap">
         <div class="word">

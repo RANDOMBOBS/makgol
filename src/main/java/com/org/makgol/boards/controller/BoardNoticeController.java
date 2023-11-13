@@ -61,7 +61,7 @@ public class BoardNoticeController {
     }
 
     @GetMapping("/detailNotice")
-    public String detailNotice(@RequestParam("b_id") int b_id, Model model) {
+    public String detailNotice(@RequestParam("b_id") int b_id, Model model, HttpSession session) {
         String nextPage = "jsp/board/notice/notice_detail";
         BoardVo boardVo = boardNoticeService.detailNotice(b_id);
         model.addAttribute("boardVo", boardVo);
