@@ -124,22 +124,13 @@ public class UsersController {
     }
 
     @PostMapping("/modifyUserConfirm")
-    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile, HttpSession session){
-        String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
-        String currentDirectory = System.getProperty("user.dir");
-        FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
-        usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
-        usersRequestVo.setPhoto(fileInfo.getPhotoName());
-        int result = userService.modifyUserInfo(usersRequestVo);
-        if(result>0){
-            session.setAttribute("loginedUsersRequestVo", usersRequestVo);
-            String deleteFile = currentDirectory+"\\src\\main\\resources\\static\\image\\"+oldFileName;
-            File oldfile= new File(deleteFile);
-            oldfile.delete();
+    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile, HttpSession session) {
+        int result = userService.modifyUserInfo(usersRequestVo, oldFile, session);
+        if (result > 0) {
+            return "jsp/user/my_page";
         }
-        return "jsp/user/my_page";
+        return "jsp/user/modify_user";
     }
-
 
 
 }
