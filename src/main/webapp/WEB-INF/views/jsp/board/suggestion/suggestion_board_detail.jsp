@@ -22,24 +22,6 @@ request.setCharacterEncoding("utf-8");
     	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 
-<style>
-ul {
-	text-align: left;
-	display: flex;
-	justify-content: space-between;
-	width: 800px;
-	list-style: none;
-}
-
-ul img {
-	width: 20px;
-	height: 20px;
-}
-
-label {
-	cursor: pointer;
-}
-</style>
 </head>
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
