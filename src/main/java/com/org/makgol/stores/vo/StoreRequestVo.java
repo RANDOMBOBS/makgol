@@ -38,6 +38,10 @@ public class StoreRequestVo {
     private String    place_url ;
     //식당정보 업데이트 날짜
     private LocalDate update_date;
+    //검색 키워드
+    private String 	  keyword = "empty";
+    //메뉴 이름
+    private String    menuName = "empty";
 
 
     @Builder
