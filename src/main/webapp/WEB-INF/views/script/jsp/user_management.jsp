@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
-	$.noConflict();
-	var jQ = jQuery;
 
 	function userList() {
 		jQ.ajax({

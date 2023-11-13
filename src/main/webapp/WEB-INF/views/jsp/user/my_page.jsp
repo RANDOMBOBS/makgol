@@ -32,7 +32,7 @@
         <table>
             <tr>
                 <td>
-                    <img src="<c:url value="http://localhost:8090${loginedUsersRequestVo.photo_path}"/>">
+                <img src="http://localhost:8090${loginedUsersRequestVo.photo_path}"/>
                 </td>
             </tr>
             <tr>

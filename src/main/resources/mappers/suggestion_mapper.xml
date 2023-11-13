@@ -140,20 +140,20 @@
 
     <select id="selectUserLikeStatus" resultType="int" parameterType="com.org.makgol.boards.vo.BoardVo">
         SELECT count(*)
-        FROM board_like
+        FROM board_likes
         WHERE b_id = #{b_id}
           AND user_id = #{user_id}
     </select>
 
 
     <insert id="insertBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
-        INSERT INTO board_like(b_id, user_id)
+        INSERT INTO board_likes(b_id, user_id)
         VALUES (#{b_id}, #{user_id})
     </insert>
 
     <delete id="deleteBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
         DELETE
-        FROM board_like
+        FROM board_likes
         WHERE b_id = #{b_id}
           AND user_id = #{user_id}
     </delete>
@@ -161,7 +161,7 @@
 
     <select id="selectLikeCount" resultType="int" parameterType="int">
         SELECT count(*)
-        FROM board_like
+        FROM board_likes
         WHERE b_id = #{b_id};
     </select>
 
