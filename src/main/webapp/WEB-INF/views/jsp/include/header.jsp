@@ -92,7 +92,7 @@ UsersRequestVo blackList = (UsersRequestVo) session.getAttribute("blackList");
           <li>
             <a href="#">COMMUNITY</a>
             <ul class="depth2">
-              <li><a href="<c:url value='/board/Notice'/>">공지사항</a></li>
+              <li><a href="<c:url value='/board/notice'/>">공지사항</a></li>
               <li><a href="<c:url value='/board/suggestion'/>">건의사항</a></li>
               <li><a href="<c:url value='/board/vent'/>">하소연 게시판</a></li>
             </ul>

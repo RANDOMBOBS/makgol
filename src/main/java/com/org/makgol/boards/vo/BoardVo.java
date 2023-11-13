@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class BoardVo {
 
-
     int b_id;
     int user_id;
     int hit;
