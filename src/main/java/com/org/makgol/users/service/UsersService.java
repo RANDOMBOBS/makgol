@@ -88,11 +88,15 @@ public class UsersService {
         //사용자 패스워드 암호화
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
+        if(usersRequestVo.getPhotoFile() != null){
+            FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+            usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+            usersRequestVo.setPhoto(fileInfo.getPhotoName());
+        } else {
+            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto("user_default.jpeg");
+        }
 
-        FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
-
-        usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
-        usersRequestVo.setPhoto(fileInfo.getPhotoName());
 
 
 
@@ -178,12 +182,16 @@ public class UsersService {
     public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpSession session) {
         String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
         String currentDirectory = System.getProperty("user.dir");
-
-        FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
-
-        usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
-        usersRequestVo.setPhoto(fileInfo.getPhotoName());
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
+
+        if(usersRequestVo.getPhotoFile() != null){
+            FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+            usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+            usersRequestVo.setPhoto(fileInfo.getPhotoName());
+        } else {
+            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto("user_default.jpeg");
+        }
 
         int result = userDao.updateUserInfo(usersRequestVo);
 

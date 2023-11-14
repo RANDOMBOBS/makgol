@@ -25,7 +25,7 @@ public class UsersController {
     //joinUser_POST
     @PostMapping("/join")
     public ResponseEntity<?> joinUser(@ModelAttribute @Valid UsersRequestVo usersRequestVo) {
-
+        System.out.println("유저정보?"+usersRequestVo);
         Boolean result = userService.joinUser(usersRequestVo);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
