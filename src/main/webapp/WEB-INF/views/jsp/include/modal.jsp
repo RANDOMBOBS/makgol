@@ -180,8 +180,20 @@
             document.querySelector(".modal_cover").style.display = "none";
             document.querySelector(".register_modal").style.display = "none";
         });
-    };
 
+        const registerInputEles = document.querySelectorAll("#register_form .input_area");
+        registerInputEles.forEach((ele) => {
+            const inputBorderEle = ele.parentNode.parentNode;
+
+            ele.addEventListener("focus", () => {
+                inputBorderEle.style.border = "2px solid #c7a669";
+            });
+
+            ele.addEventListener("blur", () => {
+                inputBorderEle.style.border = "2px solid #ffe286";
+            });
+        });
+    };
 
     loginModal();
     registerModal();
