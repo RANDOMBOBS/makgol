@@ -12,7 +12,6 @@
           integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css"/>
-    <link href="<c:url value='/resources/static/css/join.css' />" rel="stylesheet" type="text/css"/>
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>
@@ -191,14 +190,18 @@
                         }
 
                 */
+
                 formData.append("name", name);
                 formData.append("email", email);
                 formData.append("phone", phone);
                 formData.append("address", address);
                 formData.append("password", password);
-                formData.append("photoFile", photo);
                 formData.append("longitude", longitude);
                 formData.append("latitude", latitude);
+
+                if (photo != null) {
+                    formData.append("photoFile", photo);
+                }
 
                 jQuery.ajax({
                     type: "POST",

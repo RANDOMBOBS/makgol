@@ -3,6 +3,8 @@ package com.org.makgol.users.controller;
 import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UsersController {
     private final UsersService userService;
-
+    private final FileUpload fileUpload;
     //joinUser_POST
     @PostMapping("/join")
     public ResponseEntity<?> joinUser(@ModelAttribute @Valid UsersRequestVo usersRequestVo) {
@@ -121,12 +124,13 @@ public class UsersController {
     }
 
     @PostMapping("/modifyUserConfirm")
-    
-    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo){
-        int result = userService.modifyUserInfo(usersRequestVo);
-        return "jsp/user/my_page";
+    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile, HttpSession session) {
+        int result = userService.modifyUserInfo(usersRequestVo, oldFile, session);
+        if (result > 0) {
+            return "jsp/user/my_page";
+        }
+        return "jsp/user/modify_user";
     }
-
 
 
 }
