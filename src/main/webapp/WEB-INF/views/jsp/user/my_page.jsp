@@ -50,7 +50,9 @@
         </table>
     </div>
 
-   <c:url value='/user/myStoreList' var='my_store_url'/><c:param name='user_id' value='${loginedUsersRequestVo.b_id}' /></c:url>
+   <c:url value='/user/myStoreList' var='my_store_url'>
+      <c:param name='user_id' value='${loginedUsersRequestVo.id}' />
+   </c:url>
 
     <div id="my_history">
         <span>내 활동이력</span>

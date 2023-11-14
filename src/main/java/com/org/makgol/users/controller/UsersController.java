@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -135,10 +136,11 @@ public class UsersController {
     }
 
 
-//    @GetMapping("/myStoreList")
-//    public String myStoreList(@RequestParam("user_id") int user_id){
-//        List<StoreResponseVo> storeVos = userService.myStoreList(user_id);
-//        return "jsp/user/my_store_list";
-//    }
+    @GetMapping("/myStoreList")
+    public String myStoreList(@RequestParam("user_id") int user_id, Model model){
+        List<StoreResponseVo> storeVos = userService.myStoreList(user_id);
+        model.addAttribute("storeVos", storeVos);
+        return "jsp/user/my_store_list";
+    }
 
 }

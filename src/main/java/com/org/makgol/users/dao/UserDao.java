@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersResponseVo;
 import org.mindrot.jbcrypt.BCrypt;
@@ -156,4 +157,17 @@ public class UserDao {
 		}
 		return result;
 	}
+
+	public List<StoreResponseVo> selectMyStoreList(int user_id){
+		String sql = "SELECT * FROM stores S JOIN store_likes SL ON S.id=SL.store_id WHERE SL.user_id = ?";
+		List<StoreResponseVo> storeVos = null;
+		try {
+			RowMapper<StoreResponseVo> rowMapper = BeanPropertyRowMapper.newInstance(StoreResponseVo.class);
+			storeVos = jdbcTemplate.query(sql, rowMapper, user_id);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return storeVos;
+	}
+
 }

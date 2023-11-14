@@ -170,9 +170,9 @@ public class UsersService {
         return result;
     }
 
-//    public List<StoreResponseVo> myStoreList(int user_id){
-//    return userDao.selectMy
-//    }
+    public List<StoreResponseVo> myStoreList(int user_id){
+    return userDao.selectMyStoreList(user_id);
+    }
 
 
 }
