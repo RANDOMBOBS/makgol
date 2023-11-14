@@ -14,19 +14,17 @@
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	function ModifyBoardForm() {
-
 		let form = document.modify_board_form;
-
 		if (form.title.value == '') {
 			alert('제목을 입력해주세요');
 			form.title.focus();
-
 		} else if (form.contents.value == '') {
 			alert('글 내용을 입력해주세요.');
 			form.contents.focus();
-
 		} else {
+		   if (window.confirm('글을 수정하시겠습니까?')) {
 			form.submit();
+		    }
 		}
 
 	}

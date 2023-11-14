@@ -81,9 +81,11 @@ request.setCharacterEncoding("utf-8");
 
 		<c:if test="${boardVo.user_id == loginedUsersRequestVo.getId()}">
 			<a href="${modify_url}">수정</a>
-			<a href="${delete_url}">삭제</a>
+			<a href="#javaScript" onclick="boardDelete()">삭제</a>
 		</c:if>
 	</div>
+
+
 
 	<form name="create_comment_form">
 		<p>댓글</p>
@@ -125,6 +127,12 @@ request.setCharacterEncoding("utf-8");
 			userLikeStatus(b_id, user_id);
 		}
 		comList();
+
+		function boardDelete(){
+            if (window.confirm('글을 삭제하시겠습니까?')) {
+                window.location.href = "${delete_url}";
+            }
+        }
 	</script>
 </body>
 </html>

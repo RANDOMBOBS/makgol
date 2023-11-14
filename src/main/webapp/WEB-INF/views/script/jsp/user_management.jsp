@@ -20,6 +20,7 @@
 	}
 
 	function updateGrade() {
+		if (window.confirm('회원 등급을 변경하시겠습니까?')) {
 		let grade = jQ("select[name=grade]").val();
 		let checkboxes = jQ("input[type=checkbox]:checked");
 		checkboxes.each(function() {
@@ -45,6 +46,7 @@
 				},
 			});
 		});
+		}
 	}
 
 	function allCheckbox() {
