@@ -13,4 +13,20 @@
     <select id="duplicationUserEmail" resultType="String" parameterType="String">
         SELECT email FROM users WHERE email = #{email}
     </select>
+
+    <select id="selectUser" resultType="com.org.makgol.users.vo.UsersRequestVo" parameterType="String">
+        SELECT * FROM users WHERE email = #{email}
+    </select>
+
+    <update id="updateUserInfo" parameterType="com.org.makgol.users.vo.UsersRequestVo">
+        UPDATE users SET password=#{password}, phone=#{phone}, photo=#{photo}, photo_path=#{photo_path}, address=#{address}, longitude=#{longitude}, latitude=#{latitude}
+        WHERE id=#{id}
+    </update>
+
+    <select id="selectMyStoreList" resultType="com.org.makgol.stores.vo.StoreResponseVo" parameterType="int">
+    SELECT * FROM stores S
+    JOIN store_likes SL
+    ON S.id=SL.store_id
+    WHERE SL.user_id = #{user_id}
+    </select>
 </mapper>

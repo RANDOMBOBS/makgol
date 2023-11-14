@@ -121,8 +121,8 @@ public class UsersService {
     }// joinUser_END
 
     public UsersRequestVo loginConfirm(UsersRequestVo usersRequestVo) {
-        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(usersRequestVo);
-
+        String email = usersRequestVo.getEmail();
+        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(email);
 
         if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
             loginedInUsersRequestVo = null;
@@ -143,7 +143,7 @@ public class UsersService {
         String currentDirectory = System.getProperty("user.dir");
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if(usersRequestVo.getPhotoFile() != null){
+        if(usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()){
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
@@ -159,7 +159,6 @@ public class UsersService {
             usersRequestVo.setName(loginedUsersRequestVo.getName());
             usersRequestVo.setEmail(loginedUsersRequestVo.getEmail());
             session.setAttribute("loginedUsersRequestVo", usersRequestVo);
-            System.out.println(oldFileName);
             if(!oldFileName.equals("user_default.jpeg")){
             String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
             File oldfile = new File(deleteFile);

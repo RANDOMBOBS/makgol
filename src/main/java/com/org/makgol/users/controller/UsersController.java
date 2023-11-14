@@ -28,7 +28,6 @@ public class UsersController {
     //joinUser_POST
     @PostMapping("/join")
     public ResponseEntity<?> joinUser(@ModelAttribute @Valid UsersRequestVo usersRequestVo) {
-        System.out.println("유저정보?"+usersRequestVo);
         Boolean result = userService.joinUser(usersRequestVo);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -82,24 +81,18 @@ public class UsersController {
 
     @GetMapping("/login")
     public String loginForm() {
-        // 로그인 화면 템플릿 경로를 설정
         return "jsp/user/user_login";
     }
 
     @PostMapping("/loginConfirm")
     public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session) {
-        // 기본적으로 로그인 성공 시 'login_ok' 화면을 표시
         String nextPage = "home";
 
-        // 사용자 로그인 정보를 서비스를 통해 확인
         UsersRequestVo loginedUsersRequestVo = userService.loginConfirm(usersRequestVo);
-        System.out.println(loginedUsersRequestVo);
         if (loginedUsersRequestVo == null) {
-            // 로그인 실패 시 'login_ng' 화면을 표시
             nextPage = "jsp/user/user_login_ng";
         } else {
             if (!(loginedUsersRequestVo.getGrade() != null && "블랙리스트".equals(loginedUsersRequestVo.getGrade()))) {
-                // 로그인 성공 시 사용자 정보를 세션에 저장하고 세션
                 session.setAttribute("loginedUsersRequestVo", loginedUsersRequestVo);
             } else{
                 session.setAttribute("blackList", loginedUsersRequestVo);
@@ -109,10 +102,15 @@ public class UsersController {
     }
     @GetMapping("/logout")
     public String logout(HttpSession session, @RequestParam("link") String link){
-        System.out.println(link);
+        String cutWord = "views/";
+        int cutPoint = link.indexOf(cutWord)+6;
+        int extension = link.lastIndexOf(".");
+        String nextPage = link.substring(cutPoint, extension);
+
         session.removeAttribute("blackList");
         session.invalidate();
-        return "home";
+
+        return nextPage;
     }
 
     @GetMapping("/myPage")
@@ -133,7 +131,6 @@ public class UsersController {
         }
         return "jsp/user/modify_user";
     }
-
 
     @GetMapping("/myStoreList")
     public String myStoreList(@RequestParam("user_id") int user_id, Model model){

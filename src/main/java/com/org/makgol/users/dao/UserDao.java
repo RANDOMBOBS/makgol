@@ -135,38 +135,21 @@ public class UserDao {
 
 
 	// 사용자 정보 조회 (로그인)
-	public UsersRequestVo selectUser(UsersRequestVo usersRequestVo) {
-		String sql = "SELECT * FROM users WHERE email = ?";
+	public UsersRequestVo selectUser(String email) {
 		List<UsersRequestVo> list = null;
-		try {
-			RowMapper<UsersRequestVo> rowMapper = BeanPropertyRowMapper.newInstance(UsersRequestVo.class);
-			list = jdbcTemplate.query(sql, rowMapper, usersRequestVo.getEmail());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		list = usersRepository.selectUser(email);
 		return list.size()>0 ? list.get(0) : null;
 	}
 
 	public int updateUserInfo(UsersRequestVo usersRequestVo){
-		String sql = "UPDATE users SET password=?, phone=?, photo=?, photo_path=?, address=?, longitude=?, latitude=? WHERE id=?";
 		int result = -1;
-		try {
-			result = jdbcTemplate.update(sql,usersRequestVo.getPassword(), usersRequestVo.getPhone(), usersRequestVo.getPhoto(), usersRequestVo.getPhoto_path(), usersRequestVo.getAddress(), usersRequestVo.getLongitude(), usersRequestVo.getLatitude(), usersRequestVo.getId());
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		result = usersRepository.updateUserInfo(usersRequestVo);
 		return result;
 	}
 
 	public List<StoreResponseVo> selectMyStoreList(int user_id){
-		String sql = "SELECT * FROM stores S JOIN store_likes SL ON S.id=SL.store_id WHERE SL.user_id = ?";
 		List<StoreResponseVo> storeVos = null;
-		try {
-			RowMapper<StoreResponseVo> rowMapper = BeanPropertyRowMapper.newInstance(StoreResponseVo.class);
-			storeVos = jdbcTemplate.query(sql, rowMapper, user_id);
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		storeVos = usersRepository.selectMyStoreList(user_id);
 		return storeVos;
 	}
 
