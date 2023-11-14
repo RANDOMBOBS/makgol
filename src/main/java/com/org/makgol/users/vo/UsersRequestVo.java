@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Valid
 @ToString
-public class UsersRequestVo {
+public class UsersRequestVo{
 	// ID
 	int id;
 
@@ -44,7 +44,7 @@ public class UsersRequestVo {
 	@NotBlank(message = "전화번호(필수)")
 	@NotEmpty
 	String phone;
-	
+
 	//photo file
 	MultipartFile photoFile;
 
