@@ -73,6 +73,7 @@
     background: #fdf97e;
     outline: none;
     border-radius: 5px;
+    text-align: left;
 }
 
 .login_modal .modal_body .login_wrapper #login_form .input_area::placeholder {
