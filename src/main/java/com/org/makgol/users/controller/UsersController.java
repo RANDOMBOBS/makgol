@@ -134,6 +134,7 @@ public class UsersController {
         return "jsp/user/modify_user";
     }
 
+
 //    @GetMapping("/myStoreList")
 //    public String myStoreList(@RequestParam("user_id") int user_id){
 //        List<StoreResponseVo> storeVos = userService.myStoreList(user_id);

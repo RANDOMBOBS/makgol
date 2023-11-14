@@ -23,7 +23,7 @@ jQuery(document).ready(function() {
     //이메일 중복확인
     jQuery('#mail-Check-duplication').click(function() {
 
-		const email = jQuery('#userEmail1').val() + jQuery('#userEmail2').val(); // 이메일 주소값 얻어오기!
+		const email = jQuery('#userEmail1').val(); // 이메일 주소값 얻어오기!
 
 		jQuery.ajax({
 			type : 'POST',
@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
     // 이메일 인증번호 전송
 	jQuery('#mail-Check-Btn').click(function() {
         alert('인증번호가 전송되었습니다.')
-		const email = jQuery('#userEmail1').val() + jQuery('#userEmail2').val(); // 이메일 주소값 얻어오기!
+		const email = jQuery('#userEmail1').val(); // 이메일 주소값 얻어오기!
 		const auth_number = jQuery('.mail-check-input') // 인증번호 입력하는곳
 
 		var authNumber = {
@@ -83,7 +83,7 @@ jQuery(document).ready(function() {
 	// 인증번호 비교
 	// blur -> focus가 벗어나는 경우 발생
 	jQuery('#mail-Check-Btn2').click(function () {
-		const email = jQuery('#userEmail1').val() + jQuery('#userEmail2').val(); // 이메일 주소값 얻어오기!
+		const email = jQuery('#userEmail1').val(); // 이메일 주소값 얻어오기!
 		const auth_number = jQuery('#mail-Check-text').val(); //인증번호 얻어오기!
 
 		var authNumber = {
@@ -105,7 +105,6 @@ jQuery(document).ready(function() {
 		            if (data === true) {
 		                alert("인증성공");
 		                jQuery('#userEmail1').attr('disabled',true);
-                        jQuery('#userEmail2').attr('disabled',true);
 		    			jQuery('#mail-Check-Btn').attr('disabled',true);
 		    			jQuery('#mail-Check-text').attr('disabled',true);
 		    			jQuery('#mail-Check-Btn2').attr('disabled',true);
@@ -157,7 +156,7 @@ jQuery(document).ready(function() {
         let reg_url = /^(https?:\/\/)?([a-z\d\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/; // URL 검사식
 
         const formData = new FormData();
-        const email 	= jQuery("#userEmail1").val()+jQuery("#userEmail2").val();
+        const email 	= jQuery("#userEmail1").val();
         const name		= jQuery("#name").val();
         const phone 	= jQuery("#phone").val();
         const photo 	= jQuery("#photo")[0].files[0];
@@ -190,6 +189,7 @@ jQuery(document).ready(function() {
         }
 
 */
+
         formData.append("name",  	 name);
         formData.append("email",	 email);
         formData.append("phone", 	 phone);
@@ -197,6 +197,7 @@ jQuery(document).ready(function() {
         formData.append("password",  password);
         formData.append("longitude", longitude);
         formData.append("latitude",  latitude);
+
         if(photo != null){ formData.append("photoFile", photo); }
 
         jQuery.ajax({
