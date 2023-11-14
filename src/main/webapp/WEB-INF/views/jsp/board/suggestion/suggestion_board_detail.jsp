@@ -83,6 +83,7 @@ request.setCharacterEncoding("utf-8");
 			<a href="${modify_url}">수정</a>
 			<a href="#javaScript" onclick="boardDelete()">삭제</a>
 		</c:if>
+
 	</div>
 
 
