@@ -190,7 +190,6 @@ jQuery(document).ready(function() {
         }
 
 */
-
         formData.append("name",  	 name);
         formData.append("email",	 email);
         formData.append("phone", 	 phone);
