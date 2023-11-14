@@ -131,6 +131,4 @@ public class UsersController {
         }
         return "jsp/user/modify_user";
     }
-
-
 }
