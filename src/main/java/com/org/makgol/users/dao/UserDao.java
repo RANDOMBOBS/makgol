@@ -148,7 +148,7 @@ public class UserDao {
 
 	public int updateUserInfo(UsersRequestVo usersRequestVo){
 		String sql = "UPDATE users SET password=?, phone=?, photo=?, photo_path=? WHERE id=?";
-		usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
+
 		int result = -1;
 		try {
 			result = jdbcTemplate.update(sql,usersRequestVo.getPassword(), usersRequestVo.getPhone(), usersRequestVo.getPhoto(), usersRequestVo.getPhoto_path(), usersRequestVo.getId());
