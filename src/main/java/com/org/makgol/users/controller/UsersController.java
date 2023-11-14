@@ -107,12 +107,11 @@ public class UsersController {
         }
         return nextPage;
     }
-
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session, @RequestParam("link") String link){
+        System.out.println(link);
         session.removeAttribute("blackList");
         session.invalidate();
-
         return "home";
     }
 

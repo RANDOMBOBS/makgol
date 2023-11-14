@@ -27,6 +27,7 @@
             <li>${item.phone}</li>
           </ul>
         </td>
+        <td><a href="#">식당 보러가기</a></td>
       </tr>
       </c:forEach>
     </table>
