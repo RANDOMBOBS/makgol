@@ -1,163 +1,162 @@
 .login_modal {
-  display: none;
-  opacity: 1;
-  width: 450px;
-  height: 700px;
-  background: #ffffff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 20px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    display: none;
+    opacity: 1;
+    width: 450px;
+    height: 700px;
+    background: #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 .login_modal .modal_body {
-  height: 580px;
+    height: 580px;
 }
 
 .login_modal .modal_body .login_wrapper {
-  width: 400px;
-  height: 250px;
-  padding: 40px 40px 0 40px;
-  box-sizing: border-box;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    width: 400px;
+    height: 250px;
+    padding: 40px 40px 0 40px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .login_modal .modal_body .login_wrapper #login_form > input {
-  width: 100%;
-  height: 48px;
-  padding: 0 10px;
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  border-radius: 6px;
-  background-color: #f8f8f8;
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #f8f8f8;
 }
 
 .login_modal .modal_body .login_wrapper #login_form > input::placeholder {
-  color: #d2d2d2;
+    color: #d2d2d2;
 }
 
 .login_modal .modal_body .login_wrapper #login_form #submit_login {
-  color: #1a1a1a;
-  font-size: 16px;
-  background-color: #ffe286;
-  margin-top: 20px;
-  border: none;
-  outline: none;
+    color: #1a1a1a;
+    font-size: 16px;
+    background-color: #ffe286;
+    margin-top: 20px;
+    border: none;
+    outline: none;
 }
 
 .login_modal .modal_body .login_wrapper #login_form #submit_login:hover {
-  color: #ffe286;
-  background-color: darkgray;
-  cursor: pointer;
+    color: #ffe286;
+    background-color: darkgray;
+    cursor: pointer;
 }
 
 .login_modal .modal_body .login_wrapper #login_form #remember-check {
-  outline: none;
+    outline: none;
 }
 
 .login_modal .modal_body .login_wrapper #login_form > label {
-  color: #999999;
+    color: #999999;
 }
 
 .login_modal .modal_body .login_wrapper #login_form .input_area {
-  width: 320px;
-  height: 40px;
-  padding-left: 10px;
-  margin-bottom: 12px;
-  border: none;
-  background: #fdf97e;
-  outline: none;
-  border-radius: 5px;
+    width: 320px;
+    height: 40px;
+    padding-left: 10px;
+    margin-bottom: 12px;
+    border: none;
+    background: #fdf97e;
+    outline: none;
+    border-radius: 5px;
+    text-align: left;
 }
 
 .login_modal .modal_body .login_wrapper #login_form .input_area::placeholder {
-  color: #111105;
+    color: #111105;
 }
 
 .login_modal .modal_body .login_wrapper #login_form .input_area:focus {
-  background-color: #ffe286;
+    background-color: #ffe286;
 }
 
 .login_modal .modal_body .login_wrapper #login_form #save_id {
-  font-size: 13px;
-  color: #575656;
+    font-size: 13px;
+    color: #575656;
 }
 
 .login_modal .modal_body .login_wrapper #login_form #save_id:hover {
-  color: black;
+    color: black;
 }
 
 .login_modal .modal_body .login_wrapper #login_form #save_id > label {
-  display: flex;
-  position: relative;
-  left: 1px;
+    display: flex;
+    position: relative;
+    left: 1px;
 }
 
 .login_modal .modal_body .login_wrapper #login_form #save_id > label span {
-  margin-left: 5px;
+    margin-left: 5px;
 }
 
 .login_modal .modal_body .user_option {
-  position: absolute;
-  top: 54%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .login_modal .modal_body .user_option span {
-  font-size: 13px;
-  color: #575656;
+    font-size: 13px;
+    color: #575656;
 }
 
 .login_modal .modal_body .user_option span:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  color: black;
+    cursor: pointer;
+    text-decoration: underline;
+    color: black;
 }
 
 .login_modal .modal_body .social_login {
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .login_modal .modal_body .social_login button {
-  width: 320px;
-  height: 53px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  color: #2c2c2c;
-  font-weight: bolder;
-  font-size: 14px;
-  border-radius: 7px;
-  border: none;
-  outline: none;
+    width: 320px;
+    height: 53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    color: #2c2c2c;
+    font-weight: bolder;
+    font-size: 14px;
+    border-radius: 7px;
+    border: none;
+    outline: none;
 }
 
 .login_modal .modal_body .social_login button:hover {
-  cursor: pointer;
-  text-decoration: underline;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .login_modal .modal_body .social_login #naver_login {
-  background: #00c300 url("../../../public/images/ico_naver.png") no-repeat 10px
-    center/50px 50px;
+    background: #00c300 url(../../image/ico_naver.png) no-repeat 10px center/50px 50px;
 }
 
 .login_modal .modal_body .social_login #kakao_login {
-  background: #ffea26 url("../../../public/images/ico_kakao.png") no-repeat 10px
-    center/50px 50px;
+    background: #ffea26 url(../../image/ico_kakao.png) no-repeat 10px center/50px 50px;
 }

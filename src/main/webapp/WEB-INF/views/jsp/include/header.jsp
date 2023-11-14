@@ -157,63 +157,22 @@
         jQ(this).find("ul").stop().slideUp();
     });
 
-    // const modalCoverEle = document.querySelector(".modal_cover");
-    // const loginModalButtonEle = document.querySelector("#login_modal");
-    // const loginEmailInputEle = document.querySelector("#login_email");
-    // const loginPasswordInputEle = document.querySelector("#login_password");
-    // const registerModalEle = document.querySelector(".register_modal");
-    // const joinModalButtonEle = document.querySelector("#join_modal");
-    // const registerInputEles = document.querySelectorAll(
-    //     "#register_form .input_area",
-    // );
-    // const registerEmailInputEle = document.querySelector("#register_email");
-    // const registerNameInputEle = document.querySelector("#register_name");
-    // const registerPasswordInputEle = document.querySelector("#register_password");
-    // const registerPasswordConfirmInputEle = document.querySelector("#register_password_confirm");
-
-    const closeButton = ({modal}) => {
-        if (modal === "login") {
-            document
-                .querySelector(".login_modal .modal_head .close_button")
-                .addEventListener("click", () => {
-                    document.querySelector(".modal_cover").style.display = "none";
-                    document.querySelector(".login_modal").style.display = "none";
-                });
-        } else {
-            document
-                .querySelector(".register_modal .modal_head .close_button")
-                .addEventListener("click", () => {
-                    document.querySelector(".modal_cover").style.display = "none";
-                    document.querySelector(".register_modal").style.display = "none";
-                });
-        }
-    };
-
-    const registerModal = () => {
+    const registerModalButtonEle = document.querySelector("#register_modal");
+    registerModalButtonEle.addEventListener("click", () => {
         const modalCoverEle = document.querySelector(".modal_cover");
         const registerModalEle = document.querySelector(".register_modal");
 
         modalCoverEle.style.display = "block";
         registerModalEle.style.display = "block";
+    })
 
-        closeButton({modal: "register"});
-    }
-
-    const registerModalButtonEle = document.querySelector("#register_modal");
-    registerModalButtonEle.addEventListener("click", registerModal);
-
-    const loginModal = () => {
+    const loginModalButtonEle = document.querySelector("#login_modal");
+    loginModalButtonEle.addEventListener("click", () => {
         const modalCoverEle = document.querySelector(".modal_cover");
         const loginModalEle = document.querySelector(".login_modal");
 
         modalCoverEle.style.display = "block";
         loginModalEle.style.display = "block";
-
-        closeButton({modal: "login"});
-    };
-
-    const loginModalButtonEle = document.querySelector("#login_modal");
-    loginModalButtonEle.addEventListener("click", loginModal);
-
+    });
 
 </script>
