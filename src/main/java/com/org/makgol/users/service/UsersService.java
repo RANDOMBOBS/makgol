@@ -178,6 +178,7 @@ public class UsersService {
     public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpSession session) {
         String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
         String currentDirectory = System.getProperty("user.dir");
+
         FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
 
         usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
@@ -185,6 +186,7 @@ public class UsersService {
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
         int result = userDao.updateUserInfo(usersRequestVo);
+
         if (result > 0) {
             UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
             loginedUsersRequestVo.setPhoto(fileInfo.getPhotoName());
@@ -194,6 +196,7 @@ public class UsersService {
             File oldfile = new File(deleteFile);
             oldfile.delete();
         }
+
         return result;
     }
 
