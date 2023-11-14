@@ -158,9 +158,12 @@ public class UsersService {
             usersRequestVo.setName(loginedUsersRequestVo.getName());
             usersRequestVo.setEmail(loginedUsersRequestVo.getEmail());
             session.setAttribute("loginedUsersRequestVo", usersRequestVo);
+            System.out.println(oldFileName);
+            if(!oldFileName.equals("user_default.jpeg")){
             String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
             File oldfile = new File(deleteFile);
             oldfile.delete();
+            }
         }
 
         return result;
