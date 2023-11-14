@@ -45,12 +45,11 @@
     <input type="password" placeholder="비밀번호 확인" id="passwordCheck" name="passwordCheck">
     <button type="button" id="passwordCheckBtn" name="passwordCheckBtn">비밀번호 확인</button><br />
     <input placeholder="전화번호" id="phone" name="phone" value="${loginedUsersRequestVo.phone}"><br />
-    <input type="text" id="sample5_address" value="${loginedUsersRequestVo.address}"><br>
-
+    <input type="text" id="sample5_address" name="address" value="${loginedUsersRequestVo.address}"><br>
     <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
     <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-    <input type="hidden" id="longitude" >
-    <input type="hidden" id="latitude" >
+    <input type="hidden" name="longitude" id="longitude" >
+    <input type="hidden" name="latitude" id="latitude" >
 
     <input type="file" id="photoFile" name="photoFile">
     <input type="hidden" name="id" value="${loginedUsersRequestVo.id}">
@@ -85,7 +84,10 @@
     } else if (form.phone.value === "") {
       alert("전화번호를 입력해주세요");
       form.phone.focus();
-    } else {
+    } else if (form.phone.value === "") {
+      alert("전화번호를 입력해주세요");
+      form.phone.focus();
+    }else {
       if (window.confirm('정보를 수정하시겠습니까?')) {
       form.submit();
       }

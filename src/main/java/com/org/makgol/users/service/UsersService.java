@@ -189,9 +189,9 @@ public class UsersService {
 
         if (result > 0) {
             UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
-            loginedUsersRequestVo.setPhoto(fileInfo.getPhotoName());
-            loginedUsersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
-            session.setAttribute("loginedUsersRequestVo", loginedUsersRequestVo);
+            usersRequestVo.setName(loginedUsersRequestVo.getName());
+            usersRequestVo.setEmail(loginedUsersRequestVo.getEmail());
+            session.setAttribute("loginedUsersRequestVo", usersRequestVo);
             String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
             File oldfile = new File(deleteFile);
             oldfile.delete();
