@@ -179,8 +179,11 @@ public class UsersService {
         String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
         String currentDirectory = System.getProperty("user.dir");
         FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+
         usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
         usersRequestVo.setPhoto(fileInfo.getPhotoName());
+        usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
+
         int result = userDao.updateUserInfo(usersRequestVo);
         if (result > 0) {
             UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
