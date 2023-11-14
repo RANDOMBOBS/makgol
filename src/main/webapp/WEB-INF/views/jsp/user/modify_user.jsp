@@ -73,6 +73,10 @@
 
   function ModifyUserInfo() {
     let form = document.modify_user_info;
+    if (document.getElementById("longitude").value === "" || document.getElementById("latitude").value === "") {
+                  document.getElementById("longitude").value = "${loginedUsersRequestVo.longitude}";
+                  document.getElementById("latitude").value = "${loginedUsersRequestVo.latitude}";
+              }
     if (form.password.value === "") {
       alert("비밀번호를 입력해주세요");
       form.password.focus();
@@ -89,6 +93,8 @@
       form.phone.focus();
     }else {
       if (window.confirm('정보를 수정하시겠습니까?')) {
+
+
       form.submit();
       }
     }

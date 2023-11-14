@@ -190,17 +190,14 @@ jQuery(document).ready(function() {
         }
 
 */
-     formData.append("name",  	 name);
-            formData.append("email",	 email);
-            formData.append("phone", 	 phone);
-            formData.append("address", 	 address);
-            formData.append("password",  password);
-            formData.append("longitude", longitude);
-            formData.append("latitude",  latitude);
-
-            if(photo != null){ formData.append("photoFile", photo); }
-
-
+        formData.append("name",  	 name);
+        formData.append("email",	 email);
+        formData.append("phone", 	 phone);
+        formData.append("address", 	 address);
+        formData.append("password",  password);
+        formData.append("longitude", longitude);
+        formData.append("latitude",  latitude);
+        if(photo != null){ formData.append("photoFile", photo); }
 
         jQuery.ajax({
             type		: "POST",
