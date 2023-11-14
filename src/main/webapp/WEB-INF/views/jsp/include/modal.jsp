@@ -151,5 +151,40 @@
         </div>
     </div>
 </div>
+<script>
+    const loginModal = () => {
+        const loginModalCloseButtonEle = document.querySelector(".login_modal .modal_head .close_button");
+
+        loginModalCloseButtonEle.addEventListener("click", () => {
+            document.querySelector(".modal_cover").style.display = "none";
+            document.querySelector(".login_modal").style.display = "none";
+        });
+
+        const registerModalButtonEle = document.querySelector(".user_option span:nth-child(1)");
+        registerModalButtonEle.addEventListener("click", () => {
+            const modalCoverEle = document.querySelector(".modal_cover");
+            const registerModalEle = document.querySelector(".register_modal");
+
+            document.querySelector(".login_modal").style.display = "none";
+
+            modalCoverEle.style.display = "block";
+            registerModalEle.style.display = "block";
+        })
+
+    };
+
+    const registerModal = () => {
+        const registerModalCloseButtonEle = document.querySelector(".register_modal .modal_head .close_button")
+
+        registerModalCloseButtonEle.addEventListener("click", () => {
+            document.querySelector(".modal_cover").style.display = "none";
+            document.querySelector(".register_modal").style.display = "none";
+        });
+    };
+
+
+    loginModal();
+    registerModal();
+</script>
 </body>
 </html>
