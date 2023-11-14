@@ -4,6 +4,7 @@ import com.org.makgol.stores.dao.StoresDao;
 import com.org.makgol.stores.vo.Category;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
+import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
@@ -168,6 +169,10 @@ public class UsersService {
 
         return result;
     }
+
+//    public List<StoreResponseVo> myStoreList(int user_id){
+//    return userDao.selectMy
+//    }
 
 
 }

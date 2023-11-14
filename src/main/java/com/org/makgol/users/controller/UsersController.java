@@ -1,5 +1,6 @@
 package com.org.makgol.users.controller;
 
+import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -132,5 +134,10 @@ public class UsersController {
         return "jsp/user/modify_user";
     }
 
+//    @GetMapping("/myStoreList")
+//    public String myStoreList(@RequestParam("user_id") int user_id){
+//        List<StoreResponseVo> storeVos = userService.myStoreList(user_id);
+//        return "jsp/user/my_store_list";
+//    }
 
 }

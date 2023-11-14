@@ -49,14 +49,16 @@
             </tr>
         </table>
     </div>
+
+   <c:url value='/user/myStoreList' var='my_store_url'/><c:param name='user_id' value='${loginedUsersRequestVo.b_id}' /></c:url>
+
     <div id="my_history">
         <span>내 활동이력</span>
         <table>
             <tr>
                 <td>좋아요한 식당</td>
-                <td><a href="#">보러가기</a></td>
+                <td><a href="${my_store_url}">보러가기</a></td>
             </tr>
-
             <tr>
                 <td>작성한 글</td>
                 <td><a href="#">보러가기</a></td>
