@@ -29,7 +29,6 @@ import com.org.makgol.comment.vo.CommentResponseVo;
 public class BoardSuggestionController {
 	private final BoardSuggestionService boardService;
 
-	private final FileUpload fileUpload;
 	/**
 	 * suggestion 게시판 게시글리스트
 	 * 
@@ -82,18 +81,10 @@ public class BoardSuggestionController {
 	@PostMapping("/createConfirm")
 	public String createConfirm(@ModelAttribute BoardVo boardVo) {
 	    String nextPage = "jsp/board/suggestion/create_board_ok";
-	    MultipartFile file = boardVo.getFile();
-	    if (!file.isEmpty()) {
-	        FileInfo fileInfo = fileUpload.fileUpload(file);
-			boardVo.setAttachment(fileInfo.getPhotoPath());
-	    }
-	    
 	    int result = boardService.createBoardConfirm(boardVo);
-	    
 	    if (result < 1) {
 	        nextPage = "jsp/board/suggestion/create_board_ng";
 	    }
-	    
 	    return nextPage;
 	}
 
@@ -196,22 +187,10 @@ public class BoardSuggestionController {
 	@PostMapping("/modifyConfirm")
 	public String modifyConfirm(@ModelAttribute BoardVo boardVo, @RequestParam("oldFile") String oldFile) {
 		String nextPage = "jsp/board/suggestion/modify_board_ok";
-		MultipartFile file = boardVo.getFile();
-		String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
-		String currentDirectory = System.getProperty("user.dir");
-		if (!file.isEmpty()) {
-			FileInfo fileInfo = fileUpload.fileUpload(file);
-			boardVo.setAttachment(fileInfo.getPhotoPath());
-		}
-		
-		int result = boardService.modifyBoardConfirm(boardVo);
 
+		int result = boardService.modifyBoardConfirm(boardVo, oldFile);
 		if (result < 1) {
 			nextPage = "jsp/board/suggestion/modify_board_ng";
-		}else {
-			String deleteFile = currentDirectory+"\\src\\main\\resources\\static\\image\\"+oldFileName;
-			File oldfile= new File(deleteFile);
-			oldfile.delete();
 		}
 		return nextPage;
 	}
@@ -225,16 +204,9 @@ public class BoardSuggestionController {
 	@GetMapping("/delete")
 	public String delete(@RequestParam("b_id") int b_id, @RequestParam("attachment") String attachment) {
 		String nextPage = "jsp/board/suggestion/delete_board_ok";
-		int result = boardService.deleteBoard(b_id);
-		String currentDirectory = System.getProperty("user.dir");
-		String attachmentName = attachment.substring(attachment.lastIndexOf("/")+1, attachment.length());
-
-		String deleteFile = currentDirectory+"\\src\\main\\resources\\static\\image\\"+attachmentName;
+		int result = boardService.deleteBoard(b_id,attachment);
 		if (result < 1) {
 			nextPage = "jsp/board/suggestion/delete_board_ng";
-		} else {
-			File file = new File(deleteFile);
-			file.delete();
 		}
 		return nextPage;
 	}
