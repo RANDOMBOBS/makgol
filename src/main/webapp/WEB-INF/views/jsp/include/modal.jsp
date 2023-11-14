@@ -16,13 +16,13 @@
         </div>
         <div class="modal_body">
             <div class="login_wrapper">
-                <form action="" id="login_form" method="post">
+                <form action="/user/loginConfirm" id="login_form" method="post">
                     <label>
                         <input
                                 autocomplete="off"
                                 class="input_area"
                                 id="login_email"
-                                name="userEmail"
+                                name="email"
                                 placeholder="Email"
                                 type="text"
                         />
@@ -31,7 +31,7 @@
                         <input
                                 class="input_area"
                                 id="login_password"
-                                name="userPassword"
+                                name="password"
                                 placeholder="Password"
                                 type="password"
                         />
