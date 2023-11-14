@@ -67,5 +67,49 @@ public class BoardNoticeController {
         model.addAttribute("boardVo", boardVo);
         return nextPage;
     }
+
+    @GetMapping("/modifyNotice")
+    /***
+     * 게시글 수정 페이지
+     * @param b_id
+     * @param model
+     * @return
+     */
+    public String modifyNotice(@RequestParam("b_id") int b_id, Model model) {
+        String nextPage = "jsp/board/notice/notice_modify_form";
+        BoardVo boardVo = boardNoticeService.modifyNotice(b_id);
+        model.addAttribute("boardVo", boardVo);
+        return nextPage;
+    }
+
+    @PostMapping("/modifyNoticeConfirm")
+    /***
+     * 게시글 수정버튼
+     * @param boardVo
+     * @return
+     */
+    public String modifyNoticeConfirm(BoardVo boardVo) {
+        String nextPage = "jsp/board/notice/notice_modify_ok";
+        int result = boardNoticeService.modifyNoticeConfirm(boardVo);
+        if (result <= 0) {
+            nextPage = "jsp/board/notice/notice_modify_ng";
+        }
+        return nextPage;
+    }
+
+    @GetMapping("/deleteNotice")
+    /***
+     * 게시글 삭제
+     * @param b_id
+     * @return
+     */
+    public String deleteNotice(@RequestParam("b_id") int b_id) {
+        String nextPage = "jsp/board/notice/notice_delete_ok";
+        int result = boardNoticeService.deleteNotice(b_id);
+        if (result <= 0) {
+            nextPage = "jsp/board/notice/notice_delete_ng";
+        }
+        return nextPage;
+    }
 }
 

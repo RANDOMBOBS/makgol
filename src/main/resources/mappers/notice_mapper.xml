@@ -28,9 +28,18 @@
         ORDER BY date DESC
     </select>
 
+    <!-- 게시글 특정단어 검색 -->
+    <!-- Notice select (Notice search) -->
+    <select id="selectSearchNotice" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
+        SELECT b.id AS b_id, b.user_id, b.hit, b.title, b.date, b.contents, b.category, b.sympathy, u.name, u.photo
+        FROM boards AS b
+        JOIN users AS u ON b.user_id = u.id
+        WHERE category = 'notice' AND title LIKE CONCAT('%', #{searchWord}, '%')
+    </select>
+
     <!-- 게시글 정보 -->
     <!-- Notice select (Notice detail) -->
-    <select id="selectDetailNotice" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
+    <select id="selectDetailNotice" resultMap="boardResult" parameterType="int">
         SELECT b.id, b.user_id, b.hit, b.title, b.date,
         b.contents, b.category, b.sympathy, b.attachment,
         u.name, u.photo
@@ -39,13 +48,15 @@
         WHERE b.id = #{id}
     </select>
 
-    <!-- 게시글 특정단어 검색 -->
-    <!-- Notice select (Notice search) -->
-    <select id="selectSearchNotice" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
-        SELECT b.id AS b_id, b.user_id, b.hit, b.title, b.date, b.contents, b.category, b.sympathy, u.name, u.photo
+    <!-- 게시글 수정하기 -->
+    <!-- Notice select (Notice modify) -->
+    <select id="selectModNotice" resultMap="boardResult" parameterType="int">
+        SELECT b.id, b.user_id, b.hit, b.title, b.date,
+        b.contents, b.category, b.sympathy, b.attachment,
+        u.name, u.photo
         FROM boards AS b
         JOIN users AS u ON b.user_id = u.id
-        WHERE category = 'notice' AND title LIKE CONCAT('%', #{searchWord}, '%')
+        WHERE b.id = #{id}
     </select>
 
     <!-- 게시글 추가 -->
@@ -57,5 +68,22 @@
         VALUES
         (#{category},#{title},1,now(),#{contents})
     </insert>
+
+    <!-- 게시글 수정 -->
+    <!-- Notice update -->
+    <update id="updateNotice" parameterType="com.org.makgol.boards.vo.BoardVo">
+        UPDATE boards
+        SET
+        title = #{title},
+        contents=#{contents}
+        WHERE
+        id = #{b_id}
+    </update>
+
+    <delete id="deleteNotice" parameterType="int">
+        DELETE FROM boards
+        WHERE
+        id = #{b_id}
+    </delete>
 
 </mapper>

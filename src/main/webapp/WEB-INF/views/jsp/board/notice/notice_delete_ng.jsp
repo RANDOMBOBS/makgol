@@ -11,6 +11,6 @@
  실패
  
  
- <a href="<c:url value='/board/Notice' />">게시글 목록으로 이동</a>
+ <a href="<c:url value='/board/notice' />">게시글 목록으로 이동</a>
 </body>
 </html>

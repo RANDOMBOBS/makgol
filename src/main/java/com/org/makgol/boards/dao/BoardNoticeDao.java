@@ -44,4 +44,29 @@ public class BoardNoticeDao {
         boardVo = boardNoticeRepository.selectDetailNotice(b_id);
         return boardVo.size() > 0 ? boardVo.get(0) : null;
     } // end
+
+    // 게시글 내용 수정 페이지
+    // Notice detail page
+    public BoardVo selectModNotice(int b_id) {
+        List<BoardVo> boards = null;
+        boards = boardNoticeRepository.selectModNotice(b_id);
+        return boards.size() > 0 ? boards.get(0) : null;
+    } // end
+
+    // 게시글 수정
+    // Notice update
+    public int updateNotice(BoardVo boardVo) throws DataAccessException {
+        int result=-1;
+        result= boardNoticeRepository.updateNotice(boardVo);
+        return result;
+    }
+
+    // 게시글 삭제
+    // Notice delete
+    public int deleteNotice(int b_id) throws DataAccessException {
+        int result=-1;
+        result= boardNoticeRepository.deleteNotice(b_id);
+        return result;
+    } // end
+
 }

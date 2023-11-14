@@ -38,4 +38,22 @@ public class BoardNoticeService {
     public BoardVo detailNotice(int b_id) {
         return boardNoticeDao.selectDetailNotice(b_id);
     }
+
+    // 게시글 수정 페이지
+    // Notice modifyPage
+    public BoardVo modifyNotice(int b_id) {
+        return boardNoticeDao.selectModNotice(b_id);
+    }
+
+    // 게시글 수정 완료
+    // Notice modify update
+    public int modifyNoticeConfirm(BoardVo boardVo) {
+        return boardNoticeDao.updateNotice(boardVo);
+    }
+
+    // 게시글 삭제
+    // Notice delete
+    public int deleteNotice(int b_id) {
+        return boardNoticeDao.deleteNotice(b_id);
+    }
 }

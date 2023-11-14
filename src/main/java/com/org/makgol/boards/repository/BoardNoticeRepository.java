@@ -16,4 +16,10 @@ public interface BoardNoticeRepository {
     int insertNotice(BoardVo boardVo);
 
     List<BoardVo> selectDetailNotice(int b_id);
+
+    List<BoardVo> selectModNotice(int b_id);
+
+    int updateNotice(BoardVo boardVo);
+
+    int deleteNotice(int b_id);
 }

@@ -14,14 +14,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   </style>
     <meta charset="UTF-8" />
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
-    <script type="text/javascript">
-      function deleteBoard(b_id,title) {
-      	let result = confirm('공지사항 ['+ title +'] 를(을) 정말 삭제 하시겠습니까?');
-      	if (result){
-      		location.href = "<c:url value='/board/deleteNotice?b_id="+ b_id +"'/>";
-      }
-     }
-    </script>
+
   </head>
   <body>
 
@@ -70,14 +63,19 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           <c:url value="/board/deleteNotice" var="delete_url">
             <c:param name="b_id" value="${boardVo.b_id}" />
           </c:url>
-          <a
-            class="delete_notice_button"
-            href="${delete_url}"
-            onclick="deleteBoard(${boardVo.b_id},'${boardVo.title}')"
-            >삭제</a
-          >
+          <a class="delete_notice_button" href="#javascript:;" onclick="deleteBoard(${boardVo.b_id},'${boardVo.title}')">삭제</a>
         </div>
       </div>
     </section>
+
+    <script type="text/javascript">
+          function deleteBoard(b_id,title) {
+          	let result = confirm('공지사항 ['+ title +'] 를(을) 정말 삭제 하시겠습니까?');
+          	if (result){
+          		window.location.href = "${delete_url}"
+          }
+         }
+        </script>
+
   </body>
 </html>
