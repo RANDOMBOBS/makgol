@@ -27,25 +27,25 @@
 >
     <div id="my_info">
         <span>내 정보</span>
-        <span><a href="#">수정하기</a></span>
+        <span><a href="<c:url value='/user/modifyUser'/>">수정하기</a></span>
 
         <table>
             <tr>
                 <td>
-                    <img src="<c:url value="http://localhost:8090${loginedUsersRequestVo.photo_path}"/>">
+                <img src="http://localhost:8090${loginedUsersRequestVo.photo_path}" alt="프로필사진"/>
                 </td>
             </tr>
             <tr>
-                <td>김효진</td>
+                <td>${loginedUsersRequestVo.name}</td>
             </tr>
             <tr>
-                <td>kyg0328@naver.com</td>
+                <td>${loginedUsersRequestVo.email}</td>
             </tr>
             <tr>
-                <td>+82 10-2642-4077</td>
+                <td>${loginedUsersRequestVo.phone}</td>
             </tr>
             <tr>
-                <td>경기도 군포시 광정로 119, 731동 1201호</td>
+                <td>${loginedUsersRequestVo.address}</td>
             </tr>
         </table>
     </div>

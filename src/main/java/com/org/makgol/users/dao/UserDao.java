@@ -147,11 +147,11 @@ public class UserDao {
 	}
 
 	public int updateUserInfo(UsersRequestVo usersRequestVo){
-		String sql = "UPDATE users SET password=?, phone=? WHERE id=?";
-		usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
+		String sql = "UPDATE users SET password=?, phone=?, photo=?, photo_path=? WHERE id=?";
+
 		int result = -1;
 		try {
-			result = jdbcTemplate.update(sql,usersRequestVo.getPassword(), usersRequestVo.getPhone(), usersRequestVo.getId());
+			result = jdbcTemplate.update(sql,usersRequestVo.getPassword(), usersRequestVo.getPhone(), usersRequestVo.getPhoto(), usersRequestVo.getPhoto_path(), usersRequestVo.getId());
 		} catch (Exception e){
 			e.printStackTrace();
 		}

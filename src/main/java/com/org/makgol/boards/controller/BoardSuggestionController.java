@@ -1,42 +1,35 @@
 package com.org.makgol.boards.controller;
 
 import java.io.File;
-import java.net.http.HttpResponse;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.org.makgol.comment.vo.CommentRequestVo;
 import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
 
 import com.org.makgol.boards.UploadFileService;
 import com.org.makgol.boards.service.BoardSuggestionService;
 import com.org.makgol.boards.vo.BoardVo;
-import com.org.makgol.comment.vo.CommentVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/board/suggestion")
 public class BoardSuggestionController {
-	@Autowired
-	BoardSuggestionService boardService;
+	private final BoardSuggestionService boardService;
 
-	@Autowired
-	UploadFileService uploadFileService;
-
+	private final FileUpload fileUpload;
 	/**
 	 * suggestion 게시판 게시글리스트
 	 * 
@@ -82,18 +75,17 @@ public class BoardSuggestionController {
 	/**
 	 * suggestion 글 쓰기 폼 제출
 	 * 
-	 * @param boardVo -- 카테고리 : category 제목 : title 작성자 : user_id 내용 : contents
-	 * 
+	 *
 	 * @return 글쓰기 성공 여부 성공 시 : board/create_board_ok.jsp 실패 시 :
 	 *         board/create_board_ng.jsp
 	 */
 	@PostMapping("/createConfirm")
-	public String createConfirm(BoardVo boardVo, @RequestParam("file") MultipartFile file) {
+	public String createConfirm(@ModelAttribute BoardVo boardVo) {
 	    String nextPage = "jsp/board/suggestion/create_board_ok";
-	    
-	    if (!file.isEmpty()) { // 파일이 업로드되었는지 확인
-	        String fileName = uploadFileService.boardUpload(file);
-	        boardVo.setAttachment(fileName);
+	    MultipartFile file = boardVo.getFile();
+	    if (!file.isEmpty()) {
+	        FileInfo fileInfo = fileUpload.fileUpload(file);
+			boardVo.setAttachment(fileInfo.getPhotoPath());
 	    }
 	    
 	    int result = boardService.createBoardConfirm(boardVo);
@@ -127,14 +119,14 @@ public class BoardSuggestionController {
 	/**
 	 * suggestion 댓글 INSERT
 	 * 
-	 * @param commentVo : 댓글 폼에서 가져온 정보(board_id, nickname, content)
+	 * @param commentRequestVo : 댓글 폼에서 가져온 정보(board_id, nickname, content)
 	 * 
 	 * @return result값(INSERT 쿼리문 성공여부)를 가지고 suggestion_board_detail.jsp로 이동
 	 */
 	@ResponseBody
 	@PostMapping("/commentCreate")
-	public int createComment(@RequestBody CommentVo commentVo) {
-		int result = boardService.addComment(commentVo);
+	public int createComment(@RequestBody CommentRequestVo commentRequestVo) {
+		int result = boardService.addComment(commentRequestVo);
 		return result;
 	}
 
@@ -148,21 +140,21 @@ public class BoardSuggestionController {
 	 */
 	@RequestMapping(value = "/commentList/{board_id}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String commentList(@PathVariable("board_id") int board_id, Model model) {
-		List<CommentVo> commentVos = boardService.getCommentList(board_id);
-		model.addAttribute("commentVos", commentVos);
+		List<CommentResponseVo> commentResponseVos = boardService.getCommentList(board_id);
+		model.addAttribute("commentVos", commentResponseVos);
 		return "jsp/board/suggestion/board_comment_list";
 	}
 
 	/**
 	 * suggestion 댓글 수정 폼 제출
 	 * 
-	 * @param commentVo : 수정폼에서 가져온 데이터(nickname, contents, id)
+	 * @param commentResponseVo : 수정폼에서 가져온 데이터(nickname, contents, id)
 	 * @return result값(UPDATE 쿼리문 성공여부)를 가지고 board_comment_list.jsp로 이동
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/commentModifyConfirm", method = { RequestMethod.GET, RequestMethod.POST })
-	public int commentModifyConfirm(@RequestBody CommentVo commentVo) {
-		int result = boardService.modifyCommentConfirm(commentVo);
+	public int commentModifyConfirm(@RequestBody CommentResponseVo commentResponseVo) {
+		int result = boardService.modifyCommentConfirm(commentResponseVo);
 		return result;
 	}
 
@@ -198,25 +190,26 @@ public class BoardSuggestionController {
 	/**
 	 * suggestion 글 수정 폼 제출
 	 * 
-	 * @param boardVo -- 카테고리 : category 제목 : title 작성자 : user_id 내용 : contents
-	 * 
+	 *
 	 * @return 수정 성공 여부 성공 시 : modify_board_ok.jsp 실패 시 : modify_board_ng.jsp
 	 */
 	@PostMapping("/modifyConfirm")
-	public String modifyConfirm(BoardVo boardVo, @RequestParam("file") MultipartFile file, @RequestParam("trash") String trash) {
+	public String modifyConfirm(@ModelAttribute BoardVo boardVo, @RequestParam("oldFile") String oldFile) {
 		String nextPage = "jsp/board/suggestion/modify_board_ok";
-
-		
-		if (!file.isEmpty()) { 
-	        String fileName = uploadFileService.boardUpload(file);
-	        boardVo.setAttachment(fileName);
-	    }
+		MultipartFile file = boardVo.getFile();
+		String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
+		String currentDirectory = System.getProperty("user.dir");
+		if (!file.isEmpty()) {
+			FileInfo fileInfo = fileUpload.fileUpload(file);
+			boardVo.setAttachment(fileInfo.getPhotoPath());
+		}
 		
 		int result = boardService.modifyBoardConfirm(boardVo);
+
 		if (result < 1) {
 			nextPage = "jsp/board/suggestion/modify_board_ng";
 		}else {
-			String deleteFile = "C:\\makgol\\board\\upload\\"+trash;
+			String deleteFile = currentDirectory+"\\src\\main\\resources\\static\\image\\"+oldFileName;
 			File oldfile= new File(deleteFile);
 			oldfile.delete();
 		}
@@ -233,7 +226,10 @@ public class BoardSuggestionController {
 	public String delete(@RequestParam("b_id") int b_id, @RequestParam("attachment") String attachment) {
 		String nextPage = "jsp/board/suggestion/delete_board_ok";
 		int result = boardService.deleteBoard(b_id);
-		String deleteFile = "C:\\makgol\\board\\upload\\"+attachment;
+		String currentDirectory = System.getProperty("user.dir");
+		String attachmentName = attachment.substring(attachment.lastIndexOf("/")+1, attachment.length());
+
+		String deleteFile = currentDirectory+"\\src\\main\\resources\\static\\image\\"+attachmentName;
 		if (result < 1) {
 			nextPage = "jsp/board/suggestion/delete_board_ng";
 		} else {
