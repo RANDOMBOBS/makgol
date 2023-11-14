@@ -22,24 +22,6 @@ request.setCharacterEncoding("utf-8");
     	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 
-<style>
-ul {
-	text-align: left;
-	display: flex;
-	justify-content: space-between;
-	width: 800px;
-	list-style: none;
-}
-
-ul img {
-	width: 20px;
-	height: 20px;
-}
-
-label {
-	cursor: pointer;
-}
-</style>
 </head>
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
@@ -69,7 +51,7 @@ label {
 
 		<c:if test="${not empty boardVo.attachment}">
 			<tr>
-				<img src="<c:url value="file:///C:/makgol/board/upload//${boardVo.attachment}"/>">
+				<img src="http://localhost:8090${boardVo.attachment}">
 			</tr>
 		</c:if>
 	</table>
@@ -99,9 +81,11 @@ label {
 
 		<c:if test="${boardVo.user_id == loginedUsersRequestVo.getId()}">
 			<a href="${modify_url}">수정</a>
-			<a href="${delete_url}">삭제</a>
+			<a href="#javaScript" onclick="boardDelete()">삭제</a>
 		</c:if>
 	</div>
+
+
 
 	<form name="create_comment_form">
 		<p>댓글</p>
@@ -143,6 +127,12 @@ label {
 			userLikeStatus(b_id, user_id);
 		}
 		comList();
+
+		function boardDelete(){
+            if (window.confirm('글을 삭제하시겠습니까?')) {
+                window.location.href = "${delete_url}";
+            }
+        }
 	</script>
 </body>
 </html>

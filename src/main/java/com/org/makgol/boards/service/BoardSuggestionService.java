@@ -2,7 +2,8 @@ package com.org.makgol.boards.service;
 
 import com.org.makgol.boards.dao.BoardSuggestionDao;
 import com.org.makgol.boards.vo.BoardVo;
-import com.org.makgol.comment.vo.CommentVo;
+import com.org.makgol.comment.vo.CommentRequestVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,23 +47,23 @@ public class BoardSuggestionService {
     /**
      * suggestion 댓글 INSERT
      **/
-    public int addComment(CommentVo commentVo) {
+    public int addComment(CommentRequestVo commentRequestVo) {
 
-        return boardDao.insertComment(commentVo);
+        return boardDao.insertComment(commentRequestVo);
     }
 
     /**
      * suggestion 댓글 SELECT
      **/
-    public List<CommentVo> getCommentList(int board_id) {
+    public List<CommentResponseVo> getCommentList(int board_id) {
         return boardDao.selectCommentList(board_id);
     }
 
     /**
      * suggestion 댓글 수정 폼 제출
      **/
-    public int modifyCommentConfirm(CommentVo commentVo) {
-        return boardDao.updateComment(commentVo);
+    public int modifyCommentConfirm(CommentResponseVo commentResponseVo) {
+        return boardDao.updateComment(commentResponseVo);
     }
 
     /**

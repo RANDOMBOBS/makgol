@@ -25,7 +25,8 @@
 
 <div class="form-group email-form">
   <label>회원정보 수정</label>
-  <form action="<c:url value='/user/modifyUserConfirm'/>" method="post" name="modify_user_info" enctype="multipart/form-data">
+  <form action="<c:url value='/user/modifyUserConfirm'><c:param name="oldFile" value="${loginedUsersRequestVo.photo_path}"/></c:url>"
+ method="post" name="modify_user_info" enctype="multipart/form-data">
     <div class="input-group">
       <input type="text" class="form-control" name="userEmail1" id="userEmail1" value="${emailId}" readonly disabled>
       <select class="form-control" name="userEmail2" id="userEmail2" readonly disabled>
@@ -41,6 +42,10 @@
     <input type="password" placeholder="비밀번호 확인" id="passwordCheck" name="passwordCheck">
     <button type="button" id="passwordCheckBtn" name="passwordCheckBtn">비밀번호 확인</button><br />
     <input placeholder="전화번호" id="phone" name="phone" value="${loginedUsersRequestVo.phone}"><br />
+    <input type="text" id="sample5_address" value="${loginedUsersRequestVo.address}"><br>
+    <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
+    <input type="hidden" id="longitude" >
+    <input type="hidden" id="latitude" >
     <input type="file" id="photoFile" name="photoFile">
     <input type="hidden" name="id" value="${loginedUsersRequestVo.id}">
     <button type="button" onclick="ModifyUserInfo()">회원정보수정</button>
@@ -75,9 +80,12 @@
       alert("전화번호를 입력해주세요");
       form.phone.focus();
     } else {
+      if (window.confirm('정보를 수정하시겠습니까?')) {
       form.submit();
+      }
     }
   }
+
 </script>
 </body>
 </html>

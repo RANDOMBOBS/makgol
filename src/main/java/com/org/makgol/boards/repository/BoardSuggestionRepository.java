@@ -1,7 +1,8 @@
 package com.org.makgol.boards.repository;
 
 import com.org.makgol.boards.vo.BoardVo;
-import com.org.makgol.comment.vo.CommentVo;
+import com.org.makgol.comment.vo.CommentRequestVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,11 +19,11 @@ public interface BoardSuggestionRepository {
 
     int updateHit(int b_id);
 
-    int insertComment(CommentVo commentVo);
+    int insertComment(CommentRequestVo commentRequestVo);
 
-    List<CommentVo> selectCommentList(int board_id);
+    List<CommentResponseVo> selectCommentList(int board_id);
 
-    int updateComment(CommentVo commentVo);
+    int updateComment(CommentResponseVo commentResponseVo);
 
     int deleteComment(int id);
 

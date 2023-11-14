@@ -46,7 +46,7 @@ public class UsersRequestVo {
 	String phone;
 	
 	//photo file
-	MultipartFile photoFile = null;
+	MultipartFile photoFile;
 
 	//파일 이름
 	String photo;
@@ -54,9 +54,15 @@ public class UsersRequestVo {
 	// 프로필사진경로
 	String photo_path;
 
+
 	//경도
+	@NotBlank(message = "경도")
+	@NotEmpty
     double longitude;
+
     //위도
+	@NotBlank(message = "위도")
+	@NotEmpty
     double latitude;
 
 	@NotBlank(message = "회원등급(필수)")

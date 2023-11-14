@@ -1,5 +1,8 @@
 package com.org.makgol.util.file;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -8,7 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Component
+@PropertySource("classpath:/application.properties")
 public class FileUpload {
+
+    @Value("${file.path.matcher}")
+    private String filePathMatcher;
 
     public List<FileInfo> fileListUpload(List<MultipartFile> fileList) {
         List<FileInfo> fileInfoList = new ArrayList<>();
@@ -59,10 +67,6 @@ public class FileUpload {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-
-
         }
         return fileInfoList;
     }
@@ -110,12 +114,8 @@ public class FileUpload {
 
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-                String path = uploadFolder+"\\"+uniqueName + fileExtension;
-                path = path.replace("\\","/");
-                int startIndex = path.indexOf("resources/static/image/");
-                path = path.substring(startIndex);
 
-                fileInfo.setPhotoPath(path);
+                fileInfo.setPhotoPath(filePathMatcher+uniqueName+fileExtension);
                 fileInfo.setPhotoName(fileRealName);
 
             } catch (IllegalStateException e) {

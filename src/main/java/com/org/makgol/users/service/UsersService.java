@@ -16,8 +16,10 @@ import com.org.makgol.util.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,6 +36,7 @@ public class UsersService {
     private final KakaoMapSearch kakaoMapSearch;
     private final StoresDao storesDao;
     private final UsersRepository usersRepository;
+    private final FileUpload fileUpload;
 
     public String userFindId(String userEmail){
         return userEmail;
@@ -85,7 +88,7 @@ public class UsersService {
         //사용자 패스워드 암호화
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        FileUpload fileUpload = new FileUpload();
+
         FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
 
         usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
@@ -172,8 +175,23 @@ public class UsersService {
         return !result;
     }
 
-    public int modifyUserInfo(UsersRequestVo usersRequestVo){
-        return userDao.updateUserInfo(usersRequestVo);
+    public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpSession session) {
+        String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
+        String currentDirectory = System.getProperty("user.dir");
+        FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+        usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+        usersRequestVo.setPhoto(fileInfo.getPhotoName());
+        int result = userDao.updateUserInfo(usersRequestVo);
+        if (result > 0) {
+            UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
+            loginedUsersRequestVo.setPhoto(fileInfo.getPhotoName());
+            loginedUsersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+            session.setAttribute("loginedUsersRequestVo", loginedUsersRequestVo);
+            String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
+            File oldfile = new File(deleteFile);
+            oldfile.delete();
+        }
+        return result;
     }
 
 

@@ -3,7 +3,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="java.util.List"%>
-<%@page import="com.org.makgol.comment.vo.CommentVo"%>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
 	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
@@ -14,8 +13,7 @@
 <c:forEach var="item" items="${commentVos}">
 	<div class="one_comment">
 		<ul>
-			<li><img
-				src="<c:url value="file:///C:/makgol/user/upload//${item.getPhoto()}"/>"></li>
+			<li><img src="http://localhost:8090${item.photo_path}"/></li>
 			<li>닉네임은 ${item.getNickname()}</li>
 			<li>내용은 ${item.getContent()}</li>
 			<li>작성일은 ${item.getDate()}</li>
