@@ -198,6 +198,7 @@ jQuery(document).ready(function() {
         formData.append("password",  password);
         formData.append("longitude", longitude);
         formData.append("latitude",  latitude);
+
         if(photo != null){ formData.append("photoFile", photo); }
 
         jQuery.ajax({
