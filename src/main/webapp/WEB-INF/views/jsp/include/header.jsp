@@ -98,17 +98,13 @@
                 </ul>
             </li>
 
-
-
-             <c:url value='/user/logout' var='logout_url'/>
-
             <c:choose>
                 <c:when test="${loginedUsersRequestVo != null}">
                     <c:if test="${loginedUsersRequestVo.getGrade() == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
                     <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
-                    <li><a href="#" id="logout_link">LOGOUT</a></li>
+                    <li><a href="<c:url value=''/>" id="logout_link">LOGOUT</a></li>
                 </c:when>
                 <c:otherwise>
                     <li><a href="#" id="register_modal">JOIN</a></li>
@@ -126,8 +122,10 @@
     var jQ = jQuery;
 
 jQ("#logout_link").on("click", function () {
+        alert("1234");
         var currentURL = window.location.href;
-        jQ(this).attr("href", "${logout_url}?link=" + encodeURIComponent(currentURL));
+        alert(encodeURIComponent(currentURL));
+        jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
     });
 
 

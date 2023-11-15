@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -100,16 +101,24 @@ public class UsersController {
         return nextPage;
     }
     @GetMapping("/logout")
-    public String logout(HttpSession session, @RequestParam("link") String link){
-        System.out.println("링크는???"+link);
+    public String logout(HttpSession session, @RequestParam("link") String link) {
+        System.out.println("링크는???" + link);
         session.removeAttribute("blackList");
         session.invalidate();
-
-        if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")){
-            return "home";
-        }else {
-            return "redirect:" + link;
+        List<String> urlList = new ArrayList<String>();
+        urlList.add("/admin/userManagement");
+        urlList.add("/suggestion/create");
+        urlList.add("/suggestion/modify");
+        urlList.add("/user/modifyUser");
+        urlList.add("/user/myHistory");
+        urlList.add("/user/myPage");
+        urlList.add("/user/myStoreList");
+        for (String url : urlList) {
+            if (link.contains(url)) {
+                return "home";
+            }
         }
+        return "redirect:" + link;
     }
 
     @GetMapping("/myPage")

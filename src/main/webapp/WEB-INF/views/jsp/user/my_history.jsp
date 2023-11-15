@@ -15,6 +15,6 @@
 </head>
 <body>
 <jsp:include page="../include/header.jsp"></jsp:include>
-
+<div id="my_history"></div>
 </body>
 </html>
