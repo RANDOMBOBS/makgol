@@ -172,7 +172,6 @@
         });
     }
 </script>
-<jsp:include page="jsp/include/modal.jsp"></jsp:include>
 </body>
 </html>
 

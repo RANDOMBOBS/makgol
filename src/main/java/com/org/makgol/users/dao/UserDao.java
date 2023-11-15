@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.org.makgol.boards.vo.BoardVo;
+import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersResponseVo;
 import org.mindrot.jbcrypt.BCrypt;
@@ -134,26 +136,28 @@ public class UserDao {
 
 
 	// 사용자 정보 조회 (로그인)
-	public UsersRequestVo selectUser(UsersRequestVo usersRequestVo) {
-		String sql = "SELECT * FROM users WHERE email = ?";
+	public UsersRequestVo selectUser(String email) {
 		List<UsersRequestVo> list = null;
-		try {
-			RowMapper<UsersRequestVo> rowMapper = BeanPropertyRowMapper.newInstance(UsersRequestVo.class);
-			list = jdbcTemplate.query(sql, rowMapper, usersRequestVo.getEmail());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		list = usersRepository.selectUser(email);
 		return list.size()>0 ? list.get(0) : null;
 	}
 
 	public int updateUserInfo(UsersRequestVo usersRequestVo){
-		String sql = "UPDATE users SET password=?, phone=?, photo=?, photo_path=?, address=?, longitude=?, latitude=? WHERE id=?";
 		int result = -1;
-		try {
-			result = jdbcTemplate.update(sql,usersRequestVo.getPassword(), usersRequestVo.getPhone(), usersRequestVo.getPhoto(), usersRequestVo.getPhoto_path(), usersRequestVo.getAddress(), usersRequestVo.getLongitude(), usersRequestVo.getLatitude(), usersRequestVo.getId());
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		result = usersRepository.updateUserInfo(usersRequestVo);
 		return result;
 	}
+
+	public List<StoreResponseVo> selectMyStoreList(int user_id){
+		List<StoreResponseVo> storeVos = null;
+		storeVos = usersRepository.selectMyStoreList(user_id);
+		return storeVos;
+	}
+
+	public List<BoardVo> selectMyPostList(int user_id){
+		List<BoardVo> boardVos = null;
+		boardVos = usersRepository.selectMyPostList(user_id);
+		return boardVos;
+	}
+
 }

@@ -44,4 +44,6 @@ public interface BoardSuggestionRepository {
     int selectLikeCount(int b_id);
 
     void updateBoardSympathy(Map<String, Integer> map);
+
+    int deleteHistoryBoard(int board_id);
 }

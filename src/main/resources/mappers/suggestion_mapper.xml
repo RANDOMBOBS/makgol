@@ -151,8 +151,7 @@
     </insert>
 
     <delete id="deleteBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
-        DELETE
-        FROM board_likes
+        DELETE FROM board_likes
         WHERE b_id = #{b_id}
           AND user_id = #{user_id}
     </delete>
@@ -170,5 +169,8 @@
         WHERE id = #{b_id}
     </update>
 
-
+<delete id="deleteHistoryBoard" parameterType="int">
+    DELETE FROM boards
+    WHERE id = #{board_id}
+</delete>
 </mapper>

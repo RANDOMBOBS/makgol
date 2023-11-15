@@ -2,10 +2,10 @@ package com.org.makgol.users.service;
 
 import com.org.makgol.exception.CustomException;
 import com.org.makgol.exception.ErrorCode;
+import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.stores.dao.StoresDao;
-import com.org.makgol.stores.vo.Category;
-import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
+import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
@@ -121,7 +121,8 @@ public class UsersService {
     }// joinUser_END
 
     public UsersRequestVo loginConfirm(UsersRequestVo usersRequestVo) {
-        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(usersRequestVo);
+        String email = usersRequestVo.getEmail();
+        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(email);
 
         if(loginedInUsersRequestVo == null) { throw new CustomException(ErrorCode.NOT_FOUND_USER); }
 
@@ -144,7 +145,7 @@ public class UsersService {
         String currentDirectory = System.getProperty("user.dir");
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if(usersRequestVo.getPhotoFile() != null){
+        if(usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()){
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
@@ -160,14 +161,22 @@ public class UsersService {
             usersRequestVo.setName(loginedUsersRequestVo.getName());
             usersRequestVo.setEmail(loginedUsersRequestVo.getEmail());
             session.setAttribute("loginedUsersRequestVo", usersRequestVo);
+            if(!oldFileName.equals("user_default.jpeg")){
             String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
             File oldfile = new File(deleteFile);
             oldfile.delete();
+            }
         }
 
         return result;
     }
 
+    public List<StoreResponseVo> myStoreList(int user_id){
+    return userDao.selectMyStoreList(user_id);
+    }
 
+    public List<BoardVo> getMyPostList(int user_id){
+        return userDao.selectMyPostList(user_id);
+    }
 }
 

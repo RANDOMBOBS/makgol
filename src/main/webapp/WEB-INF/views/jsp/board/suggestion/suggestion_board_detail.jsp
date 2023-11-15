@@ -107,8 +107,6 @@ request.setCharacterEncoding("utf-8");
 				<input type="text" name="nickname" placeholder="로그인 후 댓글 작성이 가능합니다."
 					disabled />
 				<br />
-				<a href="/user/login">로그인하러가기</a>
-				<br />
 
 			</c:otherwise>
 		</c:choose>

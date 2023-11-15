@@ -7,6 +7,8 @@
     UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
     UsersRequestVo blackList = (UsersRequestVo) session.getAttribute("blackList");
 %>
+<jsp:include page="./modal.jsp"></jsp:include>
+
 <header id="header">
     <div class="all_category">
         <div class="show_category">
@@ -95,13 +97,14 @@
                     <li><a href="<c:url value='/board/vent'/>">하소연 게시판</a></li>
                 </ul>
             </li>
+
             <c:choose>
                 <c:when test="${loginedUsersRequestVo != null}">
                     <c:if test="${loginedUsersRequestVo.getGrade() == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
                     <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
-                    <li><a href="<c:url value='/user/logout'/>">LOGOUT</a></li>
+                    <li><a href="<c:url value=''/>" id="logout_link">LOGOUT</a></li>
                 </c:when>
                 <c:otherwise>
                     <li><a href="#" id="register_modal">JOIN</a></li>
@@ -118,9 +121,15 @@
     $.noConflict();
     var jQ = jQuery;
 
+jQ("#logout_link").on("click", function () {
+        var currentURL = window.location.href;
+        jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
+    });
+
+
     let black = "${blackList}";
     if (black) {
-        alert("블랙리스트입니다.")
+        alert("접근이 제한된 사용자입니다.")
 
         jQ.ajax({
             url: "/user/logout",
