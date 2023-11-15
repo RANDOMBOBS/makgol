@@ -1,8 +1,6 @@
 package com.org.makgol.users.service;
 
 import com.org.makgol.stores.dao.StoresDao;
-import com.org.makgol.stores.vo.Category;
-import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
@@ -16,12 +14,9 @@ import com.org.makgol.util.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,19 +33,19 @@ public class UsersService {
     private final UsersRepository usersRepository;
     private final FileUpload fileUpload;
 
-    public String userFindId(String userEmail){
+    public String userFindId(String userEmail) {
         return userEmail;
     }
 
     //userFindPassword
-    public String userFindPassword(String userEmail){
+    public String userFindPassword(String userEmail) {
 
-        if(userDao.findUserEmail(userEmail)) {
+        if (userDao.findUserEmail(userEmail)) {
 
-            int randomNumber= mailSendUtil.makeRandomNumber();
+            int randomNumber = mailSendUtil.makeRandomNumber();
             String newPassword = String.valueOf(randomNumber);
 
-            if(userDao.updatePassword(newPassword, userEmail)) {
+            if (userDao.updatePassword(newPassword, userEmail)) {
                 mailSendUtil.sendMail(randomNumber, userEmail);
 
             }
@@ -63,12 +58,11 @@ public class UsersService {
     }// userFindPassword_END
 
 
-
     //이메일 번호 송신
     public boolean checkEmail(String email) {
-        int authNumber= mailSendUtil.makeRandomNumber();
+        int authNumber = mailSendUtil.makeRandomNumber();
         String key = String.valueOf(authNumber);
-        if(mailSendUtil.sendMail(authNumber, email)){
+        if (mailSendUtil.sendMail(authNumber, email)) {
             return redisUtil.setDataExpire(key, email, 60 * 3L);
         }
         return false;
@@ -89,7 +83,7 @@ public class UsersService {
         //사용자 패스워드 암호화
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if(usersRequestVo.getPhotoFile() != null){
+        if (usersRequestVo.getPhotoFile() != null) {
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
@@ -99,20 +93,21 @@ public class UsersService {
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
-        if(userDao.createUser(usersRequestVo)) {
+        if (userDao.createUser(usersRequestVo)) {
 
             UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
             List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
             try {
                 //업장 중복 체크
-                System.out.println("before storeRequestVoList --> : "+storeRequestVoList.size());
+                System.out.println("before storeRequestVoList --> : " + storeRequestVoList.size());
                 System.out.println(storesDao.checkStore(storeRequestVoList));
-                System.out.println("after storeRequestVoList --> : "+storeRequestVoList.size());
+                System.out.println("after storeRequestVoList --> : " + storeRequestVoList.size());
 
                 HashMap<String, Object> storeMap = kakaoMapSearch.storeInfoRequest(storeRequestVoList);
                 storesDao.insertStore(storeMap);
-            } catch(Exception e) {}
+            } catch (Exception e) {
+            }
 
             return true;
         }
@@ -138,11 +133,11 @@ public class UsersService {
     }
 
     public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpSession session) {
-        String oldFileName = oldFile.substring(oldFile.lastIndexOf("/")+1, oldFile.length());
+        String oldFileName = oldFile.substring(oldFile.lastIndexOf("/") + 1);
         String currentDirectory = System.getProperty("user.dir");
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if(usersRequestVo.getPhotoFile() != null){
+        if (usersRequestVo.getPhotoFile() != null) {
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());

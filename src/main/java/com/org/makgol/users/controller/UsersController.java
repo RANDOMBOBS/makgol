@@ -3,18 +3,15 @@ package com.org.makgol.users.controller;
 import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
-import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
 
 @Controller
 @RequestMapping("/user")
@@ -22,10 +19,11 @@ import java.io.File;
 public class UsersController {
     private final UsersService userService;
     private final FileUpload fileUpload;
+
     //joinUser_POST
     @PostMapping("/join")
     public ResponseEntity<?> joinUser(@ModelAttribute @Valid UsersRequestVo usersRequestVo) {
-        System.out.println("유저정보?"+usersRequestVo);
+        System.out.println("유저정보?" + usersRequestVo);
         Boolean result = userService.joinUser(usersRequestVo);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -61,12 +59,16 @@ public class UsersController {
     public ResponseEntity<?> mailCheckDuplication(@RequestParam("email") String email) {
         Boolean result = userService.mailCheckDuplication(email);
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        if (result) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
 
     } // mailCheckDuplication_END
 
     @PostMapping("/authNumberCheck")
-    public ResponseEntity<?>  authNumberCheck(@Valid @RequestBody AuthNumberVo authNumberVo) {
+    public ResponseEntity<?> authNumberCheck(@Valid @RequestBody AuthNumberVo authNumberVo) {
         //int number = Integer.parseInt(auth_number);
         boolean result = userService.checkNumber(authNumberVo.getAuth_number(), authNumberVo.getEmail());
 
@@ -74,7 +76,6 @@ public class UsersController {
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     } //authNumberCheck_END
-
 
 
     @GetMapping("/login")
@@ -98,7 +99,7 @@ public class UsersController {
             if (!(loginedUsersRequestVo.getGrade() != null && "블랙리스트".equals(loginedUsersRequestVo.getGrade()))) {
                 // 로그인 성공 시 사용자 정보를 세션에 저장하고 세션
                 session.setAttribute("loginedUsersRequestVo", loginedUsersRequestVo);
-            } else{
+            } else {
                 session.setAttribute("blackList", loginedUsersRequestVo);
             }
         }
@@ -106,7 +107,7 @@ public class UsersController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.removeAttribute("blackList");
         session.invalidate();
 
@@ -114,12 +115,12 @@ public class UsersController {
     }
 
     @GetMapping("/myPage")
-    public String myPage(){
+    public String myPage() {
         return "jsp/user/my_page";
     }
 
     @GetMapping("/modifyUser")
-    public String modify_user(){
+    public String modify_user() {
         return "jsp/user/modify_user";
     }
 
