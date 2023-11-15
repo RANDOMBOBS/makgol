@@ -1,5 +1,7 @@
 package com.org.makgol.users.service;
 
+import com.org.makgol.exception.CustomException;
+import com.org.makgol.exception.ErrorCode;
 import com.org.makgol.stores.dao.StoresDao;
 import com.org.makgol.stores.vo.Category;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
@@ -94,7 +96,6 @@ public class UsersService {
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
-
             usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
@@ -122,6 +123,7 @@ public class UsersService {
     public UsersRequestVo loginConfirm(UsersRequestVo usersRequestVo) {
         UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(usersRequestVo);
 
+        if(loginedInUsersRequestVo == null) { throw new CustomException(ErrorCode.NOT_FOUND_USER); }
 
         if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
             loginedInUsersRequestVo = null;

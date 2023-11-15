@@ -79,6 +79,9 @@ dependencies {
 
     // 핫리로딩 종속성
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    // jackson-datatype-jsr310 모듈을 사용하여 Java 8의 날짜 및 시간 유형을 처리하도록 Jackson을 구성
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 }
 
 tasks.named('test') {
