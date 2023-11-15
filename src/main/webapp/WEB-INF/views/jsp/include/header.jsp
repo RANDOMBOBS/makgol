@@ -98,9 +98,9 @@
                 </ul>
             </li>
 
-            <c:url value='/user/logout' var='logout_url'>
-                <c:param name='link' value='${pageContext.request.requestURL}' />
-            </c:url>
+
+
+             <c:url value='/user/logout' var='logout_url'/>
 
             <c:choose>
                 <c:when test="${loginedUsersRequestVo != null}">
@@ -108,7 +108,7 @@
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
                     <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
-                    <li><a href="<c:url value='${logout_url}'/>">LOGOUT</a></li>
+                    <li><a href="#" id="logout_link">LOGOUT</a></li>
                 </c:when>
                 <c:otherwise>
                     <li><a href="#" id="register_modal">JOIN</a></li>
@@ -124,6 +124,12 @@
 <script>
     $.noConflict();
     var jQ = jQuery;
+
+jQ("#logout_link").on("click", function () {
+        var currentURL = window.location.href;
+        jQ(this).attr("href", "${logout_url}?link=" + encodeURIComponent(currentURL));
+    });
+
 
     let black = "${blackList}";
     if (black) {

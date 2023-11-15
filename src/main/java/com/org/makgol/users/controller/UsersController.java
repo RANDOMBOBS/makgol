@@ -35,7 +35,6 @@ public class UsersController {
 
     @GetMapping("/join")
     public String userJoinPage() {
-
         String nextPage = "jsp/user/user_join";
         return nextPage;
     } // userJoinPage_END
@@ -102,15 +101,15 @@ public class UsersController {
     }
     @GetMapping("/logout")
     public String logout(HttpSession session, @RequestParam("link") String link){
-        String cutWord = "views/";
-        int cutPoint = link.indexOf(cutWord)+6;
-        int extension = link.lastIndexOf(".");
-        String nextPage = link.substring(cutPoint, extension);
-
+        System.out.println("링크는???"+link);
         session.removeAttribute("blackList");
         session.invalidate();
 
-        return nextPage;
+        if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")){
+            return "home";
+        }else {
+            return "redirect:" + link;
+        }
     }
 
     @GetMapping("/myPage")
