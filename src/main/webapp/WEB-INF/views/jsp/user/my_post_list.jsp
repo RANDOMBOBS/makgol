@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th><input type="checkbox" id="allCheckbox" onclick="allCheckbox()" /></th>
+        <th>카테고리</th>
         <th>글제목</th>
         <th>공감수</th>
         <th>작성일</th>
@@ -15,6 +16,8 @@
         <c:forEach var="item" items="${boardVos}">
           <tr>
             <td><input type="checkbox" /></td>
+            <input type="hidden" value="${item.b_id}">
+            <td>${item.category}</td>
             <td><c:url value='/board/suggestion/detail' var='detail_url'>
                         <c:param name='b_id' value='${item.b_id}' />
                 </c:url> <a href="${detail_url}">${item.title}</a></td>
@@ -28,14 +31,4 @@
 
 <button type="button" onclick="deleteBoard()">삭제</button>
 
-<script>
-function deleteBoard(){
-    if(window.confirm('선택하신 글을 삭제하시겠습니까?'){
-        let checkboxes= jQuery("input[type=checkbox]:checked");
-            checkboxes.each(function(){
-
-            })
-    }
-}
-
-</script>
+	<jsp:include page="../../script/jsp/user.jsp"></jsp:include>

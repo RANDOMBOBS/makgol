@@ -122,16 +122,14 @@
     var jQ = jQuery;
 
 jQ("#logout_link").on("click", function () {
-        alert("1234");
         var currentURL = window.location.href;
-        alert(encodeURIComponent(currentURL));
         jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
     });
 
 
     let black = "${blackList}";
     if (black) {
-        alert("블랙리스트입니다.")
+        alert("접근이 제한된 사용자입니다.")
 
         jQ.ajax({
             url: "/user/logout",

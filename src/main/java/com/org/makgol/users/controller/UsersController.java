@@ -1,5 +1,6 @@
 package com.org.makgol.users.controller;
 
+import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
@@ -145,6 +146,18 @@ public class UsersController {
         List<StoreResponseVo> storeVos = userService.myStoreList(user_id);
         model.addAttribute("storeVos", storeVos);
         return "jsp/user/my_store_list";
+    }
+
+    @GetMapping("/myHistory")
+    public String myyHistory(){
+        return "jsp/user/my_history";
+    }
+    @RequestMapping(value = "/myPostList/{user_id}", method = { RequestMethod.GET, RequestMethod.POST })
+    public String myPostList(@PathVariable("user_id") int user_id, Model model){
+        String nextPage = "jsp/user/my_post_list";
+        List<BoardVo> boardVos = userService.getMyPostList(user_id);
+        model.addAttribute("boardVos", boardVos);
+        return nextPage;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.org.makgol.users.service;
 
+import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.stores.dao.StoresDao;
 import com.org.makgol.stores.vo.Category;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
@@ -173,6 +174,8 @@ public class UsersService {
     return userDao.selectMyStoreList(user_id);
     }
 
-
+    public List<BoardVo> getMyPostList(int user_id){
+        return userDao.selectMyPostList(user_id);
+    }
 }
 

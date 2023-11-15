@@ -158,4 +158,8 @@ public class BoardSuggestionService {
         boardDao.updateBoardSympathy(map);
     }
 
+    public int deleteHistoryBoard(int board_id){
+        return boardDao.deleteHistoryBoard(board_id);
+    }
+
 }

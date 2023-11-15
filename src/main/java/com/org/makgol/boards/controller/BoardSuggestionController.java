@@ -267,7 +267,11 @@ public class BoardSuggestionController {
 		}
 		return map;
 	}
-	
-	
+
+	@RequestMapping(value = "/deleteHistory/{id}", method = { RequestMethod.GET, RequestMethod.POST })
+	public int deleteHistory(@PathVariable("id") int id){
+		int result = boardService.deleteHistoryBoard(id);
+		return result;
+	}
 
 }

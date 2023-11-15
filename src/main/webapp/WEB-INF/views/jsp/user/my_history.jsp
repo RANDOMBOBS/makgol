@@ -15,6 +15,18 @@
 </head>
 <body>
 <jsp:include page="../include/header.jsp"></jsp:include>
-<div id="my_history"></div>
+<h1>내 활동 이력</h1>
+ <ul>
+      <li class="myPosts on">작성한 글</li>
+      <li class="myComments">작성한 댓글</li>
+      <li class="likeComments">공감한 글</li>
+    </ul>
+    <div id="my_history"></div>
+
+	<jsp:include page="../../script/jsp/user.jsp"></jsp:include>
+
+<script>
+allPostList();
+</script>
 </body>
 </html>

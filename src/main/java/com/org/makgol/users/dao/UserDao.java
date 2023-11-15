@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersResponseVo;
@@ -151,6 +152,12 @@ public class UserDao {
 		List<StoreResponseVo> storeVos = null;
 		storeVos = usersRepository.selectMyStoreList(user_id);
 		return storeVos;
+	}
+
+	public List<BoardVo> selectMyPostList(int user_id){
+		List<BoardVo> boardVos = null;
+		boardVos = usersRepository.selectMyPostList(user_id);
+		return boardVos;
 	}
 
 }
