@@ -295,6 +295,8 @@
             const email = $('#register_email').val();
             const authSelfInputEle = $("#auth_self");
 
+            alert("인증번호가 전송되었습니다. 잠시만 기다려주세요.");
+
             $.ajax({
                 type: "POST",
                 url: "<c:url value='/user/mailCheck'/>",
@@ -302,7 +304,6 @@
                 contentType: "application/json",
                 dataType: "json",
                 success(data) {
-                    alert("인증번호가 전송되었습니다.");
                     authSelfInputEle.attr({disabled: false});
                     $("#check_auth").css({display: "block"});
                 }, error(err) {
