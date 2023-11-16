@@ -103,6 +103,7 @@ public class UsersController {
     }
     @GetMapping("/logout")
     public String logout(HttpSession session, @RequestParam("link") String link) {
+        System.out.println("@GetMapping(\"/logout\")");
         System.out.println("링크는???" + link);
         session.removeAttribute("blackList");
         session.invalidate();

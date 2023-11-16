@@ -126,9 +126,7 @@ public class UsersService {
 
         if(loginedInUsersRequestVo == null) { throw new CustomException(ErrorCode.NOT_FOUND_USER); }
 
-        if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
-            loginedInUsersRequestVo = null;
-        }
+        if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) { loginedInUsersRequestVo = null; }
 
         return loginedInUsersRequestVo;
     }
@@ -157,6 +155,9 @@ public class UsersService {
         int result = userDao.updateUserInfo(usersRequestVo);
 
         if (result > 0) {
+
+
+
             UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
             usersRequestVo.setName(loginedUsersRequestVo.getName());
             usersRequestVo.setEmail(loginedUsersRequestVo.getEmail());
@@ -166,6 +167,21 @@ public class UsersService {
             File oldfile = new File(deleteFile);
             oldfile.delete();
             }
+
+            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
+            List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
+
+            try {
+                //업장 중복 체크
+                System.out.println("before storeRequestVoList --> : "+storeRequestVoList.size());
+                System.out.println(storesDao.checkStore(storeRequestVoList));
+                System.out.println("after storeRequestVoList --> : "+storeRequestVoList.size());
+
+                HashMap<String, Object> storeMap = kakaoMapSearch.storeInfoRequest(storeRequestVoList);
+                storesDao.insertStore(storeMap);
+            } catch(Exception e) {}
+
+            return result;
         }
 
         return result;
