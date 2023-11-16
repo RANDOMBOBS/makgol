@@ -9,7 +9,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 
 
 </head>

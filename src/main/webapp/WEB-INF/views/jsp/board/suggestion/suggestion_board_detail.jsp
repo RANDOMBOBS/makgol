@@ -13,7 +13,6 @@ request.setCharacterEncoding("utf-8");
 <meta charset="UTF-8" />
 <title>글 보기</title>
 
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 
 </head>
 <body>

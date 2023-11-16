@@ -11,7 +11,6 @@
 <link href="<c:url value='/resources/css/category.css' />"
 	rel="stylesheet" type="text/css" />
 
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 
 
 </head>

@@ -6,7 +6,6 @@
 <head>
     <title>로그인</title>
 
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 <link href="<c:url value='/resources/static/css/login.css' />" rel="stylesheet" type="text/css" />
 </head>
 <body>

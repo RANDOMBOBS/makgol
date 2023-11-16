@@ -6,7 +6,6 @@
  <meta charset="UTF-8">
   <title>막내야 골라봐 | 내 맛집 리스트 (MY_STORE_LIST)</title>
 
-  <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 
 </head>
 <body>

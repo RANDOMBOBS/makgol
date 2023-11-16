@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>

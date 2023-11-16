@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <title>막내야 골라봐 | 회원정보수정 (MODIFY_USER_INFO)</title>
 
-    <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>

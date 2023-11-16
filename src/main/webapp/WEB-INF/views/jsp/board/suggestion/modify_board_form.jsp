@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	function ModifyBoardForm() {
 		let form = document.modify_board_form;
