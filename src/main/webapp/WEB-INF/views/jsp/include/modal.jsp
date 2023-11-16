@@ -320,13 +320,14 @@
             $.ajax({
                 type: "POST",
                 url: '<c:url value ="/user/authNumberCheck"/>',
-                data: JSON.stringify({email, randomNumber}),
+                data: JSON.stringify({email, auth_number: randomNumber}),
                 contentType: "application/json",
                 dataType: "json",
                 success(data) {
                     alert("인증을 성공하였습니다.")
                     checkAuthButtonEle.css({display: "none"})
                 }, error(err) {
+                    console.log(err)
                     alert("서버 오류입니다.")
                 }
             })
