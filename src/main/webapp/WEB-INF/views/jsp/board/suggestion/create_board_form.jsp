@@ -8,35 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<link rel="stylesheet"
-    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
-<script type="text/javascript">
-	
-	function CreateBoardForm() {
 
-		let form = document.create_board_form;
-		
-		if (form.category.value == '') {
-			alert('카테고리를 선택해주세요.');
-			form.category.focus();
 
-		} else if (form.title.value == '') {
-			alert('제목을 입력해주세요');
-			form.title.focus();
-
-		} else if (form.contents.value == '') {
-			alert('글 내용을 입력해주세요.');
-			form.contents.focus();
-
-		}  else {
-			form.submit();
-		}
-
-	}
-</script>
 
 </head>
 <body>
@@ -66,6 +39,29 @@
 			<input type="reset" value="취소">
 		</form>
 	</div>
+<script type="text/javascript">
 
+	function CreateBoardForm() {
+
+		let form = document.create_board_form;
+
+		if (form.category.value == '') {
+			alert('카테고리를 선택해주세요.');
+			form.category.focus();
+
+		} else if (form.title.value == '') {
+			alert('제목을 입력해주세요');
+			form.title.focus();
+
+		} else if (form.contents.value == '') {
+			alert('글 내용을 입력해주세요.');
+			form.contents.focus();
+
+		}  else {
+			form.submit();
+		}
+
+	}
+</script>
 </body>
 </html>

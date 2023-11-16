@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -156,6 +157,16 @@ public class BoardSuggestionService {
 
     public void addBoardSympathy(Map<String, Integer> map) {
         boardDao.updateBoardSympathy(map);
+    }
+
+    public int deleteHistoryBoard(String ids){
+        String id[] = ids.split(",");
+        List<Integer> idList = new ArrayList<>();
+        for(String item : id) {
+            idList.add(Integer.parseInt(item));
+        }
+        int result =  boardDao.deleteHistoryBoard(idList);
+        return result;
     }
 
 }

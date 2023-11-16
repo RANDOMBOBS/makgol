@@ -157,5 +157,12 @@ public class BoardSuggestionDao {
     public void updateBoardSympathy(Map<String, Integer> map) {
         boardSuggestionRepository.updateBoardSympathy(map);
     }
+
+    public int deleteHistoryBoard(List<Integer> idList){
+        int result = -1;
+        result = boardSuggestionRepository.deleteHistoryBoard(idList);
+        return result;
+    }
+
 }
 

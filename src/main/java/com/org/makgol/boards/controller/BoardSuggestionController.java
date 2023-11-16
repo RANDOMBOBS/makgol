@@ -1,6 +1,7 @@
 package com.org.makgol.boards.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -267,7 +268,14 @@ public class BoardSuggestionController {
 		}
 		return map;
 	}
-	
-	
+
+	@ResponseBody
+	@PostMapping("/deleteHistory/{ids}")
+	public Map<String, Integer> deleteHistory(@PathVariable("ids") String ids){
+		int result = boardService.deleteHistoryBoard(ids);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result",result);
+		return map;
+	}
 
 }

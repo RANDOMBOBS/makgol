@@ -6,12 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>막내야 골라봐 | 회원정보수정 (MODIFY_USER_INFO)</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css"/>
+
 </head>
 
 <body>
@@ -49,17 +44,23 @@
             </tr>
         </table>
     </div>
+
+   <c:url value='/user/myStoreList' var='my_store_url'>
+      <c:param name='user_id' value='${loginedUsersRequestVo.id}' />
+   </c:url>
+
+
+
     <div id="my_history">
         <span>내 활동이력</span>
         <table>
             <tr>
                 <td>좋아요한 식당</td>
-                <td><a href="#">보러가기</a></td>
+                <td><a href="${my_store_url}">보러가기</a></td>
             </tr>
-
             <tr>
                 <td>작성한 글</td>
-                <td><a href="#">보러가기</a></td>
+                <td><a href="<c:url value='/user/myHistory'/>">보러가기</a></td>
             </tr>
             <tr>
                 <td>작성한 댓글</td>

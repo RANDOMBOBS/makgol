@@ -7,6 +7,20 @@
     UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
     UsersRequestVo blackList = (UsersRequestVo) session.getAttribute("blackList");
 %>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<link rel="stylesheet"
+    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
+
+
+<jsp:include page="./modal.jsp"></jsp:include>
+
 <header id="header">
     <div class="all_category">
         <div class="show_category">
@@ -95,13 +109,14 @@
                     <li><a href="<c:url value='/board/vent'/>">하소연 게시판</a></li>
                 </ul>
             </li>
+
             <c:choose>
                 <c:when test="${loginedUsersRequestVo != null}">
                     <c:if test="${loginedUsersRequestVo.getGrade() == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
                     <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
-                    <li><a href="<c:url value='/user/logout'/>">LOGOUT</a></li>
+                    <li><a href="<c:url value=''/>" id="logout_link">LOGOUT</a></li>
                 </c:when>
                 <c:otherwise>
                     <li><a href="#" id="register_modal">JOIN</a></li>
@@ -118,9 +133,15 @@
     $.noConflict();
     var jQ = jQuery;
 
+jQ("#logout_link").on("click", function () {
+        var currentURL = window.location.href;
+        jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
+    });
+
+
     let black = "${blackList}";
     if (black) {
-        alert("블랙리스트입니다.")
+        alert("접근이 제한된 사용자입니다.")
 
         jQ.ajax({
             url: "/user/logout",
