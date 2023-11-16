@@ -61,7 +61,7 @@
     </div>
     <div class="register_modal">
         <div class="modal_head">
-            <h1>Register</h1>
+            <h1>Join</h1>
             <button class="close_button">X</button>
         </div>
         <div class="modal_body">
@@ -111,6 +111,7 @@
                                     <button id="send_number" style="display: none">번호 발송</button>
                                 </div>
                                 <button id="check_auth">인증 확인</button>
+                                <input type="hidden" id="auth_status">
                             </td>
                         </tr>
                         <tr>
@@ -142,6 +143,7 @@
                                 <div class="option_button">
                                     <button id="password_validate">일치 확인</button>
                                 </div>
+                                <input type="hidden" id="password_status">
                             </td>
                         </tr>
                         <tr>
@@ -191,8 +193,8 @@
                                 <div class="option_button">
                                     <button id="my_location">내 위치</button>
                                 </div>
-                                <button id="watch_map">지도 보기</button>
-                                <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+                                <input type="hidden" id="longitude">
+                                <input type="hidden" id="latitude">
                             </td>
                         </tr>
                     </table>
@@ -292,10 +294,6 @@
 
             const email = $('#register_email').val();
             const authSelfInputEle = $("#auth_self");
-            alert("인증번호가 전송되었습니다.")
-
-            authSelfInputEle.attr({disabled: false});
-            $("#check_auth").css({display: "block"});
 
             $.ajax({
                 type: "POST",
@@ -305,6 +303,8 @@
                 dataType: "json",
                 success(data) {
                     alert("인증번호가 전송되었습니다.");
+                    authSelfInputEle.attr({disabled: false});
+                    $("#check_auth").css({display: "block"});
                 }, error(err) {
                     alert("서버 오류입니다.")
                 }
@@ -313,38 +313,146 @@
 
         const checkAuthButtonEle = $("#check_auth");
         checkAuthButtonEle.click((e) => {
-            e.preventDefault();
-            const email = $("#register_email").val();
-            const randomNumber = $("#auth_self").val();
+                e.preventDefault();
+                const email = $("#register_email").val();
+                const randomNumber = $("#auth_self").val();
+                const authStatusEle = $("#auth_status");
 
-            $.ajax({
-                type: "POST",
-                url: '<c:url value ="/user/authNumberCheck"/>',
-                data: JSON.stringify({email, auth_number: randomNumber}),
-                contentType: "application/json",
-                dataType: "json",
-                success(data) {
-                    alert("인증을 성공하였습니다.")
-                    checkAuthButtonEle.css({display: "none"})
-                }, error(err) {
-                    console.log(err)
-                    alert("서버 오류입니다.")
-                }
-            })
-        });
+                $.ajax({
+                    type: "POST",
+                    url: '<c:url value ="/user/authNumberCheck"/>',
+                    data: JSON.stringify({email, auth_number: randomNumber}),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success(data) {
+                        alert("인증을 성공하였습니다.")
+                        checkAuthButtonEle.css({display: "none"})
+                        authStatusEle.val("success");
+                    }, error(err) {
+                        authStatusEle.val("fail");
+                        console.error(err)
+                        if (err.status >= 500) {
+                            return alert("서버 에러");
+                        }
+                        alert("유효하지 않은 인증번호입니다.")
+                    }
+
+                })
+            }
+        )
+
 
         const passwordValidateButtonEle = $("#password_validate");
         passwordValidateButtonEle.click((e) => {
             e.preventDefault();
             const password = $("#register_password").val();
             const passwordConfirm = $("#register_password_confirm").val();
+            const passwordStatusEle = $("#password_status");
+
+            // const reg_pw1 = /^[a-z0-9_-]{6,18}$/; // 단순 6~18자리
+            // const reg_pw2 = /(?=.*[a-zA-ZS])(?=.*?[#?!@$%^&*-]).{6,24}/; // 문자와 특수문자 조합의 6~24 자리
+            // const reg_pw3 = /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/; // 문자, 숫자 1개이상 포함, 8자리 이상
+            //
+            // const validatePasswordItems = [reg_pw1.test(password), reg_pw2.test(password), reg_pw3.test(password)];
+            // const hasFalse = validatePasswordItems.includes(false);
+            //
+            // if (hasFalse) {
+            //     passwordStatusEle.val("fail");
+            //     return alert("비밀번호 형식에 맞게 입력해주세요.")
+            // }
 
             if (password === passwordConfirm) {
                 alert("비밀번호가 일치합니다.")
+                passwordStatusEle.val("success");
             } else {
                 alert("비밀번호가 일치하지 않습니다.")
+                passwordStatusEle.val("fail");
             }
         });
+
+        const myLocationButtonEle = $("#my_location");
+        myLocationButtonEle.click((e) => {
+            e.preventDefault();
+
+            const {daum: {Postcode}} = window;
+            const {daum: {maps: {services: {Geocoder}}}} = window;
+            const {daum: {maps: {services: {Status: {OK}}}}} = window;
+
+            new Postcode({
+                oncomplete(data) {
+                    $("#register_address").val(data.address);
+                    const {addressSearch} = new Geocoder();
+                    addressSearch(data.address, (result, status) => {
+                        if (status === OK) {
+                            const {x, y} = result[0];
+                            $("#longitude").val(x);
+                            $("#latitude").val(y);
+                        }
+                    })
+                }
+            }).open();
+        });
+
+        const submitRegisterButtonEle = $("#submit_register");
+        submitRegisterButtonEle.click((e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+
+            const inputEmail = $("#register_email").val();
+            const inputAuthSelf = $("#auth_self").val();
+            const inputPassword = $("#register_password").val();
+            const inputPasswordConfirm = $("#register_password_confirm").val();
+            const inputName = $("#register_name").val();
+            const inputPhone = $("#register_phone").val();
+            const inputAddress = $("#register_address").val();
+
+            const validateItems = [inputEmail, inputAuthSelf, inputPassword, inputPasswordConfirm, inputName, inputPhone, inputAddress]
+            const hasNull = validateItems.map((item) => !item ? null : item).includes(null);
+
+
+            if (hasNull) return alert("입력창에 공백이 포함되어있습니다.");
+
+            const authStatus = $("#auth_status").val();
+            const passwordStatus = $("#password_status").val();
+
+            const statusItems = [authStatus, passwordStatus];
+            const hasFail = statusItems.includes("fail");
+
+            if (hasFail) return alert("확인 절차가 제대로 이루어지지 않았습니다.")
+
+            const photo = jQuery("#photo")[0].files[0];
+            const longitude = jQuery("#longitude").val();
+            const latitude = jQuery("#latitude").val();
+
+            formData.append("email", inputEmail);
+            formData.append("password", inputPassword);
+            formData.append("name", inputName);
+            formData.append("phone", inputPhone);
+            formData.append("address", inputAddress);
+            formData.append("longitude", longitude);
+            formData.append("latitude", latitude);
+
+            if (photo != null) {
+                formData.append("photoFile", photo);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8090/user/join",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success(data) {
+                    alert("회원가입 되었습니다!");
+                    window.location.href = "http://localhost:8090";
+                }, error(err) {
+                    alert("서버 에러");
+                }
+            });
+
+
+        })
 
         const registerInputEles = document.querySelectorAll("#register_form .input_area");
         registerInputEles.forEach((ele) => {
@@ -358,38 +466,8 @@
                 inputBorderEle.style.border = "2px solid #ffe286";
             });
         });
+    }
 
-        const myLocationButtonEle = $("#my_location");
-        myLocationButtonEle.click((e) => {
-            e.preventDefault();
-            new daum.Postcode({
-                oncomplete(data) {
-                    $("#register_address").val(data.address);
-                }
-            }).open();
-        });
-
-        const submitRegisterButtonEle = $("#submit_register");
-        submitRegisterButtonEle.click((e) => {
-            e.preventDefault();
-
-            const inputEmail = $("#register_email").val();
-            const inputAuthSelf = $("#auth_self").val();
-            const inputPassword = $("#register_password").val();
-            const inputPasswordConfirm = $("#register_password_confirm").val();
-            const inputName = $("#register_name").val();
-            const inputPhone = $("#register_phone").val();
-            const inputAddress = $("#register_address").val();
-
-            const validateItems = [inputEmail, inputAuthSelf, inputPassword, inputPasswordConfirm, inputName, inputPhone, inputAddress]
-            const hasNull = validateItems.map((item) => !item ? null : item).includes(null);
-
-            if (hasNull) return alert("입력창에 공백이 포함되어있습니다.")
-
-
-            alert("submit");
-        })
-    };
 
     loginModal();
     registerModal();

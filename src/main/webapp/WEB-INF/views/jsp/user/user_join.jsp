@@ -37,7 +37,7 @@
                 jQuery.ajax({
                     type: 'POST',
                     url: '<c:url value ="/user/mailCheckDuplication"/>', // GET방식이라 Url 뒤에 email을 뭍힐수있다.
-                    data: {email: email},
+                    data: JSON.stringify({email}),
                     dataType: "json",
                     success: function (data, status) {
                         if (status === "success") {
@@ -210,7 +210,6 @@
                     formData.append("photoFile", photo);
                 }
 
-                photo
 
                 jQuery.ajax({
                     type: "POST",
