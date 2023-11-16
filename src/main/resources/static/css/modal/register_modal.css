@@ -42,7 +42,7 @@
     height: 198px;
     border: 3px solid #f1ec10;
     border-radius: 5px;
-    background: url("https://previews.123rf.com/images/tiodwiyanto/tiodwiyanto2106/tiodwiyanto210600187/169569229-%EB%B3%91%EC%95%84%EB%A6%AC-%EC%95%84%EC%9D%B4%EC%BD%98-%EB%A7%8C%ED%99%94-%EC%9E%91%EC%9D%80-%EB%B3%91%EC%95%84%EB%A6%AC-%EB%B3%91%EC%95%84%EB%A6%AC%EC%9D%98-%EA%B7%80%EC%97%AC%EC%9A%B4-%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%8F%99%EB%AC%BC.jpg") no-repeat 0 center/175px 191px;
+    background: url("../../image/user_default.jpeg") no-repeat 0 center/175px 191px;
 }
 
 .register_modal .modal_body .register_wrapper #register_form td .key {
