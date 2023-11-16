@@ -1,5 +1,6 @@
 package com.org.makgol.users.service;
 
+import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.exception.CustomException;
 import com.org.makgol.exception.ErrorCode;
 import com.org.makgol.boards.vo.BoardVo;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.stream.events.Comment;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -194,5 +196,12 @@ public class UsersService {
     public List<BoardVo> getMyPostList(int user_id){
         return userDao.selectMyPostList(user_id);
     }
+
+    public List<CommentResponseVo> getMyCommentList(int user_id){
+        return userDao.selectMyCommentList(user_id);
+    }
+
 }
+
+
 

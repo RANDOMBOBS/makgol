@@ -1,6 +1,7 @@
 package com.org.makgol.users.controller;
 
 import com.org.makgol.boards.vo.BoardVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
@@ -150,7 +151,7 @@ public class UsersController {
     }
 
     @GetMapping("/myHistory")
-    public String myyHistory(){
+    public String myHistory(){
         return "jsp/user/my_history";
     }
     @RequestMapping(value = "/myPostList/{user_id}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -161,4 +162,16 @@ public class UsersController {
         return nextPage;
     }
 
+    @RequestMapping(value = "/myCommentList/{user_id}", method = { RequestMethod.GET, RequestMethod.POST })
+    public String myCommentList(@PathVariable("user_id") int user_id, Model model){
+        System.out.println("유저아이디"+user_id);
+        String nextPage = "jsp/user/my_comment_list";
+        List<CommentResponseVo> commentVos = userService.getMyCommentList(user_id);
+        System.out.println("댓글들"+commentVos);
+        model.addAttribute("commentVos", commentVos);
+        return nextPage;
+    }
+
 }
+
+

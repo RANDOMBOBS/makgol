@@ -46,4 +46,11 @@
     <select id="selectMyPostList" resultMap="boardResult" parameterType="int">
         SELECT * FROM boards WHERE user_id = #{user_id};
     </select>
+
+    <select id="selectMyCommentList" resultType="com.org.makgol.comment.vo.CommentResponseVo" parameterType="int">
+        SELECT * FROM comments
+        JOIN boards
+        ON comments.board_id = boards.id
+        WHERE comments.user_id = #{user_id};
+    </select>
 </mapper>

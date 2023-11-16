@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.org.makgol.boards.vo.BoardVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersResponseVo;
@@ -160,4 +161,9 @@ public class UserDao {
 		return boardVos;
 	}
 
+	public List<CommentResponseVo> selectMyCommentList(int user_id){
+		List<CommentResponseVo> commentVos = null;
+		commentVos = usersRepository.selectMyCommentList(user_id);
+		return commentVos;
+	}
 }

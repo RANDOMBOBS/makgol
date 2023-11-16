@@ -270,12 +270,14 @@ public class BoardSuggestionController {
 	}
 
 	@ResponseBody
-	@PostMapping("/deleteHistory/{ids}")
+	@PostMapping("/deleteMyBoard/{ids}")
 	public Map<String, Integer> deleteHistory(@PathVariable("ids") String ids){
 		int result = boardService.deleteHistoryBoard(ids);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result",result);
 		return map;
 	}
+
+
 
 }

@@ -64,11 +64,11 @@
             </tr>
             <tr>
                 <td>작성한 댓글</td>
-                <td><a href="#">보러가기</a></td>
+                <td><a href="<c:url value='/user/myHistory'/>">보러가기</a></td>
             </tr>
             <tr>
                 <td>공감한 글</td>
-                <td><a href="#">보러가기</a></td>
+                <td><a href="<c:url value='/user/myHistory'/>">보러가기</a></td>
             </tr>
         </table>
     </div>

@@ -22,7 +22,7 @@
 	<jsp:include page="../../script/jsp/user.jsp"></jsp:include>
 
 <script>
-allPostList();
+allCommentList();
 </script>
 </body>
 </html>
