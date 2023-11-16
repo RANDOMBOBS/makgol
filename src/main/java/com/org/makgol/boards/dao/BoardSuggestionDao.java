@@ -164,5 +164,21 @@ public class BoardSuggestionDao {
         return result;
     }
 
+    public int deleteHistoryComment(List<Integer> idList){
+        int result = -1;
+        result = boardSuggestionRepository.deleteHistoryComment(idList);
+        return result;
+    }
+
+    public int deleteHistoryLike(List<Integer> idList){
+        int result = -1;
+        result = boardSuggestionRepository.deleteHistoryLike(idList);
+        return result;
+    }
+
+    public void deleteLikes(List<Integer> boardidList){
+       boardSuggestionRepository.deleteLikes(boardidList);
+    }
+
 }
 

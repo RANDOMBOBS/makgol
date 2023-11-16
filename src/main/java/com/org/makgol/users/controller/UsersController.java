@@ -164,11 +164,18 @@ public class UsersController {
 
     @RequestMapping(value = "/myCommentList/{user_id}", method = { RequestMethod.GET, RequestMethod.POST })
     public String myCommentList(@PathVariable("user_id") int user_id, Model model){
-        System.out.println("유저아이디"+user_id);
         String nextPage = "jsp/user/my_comment_list";
         List<CommentResponseVo> commentVos = userService.getMyCommentList(user_id);
-        System.out.println("댓글들"+commentVos);
         model.addAttribute("commentVos", commentVos);
+        return nextPage;
+    }
+
+    @RequestMapping(value = "/myLikePost/{user_id}", method = { RequestMethod.GET, RequestMethod.POST })
+    public String myLikePost(@PathVariable("user_id") int user_id, Model model){
+        String nextPage = "jsp/user/my_like_post_list";
+        List<BoardVo> boardVos = userService.getMyLikePost(user_id);
+        model.addAttribute("boardVos", boardVos);
+        System.out.println(boardVos);
         return nextPage;
     }
 

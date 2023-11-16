@@ -201,6 +201,11 @@ public class UsersService {
         return userDao.selectMyCommentList(user_id);
     }
 
+    public List<BoardVo> getMyLikePost(int user_id){
+        return userDao.selectMyLikePostList(user_id);
+    }
+
+
 }
 
 

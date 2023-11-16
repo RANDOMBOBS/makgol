@@ -53,4 +53,11 @@
         ON comments.board_id = boards.id
         WHERE comments.user_id = #{user_id};
     </select>
+
+    <select id="selectMyLikePostList" resultType="com.org.makgol.boards.vo.BoardLikeVo" parameterType="int">
+        SELECT BL.id, BL.b_id, BL.user_id my_id, B.user_id, B.hit, B.title, B.category, B.sympathy, B.date  FROM board_likes BL
+        JOIN boards B
+        ON BL.b_id = B.id
+        WHERE BL.user_id = #{user_id};
+    </select>
 </mapper>

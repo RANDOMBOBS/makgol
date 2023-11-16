@@ -18,4 +18,6 @@ public interface UsersRepository {
     List<StoreResponseVo> selectMyStoreList(int user_id);
     List<BoardVo> selectMyPostList(int user_id);
     List<CommentResponseVo> selectMyCommentList(int user_id);
+    List<BoardVo> selectMyLikePostList(int user_id);
+
 }

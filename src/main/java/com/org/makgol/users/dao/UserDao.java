@@ -166,4 +166,11 @@ public class UserDao {
 		commentVos = usersRepository.selectMyCommentList(user_id);
 		return commentVos;
 	}
+
+	public List<BoardVo> selectMyLikePostList(int user_id){
+		List<BoardVo> boardVos = null;
+		boardVos = usersRepository.selectMyLikePostList(user_id);
+		return boardVos;
+	}
+
 }

@@ -3,15 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
+        let b_id = jQ('#like').attr("data-b-id");
+        let user_id = jQ('#like').attr("data-user-id");
+        let likeData = { b_id: b_id, user_id: user_id };
+        console.log(user_id, b_id);
 
 
 	function allBoardList() {
-		jQuery.ajax({
+		jQ.ajax({
 			url : "/board/suggestion/showAllList",
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
-				jQuery(".board_list").html(rdata);
+				jQ(".board_list").html(rdata);
 			},
 			error : function(error) {
 				alert("allBoardList 오류");
@@ -140,7 +144,6 @@
 
 	function modComment(button) {
 		jQ(button).parent().parent().next().show();
-
 	}
 
 	function searchBoard() {
@@ -175,45 +178,7 @@
 		}
 	}
 
-	jQ('input[type=checkbox]').on('click',function() {
-		if (!user_id) {
-			alert("로그인을 하세요.")
-			return false;
-		}
-		if (jQ(this).prop('checked')) {
-			jQ(this).next('i').addClass('fa-solid').removeClass('fa-regular')
-			jQ.ajax({
-			type :"POST",
-			url : "${pageContext.request.contextPath}/board/suggestion/likeBoard",
-			data : JSON.stringify(likeData),
-			contentType : "application/json; charset=UTF-8",
-			success : function(rdata){
-				jQ('.fa-thumbs-up').text(rdata.totalLike)
-			},
-			error : function(error){
-				console.log(error)
-			}
-		})
-		
-		} else {
-			jQ(this).next('i').addClass('fa-regular').removeClass('fa-solid')
 
-			jQ.ajax({
-			type :"POST",
-			url : "${pageContext.request.contextPath}/board/suggestion/unlikeBoard",
-			data : JSON.stringify(likeData),
-			contentType : "application/json; charset=UTF-8",
-			success : function(rdata){
-				jQ('.fa-thumbs-up').text(rdata.totalLike)
-			},
-			error : function(error){
-				console.log(error)
-			}
-		})
-		}
-	})
-	
-	
 	function userLikeStatus(b_id, user_id){
 		jQ.ajax({
 			type :"POST",
@@ -233,4 +198,44 @@
 			}
 		})
 	}
+
+	
+	
+  jQ('input[type=checkbox]').on('click',function() {
+        		if (!user_id) {
+        			alert("로그인을 하세요.")
+        			return false;
+        		}
+        		if (jQ(this).prop('checked')) {
+        			jQ(this).next('i').addClass('fa-solid').removeClass('fa-regular')
+        			jQ.ajax({
+        			type :"POST",
+        			url : "${pageContext.request.contextPath}/board/suggestion/likeBoard",
+        			data : JSON.stringify(likeData),
+        			contentType : "application/json; charset=UTF-8",
+        			success : function(rdata){
+        				jQ('.fa-thumbs-up').text(rdata.totalLike)
+        			},
+        			error : function(error){
+        				console.log(error)
+        			}
+        		})
+
+        		} else {
+        			jQ(this).next('i').addClass('fa-regular').removeClass('fa-solid')
+
+        			jQ.ajax({
+        			type :"POST",
+        			url : "${pageContext.request.contextPath}/board/suggestion/unlikeBoard",
+        			data : JSON.stringify(likeData),
+        			contentType : "application/json; charset=UTF-8",
+        			success : function(rdata){
+        				jQ('.fa-thumbs-up').text(rdata.totalLike)
+        			},
+        			error : function(error){
+        				console.log(error)
+        			}
+        		})
+        		}
+        	})
 </script>
