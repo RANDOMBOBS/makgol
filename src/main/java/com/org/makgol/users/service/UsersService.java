@@ -115,9 +115,9 @@ public class UsersService {
     }// joinUser_END
 
     public UsersRequestVo loginConfirm(UsersRequestVo usersRequestVo) {
-        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(usersRequestVo);
-
-
+        String email = usersRequestVo.getEmail();
+        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(email);
+        
         if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
             loginedInUsersRequestVo = null;
         }
