@@ -292,8 +292,6 @@ public class BoardSuggestionController {
 		String boardids = data.get("boardids");
 		String likeids = data.get("likeids");
 
-		System.out.println("게시글 번호는?" + boardids);
-		System.out.println("공감취소할 번호는?" + likeids);
 
 		int result = boardService.deleteMyLike(likeids, boardids);
 

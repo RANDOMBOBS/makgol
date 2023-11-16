@@ -1,4 +1,4 @@
-package com.org.makgol.exception;
+package com.org.makgol.global.exception;
 
 import lombok.Getter;
 

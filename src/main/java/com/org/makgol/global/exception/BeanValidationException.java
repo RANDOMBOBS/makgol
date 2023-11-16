@@ -1,4 +1,4 @@
-package com.org.makgol.exception;
+package com.org.makgol.global.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,4 +21,6 @@ public class BeanValidationException {
         return ErrorResponse.constraintMsgToResponseEntity
                 (ErrorCode.WRONG_INPUT, mae.getBindingResult().getAllErrors().get(0).getDefaultMessage());
     }
+
+
 }

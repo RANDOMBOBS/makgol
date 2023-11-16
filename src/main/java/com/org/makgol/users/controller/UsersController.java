@@ -6,7 +6,6 @@ import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
-import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,12 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,6 +24,7 @@ import java.util.List;
 public class UsersController {
     private final UsersService userService;
     private final FileUpload fileUpload;
+
     //joinUser_POST
     @PostMapping("/join")
     public ResponseEntity<?> joinUser(@ModelAttribute @Valid UsersRequestVo usersRequestVo) {
@@ -38,6 +35,7 @@ public class UsersController {
 
     @GetMapping("/join")
     public String userJoinPage() {
+
         String nextPage = "jsp/user/user_join";
         return nextPage;
     } // userJoinPage_END
@@ -54,83 +52,71 @@ public class UsersController {
     @ResponseBody
     public ResponseEntity<?> mailCheck(@Valid @RequestBody AuthNumberVo authNumberVo) {
 
-        Boolean result = userService.checkEmail(authNumberVo.getEmail());
+        boolean result = userService.checkEmail(authNumberVo.getEmail());
 
         //인증번호 송신 성공
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return result ? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     } // mailCheck_END
 
     @PostMapping("/mailCheckDuplication")
     @ResponseBody
     public ResponseEntity<?> mailCheckDuplication(@RequestParam("email") String email) {
-        Boolean result = userService.mailCheckDuplication(email);
+        boolean result = userService.mailCheckDuplication(email);
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
-
+        return result ? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     } // mailCheckDuplication_END
 
     @PostMapping("/authNumberCheck")
-    public ResponseEntity<?>  authNumberCheck(@Valid @RequestBody AuthNumberVo authNumberVo) {
+    public ResponseEntity<?> authNumberCheck(@Valid @RequestBody AuthNumberVo authNumberVo) {
         //int number = Integer.parseInt(auth_number);
         boolean result = userService.checkNumber(authNumberVo.getAuth_number(), authNumberVo.getEmail());
 
-        //인증 성공
-        return new ResponseEntity<>(result, HttpStatus.OK);
-
+        return result ? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     } //authNumberCheck_END
-
 
 
     @GetMapping("/login")
     public String loginForm() {
+        // 로그인 화면 템플릿 경로를 설정
         return "jsp/user/user_login";
     }
 
     @PostMapping("/loginConfirm")
     public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session) {
+        // 기본적으로 로그인 성공 시 'login_ok' 화면을 표시
         String nextPage = "home";
 
+        // 사용자 로그인 정보를 서비스를 통해 확인
         UsersRequestVo loginedUsersRequestVo = userService.loginConfirm(usersRequestVo);
         if (loginedUsersRequestVo == null) {
+            // 로그인 실패 시 'login_ng' 화면을 표시
             nextPage = "jsp/user/user_login_ng";
         } else {
             if (!(loginedUsersRequestVo.getGrade() != null && "블랙리스트".equals(loginedUsersRequestVo.getGrade()))) {
+                // 로그인 성공 시 사용자 정보를 세션에 저장하고 세션
                 session.setAttribute("loginedUsersRequestVo", loginedUsersRequestVo);
-            } else{
+            } else {
                 session.setAttribute("blackList", loginedUsersRequestVo);
             }
         }
         return nextPage;
     }
+
     @GetMapping("/logout")
-    public String logout(HttpSession session, @RequestParam("link") String link) {
-        System.out.println("@GetMapping(\"/logout\")");
-        System.out.println("링크는???" + link);
+    public String logout(HttpSession session) {
         session.removeAttribute("blackList");
         session.invalidate();
-        List<String> urlList = new ArrayList<String>();
-        urlList.add("/admin/userManagement");
-        urlList.add("/suggestion/create");
-        urlList.add("/suggestion/modify");
-        urlList.add("/user/modifyUser");
-        urlList.add("/user/myHistory");
-        urlList.add("/user/myPage");
-        urlList.add("/user/myStoreList");
-        for (String url : urlList) {
-            if (link.contains(url)) {
-                return "home";
-            }
-        }
-        return "redirect:" + link;
+
+        return "home";
     }
 
     @GetMapping("/myPage")
-    public String myPage(){
+    public String myPage() {
         return "jsp/user/my_page";
     }
 
     @GetMapping("/modifyUser")
-    public String modify_user(){
+    public String modify_user() {
         return "jsp/user/modify_user";
     }
 
@@ -175,7 +161,6 @@ public class UsersController {
         String nextPage = "jsp/user/my_like_post_list";
         List<BoardVo> boardVos = userService.getMyLikePost(user_id);
         model.addAttribute("boardVos", boardVos);
-        System.out.println(boardVos);
         return nextPage;
     }
 
