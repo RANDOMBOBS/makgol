@@ -1,7 +1,7 @@
 package com.org.makgol.users.service;
 
-import com.org.makgol.exception.CustomException;
-import com.org.makgol.exception.ErrorCode;
+import com.org.makgol.global.exception.CustomException;
+import com.org.makgol.global.exception.ErrorCode;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.stores.dao.StoresDao;
 import com.org.makgol.stores.vo.StoreRequestVo;
@@ -18,12 +18,9 @@ import com.org.makgol.util.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 

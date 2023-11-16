@@ -1,4 +1,4 @@
-package com.org.makgol.global.error.config;
+package com.org.makgol.global.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
