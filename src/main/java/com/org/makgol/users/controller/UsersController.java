@@ -27,14 +27,24 @@ import java.util.List;
 public class UsersController {
     private final UsersService userService;
     private final FileUpload fileUpload;
+
+    /**
+     * -회원가입-
+     * @param usersRequestVo (String name, String email, String password, String phone, MultipartFile photoFile)
+     * @return Boolean값으로 true, false 반환
+     */
     //joinUser_POST
     @PostMapping("/join")
     public ResponseEntity<?> joinUser(@ModelAttribute @Valid UsersRequestVo usersRequestVo) {
-        Boolean result = userService.joinUser(usersRequestVo);
+        Boolean result = userService.join(usersRequestVo);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }// joinUser_END
 
+    /**
+     * 회원가입 jsp 페이지
+     * @return nextPage
+     */
     @GetMapping("/join")
     public String userJoinPage() {
         String nextPage = "jsp/user/user_join";

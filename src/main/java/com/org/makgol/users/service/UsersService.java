@@ -86,8 +86,11 @@ public class UsersService {
     }//checkEmail_END
 
 
-    //joinUser
-    public Boolean joinUser(UsersRequestVo usersRequestVo) {
+    /**
+     * @param usersRequestVo (String name, String email, String password, String phone, MultipartFile photoFile)
+     * @return
+     */
+    public Boolean join(UsersRequestVo usersRequestVo) {
         //사용자 패스워드 암호화
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
