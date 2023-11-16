@@ -20,20 +20,22 @@ function allPostList(){
 }
 
 function deleteBoard(){
-        let checkboxes= jQuery("input[type=checkbox]:checked");
-            checkboxes.each(function(){
-                let id = jQuery(this).closest("input[type=hidden]").value();
-                jQ.ajax({
-                    url : "/board/delete/"+id,
-                    type : "GET",
+            let checkboxes= jQuery("input[type=checkbox]:checked");
+            let ids = ""
+            checkboxes.each(function(index){
+                ids += jQuery(this).closest("td").next().val()+",";
+            })
+            jQ.ajax({
+                    url : "/board/suggestion/deleteHistory/"+ids,
+                    type : "POST",
                     success : function(rdata) {
-                         alert(rdata);
+                        alert("결과는?"+rdata.result);
+                         allPostList();
                         },
                         error : function(error) {
                             alert("deleteBoard 오류");
                         },
                 });
-            })
     }
 
 </script>

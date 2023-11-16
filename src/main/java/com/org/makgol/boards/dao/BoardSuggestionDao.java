@@ -158,10 +158,9 @@ public class BoardSuggestionDao {
         boardSuggestionRepository.updateBoardSympathy(map);
     }
 
-    public int deleteHistoryBoard(int board_id){
-
+    public int deleteHistoryBoard(List<Integer> idList){
         int result = -1;
-        result = boardSuggestionRepository.deleteHistoryBoard(board_id);
+        result = boardSuggestionRepository.deleteHistoryBoard(idList);
         return result;
     }
 

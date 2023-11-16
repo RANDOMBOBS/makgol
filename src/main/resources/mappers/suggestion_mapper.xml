@@ -2,8 +2,8 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.org.makgol.boards.repository.BoardSuggestionRepository">
+
     <resultMap id="boardResult" type="com.org.makgol.boards.vo.BoardVo">
         <result property="b_id" column="id"/>
         <result property="user_id" column="user_id"/>
@@ -169,8 +169,12 @@
         WHERE id = #{b_id}
     </update>
 
-<delete id="deleteHistoryBoard" parameterType="int">
-    DELETE FROM boards
-    WHERE id = #{board_id}
-</delete>
+    <delete id="deleteHistoryBoard" parameterType="List">
+        DELETE FROM boards
+        WHERE
+        <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
+            id = #{id}
+        </foreach>
+    </delete>
+
 </mapper>

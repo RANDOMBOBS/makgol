@@ -45,5 +45,5 @@ public interface BoardSuggestionRepository {
 
     void updateBoardSympathy(Map<String, Integer> map);
 
-    int deleteHistoryBoard(int board_id);
+    int deleteHistoryBoard(List<Integer> idList);
 }
