@@ -48,23 +48,18 @@ public class UsersController {
     @ResponseBody
     public ResponseEntity<?> mailCheck(@Valid @RequestBody AuthNumberVo authNumberVo) {
 
-        Boolean result = userService.checkEmail(authNumberVo.getEmail());
+        boolean result = userService.checkEmail(authNumberVo.getEmail());
 
         //인증번호 송신 성공
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return result ? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     } // mailCheck_END
 
     @PostMapping("/mailCheckDuplication")
     @ResponseBody
     public ResponseEntity<?> mailCheckDuplication(@RequestParam("email") String email) {
-        Boolean result = userService.mailCheckDuplication(email);
+        boolean result = userService.mailCheckDuplication(email);
 
-        if (result) {
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-        }
-
+        return result ? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     } // mailCheckDuplication_END
 
     @PostMapping("/authNumberCheck")
@@ -72,9 +67,7 @@ public class UsersController {
         //int number = Integer.parseInt(auth_number);
         boolean result = userService.checkNumber(authNumberVo.getAuth_number(), authNumberVo.getEmail());
 
-        //인증 성공
-        return new ResponseEntity<>(result, HttpStatus.OK);
-
+        return result ? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
     } //authNumberCheck_END
 
 
