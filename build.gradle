@@ -79,6 +79,9 @@ dependencies {
 
     // 핫리로딩 종속성
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
 }
 
 tasks.named('test') {
