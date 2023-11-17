@@ -113,6 +113,7 @@ public class StoresDao {
             }
         }
     }
+
     public int checkStore(List<StoreRequestVo> storeRequestVos) throws Exception {
 
 
