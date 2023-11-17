@@ -1,25 +1,19 @@
 package com.org.makgol.boards.controller;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.org.makgol.boards.vo.BoardCreateRequestVo;
 import com.org.makgol.comment.vo.CommentRequestVo;
 import com.org.makgol.users.vo.UsersRequestVo;
-import com.org.makgol.util.file.FileInfo;
-import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
 
-import com.org.makgol.boards.UploadFileService;
 import com.org.makgol.boards.service.BoardSuggestionService;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
@@ -80,9 +74,10 @@ public class BoardSuggestionController {
 	 *         board/create_board_ng.jsp
 	 */
 	@PostMapping("/createConfirm")
-	public String createConfirm(@ModelAttribute BoardVo boardVo) {
+	public String createConfirm(@ModelAttribute BoardCreateRequestVo boardCreateRequestVo) {
+		System.out.println("글쓰기 결과?"+boardCreateRequestVo);
 	    String nextPage = "jsp/board/suggestion/create_board_ok";
-	    int result = boardService.createBoardConfirm(boardVo);
+	    int result = boardService.createBoardConfirm(boardCreateRequestVo);
 	    if (result < 1) {
 	        nextPage = "jsp/board/suggestion/create_board_ng";
 	    }
@@ -99,12 +94,13 @@ public class BoardSuggestionController {
 	 * @return suggestion_board_detail.jsp로 이동
 	 */
 	@RequestMapping(value = "/detail", method = { RequestMethod.GET, RequestMethod.POST })
-	public String detail(@RequestParam("b_id") int b_id, Model model, HttpSession httpSession) {
+	public void detail(@RequestParam("id") int id, Model model, HttpSession httpSession) {
 		String nextPage = "jsp/board/suggestion/suggestion_board_detail";
-		BoardVo boardVo = boardService.readSuggestionBoard(b_id);
-		boardService.addHit(b_id);
-		model.addAttribute("boardVo", boardVo);
-		return nextPage;
+		System.out.println("id는"+id);
+		List<BoardVo> boardVos = boardService.readSuggestionBoard(id);
+		boardService.addHit(id);
+//		model.addAttribute("boardVo", boardVo);
+//		return nextPage;
 	}
 
 	/**
@@ -169,14 +165,14 @@ public class BoardSuggestionController {
 	 * @param model : 다음 화면으로 값(boardVo : 수정폼에 입력한 값)을 전달해주는 객체
 	 * @return modify_board_form.jsp로 이동
 	 */
-	@GetMapping("/modify")
-	public String modify(@RequestParam("b_id") int b_id, @RequestParam("name") String name, Model model, @RequestParam("attachment") String attachment) {
-		String nextPage = "jsp/board/suggestion/modify_board_form";
-		BoardVo boardVo = boardService.modifyBoard(b_id);
-		boardVo.setName(name);
-		model.addAttribute("boardVo", boardVo);
-		return nextPage;
-	}
+//	@GetMapping("/modify")
+//	public String modify(@RequestParam("b_id") int b_id, @RequestParam("name") String name, Model model, @RequestParam("attachment") String attachment) {
+//		String nextPage = "jsp/board/suggestion/modify_board_form";
+//		BoardVo boardVo = boardService.modifyBoard(b_id);
+//		boardVo.setName(name);
+//		model.addAttribute("boardVo", boardVo);
+//		return nextPage;
+//	}
 
 	/**
 	 * suggestion 글 수정 폼 제출
@@ -184,16 +180,16 @@ public class BoardSuggestionController {
 	 *
 	 * @return 수정 성공 여부 성공 시 : modify_board_ok.jsp 실패 시 : modify_board_ng.jsp
 	 */
-	@PostMapping("/modifyConfirm")
-	public String modifyConfirm(@ModelAttribute BoardVo boardVo, @RequestParam("oldFile") String oldFile) {
-		String nextPage = "jsp/board/suggestion/modify_board_ok";
-
-		int result = boardService.modifyBoardConfirm(boardVo, oldFile);
-		if (result < 1) {
-			nextPage = "jsp/board/suggestion/modify_board_ng";
-		}
-		return nextPage;
-	}
+//	@PostMapping("/modifyConfirm")
+//	public String modifyConfirm(@ModelAttribute BoardVo boardVo, @RequestParam("oldFile") String oldFile) {
+//		String nextPage = "jsp/board/suggestion/modify_board_ok";
+//
+//		int result = boardService.modifyBoardConfirm(boardVo, oldFile);
+//		if (result < 1) {
+//			nextPage = "jsp/board/suggestion/modify_board_ng";
+//		}
+//		return nextPage;
+//	}
 
 	/**
 	 * suggestion 글 DELETE
@@ -201,15 +197,15 @@ public class BoardSuggestionController {
 	 * @param b_id : 게시글 번호
 	 * @return 삭제 성공 여부 성공 시 : delete_board_ok.jsp 실패 시 : delete_board_ng.jsp
 	 */
-	@GetMapping("/delete")
-	public String delete(@RequestParam("b_id") int b_id, @RequestParam("attachment") String attachment) {
-		String nextPage = "jsp/board/suggestion/delete_board_ok";
-		int result = boardService.deleteBoard(b_id,attachment);
-		if (result < 1) {
-			nextPage = "jsp/board/suggestion/delete_board_ng";
-		}
-		return nextPage;
-	}
+//	@GetMapping("/delete")
+//	public String delete(@RequestParam("b_id") int b_id, @RequestParam("attachment") String attachment) {
+//		String nextPage = "jsp/board/suggestion/delete_board_ok";
+//		int result = boardService.deleteBoard(b_id,attachment);
+//		if (result < 1) {
+//			nextPage = "jsp/board/suggestion/delete_board_ng";
+//		}
+//		return nextPage;
+//	}
 
 	/** suggestion 글 검색 **/
 	@RequestMapping(value = "/search", method = { RequestMethod.GET, RequestMethod.POST })

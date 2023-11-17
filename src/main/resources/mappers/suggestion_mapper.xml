@@ -14,7 +14,10 @@
         <result property="category" column="category"/>
         <result property="sympathy" column="sympathy"/>
         <result property="name" column="name"/>
-        <result property="attachment" column="attachment"/>
+    </resultMap>
+
+    <resultMap id="boardDetailResult" type="com.org.makgol.boards.vo.BoardDetailResponseVo">
+        <result property="user_photo_path" column="photo_path"/>
     </resultMap>
 
 
@@ -24,44 +27,48 @@
                b.hit,
                b.title,
                b.date,
-               b.contents,
                b.category,
                b.sympathy,
-               u.name,
-               u.photo
+               u.name
         FROM boards AS b
-                 JOIN users AS u ON b.user_id = u.id
+        JOIN users AS u ON b.user_id = u.id
         WHERE category = 'suggestion'
         ORDER BY date DESC
     </select>
 
-    <insert id="insertSuggestionBoard" parameterType="com.org.makgol.boards.vo.BoardVo">
-        INSERT INTO boards (user_id, title, date, contents, category, attachment)
-        VALUES (#{user_id}, #{title}, NOW(), #{contents}, #{category}, #{attachment})
+    <insert id="insertSuggestionBoard" parameterType="com.org.makgol.boards.vo.BoardCreateRequestVo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO boards (user_id, title, date, contents, category)
+        VALUES (#{user_id}, #{title}, NOW(), #{contents}, #{category})
     </insert>
 
-    <select id="showDetailSuggestionBoard" resultMap="boardResult"
-            parameterType="com.org.makgol.boards.vo.BoardVo">
-        SELECT b.id,
-               b.user_id,
-               b.hit,
-               b.title,
-               b.date,
-               b.contents,
-               b.category,
-               b.sympathy,
-               b.attachment,
-               u.name,
-               u.photo
+    <insert id="insertSuggestionBoardImage" parameterType="com.org.makgol.boards.vo.BoardCreateRequestVo">
+            INSERT INTO board_images (board_id, photo, photo_path, date)
+            VALUES (#{id}, #{photo}, #{photo_path}, now())
+    </insert>
+
+    <insert id="insertSuggestionBoardImages" parameterType="java.util.Map">
+        INSERT INTO board_images (board_id, photo, photo_path, date)
+        VALUES
+        <foreach collection="fileList" item="file" separator=",">
+            (#{id}, #{file.photoName}, #{file.photoPath}, now())
+        </foreach>
+    </insert>
+
+
+    <select id="showDetailSuggestionBoard" resultMap="boardDetailResult"
+            parameterType="int">
+        SELECT b.id, b.user_id, b.hit, b.title, b.date, b.contents, b.category, b.sympathy,
+               u.name, u.photo_path as user_photo_path,
+               bi.photo_path
         FROM boards AS b
-                 JOIN users AS u ON b.user_id = u.id
+        JOIN users AS u ON b.user_id = u.id
+        JOIN board_images AS bi ON bi.board_id = b.id
         WHERE b.id = #{id}
     </select>
 
     <update id="updateHit" parameterType="int">
         UPDATE boards
-        SET hit =
-                hit + 1
+        SET hit = hit + 1
         WHERE id = #{id}
     </update>
 
@@ -82,6 +89,7 @@
     <update id="updateComment" parameterType="com.org.makgol.comment.vo.CommentRequestVo">
         UPDATE comments
         SET nickname=#{nickname},
+            content=#{content},
             content=#{content},
             mod_date=now()
         where id = #{id}
@@ -104,7 +112,6 @@
         UPDATE boards
         SET title=#{title},
             contents=#{contents},
-            attachment=#{attachment}
         WHERE id = #{b_id}
 
     </update>

@@ -1,11 +1,11 @@
 package com.org.makgol.boards.vo;
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 @Data
-public class BoardVo {
-    int b_id;
+public class BoardDetailResponseVo {
+
     int user_id;
     int hit;
     String title;
@@ -14,4 +14,7 @@ public class BoardVo {
     String category;
     int sympathy;
     String name;
+    String user_photo_path;
+    List<String> photo_path;
+
 }

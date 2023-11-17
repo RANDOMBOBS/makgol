@@ -99,6 +99,7 @@ public class UsersController {
                 session.setAttribute("blackList", loginedUsersRequestVo);
             }
         }
+        System.out.println("유저정보는?"+loginedUsersRequestVo);
         return nextPage;
     }
 

@@ -1,8 +1,10 @@
 package com.org.makgol.boards.repository;
 
+import com.org.makgol.boards.vo.BoardCreateRequestVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentRequestVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
+import com.org.makgol.util.file.FileInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,9 +15,11 @@ public interface BoardSuggestionRepository {
 
     List<BoardVo> selectAllSuggestionBoard();
 
-    int insertSuggestionBoard(BoardVo boardVo);
+    int insertSuggestionBoard(BoardCreateRequestVo boardCreateRequestVo);
 
-    List<BoardVo> showDetailSuggestionBoard(int b_id);
+    int insertSuggestionBoardImages(Map<String, Object> map);
+
+    List<BoardVo> showDetailSuggestionBoard(int id);
 
     int updateHit(int b_id);
 

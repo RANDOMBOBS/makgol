@@ -1,12 +1,15 @@
 package com.org.makgol.boards.dao;
 
 import com.org.makgol.boards.repository.BoardSuggestionRepository;
+import com.org.makgol.boards.vo.BoardCreateRequestVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentRequestVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
+import com.org.makgol.util.file.FileInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,20 +34,43 @@ public class BoardSuggestionDao {
     /**
      * suggestion 글 쓰기 폼 제출
      **/
-    public int insertSuggestionBoard(BoardVo boardVo) {
-        int result = -1;
-        result = boardSuggestionRepository.insertSuggestionBoard(boardVo);
-        return result;
-
+    public int insertSuggestionBoard(BoardCreateRequestVo boardCreateRequestVo) {
+        int boardResult = -1;
+        boardResult = boardSuggestionRepository.insertSuggestionBoard(boardCreateRequestVo);
+        return  boardResult;
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public int insertSuggestionBoard(BoardCreateRequestVo boardCreateRequestVo,List<FileInfo> fileList) {
+        int boardResult = -1;
+        int boardImageListResult = -1;
+        boardResult = boardSuggestionRepository.insertSuggestionBoard(boardCreateRequestVo);
+        int board_id = boardCreateRequestVo.getId();
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", board_id);
+        map.put("fileList", fileList);
+        try {
+            boardImageListResult = boardSuggestionRepository.insertSuggestionBoardImages(map);
+            if(boardResult>0 && boardImageListResult>0){
+                return boardImageListResult;
+            }else {
+                return -1;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+
 
     /**
      * suggestion 글 상세보기
      **/
-    public BoardVo showDetailSuggestionBoard(int b_id) {
-        List<BoardVo> boardVo = null;
-        boardVo = boardSuggestionRepository.showDetailSuggestionBoard(b_id);
-        return boardVo.size() > 0 ? boardVo.get(0) : null;
+    public List<BoardVo> showDetailSuggestionBoard(int id) {
+        List<BoardVo> boardVos = null;
+        boardVos = boardSuggestionRepository.showDetailSuggestionBoard(id);
+        System.out.println("보드들은?"+boardVos);
+        return boardVos.size() > 0 ? boardVos : null;
     }
 
     /**
@@ -95,30 +121,30 @@ public class BoardSuggestionDao {
     /**
      * suggestion 글 수정버튼
      **/
-    public BoardVo selectBoard(int b_id) {
-        List<BoardVo> boardVo = null;
-        boardVo = boardSuggestionRepository.selectBoard(b_id);
-        return boardVo.size() > 0 ? boardVo.get(0) : null;
-    }
+//    public BoardVo selectBoard(int b_id) {
+//        List<BoardVo> boardVo = null;
+//        boardVo = boardSuggestionRepository.selectBoard(b_id);
+//        return boardVo.size() > 0 ? boardVo.get(0) : null;
+//    }
 
     /**
      * suggestion 글 수정 폼 제출
      **/
 //	실패
-    public int updateBoard(BoardVo boardVo) {
-        int result = -1;
-        result = boardSuggestionRepository.updateBoard(boardVo);
-        return result;
-    }
+//    public int updateBoard(BoardVo boardVo) {
+//        int result = -1;
+//        result = boardSuggestionRepository.updateBoard(boardVo);
+//        return result;
+//    }
 
     /**
      * suggestion 글 DELETE
      **/
-    public int deleteBoard(int b_id) {
-        int result = -1;
-        result = boardSuggestionRepository.deleteBoard(b_id);
-        return result;
-    }
+//    public int deleteBoard(int b_id) {
+//        int result = -1;
+//        result = boardSuggestionRepository.deleteBoard(b_id);
+//        return result;
+//    }
 
     /**
      * suggestion 글 검색
