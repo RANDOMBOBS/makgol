@@ -16,11 +16,12 @@
         <c:forEach var="item" items="${boardVos}">
           <tr>
             <td><input type="checkbox" class="eachCheckbox"/></td>
+                        <input type="hidden" value="${item.id}">
             <input type="hidden" value="${item.b_id}">
             <td>${item.category}</td>
-            <td><c:url value='/board/suggestion/detail' var='detail_url'>
+                 <td><c:url value='/board/suggestion/detail' var='detail_url'>
                         <c:param name='b_id' value='${item.b_id}' />
-                </c:url> <a href="${detail_url}">${item.title}</a></td>
+                     </c:url> <a href="${detail_url}">${item.title}</a></td>
             <td>${item.sympathy}</td>
             <td>${item.date}</td>
             <td>${item.hit}</td>
@@ -29,5 +30,5 @@
     </tbody>
 </table>
 
-<button type="button" onclick="deleteBoard()">삭제</button>
+<button type="button" onclick="deleteLike()">공감취소</button>
 

@@ -113,7 +113,7 @@
     <delete id="deleteBoard" parameterType="int">
         DELETE
         FROM boards
-        WHERE id = #{id}
+        WHERE id = #{b_id}
     </delete>
 
     <select id="selectSearchBoard" resultMap="boardResult"
@@ -176,5 +176,31 @@
             id = #{id}
         </foreach>
     </delete>
+
+    <delete id="deleteHistoryComment" parameterType="List">
+        DELETE FROM comments
+        WHERE
+        <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
+            id = #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteHistoryLike" parameterType="List">
+        DELETE FROM board_likes
+        WHERE
+        <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
+            id = #{id}
+        </foreach>
+    </delete>
+
+    <update id="deleteLikes" parameterType="List">
+        UPDATE boards
+        SET sympathy = sympathy-1
+        WHERE
+        <foreach collection="boardidList" item="b_id" separator=" OR " open="(" close=")" >
+            id = #{b_id}
+        </foreach>
+    </update>
+
 
 </mapper>

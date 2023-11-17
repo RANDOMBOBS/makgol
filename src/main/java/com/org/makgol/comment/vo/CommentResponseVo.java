@@ -9,7 +9,9 @@ public class CommentResponseVo {
 	int user_id;
 	
 	int board_id;
-	
+
+	String title;
+
 	String date;
 	
 	String content;

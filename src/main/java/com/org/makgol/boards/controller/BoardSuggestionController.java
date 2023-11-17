@@ -103,7 +103,6 @@ public class BoardSuggestionController {
 		String nextPage = "jsp/board/suggestion/suggestion_board_detail";
 		BoardVo boardVo = boardService.readSuggestionBoard(b_id);
 		boardService.addHit(b_id);
-
 		model.addAttribute("boardVo", boardVo);
 		return nextPage;
 	}
@@ -270,11 +269,35 @@ public class BoardSuggestionController {
 	}
 
 	@ResponseBody
-	@PostMapping("/deleteHistory/{ids}")
-	public Map<String, Integer> deleteHistory(@PathVariable("ids") String ids){
-		int result = boardService.deleteHistoryBoard(ids);
+	@PostMapping("/deleteMyBoard/{ids}")
+	public Map<String, Integer> deleteMyBoard(@PathVariable("ids") String ids){
+		int result = boardService.deleteMyBoard(ids);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result",result);
+		return map;
+	}
+
+	@ResponseBody
+	@PostMapping("/deleteMyComment/{comids}")
+	public Map<String, Integer> deleteMyComment(@PathVariable("comids") String comids){
+		int result = boardService.deleteMyComment(comids);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result",result);
+		return map;
+	}
+
+	@ResponseBody
+	@PostMapping("/deleteMyLike")
+	public Map<String, Integer> deleteMyLike(@RequestBody Map<String, String> data) {
+		String boardids = data.get("boardids");
+		String likeids = data.get("likeids");
+
+
+		int result = boardService.deleteMyLike(likeids, boardids);
+
+
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
 		return map;
 	}
 

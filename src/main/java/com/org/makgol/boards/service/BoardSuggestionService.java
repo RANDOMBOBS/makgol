@@ -23,6 +23,7 @@ public class BoardSuggestionService {
     private final FileUpload fileUpload;
 
     private final BoardSuggestionDao boardDao;
+    private BoardSuggestionDao boardService;
 
     /**
      * suggestion 게시판 가져오기
@@ -159,13 +160,43 @@ public class BoardSuggestionService {
         boardDao.updateBoardSympathy(map);
     }
 
-    public int deleteHistoryBoard(String ids){
+    public int deleteMyBoard(String ids){
         String id[] = ids.split(",");
         List<Integer> idList = new ArrayList<>();
         for(String item : id) {
             idList.add(Integer.parseInt(item));
         }
         int result =  boardDao.deleteHistoryBoard(idList);
+        return result;
+    }
+
+
+    public int deleteMyComment(String comids){
+        String id[] = comids.split(",");
+        List<Integer> idList = new ArrayList<>();
+        for(String item : id) {
+            idList.add(Integer.parseInt(item));
+        }
+        int result =  boardDao.deleteHistoryComment(idList);
+        return result;
+    }
+
+    public int deleteMyLike(String likeids, String boardids){
+        String[] id = likeids.split(",");
+        String[] boardid = boardids.split(",");
+        List<Integer> idList = new ArrayList<>();
+        List<Integer> boardidList = new ArrayList<>();
+        for(String item : id) {
+            idList.add(Integer.parseInt(item));
+        }
+        int result =  boardDao.deleteHistoryLike(idList);
+
+        if(result>0){
+            for(String item : boardid) {
+                boardidList.add(Integer.parseInt(item));
+            }
+            boardDao.deleteLikes(boardidList);
+        }
         return result;
     }
 

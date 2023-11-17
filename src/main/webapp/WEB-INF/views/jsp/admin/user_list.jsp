@@ -32,3 +32,21 @@
 
 
 <jsp:include page="../../script/jsp/user_management.jsp"></jsp:include>
+
+<script>
+let eachCheckbox = jQ("tbody input[type=checkbox]");
+
+	jQ(eachCheckbox).on("click",function(){
+		let check = true;
+        eachCheckbox.each(function() {
+            if(!jQ(this).prop("checked")){
+            check = false;
+            }
+       })
+       if(check){
+        jQ("#allCheckbox").prop("checked", true);
+       } else {
+        jQ("#allCheckbox").prop("checked", false);
+       }
+    })
+</script>

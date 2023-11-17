@@ -1,9 +1,12 @@
 package com.org.makgol.users.service;
 
+import com.org.makgol.comment.vo.CommentResponseVo;
+import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.global.exception.CustomException;
 import com.org.makgol.global.exception.ErrorCode;
 import com.org.makgol.stores.dao.StoresDao;
 import com.org.makgol.stores.vo.StoreRequestVo;
+import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
@@ -18,6 +21,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.stream.events.Comment;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -165,6 +169,26 @@ public class UsersService {
         return result;
     }
 
+    public List<StoreResponseVo> myStoreList(int user_id){
+        return userDao.selectMyStoreList(user_id);
+    }
+
+
+
+    public List<BoardVo> getMyPostList(int user_id){
+        return userDao.selectMyPostList(user_id);
+    }
+
+    public List<CommentResponseVo> getMyCommentList(int user_id){
+        return userDao.selectMyCommentList(user_id);
+    }
+
+    public List<BoardVo> getMyLikePost(int user_id){
+        return userDao.selectMyLikePostList(user_id);
+    }
+
 
 }
+
+
 

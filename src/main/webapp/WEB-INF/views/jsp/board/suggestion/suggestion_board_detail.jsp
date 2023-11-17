@@ -18,7 +18,6 @@ request.setCharacterEncoding("utf-8");
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
 
-
 	<table>
 		<tr>
 			<td>${boardVo.category}</td>
@@ -41,6 +40,7 @@ request.setCharacterEncoding("utf-8");
 		</tr>
 
 
+
 		<c:if test="${not empty boardVo.attachment}">
 			<tr>
 				<img src="http://localhost:8090${boardVo.attachment}">
@@ -51,9 +51,9 @@ request.setCharacterEncoding("utf-8");
 
 	<div>
 		<p>
-			<label for="like">
-			<input type="checkbox" id="like" style="display: none" data-b_id="${boardVo.b_id}" data-user_id="${loginedUsersRequestVo.id}" />
-			<i class="fa-regular fa-thumbs-up">${boardVo.sympathy}</i>
+			<label for="like" >
+			    <input type="checkbox" id="like" style="display: none" data-b-id="${boardVo.b_id}" data-user-id="${loginedUsersRequestVo.id}"/>
+			    <i class="fa-regular fa-thumbs-up">${boardVo.sympathy}</i>
 			</label>
 		</p>
 
@@ -67,9 +67,9 @@ request.setCharacterEncoding("utf-8");
 		</c:url>
 
 		<c:url value="/board/suggestion/delete" var="delete_url">
-			<c:param name="b_id" value="${boardVo.b_id}" />
-			<c:param name="attachment" value="${boardVo.attachment}" />
-		</c:url>
+    			<c:param name="b_id" value="${boardVo.b_id}" />
+    			<c:param name="attachment" value="${boardVo.attachment}" />
+    		</c:url>
 
 		<c:if test="${boardVo.user_id == loginedUsersRequestVo.getId()}">
 			<a href="${modify_url}">수정</a>
@@ -106,24 +106,27 @@ request.setCharacterEncoding("utf-8");
 
 	<div class="boardCommentList"></div>
 
+
 	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>
 
 
-
 	<script>
-		let b_id = jQ('input[type=checkbox]').attr("data-b_id")
-		let user_id = jQ('input[type=checkbox]').attr("data-user_id")
-		let likeData = { b_id : b_id, user_id : user_id }
+    console.log("유저아이디"+user_id, "게시판번호"+b_id)
 		if (user_id) {
 			userLikeStatus(b_id, user_id);
 		}
 		comList();
 
-		function boardDelete(){
+
+	function boardDelete(){
             if (window.confirm('글을 삭제하시겠습니까?')) {
                 window.location.href = "${delete_url}";
             }
         }
+
+
 	</script>
+
+
 </body>
 </html>
