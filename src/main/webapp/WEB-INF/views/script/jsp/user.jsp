@@ -145,6 +145,4 @@ function allMyCheckbox() {
         });
 
 
-
-
 </script>
