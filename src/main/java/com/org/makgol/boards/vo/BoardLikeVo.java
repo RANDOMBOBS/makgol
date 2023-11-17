@@ -3,19 +3,15 @@ package com.org.makgol.boards.vo;
 import lombok.Data;
 
 @Data
-public class BoardVo {
-
+public class BoardLikeVo {
+    int id;
     int b_id;
+    int my_id;
     int user_id;
     int hit;
     String title;
-    String date;
-    String contents;
     String category;
     int sympathy;
-    String name;
-    String grade;
-    String attachment;
-
+    String date;
 
 }

@@ -25,7 +25,7 @@ public class CategoryListController {
 
 	@GetMapping("/rouletteResult")
 	public String rouletteResult(@RequestParam("category") String category, Model model) {
-		String nextPage = "category/category"; 
+		String nextPage = "/category/category";
 		model.addAttribute("category", category );
 		return nextPage;
 	}

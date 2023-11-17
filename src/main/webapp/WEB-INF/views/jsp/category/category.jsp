@@ -48,9 +48,7 @@
 			$("button").removeClass("active");
 			$(this).addClass("active");
 		});
-		
-	
-		
+
 		if("${category}" == "한식"){
 			korMenu();
 			$("button").removeClass("active");
