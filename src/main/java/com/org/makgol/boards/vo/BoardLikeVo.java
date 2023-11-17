@@ -1,6 +1,7 @@
 package com.org.makgol.boards.vo;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class BoardLikeVo {
@@ -13,5 +14,4 @@ public class BoardLikeVo {
     String category;
     int sympathy;
     String date;
-
 }

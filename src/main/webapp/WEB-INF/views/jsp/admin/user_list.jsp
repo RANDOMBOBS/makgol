@@ -23,7 +23,7 @@
 				<td>${item.name}</td>
 				<td>${item.email}</td>
 				<td>${item.phone}</td>
-				<td><img src="<c:url value="file:///C:/makgol/user/upload//${item.photo}"/>"></td>
+				<td><img src="<c:url value='http://localhost:8090${item.photo_path}'/>"</td>
 				<td>${item.grade}</td>
 			</tr>
 		</c:forEach>
@@ -32,3 +32,21 @@
 
 
 <jsp:include page="../../script/jsp/user_management.jsp"></jsp:include>
+
+<script>
+let eachCheckbox = jQ("tbody input[type=checkbox]");
+
+	jQ(eachCheckbox).on("click",function(){
+		let check = true;
+        eachCheckbox.each(function() {
+            if(!jQ(this).prop("checked")){
+            check = false;
+            }
+       })
+       if(check){
+        jQ("#allCheckbox").prop("checked", true);
+       } else {
+        jQ("#allCheckbox").prop("checked", false);
+       }
+    })
+</script>

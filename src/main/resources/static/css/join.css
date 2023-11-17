@@ -1,0 +1,7 @@
+.form-group {
+    width: 700px;
+    height: 600px;
+    margin: 0 auto;
+    border: 3px solid black;
+    background-color: yellow;
+}

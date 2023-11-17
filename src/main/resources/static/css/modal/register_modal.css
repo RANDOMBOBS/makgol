@@ -1,0 +1,132 @@
+.register_modal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 900px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.register_modal .modal_body .register_wrapper #register_form {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.register_modal .modal_body .register_wrapper #register_form td {
+    box-sizing: border-box;
+    display: flex;
+    width: 500px;
+    height: 50px;
+    background: #fdf97e;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    border: 2px solid #ffe286;
+}
+
+.register_modal .modal_body .register_wrapper #register_form .user_image_select {
+    position: absolute;
+    top: -21%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.register_modal .modal_body .register_wrapper #register_form .user_image_select #photo_label {
+    display: block;
+    width: 170px;
+    height: 198px;
+    border: 3px solid #f1ec10;
+    border-radius: 5px;
+    background: url("../../image/user_default.jpeg") no-repeat 0 center/175px 191px;
+}
+
+.register_modal .modal_body .register_wrapper #register_form td .key {
+    display: flex;
+    width: 100px;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: bolder;
+    align-items: center;
+    background-color: #ffe286;
+    border-radius: 5px 0 0 5px;
+}
+
+.register_modal .modal_body .register_wrapper #register_form td .input_area {
+    height: 50px;
+    margin-left: 20px;
+    width: 305px;
+    background-color: inherit;
+    border: none;
+    font-size: 12px;
+    outline: none;
+    text-align: left;
+}
+
+.register_modal .modal_body .register_wrapper #register_form td .option_button {
+    display: flex;
+    align-items: center;
+}
+
+.register_modal .modal_body .register_wrapper #register_form td #check_auth {
+    display: none;
+    position: absolute;
+    top: 97.5px;
+    left: 108%;
+    transform: translate(-50%, -50%);
+    background-color: #ffedc7;
+}
+
+.register_modal .modal_body .register_wrapper #register_form td #watch_map {
+    display: none;
+    position: absolute;
+    top: 437px;
+    left: 108%;
+    transform: translate(-50%, -50%);
+    background-color: #ffedc7;
+}
+
+.register_modal .modal_body .register_wrapper #register_form td button {
+    width: 60px;
+    height: 35px;
+    font-size: 12px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    background-color: white;
+    color: #ff8a00;
+}
+
+.register_modal .modal_body .register_wrapper #register_form td button:hover {
+    background-color: #ff8a00;
+    color: white;
+    cursor: pointer;
+}
+
+.register_modal .modal_body .register_wrapper #register_form #submit_register {
+    width: 505px;
+    height: 60px;
+    background-color: #ffe286;
+    color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    margin-top: 10px;
+}
+
+.register_modal
+> .modal_body
+> .register_wrapper
+> #register_form
+> #submit_register:hover {
+    color: #ffe286;
+    background-color: darkgray;
+    cursor: pointer;
+}

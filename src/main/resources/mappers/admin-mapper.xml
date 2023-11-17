@@ -5,7 +5,7 @@
 
 
 <mapper namespace="com.org.makgol.admin.repository.AdminRepository">
-    <select id="selectAllUserList" resultType="com.org.makgol.users.vo.UsersRequestVo"
+    <select id="selectAllUserList" resultType="com.org.makgol.users.vo.UsersResponseVo"
             parameterType="com.org.makgol.users.vo.UsersRequestVo">
         SELECT *
         FROM users
@@ -13,7 +13,7 @@
     </select>
 
 
-    <update id="UpdateGrade" parameterType="com.org.makgol.users.vo.UsersRequestVo">
+    <update id="UpdateGrade" parameterType="com.org.makgol.users.vo.UsersResponseVo">
         UPDATE users
         SET grade = #{grade}
         where id = #{id}

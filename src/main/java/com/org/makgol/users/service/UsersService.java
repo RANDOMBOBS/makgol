@@ -1,20 +1,28 @@
 package com.org.makgol.users.service;
 
+import com.org.makgol.comment.vo.CommentResponseVo;
+import com.org.makgol.boards.vo.BoardVo;
+import com.org.makgol.global.exception.CustomException;
+import com.org.makgol.global.exception.ErrorCode;
 import com.org.makgol.stores.dao.StoresDao;
-import com.org.makgol.stores.vo.Category;
-import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
+import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
+import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.KakaoMapSearch;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.mail.MailSendUtil;
 import com.org.makgol.util.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.servlet.http.HttpSession;
+import javax.xml.stream.events.Comment;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,19 +36,22 @@ public class UsersService {
     private final RedisUtil redisUtil;
     private final KakaoMapSearch kakaoMapSearch;
     private final StoresDao storesDao;
+    private final UsersRepository usersRepository;
+    private final FileUpload fileUpload;
 
-    public String userFindId(String userEmail){
+    public String userFindId(String userEmail) {
         return userEmail;
     }
 
     //userFindPassword
-    public String userFindPassword(String userEmail){
-        if(userDao.findUserEmail(userEmail)) {
+    public String userFindPassword(String userEmail) {
 
-            int randomNumber= mailSendUtil.makeRandomNumber();
+        if (userDao.findUserEmail(userEmail)) {
+
+            int randomNumber = mailSendUtil.makeRandomNumber();
             String newPassword = String.valueOf(randomNumber);
 
-            if(userDao.updatePassword(newPassword, userEmail)) {
+            if (userDao.updatePassword(newPassword, userEmail)) {
                 mailSendUtil.sendMail(randomNumber, userEmail);
 
             }
@@ -53,14 +64,14 @@ public class UsersService {
     }// userFindPassword_END
 
 
-
     //이메일 번호 송신
     public boolean checkEmail(String email) {
-        int authNumber= mailSendUtil.makeRandomNumber();
+        int authNumber = mailSendUtil.makeRandomNumber();
         String key = String.valueOf(authNumber);
-        mailSendUtil.sendMail(authNumber, email);
-
-        return redisUtil.setDataExpire(key, email, 60 * 3L);
+        if (mailSendUtil.sendMail(authNumber, email)) {
+            return redisUtil.setDataExpire(key, email, 60 * 3L);
+        }
+        return false;
 
     } //checkEmail_END
 
@@ -76,63 +87,33 @@ public class UsersService {
     //joinUser
     public Boolean joinUser(UsersRequestVo usersRequestVo) {
         //사용자 패스워드 암호화
-
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if(userDao.createDao(usersRequestVo)) {
-            HashMap<String, Object> storeMap = new HashMap<String, Object>();
+        if (usersRequestVo.getPhotoFile() != null) {
+            FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+            usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+            usersRequestVo.setPhoto(fileInfo.getPhotoName());
+        } else {
 
-            usersRequestVo = userDao.findXY(usersRequestVo);
+            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto("user_default.jpeg");
+        }
 
-            KakaoLocalRequestVo kakaoLocalRequestVo = new KakaoLocalRequestVo();
+        if (userDao.createUser(usersRequestVo)) {
 
-            kakaoLocalRequestVo.setY(String.valueOf(usersRequestVo.getLatitude()));
-            kakaoLocalRequestVo.setX(String.valueOf(usersRequestVo.getLongitude()));
-
-
-            //String[] foodCategories = Arrays.stream(Category.CategoryFood.values())
-            //      .map(Enum::name)
-            //    .toArray(String[]::new);
-
-            // CategoryMenukorea의 값을 String 배열로 변환
-            String[] CategoryKoreaStewMenu = Arrays.stream(Category.CategoryKoreaStewMenu.values())
-                    .map(Enum::name)
-                    .toArray(String[]::new);
-
-            String[] CategoryKoreaRoastMenu = Arrays.stream(Category.CategoryKoreaRoastMenu.values())
-                    .map(Enum::name)
-                    .toArray(String[]::new);
-
-            String[] CategoryKoreaRiceMenu = Arrays.stream(Category.CategoryKoreaRiceMenu.values())
-                    .map(Enum::name)
-                    .toArray(String[]::new);
-
-
-            //kakaoMapSearch.search(foodCategories, kakaoLocalRequestVo);
-            List<StoreRequestVo> storeRequestVoList = new ArrayList<StoreRequestVo>();
-            storeRequestVoList = kakaoMapSearch.searchMenu(CategoryKoreaStewMenu, kakaoLocalRequestVo, storeRequestVoList);
-            storeRequestVoList = kakaoMapSearch.searchMenu(CategoryKoreaRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
-            storeRequestVoList = kakaoMapSearch.searchMenu(CategoryKoreaRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
-
-            System.out.println(storeRequestVoList.size());
-
-            int i=0;
-            for(StoreRequestVo storeRequestVo: storeRequestVoList) {
-                i++;
-                System.out.println("index"+ i +" --> : " +storeRequestVo.getPlace_url());
-                System.out.println("index"+ i +" --> : " +storeRequestVo.getMenuName());
-            }
+            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
+            List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
             try {
-                storeMap = kakaoMapSearch.restApiCrawller(storeRequestVoList);
-
                 //업장 중복 체크
-                System.out.println("before storeRequestVoList --> : "+storeRequestVoList.size());
+                System.out.println("before storeRequestVoList --> : " + storeRequestVoList.size());
                 System.out.println(storesDao.checkStore(storeRequestVoList));
-                System.out.println("after storeRequestVoList --> : "+storeRequestVoList.size());
+                System.out.println("after storeRequestVoList --> : " + storeRequestVoList.size());
 
+                HashMap<String, Object> storeMap = kakaoMapSearch.storeInfoRequest(storeRequestVoList);
                 storesDao.insertStore(storeMap);
-            } catch(Exception e) {}
+            } catch (Exception e) {
+            }
 
             return true;
         }
@@ -140,8 +121,10 @@ public class UsersService {
     }// joinUser_END
 
     public UsersRequestVo loginConfirm(UsersRequestVo usersRequestVo) {
-        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(usersRequestVo);
+        String email = usersRequestVo.getEmail();
+        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(email);
 
+        if(loginedInUsersRequestVo == null){ throw new CustomException(ErrorCode.NOT_FOUND_USER); }
 
         if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
             loginedInUsersRequestVo = null;
@@ -149,4 +132,63 @@ public class UsersService {
 
         return loginedInUsersRequestVo;
     }
+
+    public Boolean mailCheckDuplication(String email) {
+
+        Boolean result = email.equals(usersRepository.duplicationUserEmail(email));
+
+        return !result;
+    }
+
+    public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpSession session) {
+        String oldFileName = oldFile.substring(oldFile.lastIndexOf("/") + 1);
+        String currentDirectory = System.getProperty("user.dir");
+        usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
+
+        if (usersRequestVo.getPhotoFile() != null) {
+            FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
+            usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
+            usersRequestVo.setPhoto(fileInfo.getPhotoName());
+        } else {
+            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto("user_default.jpeg");
+        }
+
+        int result = userDao.updateUserInfo(usersRequestVo);
+
+        if (result > 0) {
+            UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
+            usersRequestVo.setName(loginedUsersRequestVo.getName());
+            usersRequestVo.setEmail(loginedUsersRequestVo.getEmail());
+            session.setAttribute("loginedUsersRequestVo", usersRequestVo);
+            String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
+            File oldfile = new File(deleteFile);
+            oldfile.delete();
+        }
+
+        return result;
+    }
+
+    public List<StoreResponseVo> myStoreList(int user_id){
+        return userDao.selectMyStoreList(user_id);
+    }
+
+
+
+    public List<BoardVo> getMyPostList(int user_id){
+        return userDao.selectMyPostList(user_id);
+    }
+
+    public List<CommentResponseVo> getMyCommentList(int user_id){
+        return userDao.selectMyCommentList(user_id);
+    }
+
+    public List<BoardVo> getMyLikePost(int user_id){
+        return userDao.selectMyLikePostList(user_id);
+    }
+
+
 }
+
+
+
