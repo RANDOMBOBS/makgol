@@ -20,7 +20,6 @@
     <div id="my_history"></div>
 
 	<jsp:include page="../../script/jsp/user.jsp"></jsp:include>
-
 <script>
     switch("${show}"){
         case "myPosts" :
@@ -33,6 +32,8 @@
             myLikePost();
             break;
     }
+
+
 </script>
 </body>
 </html>

@@ -78,7 +78,7 @@ function deleteComment(){
                 }
     }
 
-    function myLikePost(){
+   function myLikePost(){
   jQ.ajax({
         url: "/user/myLikePost/" + user_id,
         type : "GET",
@@ -121,5 +121,30 @@ function deleteComment(){
                 }
 
     }
+
+
+function allMyCheckbox() {
+		let checkbox = jQ("input[type=checkbox]");
+		if (jQ("#allMyCheckbox").is(":checked")) {
+			checkbox.prop("checked", true);
+		} else {
+			checkbox.prop("checked", false);
+		}
+	}
+
+
+	jQ("#my_history").on("click", ".eachCheckbox", function () {
+            let myCheck = true;
+            jQ(".eachCheckbox").each(function () {
+                if (!jQ(this).prop("checked")) {
+                    myCheck = false;
+                }
+            });
+
+            jQ("#allMyCheckbox").prop("checked", myCheck);
+        });
+
+
+
 
 </script>

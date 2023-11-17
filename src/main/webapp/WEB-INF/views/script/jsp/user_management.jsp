@@ -59,20 +59,6 @@
 	}
 
 
-	let checkboxes = jQ("tbody input[type=checkbox]");
 
-	jQ(checkboxes).on("click",function(){
-		let check = true;
-        checkboxes.each(function() {
-            if(!jQ(this).prop("checked")){
-            check = false;
-            }
-       })
-       if(check){
-        jQ("#allCheckbox").prop("checked", true);
-       } else {
-        jQ("#allCheckbox").prop("checked", false);
-       }
-    })
 
 </script>
