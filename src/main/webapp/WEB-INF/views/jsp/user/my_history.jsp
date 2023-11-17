@@ -15,14 +15,24 @@
  <ul>
       <li class="myPosts" onclick="myPostList()">작성한 글</li>
       <li class="myComments" onclick="myCommentList()">작성한 댓글</li>
-      <li class="likeComments" onclick="myLikePost()">공감한 글</li>
+      <li class="myLikePosts" onclick="myLikePost()">공감한 글</li>
  </ul>
     <div id="my_history"></div>
 
 	<jsp:include page="../../script/jsp/user.jsp"></jsp:include>
 
 <script>
-allPostList();
+    switch("${show}"){
+        case "myPosts" :
+            myPostList();
+            break;
+        case "myComments":
+            myCommentList();
+            break;
+        case "myLikePosts":
+            myLikePost();
+            break;
+    }
 </script>
 </body>
 </html>

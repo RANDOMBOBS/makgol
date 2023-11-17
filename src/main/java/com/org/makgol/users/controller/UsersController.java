@@ -103,11 +103,14 @@ public class UsersController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, @RequestParam("link") String link){
         session.removeAttribute("blackList");
         session.invalidate();
-
-        return "home";
+        if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")){
+            return "home";
+        }else {
+            return "redirect:" + link;
+        }
     }
 
     @GetMapping("/myPage")
@@ -137,7 +140,8 @@ public class UsersController {
     }
 
     @GetMapping("/myHistory")
-    public String myHistory(){
+    public String myHistory(@RequestParam("show") String show, Model model){
+        model.addAttribute("show", show);
         return "jsp/user/my_history";
     }
     @RequestMapping(value = "/myPostList/{user_id}", method = { RequestMethod.GET, RequestMethod.POST })
