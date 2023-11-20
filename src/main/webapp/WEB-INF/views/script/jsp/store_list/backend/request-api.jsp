@@ -5,12 +5,24 @@
         integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    const requestApi = (payload) => {
-        <%--const {data} = await axios--%>
-        <%--    .get(`http://localhost:8090/keyword-api?x=${myX}&y=${myY}&radius=1000&size=15&keyword=${keyword}&page=${page}`)--%>
-        <%--    .catch((err) => console.error(err));--%>
+    const requestApi = async (payload) => {
+        const {axios} = window;
+        const {myX, myY, keyword, page} = payload;
 
-        <%--return data;--%>
+        $.ajax({
+            type: "GET",
+            url: "<c:url value='/store/list_data' />",
+            dataType: "json",
+            success(data) {
+                console.log("성공")
+                console.log(data);
+            },
+            error(err) {
+                console.log("실패")
+                console.error(err)
+            }
+        })
+
         const data = {
             "success": true,
             "message": "성공입니다.",

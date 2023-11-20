@@ -6,11 +6,14 @@ import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,6 +47,23 @@ public class StoreController {
     @GetMapping(value = "/detail")
     public String detailPage() {
         return "jsp/store/store_detail";
+    }
+
+
+    @GetMapping(value = "/list_data")
+    @ResponseBody
+    public ResponseEntity<?> findStoreListData(
+//            @RequestParam String x,
+//            @RequestParam String y,
+//            @RequestParam String keyword,
+//            @RequestParam String page
+    ) {
+//        System.out.println("x = " + x);
+//        System.out.println("y = " + y);
+//        System.out.println("keyword = " + keyword);
+//        System.out.println("page = " + page);
+        System.out.println("welcome");
+        return new ResponseEntity<>("Hello", HttpStatus.OK);
     }
 
     @GetMapping(value = "/kakao-local-api")
