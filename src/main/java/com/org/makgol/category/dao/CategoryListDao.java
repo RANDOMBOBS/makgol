@@ -19,7 +19,7 @@ public class CategoryListDao {
 	JdbcTemplate jdbcTemplate;
 
 	public List<CategoryListVo> selectCategory(String where) {
-		String sql = "SELECT menu FROM category_list " + where;
+		String sql = "SELECT menu_name FROM category_menu " + where;
 		List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
 		try {
 			RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);

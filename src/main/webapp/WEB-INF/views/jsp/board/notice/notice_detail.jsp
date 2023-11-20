@@ -44,10 +44,6 @@
             </li>
           </ul>
         </div>
-        <div class="notice_sympathy">
-          <span class="like_icon" onclick="likeBtn(this)"><i class="fa-regular fa-thumbs-up"></i><span>
-          <span class="like_cnt"></span>
-        </div>
 
         <div class="buttons">
            <button><a href="/board/notice">목록</a></button>
