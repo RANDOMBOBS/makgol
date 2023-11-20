@@ -41,6 +41,11 @@ public class StoreController {
         return "jsp/store/store_list";
     }
 
+    @GetMapping(value = "/detail")
+    public String detailPage() {
+        return "jsp/store/store_detail";
+    }
+
     @GetMapping(value = "/kakao-local-api")
     public String callKakaoLocalApi(KakaoLocalRequestVo kakaoLocalRequestVo) {
         logger.logRequestDto(kakaoLocalRequestVo);
