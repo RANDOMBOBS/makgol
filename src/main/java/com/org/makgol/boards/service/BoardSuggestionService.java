@@ -71,8 +71,10 @@ public class BoardSuggestionService {
     public BoardDetailResponseVo readSuggestionBoard(int id) {
         List<BoardDetailResponseVo> boardVos = boardDao.showDetailSuggestionBoard(id);
         List<String> images = new ArrayList<String>();
-        for (int i = 0; i < boardVos.size(); i++) {
-            images.add(boardVos.get(i).getBoard_photo_path());
+        if(boardVos.get(0).getBoard_photo_path() != null){
+            for (int i = 0; i < boardVos.size(); i++) {
+                images.add(boardVos.get(i).getBoard_photo_path());
+            }
         }
         BoardDetailResponseVo boardVo = boardVos.get(0);
         boardVo.setImages(images);
@@ -121,8 +123,10 @@ public class BoardSuggestionService {
     public BoardVo modifyBoard(int b_id, String name) {
         List<BoardVo> boardVos = boardDao.selectBoard(b_id);
         List<String> images = new ArrayList<String>();
-        for (int i = 0; i < boardVos.size(); i++) {
-            images.add(boardVos.get(i).getPhoto_path());
+        if (boardVos.get(0).getPhoto_path() != null){
+            for (int i = 0; i < boardVos.size(); i++) {
+                images.add(boardVos.get(i).getPhoto_path());
+            }
         }
         BoardVo boardVo = boardVos.get(0);
         boardVo.setImages(images);
@@ -158,7 +162,7 @@ public class BoardSuggestionService {
             List<FileInfo> fileList = fileUpload.fileListUpload(files);
             result = boardDao.updateSuggestionBoard(boardCreateRequestVo, fileList);
         } else {
-            result = boardDao.insertSuggestionBoard(boardCreateRequestVo);
+            result = boardDao.updateSuggestionBoard(boardCreateRequestVo);
         }
         if (result > 0) {
             String currentDirectory = System.getProperty("user.dir");
@@ -192,18 +196,20 @@ public class BoardSuggestionService {
             String currentDirectory = System.getProperty("user.dir");
             String[] imageList = null;
             List<String> imageNames = new ArrayList<String>();
-            images = images.substring(1, images.length() - 1);
-            imageList = images.split(",");
-            for(int i= 0; i<imageList.length; i++) {
-                String image = imageList[i];
-                String imageName = image.substring(image.lastIndexOf("/") + 1, image.length());
-                imageNames.add(imageName);
-            }
-            for(int i= 0; i<imageNames.size(); i++) {
-                String image = imageNames.get(i);
-                String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
-                File file = new File(deleteFile);
-                file.delete();
+            if(images != null) {
+                images = images.substring(1, images.length() - 1);
+                imageList = images.split(",");
+                for (int i = 0; i < imageList.length; i++) {
+                    String image = imageList[i];
+                    String imageName = image.substring(image.lastIndexOf("/") + 1, image.length());
+                    imageNames.add(imageName);
+                }
+                for (int i = 0; i < imageNames.size(); i++) {
+                    String image = imageNames.get(i);
+                    String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
+                    File file = new File(deleteFile);
+                    file.delete();
+                }
             }
         }
         return result;
@@ -241,24 +247,19 @@ public class BoardSuggestionService {
         String[] id = ids.split(",");
         List<Integer> idList = new ArrayList<>();
         List<String> imageList = new ArrayList<>();
-
         for(String item : id) {
             idList.add(Integer.parseInt(item));
         }
         imageList = boardDao.selectBoardImages(idList);
-        //[ /fileUpload/28a90f92, /fileUpload/22390f32, /fileUpload/22390f92 ]
-        System.out.println("이미지리스트는???"+imageList);
         int result =  boardDao.deleteHistoryBoard(idList);
         if(result>0){
             String currentDirectory = System.getProperty("user.dir");
             String imageName = null;
             List<String> imageNames = new ArrayList<>();
             for(String image : imageList){
-                System.out.println("임지ㅣ느느느???"+image);
                 imageName = image.substring(image.lastIndexOf("/") + 1, image.length());
                 imageNames.add(imageName);
             }
-            System.out.println("이미지이름은??"+imageNames);
             for(int i= 0; i<imageNames.size(); i++) {
                 String image = imageNames.get(i);
                 String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;

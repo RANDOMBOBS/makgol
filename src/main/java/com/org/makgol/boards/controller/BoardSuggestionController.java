@@ -164,7 +164,7 @@ public class BoardSuggestionController {
 	 * @return modify_board_form.jsp로 이동
 	 */
 	@GetMapping("/modify")
-	public String modify(@RequestParam("b_id") int b_id, @RequestParam("name") String name, Model model, @RequestParam("images") String images) {
+	public String modify(@RequestParam("b_id") int b_id, @RequestParam("name") String name, Model model) {
 		String nextPage = "jsp/board/suggestion/modify_board_form";
 		BoardVo boardVo = boardService.modifyBoard(b_id, name);
 		model.addAttribute("boardVo", boardVo);
@@ -180,8 +180,8 @@ public class BoardSuggestionController {
 	@PostMapping("/modifyConfirm")
 	public String modifyConfirm(@ModelAttribute BoardCreateRequestVo boardCreateRequestVo, @RequestParam("oldImages") String oldImages, @RequestParam("id") int board_id) {
 		boardCreateRequestVo.setId(board_id);
+		System.out.println("아이디는?"+board_id+"보드는?"+boardCreateRequestVo);
 		String nextPage = "jsp/board/suggestion/modify_board_ok";
-
 		int result = boardService.modifyBoardConfirm(boardCreateRequestVo, oldImages);
 		if (result < 1) {
 			nextPage = "jsp/board/suggestion/modify_board_ng";

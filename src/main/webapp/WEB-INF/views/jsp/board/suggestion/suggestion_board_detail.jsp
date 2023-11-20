@@ -65,7 +65,6 @@ request.setCharacterEncoding("utf-8");
 		<c:url value="/board/suggestion/modify" var="modify_url">
 			<c:param name="b_id" value="${boardVo.id}" />
 			<c:param name="name" value="${boardVo.name}" />
-			<c:param name="images" value="${boardVo.images}" />
 		</c:url>
 
 		<c:url value="/board/suggestion/delete" var="delete_url">

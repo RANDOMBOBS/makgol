@@ -42,10 +42,11 @@
     <button type="button" id="passwordCheckBtn" name="passwordCheckBtn">비밀번호 확인</button><br />
     <input placeholder="전화번호" id="phone" name="phone" value="${loginedUsersRequestVo.phone}"><br />
     <input type="text" id="sample5_address" name="address" value="${loginedUsersRequestVo.address}"><br>
+        <input type="text" name="longitude" id="longitude" value="" >
+        <input type="text" name="latitude" id="latitude" value="">
     <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
     <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-    <input type="hidden" name="longitude" id="longitude" >
-    <input type="hidden" name="latitude" id="latitude" >
+
 
     <input type="file" id="photoFile" name="photoFile">
     <input type="hidden" name="id" value="${loginedUsersRequestVo.id}">
@@ -54,6 +55,7 @@
 </div>
 
 <script>
+        let form = document.modify_user_info;
   let pwCheck = true;
  jQ("#passwordCheckBtn").on("click", function () {
    console.log("Button clicked");
@@ -66,52 +68,6 @@
      alert("비밀번호가 일치합니다.");
    }
  });
-
-  function ModifyUserInfo() {
-    let form = document.modify_user_info;
-    if (document.getElementById("longitude").value === "" || document.getElementById("latitude").value === "") {
-      document.getElementById("longitude").value = "${loginedUsersRequestVo.longitude}";
-      document.getElementById("latitude").value = "${loginedUsersRequestVo.latitude}";
-    }
-    if (form.password.value === "") {
-      alert("비밀번호를 입력해주세요");
-      form.password.focus();
-    } else if (form.passwordCheck.value === "") {
-      alert("비밀번호 확인을 입력해주세요");
-      form.passwordCheck.focus();
-    } else if (pwCheck) {
-      alert("비밀번호 확인 버튼을 눌러주세요");
-    } else if (form.phone.value === "") {
-      alert("전화번호를 입력해주세요");
-      form.phone.focus();
-    } else if (form.phone.value === "") {
-      alert("전화번호를 입력해주세요");
-      form.phone.focus();
-    }else {
-      if (window.confirm('정보를 수정하시겠습니까?')) {
-
-
-        form.submit();
-      }
-    }
-  }
-
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        mapOption = {
-            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-            level: 5 // 지도의 확대 레벨
-        };
-
-    //지도를 미리 생성
-    var map = new daum.maps.Map(mapContainer, mapOption);
-    //주소-좌표 변환 객체를 생성
-    var geocoder = new daum.maps.services.Geocoder();
-    //마커를 미리 생성
-    var marker = new daum.maps.Marker({
-        position: new daum.maps.LatLng(37.537187, 127.005476),
-        map: map
-    });
-
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
@@ -143,9 +99,9 @@
             if (status === daum.maps.services.Status.OK) {
 
               var result = results[0]; //첫번째 결과의 값을 활용
+      jQuery("#longitude").val(result.x);
+       jQuery("#latitude").val(result.y);
 
-              document.getElementById("longitude").value = result.x;
-              document.getElementById("latitude").value = result.y;
 
               // 해당 주소에 대한 좌표를 받아서
               var coords = new daum.maps.LatLng(result.y, result.x);
@@ -161,6 +117,35 @@
         }
       }).open();
     }
+
+
+    function ModifyUserInfo() {
+    if (document.getElementById("longitude").value === "" ||document.getElementById("latitude").value === "") {
+        jQuery("#longitude").val("${loginedUsersRequestVo.longitude}");
+        jQuery("#latitude").val("${loginedUsersRequestVo.latitude}");
+      }
+      alert("${loginedUsersRequestVo}");
+      if (form.password.value === "") {
+        alert("비밀번호를 입력해주세요");
+        form.password.focus();
+      } else if (form.passwordCheck.value === "") {
+        alert("비밀번호 확인을 입력해주세요");
+        form.passwordCheck.focus();
+      } else if (pwCheck) {
+        alert("비밀번호 확인 버튼을 눌러주세요");
+      } else if (form.phone.value === "") {
+        alert("전화번호를 입력해주세요");
+        form.phone.focus();
+      } else if (form.phone.value === "") {
+        alert("전화번호를 입력해주세요");
+        form.phone.focus();
+      }  else {
+        if (window.confirm("정보를 수정하시겠습니까?")) {
+          form.submit();
+        }
+      }
+    }
+
 </script>
 </body>
 </html>

@@ -70,8 +70,11 @@ public class BoardSuggestionDao {
      **/
     public List<BoardDetailResponseVo> showDetailSuggestionBoard(int id) {
         List<BoardDetailResponseVo> boardVos = null;
-        boardVos = boardSuggestionRepository.showDetailSuggestionBoard(id);
-        return boardVos.size() > 0 ? boardVos : null;
+        boardVos = boardSuggestionRepository.showDetailImageBoard(id);
+        if(boardVos.size() == 0){
+            boardVos = boardSuggestionRepository.showDetailBoard(id);
+        }
+        return boardVos;
     }
 
     /**
@@ -124,8 +127,11 @@ public class BoardSuggestionDao {
      **/
     public List<BoardVo> selectBoard(int b_id) {
         List<BoardVo> boardVos = null;
-        boardVos = boardSuggestionRepository.selectBoard(b_id);
-        return boardVos.size() > 0 ? boardVos : null;
+        boardVos = boardSuggestionRepository.selectImageBoard(b_id);
+        if(boardVos.size() == 0){
+            boardVos = boardSuggestionRepository.selectBoard(b_id);
+        }
+        return boardVos;
     }
 
     /**
@@ -147,6 +153,7 @@ public class BoardSuggestionDao {
 
     @Transactional(rollbackFor = Exception.class)
     public int updateSuggestionBoard(BoardCreateRequestVo boardCreateRequestVo, List<FileInfo> fileList) {
+        System.out.println("넘어온값"+boardCreateRequestVo);
         int boardResult = -1;
         int boardImageListResult = -1;
         int board_id = boardCreateRequestVo.getId();
@@ -166,8 +173,6 @@ public class BoardSuggestionDao {
             throw e;
         }
     }
-
-
 
     /**
      * suggestion 글 DELETE

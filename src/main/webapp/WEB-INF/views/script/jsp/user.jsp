@@ -27,7 +27,6 @@ function deleteBoard(){
             checkboxes.each(function(index){
                 ids += jQuery(this).closest("td").next().val()+",";
             })
-	 alert(ids);
             jQ.ajax({
                     url : "/board/suggestion/deleteMyBoard/"+ids,
                     type : "POST",

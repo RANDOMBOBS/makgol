@@ -20,7 +20,9 @@ public interface BoardSuggestionRepository {
 
     int insertSuggestionBoardImages(Map<String, Object> map);
 
-    List<BoardDetailResponseVo> showDetailSuggestionBoard(int id);
+    List<BoardDetailResponseVo> showDetailImageBoard(int id);
+
+    List<BoardDetailResponseVo> showDetailBoard (int id);
 
     int updateHit(int id);
 
@@ -32,6 +34,7 @@ public interface BoardSuggestionRepository {
 
     int deleteComment(int id);
 
+    List<BoardVo> selectImageBoard(int b_id);
     List<BoardVo> selectBoard(int b_id);
 
     int updateBoard(BoardCreateRequestVo boardCreateRequestVo);
