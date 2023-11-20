@@ -17,7 +17,6 @@
             const placeNameEle = $("<a>")
                 .attr("id", "place_name")
                 .text(shop.place_name)
-                .attr("href", "#");
 
             const middleItemEle = $("<div>").addClass("middle_item");
 
@@ -35,9 +34,11 @@
 
             const detailEle = $("<a>")
                 .attr("id", "detail")
-                .text("상세 페이지");
+                .text("상세 페이지")
 
             const url = createUrlForDetailPage(shop);
+
+            placeNameEle.attr("href", url);
             detailEle.attr("href", url);
 
             const underItemComposition = [phoneEle, detailEle];
