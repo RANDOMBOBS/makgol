@@ -14,5 +14,4 @@ public class BoardLikeVo {
     String category;
     int sympathy;
     String date;
-
 }

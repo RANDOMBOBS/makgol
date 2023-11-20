@@ -78,7 +78,9 @@
     <div id="article3">
         <div class="top_menu">
             <div class="topmenu_main_div">
+                <span><img id="top5image" src="<c:url value='/resources/static/image/top5.png' />"></span>
                 <span>Top 5</span>
+                <span><img id="top5image" src="<c:url value='/resources/static/image/top5.png' />"></span>
             </div>
             <div class="topmenu_list">
                 <div class="topmenu_list_div">
@@ -125,6 +127,7 @@
     todayMenuList();
 
     topMenuList();
+
 
     function slickTodaySlider() {
         jQ(".todaymenu_list_ul").slick({

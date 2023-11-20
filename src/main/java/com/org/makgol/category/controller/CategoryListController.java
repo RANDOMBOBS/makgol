@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/category")
-
 public class CategoryListController {
 
 	@Autowired
@@ -25,19 +24,20 @@ public class CategoryListController {
 
 	@GetMapping("/rouletteResult")
 	public String rouletteResult(@RequestParam("category") String category, Model model) {
-		String nextPage = "category/category"; 
+		String nextPage = "jsp/category/category";
 		model.addAttribute("category", category );
 		return nextPage;
 	}
 
 	@RequestMapping(value = "/categoryMain", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categoryMain() {
-		return "category/category";
+		System.out.println("잘더");
+		return "jsp/category/category";
 	}
 
 	@RequestMapping(value = { "/categoryList" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public String categoryList(Model model) {
-		String nextPage = "category/category_list"; // ajax
+		String nextPage = "jsp/category/category_list"; // ajax
 		List<CategoryListVo> categoryVo = categoryListService.categoryList();
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
@@ -45,7 +45,7 @@ public class CategoryListController {
 
 	@RequestMapping(value = "/categoryKor", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categoryKor(Model model) {
-		String nextPage = "category/category_list";
+		String nextPage = "jsp/category/category_list";
 		List<CategoryListVo> categoryVo = categoryListService.categoryKor();
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
@@ -53,7 +53,7 @@ public class CategoryListController {
 
 	@RequestMapping(value = "/categoryWest", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categoryWest(Model model) {
-		String nextPage = "category/category_list";
+		String nextPage = "jsp/category/category_list";
 		List<CategoryListVo> categoryVo = categoryListService.categoryWest();
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
@@ -61,7 +61,7 @@ public class CategoryListController {
 
 	@RequestMapping(value = "/categoryChi", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categoryChi(Model model) {
-		String nextPage = "category/category_list";
+		String nextPage = "jsp/category/category_list";
 		List<CategoryListVo> categoryVo = categoryListService.categoryChi();
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
@@ -69,7 +69,7 @@ public class CategoryListController {
 
 	@RequestMapping(value = "/categorySnack", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categorySnack(Model model) {
-		String nextPage = "category/category_list";
+		String nextPage = "jsp/category/category_list";
 		List<CategoryListVo> categoryVo = categoryListService.categorySnack();
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
@@ -77,7 +77,7 @@ public class CategoryListController {
 
 	@RequestMapping(value = "/categoryJpn", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categoryJpn(Model model) {
-		String nextPage = "category/category_list";
+		String nextPage = "jsp/category/category_list";
 		List<CategoryListVo> categoryVo = categoryListService.categoryJpn();
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
@@ -85,7 +85,7 @@ public class CategoryListController {
 
 	@RequestMapping(value = "/categoryCafe", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categoryCafe(Model model) {
-		String nextPage = "category/category_list";
+		String nextPage = "jsp/category/category_list";
 		List<CategoryListVo> categoryVo = categoryListService.categoryCafe();
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;

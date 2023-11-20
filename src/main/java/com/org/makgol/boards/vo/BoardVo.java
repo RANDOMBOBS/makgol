@@ -18,6 +18,6 @@ public class BoardVo {
     String photo;
     String photo_path;
     String name;
+    String grade;
     List<String> images;
-
 }
