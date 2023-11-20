@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class BoardDetailResponseVo {
-
+    int id;
     int user_id;
     int hit;
     String title;
@@ -15,6 +15,7 @@ public class BoardDetailResponseVo {
     int sympathy;
     String name;
     String user_photo_path;
-    List<String> photo_path;
+    String board_photo_path;
+    List<String> images;
 
 }

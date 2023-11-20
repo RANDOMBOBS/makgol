@@ -21,7 +21,7 @@
 			<tr>
 				<td>${fn:length(boardVos)-(status.index)}</td>
 				<td><c:url value='/board/suggestion/detail' var='detail_url'>
-						<c:param name='id' value='${item.b_id}' />
+						<c:param name='b_id' value='${item.b_id}' />
 					</c:url> <a href="${detail_url}">${item.title}</a></td>
 				<td>${item.sympathy}</td>
 				<td>${item.name}</td>

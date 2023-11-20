@@ -22,11 +22,12 @@ function myPostList(){
 function deleteBoard(){
  if (window.confirm('선택한 글을 삭제하시겠습니까?')){
 
-            let checkboxes= jQuery("input[type=checkbox]:checked");
+            let checkboxes= jQuery("tbody input[type=checkbox]:checked");
             let ids = ""
             checkboxes.each(function(index){
                 ids += jQuery(this).closest("td").next().val()+",";
             })
+	 alert(ids);
             jQ.ajax({
                     url : "/board/suggestion/deleteMyBoard/"+ids,
                     type : "POST",
@@ -59,7 +60,7 @@ function myCommentList(){
 
 function deleteComment(){
  if (window.confirm('선택한 댓글을 삭제하시겠습니까?')){
-            let checkboxes= jQuery("input[type=checkbox]:checked");
+            let checkboxes= jQuery("tbody input[type=checkbox]:checked");
             let comids = ""
             checkboxes.each(function(index){
                 comids += jQuery(this).closest("td").next().val()+",";
@@ -96,7 +97,7 @@ function deleteComment(){
 
     function deleteLike(){
      if (window.confirm('선택한 글의 공감을 취소하시겠습니까?')){
-    let checkboxes= jQuery("input[type=checkbox]:checked");
+    let checkboxes= jQuery("tbody input[type=checkbox]:checked");
             let likeids = ""
             let boardids =""
             checkboxes.each(function(index){

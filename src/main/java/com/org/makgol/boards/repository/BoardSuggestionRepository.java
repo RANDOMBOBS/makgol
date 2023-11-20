@@ -1,6 +1,7 @@
 package com.org.makgol.boards.repository;
 
 import com.org.makgol.boards.vo.BoardCreateRequestVo;
+import com.org.makgol.boards.vo.BoardDetailResponseVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentRequestVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
@@ -19,9 +20,9 @@ public interface BoardSuggestionRepository {
 
     int insertSuggestionBoardImages(Map<String, Object> map);
 
-    List<BoardVo> showDetailSuggestionBoard(int id);
+    List<BoardDetailResponseVo> showDetailSuggestionBoard(int id);
 
-    int updateHit(int b_id);
+    int updateHit(int id);
 
     int insertComment(CommentRequestVo commentRequestVo);
 
@@ -33,7 +34,9 @@ public interface BoardSuggestionRepository {
 
     List<BoardVo> selectBoard(int b_id);
 
-    int updateBoard(BoardVo boardVo);
+    int updateBoard(BoardCreateRequestVo boardCreateRequestVo);
+
+    void deleteBoardImage(int board_id);
 
     int deleteBoard(int b_id);
 
@@ -49,6 +52,7 @@ public interface BoardSuggestionRepository {
 
     void updateBoardSympathy(Map<String, Integer> map);
     int deleteHistoryBoard(List<Integer> idList);
+    List<String> selectBoardImages(List<Integer> idList);
     int deleteHistoryComment(List<Integer> idList);
     int deleteHistoryLike(List<Integer> idList);
     void deleteLikes(List<Integer> boardidList);
