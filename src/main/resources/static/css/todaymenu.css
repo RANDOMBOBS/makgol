@@ -1,0 +1,159 @@
+ul, li {
+	list-style: none;
+}
+
+.todayBtn {
+	width: 70px;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	background-color: transparent;
+	padding: 5px;
+	margin: 3px;
+}
+
+.today_menu {
+	width: 1200px;
+	margin: 30px auto;
+}
+
+.todaymenu_main_ul {
+	font-family: "Noto Sans KR", sans-serif;
+	border-radius: 10px 10px 0 0;
+	border: 12px solid #ffa500;
+	border-bottom: none;
+	display: flex;
+	justify-content: space-between;
+	line-height: 40px;
+	width: 700px;
+	padding-right: 20px;
+}
+
+.todaymenu_list {
+	display: flex;
+	position: relative;
+}
+
+.slick-initialized .slick-slide{
+	display:flax;
+	justify-content:center;
+}
+
+.fa-circle-arrow-right {
+	position: absolute;
+	top: 45%;
+	right: 0.5%;
+	font-size: 40px;
+	color: #ffa500;
+}
+
+
+.fa-circle-arrow-left {
+	position: absolute;
+	top: 45%;
+	left: 0.8%;
+	font-size: 40px;
+	color: #ffa500;
+}
+
+.slick-slider{
+	text-align:center;
+}
+
+.custom-dots {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 10px 0;
+	padding: 0;
+}
+
+.custom-dots li {
+	list-style: none;
+	cursor: pointer;
+	display: inline-block;
+	margin: 0 6px;
+	padding: 0;
+}
+
+.custom-dots li button {
+	border: none;
+	background: #d1d1d1;
+	color: transparent;
+	cursor: pointer;
+	display: block;
+	height: 10px;
+	width: 10px;
+	border-radius: 100%;
+	padding: 0;
+}
+
+.custom-dots li.slick-active button {
+  background-color: #ffe286;
+}
+
+.todaymenu_list_div {
+	width: 1200px;
+	border: 12px solid #ffa500;
+	border-radius: 0 10px 10px 10px;
+}
+
+.todaymenu_list_ul {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	padding: 40px 50px 0px 50px;
+	overflow: hidden;
+	position: relative;
+}
+
+.todaymenu_list_ul .todaymenu_list {
+	font-family: "Noto Sans KR", sans-serif;
+	height: 260px;
+	line-height: 260px;
+	border-radius: 10px;
+	position: relative;
+	overflow: hidden;
+	justify-content: center;
+	border: 2px solid #ffe286;
+	margin:0px 5px;
+}
+
+.todaymenu_list_ul li img {
+	width: 100%;
+	height: 260px;
+	object-fit: cover;
+	border-radius: 7px;
+	filter: brightness(60%);
+}
+
+.todaymenu_list_ul li:hover img {
+	transition: all 0.6s;
+	transform: scale(1.2);
+}
+
+.today {
+	width: 400px;
+	text-align: center;
+	font-size: 20px;
+}
+
+.todaymenu_list_ul li:hover .today_menu_gogo {
+	transition: all 0.6s;
+	opacity: 1;
+	transform: translateY(-30px);
+}
+
+.today_menu_name {
+	color: #fff;
+	z-index: 9999;
+	font-size: 25px;
+	position:absolute;
+}
+
+.today_menu_gogo {
+	position: absolute;
+	top: 50%;
+	opacity: 0;
+	color: #fff;
+	z-index: 999;
+	font-size: 16px;
+}
