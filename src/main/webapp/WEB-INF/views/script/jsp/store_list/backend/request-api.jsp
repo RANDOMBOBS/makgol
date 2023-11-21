@@ -6,22 +6,22 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     const requestApi = async (payload) => {
-        const {axios} = window;
+        const {keyword, longitude, latitude, page} = payload
 
-        // $.ajax({
-        //     type: "GET",
-        //     url: `http://localhost:8090/store/list_data`,
-        //     data: payload,
-        //     dataType: "json",
-        //     contentType: "application/json",
-        //     success(data) {
-        //         console.log("성공")
-        //         console.log(data);
-        //     }, error(err) {
-        //         console.log("에러");
-        //         console.error(err);
-        //     }
-        // })
+        const url = "http://localhost:8090/store/list_data?longitude=" + longitude + "&latitude=" + latitude + "&keyword=" + keyword + "&page=" + page;
+
+        $.ajax({
+            type: "GET",
+            url,
+            contentType: "application/json",
+            success(data) {
+                console.log("성공")
+                console.log(data);
+            }, error(err) {
+                console.log("에러");
+                console.error(err);
+            }
+        })
 
         const data = {
             "success": true,
