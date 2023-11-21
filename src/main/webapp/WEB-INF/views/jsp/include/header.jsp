@@ -110,6 +110,11 @@
     </div>
     <p class="img"></p>
     <div class="userTab">
+       <c:if test="${loginedUsersRequestVo != null}">
+         <p class="welcome"> 환영합니다. ${loginedUsersRequestVo.name} 회원님!
+            <img src="http://localhost:8090${loginedUsersRequestVo.photo_path}" alt="프로필사진"/>
+         </p>
+       </c:if>
         <ul class="depth1">
             <li>
                 <a href="#">COMMUNITY</a>

@@ -88,6 +88,7 @@ public class UsersController {
 
         // 사용자 로그인 정보를 서비스를 통해 확인
         UsersRequestVo loginedUsersRequestVo = userService.loginConfirm(usersRequestVo);
+        System.out.println("로그인한 유저 정보는?"+loginedUsersRequestVo);
         if (loginedUsersRequestVo == null) {
             // 로그인 실패 시 'login_ng' 화면을 표시
             nextPage = "jsp/user/user_login_ng";
@@ -106,7 +107,7 @@ public class UsersController {
     public String logout(HttpSession session, @RequestParam("link") String link){
         session.removeAttribute("blackList");
         session.invalidate();
-        if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")){
+        if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")||link.contains("/user/loginConfirm")){
             return "home";
         }else {
             return "redirect:" + link;
