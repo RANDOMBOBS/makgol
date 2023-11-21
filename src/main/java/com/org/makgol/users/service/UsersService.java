@@ -95,7 +95,7 @@ public class UsersService {
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
 
-            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
@@ -145,14 +145,15 @@ public class UsersService {
         String currentDirectory = System.getProperty("user.dir");
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if (usersRequestVo.getPhotoFile() != null) {
+        if (usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()) {
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
-            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
+
 
         int result = userDao.updateUserInfo(usersRequestVo);
 
@@ -164,6 +165,23 @@ public class UsersService {
             String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
             File oldfile = new File(deleteFile);
             oldfile.delete();
+        }
+
+        if(result > 0){
+            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
+            List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
+
+            try {
+                //업장 중복 체크
+                System.out.println("before storeRequestVoList --> : " + storeRequestVoList.size());
+                System.out.println(storesDao.checkStore(storeRequestVoList));
+                System.out.println("after storeRequestVoList --> : " + storeRequestVoList.size());
+
+                HashMap<String, Object> storeMap = kakaoMapSearch.storeInfoRequest(storeRequestVoList);
+                storesDao.insertStore(storeMap);
+            } catch (Exception e) {
+
+            }
         }
 
         return result;

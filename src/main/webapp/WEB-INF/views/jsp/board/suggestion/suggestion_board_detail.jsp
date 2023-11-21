@@ -41,10 +41,12 @@ request.setCharacterEncoding("utf-8");
 
 
 
-		<c:if test="${not empty boardVo.attachment}">
+		<c:if test="${not empty boardVo.images}">
+			<c:forEach var="item" items="${boardVo.images}">
 			<tr>
-				<img src="http://localhost:8090${boardVo.attachment}">
+				<td colspan="2"><img src="http://localhost:8090${item}"></td>
 			</tr>
+			</c:forEach>
 		</c:if>
 	</table>
 
@@ -52,7 +54,7 @@ request.setCharacterEncoding("utf-8");
 	<div>
 		<p>
 			<label for="like" >
-			    <input type="checkbox" id="like" style="display: none" data-b-id="${boardVo.b_id}" data-user-id="${loginedUsersRequestVo.id}"/>
+			    <input type="checkbox" id="like" style="display: none" data-b-id="${boardVo.id}" data-user-id="${loginedUsersRequestVo.id}"/>
 			    <i class="fa-regular fa-thumbs-up">${boardVo.sympathy}</i>
 			</label>
 		</p>
@@ -61,14 +63,13 @@ request.setCharacterEncoding("utf-8");
 		<a href="${suggestion_url}">목록</a>
 
 		<c:url value="/board/suggestion/modify" var="modify_url">
-			<c:param name="b_id" value="${boardVo.b_id}" />
+			<c:param name="b_id" value="${boardVo.id}" />
 			<c:param name="name" value="${boardVo.name}" />
-			<c:param name="attachment" value="${boardVo.attachment}" />
 		</c:url>
 
 		<c:url value="/board/suggestion/delete" var="delete_url">
-    			<c:param name="b_id" value="${boardVo.b_id}" />
-    			<c:param name="attachment" value="${boardVo.attachment}" />
+    			<c:param name="b_id" value="${boardVo.id}" />
+    			<c:param name="images" value="${boardVo.images}" />
     		</c:url>
 
 		<c:if test="${boardVo.user_id == loginedUsersRequestVo.getId()}">
@@ -84,9 +85,10 @@ request.setCharacterEncoding("utf-8");
 		<p>댓글</p>
 		<c:choose>
 			<c:when test="${loginedUsersRequestVo != null}">
-				<input type="hidden" name="board_id" value="${boardVo.b_id}" />
+				<input type="hidden" name="board_id" value="${boardVo.id}" />
 				<input type="hidden" name="user_id"
 					value="${loginedUsersRequestVo.getId()}" />
+				<input type="hidden" name="grade" value="${loginedUsersRequestVo.getGrade()}">
 				<input type="text" name="nickname" placeholder="닉네임" />
 				<br />
 				<input type="text" name="content" placeholder="댓글을 입력해주세요." />
@@ -95,11 +97,10 @@ request.setCharacterEncoding("utf-8");
 			</c:when>
 
 			<c:otherwise>
-				<input type="hidden" name="board_id" value="${boardVo.b_id}" />
+				<input type="hidden" name="board_id" value="${boardVo.id}" />
 				<input type="text" name="nickname" placeholder="로그인 후 댓글 작성이 가능합니다."
 					disabled />
 				<br />
-
 			</c:otherwise>
 		</c:choose>
 	</form>

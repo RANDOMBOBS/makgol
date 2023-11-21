@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.org.makgol.boards.repository.BoardNoticeRepository">
+    <resultMap id="boardResult" type="com.org.makgol.boards.vo.BoardVo">
+        <result property="b_id" column="id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="hit" column="hit"/>
+        <result property="title" column="title"/>
+        <result property="date" column="date"/>
+        <result property="contents" column="contents"/>
+        <result property="category" column="category"/>
+        <result property="sympathy" column="sympathy"/>
+        <result property="name" column="name"/>
+        <result property="grade" column="grade"/>
+        <result property="attachment" column="attachment"/>
+    </resultMap>
+
+    <!-- 게시글 전체 리스트 -->
+    <!-- Notice select (All List) -->
+    <select id="selectNotice" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
+        SELECT b.id, b.user_id, b.hit, b.title, b.date,
+        b.contents, b.category, b.sympathy,
+        u.name, u.grade
+        FROM boards AS b
+        JOIN users AS u ON b.user_id = u.id
+        WHERE category = 'notice'
+        ORDER BY date DESC
+    </select>
+
+    <!-- 게시글 특정단어 검색 -->
+    <!-- Notice select (Notice search) -->
+    <select id="selectSearchNotice" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
+        SELECT b.id AS b_id, b.user_id, b.hit, b.title, b.date, b.contents, b.category, b.sympathy, u.name, u.photo
+        FROM boards AS b
+        JOIN users AS u ON b.user_id = u.id
+        WHERE category = 'notice' AND title LIKE CONCAT('%', #{searchWord}, '%')
+    </select>
+
+    <!-- 게시글 정보 -->
+    <!-- Notice select (Notice detail) -->
+    <select id="selectDetailNotice" resultMap="boardResult" parameterType="int">
+        SELECT b.id, b.user_id, b.hit, b.title, b.date,
+        b.contents, b.category, b.sympathy,
+        u.name, u.grade
+        FROM boards AS b
+        JOIN users AS u ON b.user_id = u.id
+        WHERE b.id = #{id}
+    </select>
+
+    <!-- 게시글 추가 -->
+    <!-- Notice insert -->
+    <insert id="insertNotice" parameterType="com.org.makgol.boards.vo.BoardVo">
+        INSERT INTO
+        boards
+        (category, title, user_id, date, contents)
+        VALUES
+        ('notice',#{title},#{user_id},now(),#{contents})
+    </insert>
+
+    <!-- 게시글 수정하기 -->
+    <!-- Notice select (Notice modify) -->
+    <select id="selectModNotice" resultMap="boardResult" parameterType="int">
+        SELECT b.id, b.user_id, b.hit, b.title, b.date,
+        b.contents, b.category, b.sympathy,
+        u.name, u.photo
+        FROM boards AS b
+        JOIN users AS u ON b.user_id = u.id
+        WHERE b.id = #{id}
+    </select>
+
+    <!-- 게시글 수정 -->
+    <!-- Notice update -->
+    <update id="updateNotice" parameterType="com.org.makgol.boards.vo.BoardVo">
+        UPDATE boards
+        SET
+        title = #{title},
+        contents=#{contents}
+        WHERE
+        id = #{b_id}
+    </update>
+
+    <!-- 게시글 삭제 -->
+    <!-- Notice delete -->
+    <delete id="deleteNotice" parameterType="int">
+        DELETE FROM boards
+        WHERE
+        id = #{b_id}
+    </delete>
+
+    <!-- 게시글 조회수 +1 증가 -->
+    <!-- Notice select (Notice hit) -->
+    <update id="updateNoticeHit" parameterType="int">
+        UPDATE boards
+        SET hit = hit + 1
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectLikeStatus" resultType="int" parameterType="com.org.makgol.boards.vo.BoardLikeVo">
+        SELECT count(*)
+        FROM board_likes
+        WHERE b_id = #{b_id}
+        AND user_id = #{user_id}
+    </select>
+
+    <insert id="insertLikeCount" parameterType="com.org.makgol.boards.vo.BoardVo">
+        INSERT INTO
+        board_likes (b_id, user_id)
+        VALUES (#{b_id}, #{user_id})
+    </insert>
+
+    <delete id="deleteLikeCount" parameterType="com.org.makgol.boards.vo.BoardVo">
+        DELETE
+        FROM board_likes
+        WHERE b_id = #{b_id}
+        AND user_id = #{user_id}
+    </delete>
+
+    <select id="selectLikeCount" resultType="int" parameterType="int">
+        SELECT count(*)
+        FROM board_likes
+        WHERE b_id = #{b_id};
+    </select>
+
+
+</mapper>

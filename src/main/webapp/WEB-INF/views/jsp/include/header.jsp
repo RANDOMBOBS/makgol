@@ -3,6 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.org.makgol.users.vo.UsersRequestVo" %>
 
+<link rel="stylesheet"
+    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    	integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script
+  	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+  	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+  	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <%
     UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
     UsersRequestVo blackList = (UsersRequestVo) session.getAttribute("blackList");
@@ -104,9 +114,10 @@
             <li>
                 <a href="#">COMMUNITY</a>
                 <ul class="depth2">
-                    <li><a href="<c:url value='/board/Notice'/>">공지사항</a></li>
+                    <li><a href="<c:url value='/board/notice'/>">공지사항</a></li>
                     <li><a href="<c:url value='/board/suggestion'/>">건의사항</a></li>
                     <li><a href="<c:url value='/board/vent'/>">하소연 게시판</a></li>
+                    <li><a href="<c:url value='/category/categoryMain'/>">카테고리 리스트</a></li>
                 </ul>
             </li>
 
@@ -123,7 +134,6 @@
                     <li><a href="#" id="login_modal">LOGIN</a></li>
                 </c:otherwise>
             </c:choose>
-
         </ul>
     </div>
 </header>

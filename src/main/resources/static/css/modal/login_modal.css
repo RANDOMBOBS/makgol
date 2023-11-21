@@ -154,9 +154,9 @@
 }
 
 .login_modal .modal_body .social_login #naver_login {
-    background: #00c300 url(../../image/ico_naver.png) no-repeat 10px center/50px 50px;
+    background: #00c300 url(../../image/default/ico_naver.png) no-repeat 10px center/50px 50px;
 }
 
 .login_modal .modal_body .social_login #kakao_login {
-    background: #ffea26 url(../../image/ico_kakao.png) no-repeat 10px center/50px 50px;
+    background: #ffea26 url(../../image/default/ico_kakao.png) no-repeat 10px center/50px 50px;
 }

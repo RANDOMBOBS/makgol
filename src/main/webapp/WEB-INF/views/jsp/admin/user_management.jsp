@@ -30,6 +30,22 @@
 
 	<script>
 		userList()
+
+		let eachCheckbox = jQ("tbody input[type=checkbox]");
+
+		jQ(".allUserList").on("click", "eachCheckbox", function(){
+			let check = true;
+			eachCheckbox.each(function() {
+				if(!jQ(this).prop("checked")){
+					check = false;
+				}
+			})
+			if(check){
+				jQ("#allCheckbox").prop("checked", true);
+			} else {
+				jQ("#allCheckbox").prop("checked", false);
+			}
+		})
 	</script>
 
 </body>

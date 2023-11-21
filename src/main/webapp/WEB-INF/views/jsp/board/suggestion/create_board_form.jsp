@@ -33,8 +33,17 @@
 			<input type="hidden" name="user_id" value="${user_id}">			
 			<span>내용</span>
 			<input type="text" name="contents" placeholder="글내용을 입력해주세요"> <br>
-			<input type="file" name="file"><br>
-
+			<p>이미지는 최대 5장까지 첨부가능합니다.</p>
+			<span>첨부파일 1</span>
+			<input type="file" name="file1"><br>
+			<span>첨부파일 2</span>
+			<input type="file" name="file2"><br>
+			<span>첨부파일 3</span>
+			<input type="file" name="file3"><br>
+			<span>첨부파일 4</span>
+			<input type="file" name="file4"><br>
+			<span>첨부파일 5</span>
+			<input type="file" name="file5"><br>
 			<input type="button" value="작성" onclick="CreateBoardForm();">
 			<input type="reset" value="취소">
 		</form>

@@ -7,6 +7,7 @@
 	text-align: center;
 	text-decoration: none;
 	color: #000;
+
 }
 
 ul, li {
@@ -17,9 +18,13 @@ ul, li {
 	width: 100%;
 	position: relative;
 	height: 800px;
-	background-image: url(../image/background.jpeg);
+	background-image: url(../image/default/background.jpeg);
 	background-size: cover;
 	background-position: center;
+}
+
+body{
+	background-color : #FFEED2;
 }
 
 body::-webkit-scrollbar {

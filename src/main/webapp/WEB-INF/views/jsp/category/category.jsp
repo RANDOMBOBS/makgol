@@ -8,15 +8,15 @@
 <head>
 <meta charset="UTF-8" />
 <title>Insert title here</title>
-<link href="<c:url value='/resources/css/category.css' />"
+<link href="<c:url value='/resources/static/css/category.css' />"
 	rel="stylesheet" type="text/css" />
-
-
-
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-	<jsp:include page="../../include/header.jsp"></jsp:include>
-
+<jsp:include page="../include/header.jsp"></jsp:include>
 	<section>
 		<div id="category_main_div">
 			<ul class="category_main_ul">
@@ -31,7 +31,7 @@
 		</div>
 		<div id="category_list_div"></div>
 	</section>
-	<jsp:include page="/resources/jsp/category.jsp"></jsp:include>
+	<jsp:include page="../../script/jsp/category.jsp"></jsp:include>
 	<script>
 	
 	// 버튼 클릭시 색 변화
@@ -39,9 +39,7 @@
 			$("button").removeClass("active");
 			$(this).addClass("active");
 		});
-		
-	
-		
+
 		if("${category}" == "한식"){
 			korMenu();
 			$("button").removeClass("active");

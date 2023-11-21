@@ -1,0 +1,22 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+  }
+
+ .board {
+    margin: 0 auto;
+ }
+
+
+ .contents{
+    width:500px;
+    height:350px;
+ }
+
+ .notice_detail_ul{
+    display:inline-block;
+ }
+ .title{
+    width:100px;
+ }
