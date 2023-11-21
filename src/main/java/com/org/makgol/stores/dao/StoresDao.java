@@ -73,8 +73,8 @@ public class StoresDao {
                 continue;
             }
 
-            String insertStoresSql = "INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertStoresSql = "INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date, distance) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             //int result = 0;
             jdbcTemplate.update(insertStoresSql,
@@ -82,7 +82,7 @@ public class StoresDao {
                     storeRequestVo.getLatitude(), storeRequestVo.getAddress(), storeRequestVo.getLoad_address(),
                     storeRequestVo.getCategory(), storeRequestVo.getOpening_hours(), storeRequestVo.getPhone(),
                     storeRequestVo.getSite(), storeRequestVo.getMenu_update(), storeRequestVo.getPlace_url(),
-                    storeRequestVo.getUpdate_date());
+                    storeRequestVo.getUpdate_date(), storeRequestVo.getDistance());
 
             System.out.println("insert storeInfo --> : " + storeRequestVo.getPlace_url());
 

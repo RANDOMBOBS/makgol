@@ -11,9 +11,9 @@ import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
-import com.org.makgol.util.KakaoMapSearch;
 import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
+import com.org.makgol.util.kakaoMap.KakaoMap;
 import com.org.makgol.util.mail.MailSendUtil;
 import com.org.makgol.util.redis.RedisUtil;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class UsersService {
     private final MailSendUtil mailSendUtil;
     private final UserDao userDao;
     private final RedisUtil redisUtil;
-    private final KakaoMapSearch kakaoMapSearch;
+    private final KakaoMap kakaoMapSearch;
     private final StoresDao storesDao;
     private final UsersRepository usersRepository;
     private final FileUpload fileUpload;
@@ -165,6 +165,23 @@ public class UsersService {
             String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
             File oldfile = new File(deleteFile);
             oldfile.delete();
+        }
+
+        if(result > 0){
+            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
+            List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
+
+            try {
+                //업장 중복 체크
+                System.out.println("before storeRequestVoList --> : " + storeRequestVoList.size());
+                System.out.println(storesDao.checkStore(storeRequestVoList));
+                System.out.println("after storeRequestVoList --> : " + storeRequestVoList.size());
+
+                HashMap<String, Object> storeMap = kakaoMapSearch.storeInfoRequest(storeRequestVoList);
+                storesDao.insertStore(storeMap);
+            } catch (Exception e) {
+
+            }
         }
 
         return result;
