@@ -95,7 +95,7 @@ public class UsersService {
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
 
-            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
@@ -150,7 +150,7 @@ public class UsersService {
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
-            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 

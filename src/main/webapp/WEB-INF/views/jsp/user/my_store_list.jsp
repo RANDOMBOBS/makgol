@@ -14,7 +14,7 @@
     <table>
     <c:forEach var="item" items="${storeVos}">
        <tr>
-        <td class="store_photo"><img src="<c:url value='/resources/static/image/김치찌개.jpg' />" alt="${item.name}" /></td>
+        <td class="store_photo"><img src="<c:url value='/resources/static/image/default/김치찌개.jpg' />" alt="${item.name}" /></td>
         <td class="store_info">
           <ul>
             <li>${item.name}</li>

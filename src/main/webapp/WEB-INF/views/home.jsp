@@ -78,9 +78,9 @@
     <div id="article3">
         <div class="top_menu">
             <div class="topmenu_main_div">
-                <span><img id="top5image" src="<c:url value='/resources/static/image/top5.png' />"></span>
+                <span><img id="top5image" src="<c:url value='/resources/static/image/default/top5.png' />"></span>
                 <span>Top 5</span>
-                <span><img id="top5image" src="<c:url value='/resources/static/image/top5.png' />"></span>
+                <span><img id="top5image" src="<c:url value='/resources/static/image/default/top5.png' />"></span>
             </div>
             <div class="topmenu_list">
                 <div class="topmenu_list_div">
@@ -90,7 +90,7 @@
     </div>
 
     <div id="event">
-        <div><img src="<c:url value='/resources/static/image/Christmas.png' />"></div>
+        <div><img src="<c:url value='/resources/static/image/default/Christmas.png' />"></div>
     </div>
 
 

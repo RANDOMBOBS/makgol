@@ -42,10 +42,10 @@
     <button type="button" id="passwordCheckBtn" name="passwordCheckBtn">비밀번호 확인</button><br />
     <input placeholder="전화번호" id="phone" name="phone" value="${loginedUsersRequestVo.phone}"><br />
     <input type="text" id="sample5_address" name="address" value="${loginedUsersRequestVo.address}"><br>
-    <input type="text" name="longitude" id="resultX" value="${loginedUsersRequestVo.longitude}" >
-    <input type="text" name="latitude" id="resultY" value="${loginedUsersRequestVo.latitude}">
+    <input type="hidden" name="longitude" id="resultX" value="${loginedUsersRequestVo.longitude}" >
+    <input type="hidden" name="latitude" id="resultY" value="${loginedUsersRequestVo.latitude}">
     <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
-    <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+    <div id="map" style="width:300px;height:300px;margin-top:10px;"></div>
 
     <input type="file" id="photoFile" name="photoFile">
     <input type="hidden" name="id" value="${loginedUsersRequestVo.id}">
@@ -67,21 +67,21 @@
    }
  });
 
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-              center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-              level: 5 // 지도의 확대 레벨
-            };
+     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+       mapOption = {
+         center: new daum.maps.LatLng(${loginedUsersRequestVo.latitude}, ${loginedUsersRequestVo.longitude}), // 지도의 중심좌표
+         level: 5 // 지도의 확대 레벨
+       };
 
-    //지도를 미리 생성
-    var map = new daum.maps.Map(mapContainer, mapOption);
-    //주소-좌표 변환 객체를 생성
-    var geocoder = new daum.maps.services.Geocoder();
-    //마커를 미리 생성
-    var marker = new daum.maps.Marker({
-      position: new daum.maps.LatLng(37.537187, 127.005476),
-      map: map
-    });
+     // 지도를 미리 생성
+     var map = new daum.maps.Map(mapContainer, mapOption);
+     // 주소-좌표 변환 객체를 생성
+     var geocoder = new daum.maps.services.Geocoder();
+     // 마커를 미리 생성
+     var marker = new daum.maps.Marker({
+       position: new daum.maps.LatLng(${loginedUsersRequestVo.latitude}, ${loginedUsersRequestVo.longitude}),
+       map: map
+     });
 
 
     function sample5_execDaumPostcode() {
@@ -116,7 +116,6 @@
               // 마커를 결과값으로 받은 위치로 옮긴다.
               marker.setPosition(coords)
 
-                console.log(x, y)
                         jQ("#resultX").val(x);
                         jQ("#resultY").val(y);
             }
@@ -146,8 +145,6 @@
         form.phone.focus();
       } else {
         if (window.confirm("정보를 수정하시겠습니까?")) {
-          alert("바뀐 위도는?"+jQ("input[name=longitude]").val())
-          alert("바뀐 경도는?"+jQ("input[name=latitude]").val())
           form.submit();
         }
       }

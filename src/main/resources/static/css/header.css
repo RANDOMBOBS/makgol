@@ -17,6 +17,7 @@ ul, li {
 	font-size: 20px;
 	z-index: 999;
 	color: #000;
+	background-color : #FFF;
 }
 
 #header .all_category {

@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
         <input type="file" id="imgUpload" style="display:none;"></input>
         <label for="imgUpload"><i class="fa-solid fa-image"></i></label>
     </form>
-      <img src="<c:url value='/resources/static/image/김치찌개.jpg' />">
+      <img src="<c:url value='/resources/static/image/default/김치찌개.jpg' />">
       <span class="menu_name">${item.menu_name}</span>
       <span class="menu_gogo">근처식당 찾아보기 >></span>
     </li>
