@@ -35,7 +35,7 @@ public class KakaoService {
 		int page = searchRequestVo.getPage();
 
 		UriComponents uri = UriComponentsBuilder
-				.fromHttpUrl("https://dapi.kakao.com/v2/local/search/keyword.json")
+				.fromHttpUrl("https://dapi.kakao.com/v2/local/search/keyword.json?")
 				.queryParam("y", y)
 				.queryParam("x", x)
 				.queryParam("query", keyword)
