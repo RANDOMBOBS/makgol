@@ -1,7 +1,12 @@
 package com.org.makgol.users.service;
 
+import com.org.makgol.comment.vo.CommentResponseVo;
+import com.org.makgol.boards.vo.BoardVo;
+import com.org.makgol.global.exception.CustomException;
+import com.org.makgol.global.exception.ErrorCode;
 import com.org.makgol.stores.dao.StoresDao;
 import com.org.makgol.stores.vo.StoreRequestVo;
+import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
@@ -16,6 +21,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.stream.events.Comment;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -89,7 +95,7 @@ public class UsersService {
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
 
-            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
@@ -117,7 +123,9 @@ public class UsersService {
     public UsersRequestVo loginConfirm(UsersRequestVo usersRequestVo) {
         String email = usersRequestVo.getEmail();
         UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(email);
-        
+
+        if(loginedInUsersRequestVo == null){ throw new CustomException(ErrorCode.NOT_FOUND_USER); }
+
         if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
             loginedInUsersRequestVo = null;
         }
@@ -137,14 +145,15 @@ public class UsersService {
         String currentDirectory = System.getProperty("user.dir");
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if (usersRequestVo.getPhotoFile() != null) {
+        if (usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()) {
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
-            usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
+            usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
+
 
         int result = userDao.updateUserInfo(usersRequestVo);
 
@@ -161,6 +170,26 @@ public class UsersService {
         return result;
     }
 
+    public List<StoreResponseVo> myStoreList(int user_id){
+        return userDao.selectMyStoreList(user_id);
+    }
+
+
+
+    public List<BoardVo> getMyPostList(int user_id){
+        return userDao.selectMyPostList(user_id);
+    }
+
+    public List<CommentResponseVo> getMyCommentList(int user_id){
+        return userDao.selectMyCommentList(user_id);
+    }
+
+    public List<BoardVo> getMyLikePost(int user_id){
+        return userDao.selectMyLikePostList(user_id);
+    }
+
 
 }
+
+
 

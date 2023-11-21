@@ -1,3 +1,6 @@
+
+/* Top5 메뉴 CSS */
+
 * {
 	margin: 0;
 	padding: 0;
@@ -14,6 +17,8 @@ ul, li {
 
 .topmenu_main_div {
 	margin: 30px 0px;
+	display:flex;
+	justify-content:center;
 }
 
 .topmenu_main_div span {
@@ -21,6 +26,8 @@ ul, li {
 	font-size:30px;
 	font-weight:bold;
 	display:block;
+	height:100px;
+	line-height:100px;
 }
 
 
@@ -128,4 +135,9 @@ ul, li {
 	color: #fff;
 	z-index: 999;
 	font-size: 16px;
+}
+
+#top5image{
+    width:100px;
+    margin: 0 30px;
 }

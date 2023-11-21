@@ -4,7 +4,7 @@
 <table>
     <thead>
       <tr>
-        <th><input type="checkbox" id="allCheckbox" onclick="allCheckbox()" /></th>
+        <th><input type="checkbox" id="allMyCheckbox" onclick="allMyCheckbox()" /></th>
         <th>카테고리</th>
         <th>글제목</th>
         <th>공감수</th>
@@ -15,7 +15,7 @@
     <tbody>
         <c:forEach var="item" items="${boardVos}">
           <tr>
-            <td><input type="checkbox" /></td>
+            <td><input type="checkbox" class="eachCheckbox"/></td>
             <input type="hidden" value="${item.b_id}">
             <td>${item.category}</td>
             <td><c:url value='/board/suggestion/detail' var='detail_url'>
@@ -31,4 +31,3 @@
 
 <button type="button" onclick="deleteBoard()">삭제</button>
 
-	<jsp:include page="../../script/jsp/user.jsp"></jsp:include>
