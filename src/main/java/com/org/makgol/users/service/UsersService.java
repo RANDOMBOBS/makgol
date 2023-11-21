@@ -167,6 +167,23 @@ public class UsersService {
             oldfile.delete();
         }
 
+        if(result > 0){
+            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
+            List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
+
+            try {
+                //업장 중복 체크
+                System.out.println("before storeRequestVoList --> : " + storeRequestVoList.size());
+                System.out.println(storesDao.checkStore(storeRequestVoList));
+                System.out.println("after storeRequestVoList --> : " + storeRequestVoList.size());
+
+                HashMap<String, Object> storeMap = kakaoMapSearch.storeInfoRequest(storeRequestVoList);
+                storesDao.insertStore(storeMap);
+            } catch (Exception e) {
+
+            }
+        }
+
         return result;
     }
 
