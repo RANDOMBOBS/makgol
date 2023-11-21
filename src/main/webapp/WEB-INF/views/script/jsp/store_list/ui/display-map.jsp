@@ -17,7 +17,7 @@
         };
 
         const map = new kakao.maps.Map(container, options);
-
+        
         displayMyCoordinate(map, myCoordinate);
         displayShopsCoordinate(map, shops);
     };

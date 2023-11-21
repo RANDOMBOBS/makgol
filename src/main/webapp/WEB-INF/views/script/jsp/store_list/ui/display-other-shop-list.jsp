@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="../util/create-url-for-detail-page.jsp"></jsp:include>
 <script>
     const displayOtherShopList = (page, shops) => {
         if (localStorage.getItem("page") === page) return;

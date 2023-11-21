@@ -55,7 +55,7 @@
 <jsp:include page="../../script/jsp/store_list/event/select-option.jsp"></jsp:include>
 <script
         type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=63b8ebc69249405099357fc9285963b1"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5e40f301ec35188c140844617fdf45bf"
 ></script>
 </body>
 </html>
