@@ -2,18 +2,26 @@ package com.org.makgol.category.service;
 
 import java.util.List;
 
+import com.org.makgol.category.vo.CategoryRequestVo;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.org.makgol.category.dao.CategoryListDao;
 import com.org.makgol.category.vo.CategoryListVo;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryListService {
 
 	
-	@Autowired
-	CategoryListDao categoryDao;
+	private final CategoryListDao categoryDao;
+
+	private final FileUpload fileUpload;
 	
 
 	
@@ -39,4 +47,6 @@ public class CategoryListService {
 	public List<CategoryListVo> categoryCafe() {
 		return categoryDao.selectCategoryCafe();
 	}
+
+
 }

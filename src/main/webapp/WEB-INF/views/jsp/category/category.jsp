@@ -32,8 +32,9 @@
 		<div id="category_list_div"></div>
 	</section>
 	<jsp:include page="../../script/jsp/category.jsp"></jsp:include>
+
+
 	<script>
-	
 	// 버튼 클릭시 색 변화
 		$("button").on("click", function() {
 			$("button").removeClass("active");
@@ -69,6 +70,9 @@
 			$("button").removeClass("active");
 			$(".category_main_ul button").eq(0).addClass("active");
 		}
+
+
 	</script>
+
 </body>
 </html>

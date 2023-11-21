@@ -3,6 +3,9 @@ package com.org.makgol.category.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.org.makgol.category.repository.CategoryRepository;
+import com.org.makgol.category.vo.CategoryRequestVo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,15 +14,20 @@ import com.org.makgol.category.vo.CategoryListVo;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 @Component
+@Repository
+@RequiredArgsConstructor
 public class CategoryListDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
+	private final CategoryRepository categoryRepository;
+
 	public List<CategoryListVo> selectCategory(String where) {
-		String sql = "SELECT menu_name FROM category_menu " + where;
+		String sql = "SELECT DISTINCT menu_name FROM category_menu " + where;
 		List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
 		try {
 			RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);
@@ -57,5 +65,7 @@ public class CategoryListDao {
 	public List<CategoryListVo> selectCategoryCafe() {
 		return selectCategory("WHERE category='카페/디저트'");
 	}
+
+
 
 }
