@@ -42,11 +42,10 @@
     <button type="button" id="passwordCheckBtn" name="passwordCheckBtn">비밀번호 확인</button><br />
     <input placeholder="전화번호" id="phone" name="phone" value="${loginedUsersRequestVo.phone}"><br />
     <input type="text" id="sample5_address" name="address" value="${loginedUsersRequestVo.address}"><br>
-        <input type="text" name="longitude" id="longitude" value="" >
-        <input type="text" name="latitude" id="latitude" value="">
+    <input type="text" name="longitude" id="resultX" value="${loginedUsersRequestVo.longitude}" >
+    <input type="text" name="latitude" id="resultY" value="${loginedUsersRequestVo.latitude}">
     <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
     <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-
 
     <input type="file" id="photoFile" name="photoFile">
     <input type="hidden" name="id" value="${loginedUsersRequestVo.id}">
@@ -55,7 +54,6 @@
 </div>
 
 <script>
-        let form = document.modify_user_info;
   let pwCheck = true;
  jQ("#passwordCheckBtn").on("click", function () {
    console.log("Button clicked");
@@ -94,13 +92,18 @@
           // 주소 정보를 해당 필드에 넣는다.
           document.getElementById("sample5_address").value = addr;
           // 주소로 상세 정보를 검색
+          let x = ""
+          let y = ""
           geocoder.addressSearch(data.address, function (results, status) {
             // 정상적으로 검색이 완료됐으면
             if (status === daum.maps.services.Status.OK) {
 
               var result = results[0]; //첫번째 결과의 값을 활용
-      jQuery("#longitude").val(result.x);
-       jQuery("#latitude").val(result.y);
+
+              console.log(result.x, result.y)
+              x = result.x
+              y = result.y
+
 
 
               // 해당 주소에 대한 좌표를 받아서
@@ -112,19 +115,21 @@
               map.setCenter(coords);
               // 마커를 결과값으로 받은 위치로 옮긴다.
               marker.setPosition(coords)
+
+                console.log(x, y)
+                        jQ("#resultX").val(x);
+                        jQ("#resultY").val(y);
             }
-          });
+          })
+
+
         }
       }).open();
     }
 
 
     function ModifyUserInfo() {
-    if (document.getElementById("longitude").value === "" ||document.getElementById("latitude").value === "") {
-        jQuery("#longitude").val("${loginedUsersRequestVo.longitude}");
-        jQuery("#latitude").val("${loginedUsersRequestVo.latitude}");
-      }
-      alert("${loginedUsersRequestVo}");
+    let form = document.modify_user_info;
       if (form.password.value === "") {
         alert("비밀번호를 입력해주세요");
         form.password.focus();
@@ -139,8 +144,10 @@
       } else if (form.phone.value === "") {
         alert("전화번호를 입력해주세요");
         form.phone.focus();
-      }  else {
+      } else {
         if (window.confirm("정보를 수정하시겠습니까?")) {
+          alert("바뀐 위도는?"+jQ("input[name=longitude]").val())
+          alert("바뀐 경도는?"+jQ("input[name=latitude]").val())
           form.submit();
         }
       }

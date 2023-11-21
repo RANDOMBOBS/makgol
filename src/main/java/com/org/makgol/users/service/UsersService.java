@@ -145,7 +145,7 @@ public class UsersService {
         String currentDirectory = System.getProperty("user.dir");
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
-        if (usersRequestVo.getPhotoFile() != null) {
+        if (usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()) {
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
@@ -153,6 +153,7 @@ public class UsersService {
             usersRequestVo.setPhoto_path("/fileUpload/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
+
 
         int result = userDao.updateUserInfo(usersRequestVo);
 
