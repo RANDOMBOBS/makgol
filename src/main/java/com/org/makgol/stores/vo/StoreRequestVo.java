@@ -42,6 +42,8 @@ public class StoreRequestVo {
     private String 	  keyword = "empty";
     //메뉴 이름
     private String    menuName = "empty";
+    // 거리
+    private String    distance;
 
 
     @Builder
@@ -77,6 +79,7 @@ public class StoreRequestVo {
         this.category = find_word;
         this.phone = phone;
         this.place_url = place_url;
+        this.distance = distance;
     }
 
     @Builder
