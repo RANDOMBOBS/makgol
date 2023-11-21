@@ -10,12 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -52,17 +50,13 @@ public class StoreController {
 
     @GetMapping(value = "/list_data")
     @ResponseBody
-    public ResponseEntity<?> findStoreListData(
-//            @RequestParam String x,
-//            @RequestParam String y,
-//            @RequestParam String keyword,
-//            @RequestParam String page
-    ) {
-//        System.out.println("x = " + x);
-//        System.out.println("y = " + y);
-//        System.out.println("keyword = " + keyword);
-//        System.out.println("page = " + page);
-        System.out.println("welcome");
+    public ResponseEntity<?> findStoreListData(@RequestBody Map<String, String> body) {
+
+//        System.out.println("longitude = " + body.get("longitude"));
+//        System.out.println("latitude = " + body.get("latitude"));
+//        System.out.println("keyword = " + body.get("keyword"));
+//        System.out.println("page = " + body.get("page"));
+
         return new ResponseEntity<>("Hello", HttpStatus.OK);
     }
 
