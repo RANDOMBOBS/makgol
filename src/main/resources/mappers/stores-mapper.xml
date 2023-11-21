@@ -11,4 +11,11 @@
         WHERE place_url = #{place_url}
     </select>
 
+    <select id="findStoreList" resultType="com.org.makgol.stores.dto.ResponseStoreListDto"
+            parameterType="String">
+        SELECT *
+        FROM stores
+        WHERE category = #{keyword}
+    </select>
+
 </mapper>

@@ -1,6 +1,8 @@
 package com.org.makgol.stores.controller;
 
 import com.org.makgol.stores.bean.HttpTransactionLogger;
+import com.org.makgol.stores.dto.RequestStoreListDto;
+import com.org.makgol.stores.dto.ResponseStoreListDto;
 import com.org.makgol.stores.service.StoreService;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
@@ -53,12 +55,22 @@ public class StoreController {
     @GetMapping(value = "/list_data")
     @ResponseBody
     public ResponseEntity<?> findStoreListData(
-            @RequestParam String x,
-            @RequestParam String y,
+            @RequestParam String longitude,
+            @RequestParam String latitude,
             @RequestParam String keyword,
             @RequestParam String page
     ) {
-        return new ResponseEntity<>("Hello", HttpStatus.OK);
+        RequestStoreListDto requestStoreListDto = RequestStoreListDto
+                .builder()
+                .longitude(longitude)
+                .latitude(latitude)
+                .keyword(keyword)
+                .page(page)
+                .build();
+
+        List<ResponseStoreListDto> responseStoreListDto = storeService.findStoreListData(requestStoreListDto);
+
+        return new ResponseEntity<>(responseStoreListDto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/kakao-local-api")
