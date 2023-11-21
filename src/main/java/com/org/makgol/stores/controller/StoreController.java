@@ -53,16 +53,11 @@ public class StoreController {
     @GetMapping(value = "/list_data")
     @ResponseBody
     public ResponseEntity<?> findStoreListData(
-//            @RequestParam String x,
-//            @RequestParam String y,
-//            @RequestParam String keyword,
-//            @RequestParam String page
+            @RequestParam String x,
+            @RequestParam String y,
+            @RequestParam String keyword,
+            @RequestParam String page
     ) {
-//        System.out.println("x = " + x);
-//        System.out.println("y = " + y);
-//        System.out.println("keyword = " + keyword);
-//        System.out.println("page = " + page);
-        System.out.println("welcome");
         return new ResponseEntity<>("Hello", HttpStatus.OK);
     }
 
