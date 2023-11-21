@@ -6,6 +6,7 @@ import com.org.makgol.stores.dto.ResponseStoreListDto;
 import com.org.makgol.stores.service.StoreService;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
+import com.org.makgol.stores.vo.KakaoLocalResponseVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -70,7 +71,8 @@ public class StoreController {
 
         List<ResponseStoreListDto> responseStoreListDto = storeService.findStoreListData(requestStoreListDto);
 
-        return new ResponseEntity<>(responseStoreListDto, HttpStatus.OK);
+        KakaoLocalResponseVo<List<ResponseStoreListDto>> response = new KakaoLocalResponseVo<>(true, "업장 리스트 정보를 가져옵니다.", responseStoreListDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(value = "/kakao-local-api")

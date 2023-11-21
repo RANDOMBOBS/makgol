@@ -20,8 +20,7 @@
 
         const request = getModelData(page);
 
-        const data = await requestApi(request);
-        const shops = data.result.documents;
+        const shops = await requestApi(request);
 
         shopInfo.shops = shops;
         shopInfo.keyword = request.keyword;

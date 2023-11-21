@@ -31,13 +31,14 @@ public class StoreService {
     private final StoresRepository storesRepository;
 
     public List<ResponseStoreListDto> findStoreListData(RequestStoreListDto requestStoreListDto) {
+        List<ResponseStoreListDto> result = null;
         try {
             String keyword = requestStoreListDto.getKeyword();
-            List<ResponseStoreListDto> result = storesRepository.findStoreList(keyword);
-            System.out.println("result = " + result);
+            result = storesRepository.findStoreList(keyword);
         } catch (Exception e) {
+            e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     public KakaoLocalResponseJSON callKakaoLocalAPI(KakaoLocalRequestVo searchRequestVo) {
