@@ -4,6 +4,6 @@ import com.org.makgol.stores.vo.StoreResponseVo;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface StoresReposiory {
+public interface StoresRepository {
     StoreResponseVo findByIdPlaceUrl(String place_url);
 }

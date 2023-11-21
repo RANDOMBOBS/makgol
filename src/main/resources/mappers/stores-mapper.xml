@@ -3,10 +3,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.org.makgol.stores.repository.StoresReposiory">
+<mapper namespace="com.org.makgol.stores.repository.StoresRepository">
 
     <select id="findByIdPlaceUrl" resultType="com.org.makgol.stores.vo.StoreResponseVo" parameterType="String">
-        SELECT * FROM stores WHERE place_url = #{place_url}
+        SELECT *
+        FROM stores
+        WHERE place_url = #{place_url}
     </select>
 
 </mapper>
