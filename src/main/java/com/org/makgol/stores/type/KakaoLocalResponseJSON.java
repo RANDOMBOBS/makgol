@@ -27,6 +27,7 @@ public class KakaoLocalResponseJSON {
 		
 		public StoreRequestVo mapToStoreRequestVo() {
             StoreRequestVo storeRequestVo = StoreRequestVo.builder()
+					.distance(distance)
             		.place_name(place_name)
             		.address_name(address_name)
             		.road_address_name(road_address_name)
