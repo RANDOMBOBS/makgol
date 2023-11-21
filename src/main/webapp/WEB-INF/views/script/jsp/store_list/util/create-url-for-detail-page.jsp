@@ -68,7 +68,7 @@
             shop;
 
         const myCoordinate = JSON.parse(localStorage.getItem("myCoordinate"));
-        const {myX, myY} = myCoordinate;
+        const {longitude, latitude} = myCoordinate;
 
         return new UrlBuilderForDetail()
             .setPlaceName(place_name)
@@ -78,8 +78,8 @@
             .setPlaceUrl(place_url)
             .setShopX(x)
             .setShopY(y)
-            .setMyX(myX)
-            .setMyY(myY)
+            .setMyX(longitude)
+            .setMyY(latitude)
             .getUrl();
     };
 

@@ -7,17 +7,17 @@
 <jsp:include page="./display-shop-coordinate.jsp"></jsp:include>
 <script>
     const displayMap = (shops, myCoordinate) => {
-        const {myX, myY} = myCoordinate;
+        const {longitude, latitude} = myCoordinate;
         const {kakao} = window;
 
         const container = $("#map")[0];
         const options = {
-            center: new kakao.maps.LatLng(myY, myX),
+            center: new kakao.maps.LatLng(latitude, longitude),
             level: 4,
         };
 
         const map = new kakao.maps.Map(container, options);
-        
+
         displayMyCoordinate(map, myCoordinate);
         displayShopsCoordinate(map, shops);
     };

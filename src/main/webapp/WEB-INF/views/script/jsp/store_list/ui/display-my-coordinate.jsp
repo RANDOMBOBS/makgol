@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
-    const displayMyCoordinate = (map, {myX, myY}) => {
+    const displayMyCoordinate = (map, {longitude, latitude}) => {
         const {kakao} = window;
         const imageSrc =
             "https://cdn.icon-icons.com/icons2/2104/PNG/512/map_location_icon_129048.png"; // 마커이미지의 주소입니다
@@ -13,7 +13,7 @@
             imageOption,
         );
 
-        const markerPosition = new kakao.maps.LatLng(myY, myX); // 마커가 표시될 위치입니다
+        const markerPosition = new kakao.maps.LatLng(latitude, longitude); // 마커가 표시될 위치입니다
 
         // 마커를 생성합니다
         const marker = new kakao.maps.Marker({
