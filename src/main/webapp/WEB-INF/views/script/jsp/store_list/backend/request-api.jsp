@@ -19,6 +19,7 @@
             place_name: item.name,
             x: item.longitude,
             y: item.latitude,
+            likes: item.likes,
             category_name: keyword,
             page
         }));
