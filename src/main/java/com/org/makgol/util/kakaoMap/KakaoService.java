@@ -45,7 +45,7 @@ public class KakaoService {
 				.queryParam("category_group_code", "FD6")
 				.build();
 
-		headers.set("Authorization", "KakaoAK e2a97497252d13a304751d99a85ea67c");
+		headers.set("Authorization", "KakaoAK f543101be5a350455cac037b0336e3ac");
 
 		HttpEntity<String> request = new HttpEntity<>(headers);
 
