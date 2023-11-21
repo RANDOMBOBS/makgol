@@ -117,6 +117,12 @@ li {
     background: #fdf97e;
 }
 
+#map .shop_info_area .shop_info_list .shop_info_item .top_item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2px;
+}
+
 #map .shop_info_area .shop_info_list .shop_info_item #place_name {
     display: flex;
     justify-content: left;
@@ -125,6 +131,12 @@ li {
     font-weight: bolder;
     text-decoration: none;
     color: black;
+}
+
+
+#map .shop_info_area .shop_info_list .shop_info_item #likes {
+    color: red;
+    font-size: 20px;
 }
 
 #map .shop_info_area .shop_info_list .shop_info_item #place_name:hover {

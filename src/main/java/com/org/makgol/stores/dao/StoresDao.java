@@ -1,7 +1,7 @@
 package com.org.makgol.stores.dao;
 
 
-import com.org.makgol.stores.repository.StoresReposiory;
+import com.org.makgol.stores.repository.StoresRepository;
 import com.org.makgol.stores.vo.StoreRequestMenuVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
@@ -17,9 +17,10 @@ import java.util.List;
 public class StoresDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private final StoresReposiory storesReposiory;
+    private final StoresRepository storesReposiory;
+
     public void insertStore(HashMap<String, Object> storeMap) throws Exception {
-        System.out.println(storeMap.size()/2);
+        System.out.println(storeMap.size() / 2);
         StoreResponseVo storeResponseVo;
         for (int index = 0; index < storeMap.size() / 2; index++) {
             System.out.println("------" + index + "-------");
@@ -41,7 +42,7 @@ public class StoresDao {
 
 
             if (storeResponseVo != null) {
-                System.out.println("이미 존제 함. storeRequestVo.getPlace_url() --> :"+storeRequestVo.getPlace_url());
+                System.out.println("이미 존제 함. storeRequestVo.getPlace_url() --> :" + storeRequestVo.getPlace_url());
 
                 //store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url());
                 storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
@@ -72,8 +73,8 @@ public class StoresDao {
                 continue;
             }
 
-            String insertStoresSql = "INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertStoresSql = "INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date, distance) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             //int result = 0;
             jdbcTemplate.update(insertStoresSql,
@@ -81,7 +82,7 @@ public class StoresDao {
                     storeRequestVo.getLatitude(), storeRequestVo.getAddress(), storeRequestVo.getLoad_address(),
                     storeRequestVo.getCategory(), storeRequestVo.getOpening_hours(), storeRequestVo.getPhone(),
                     storeRequestVo.getSite(), storeRequestVo.getMenu_update(), storeRequestVo.getPlace_url(),
-                    storeRequestVo.getUpdate_date());
+                    storeRequestVo.getUpdate_date(), storeRequestVo.getDistance());
 
             System.out.println("insert storeInfo --> : " + storeRequestVo.getPlace_url());
 
@@ -113,11 +114,12 @@ public class StoresDao {
             }
         }
     }
+
     public int checkStore(List<StoreRequestVo> storeRequestVos) throws Exception {
 
 
-        int count=0;
-        for(int i=storeRequestVos.size()-1; i >= 0; i--){
+        int count = 0;
+        for (int i = storeRequestVos.size() - 1; i >= 0; i--) {
             String sql = "SELECT id FROM stores WHERE place_url = ? ";
             int store_id = 0;
 
@@ -129,7 +131,7 @@ public class StoresDao {
                     storeRequestVos.remove(i);
                     count++;
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

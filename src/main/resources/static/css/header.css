@@ -133,6 +133,15 @@ ul, li {
 	bottom: 0;
 	padding: 0 30px;
 }
+#header .userTab .welcome {
+    text-align : right;
+}
+
+#header .userTab .welcome img{
+width : 30px;
+height : 30px;
+border-radius : 50%
+}
 
 #header .userTab .depth1 {
 	display: flex;
