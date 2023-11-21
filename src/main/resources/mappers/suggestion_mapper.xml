@@ -1,180 +1,264 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.org.makgol.boards.repository.BoardSuggestionRepository">
+        <mapper namespace="com.org.makgol.boards.repository.BoardSuggestionRepository">
 
-    <resultMap id="boardResult" type="com.org.makgol.boards.vo.BoardVo">
-        <result property="b_id" column="id"/>
-        <result property="user_id" column="user_id"/>
-        <result property="hit" column="hit"/>
-        <result property="title" column="title"/>
-        <result property="date" column="date"/>
-        <result property="contents" column="contents"/>
-        <result property="category" column="category"/>
-        <result property="sympathy" column="sympathy"/>
-        <result property="name" column="name"/>
-        <result property="attachment" column="attachment"/>
-    </resultMap>
+            <resultMap id="boardResult" type="com.org.makgol.boards.vo.BoardVo">
+                <result property="b_id" column="id"/>
+                <result property="user_id" column="user_id"/>
+                <result property="hit" column="hit"/>
+                <result property="title" column="title"/>
+                <result property="date" column="date"/>
+                <result property="contents" column="contents"/>
+                <result property="category" column="category"/>
+                <result property="sympathy" column="sympathy"/>
+                <result property="photo" column="photo"/>
+                <result property="photo_path" column="photo_path"/>
+                <result property="name" column="name"/>
+            </resultMap>
 
-
-    <select id="selectAllSuggestionBoard" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
-        SELECT b.id,
-               b.user_id,
-               b.hit,
-               b.title,
-               b.date,
-               b.contents,
-               b.category,
-               b.sympathy,
-               u.name,
-               u.photo
-        FROM boards AS b
-                 JOIN users AS u ON b.user_id = u.id
-        WHERE category = 'suggestion'
-        ORDER BY date DESC
-    </select>
-
-    <insert id="insertSuggestionBoard" parameterType="com.org.makgol.boards.vo.BoardVo">
-        INSERT INTO boards (user_id, title, date, contents, category, attachment)
-        VALUES (#{user_id}, #{title}, NOW(), #{contents}, #{category}, #{attachment})
-    </insert>
-
-    <select id="showDetailSuggestionBoard" resultMap="boardResult"
-            parameterType="com.org.makgol.boards.vo.BoardVo">
-        SELECT b.id,
-               b.user_id,
-               b.hit,
-               b.title,
-               b.date,
-               b.contents,
-               b.category,
-               b.sympathy,
-               b.attachment,
-               u.name,
-               u.photo
-        FROM boards AS b
-                 JOIN users AS u ON b.user_id = u.id
-        WHERE b.id = #{id}
-    </select>
-
-    <update id="updateHit" parameterType="int">
-        UPDATE boards
-        SET hit =
-                hit + 1
-        WHERE id = #{id}
-    </update>
-
-    <insert id="insertComment" parameterType="com.org.makgol.comment.vo.CommentRequestVo">
-        INSERT INTO comments(user_id, board_id, date, content, nickname)
-        VALUES (#{user_id},
-                #{board_id}, now(), #{content}, #{nickname})
-    </insert>
-
-    <select id="selectCommentList" resultType="com.org.makgol.comment.vo.CommentResponseVo"
-            parameterType="int">
-        SELECT *
-        FROM comments
-        JOIN users on comments.user_id = users.id
-        WHERE board_id = #{board_id}
-    </select>
-
-    <update id="updateComment" parameterType="com.org.makgol.comment.vo.CommentRequestVo">
-        UPDATE comments
-        SET nickname=#{nickname},
-            content=#{content},
-            mod_date=now()
-        where id = #{id}
-    </update>
-
-    <delete id="deleteComment" parameterType="int">
-        DELETE
-        FROM comments
-        WHERE id = #{id}
-    </delete>
-
-    <select id="selectBoard" resultMap="boardResult" parameterType="int">
-        SELECT *
-        FROM boards
-        WHERE id = #{b_id}
-    </select>
-
-    <update id="updateBoard" parameterType="com.org.makgol.boards.vo.BoardVo">
-
-        UPDATE boards
-        SET title=#{title},
-            contents=#{contents},
-            attachment=#{attachment}
-        WHERE id = #{b_id}
-
-    </update>
+            <resultMap id="boardDetailResult" type="com.org.makgol.boards.vo.BoardDetailResponseVo">
+                <result property="id" column="id"/>
+                <result property="user_id" column="user_id"/>
+                <result property="hit" column="hit"/>
+                <result property="title" column="title"/>
+                <result property="date" column="date"/>
+                <result property="contents" column="contents"/>
+                <result property="category" column="category"/>
+                <result property="sympathy" column="sympathy"/>
+                <result property="user_photo_path" column="user_photo"/>
+                <result property="board_photo_path" column="board_photo"/>
+            </resultMap>
 
 
-    <delete id="deleteBoard" parameterType="int">
-        DELETE
-        FROM boards
-        WHERE id = #{id}
-    </delete>
 
-    <select id="selectSearchBoard" resultMap="boardResult"
-            parameterType="hashmap">
-        SELECT b.id AS b_id, b.user_id, b.hit, b.title, b.date, b.contents,
-        b.category, b.sympathy, u.name, u.photo
-        FROM boards AS b
-        JOIN users AS u
-        ON b.user_id = u.id
-        WHERE category = 'suggestion'
-        <choose>
-            <when test="searchOption == 'name'">
-                AND u.name = #{searchWord}
-            </when>
-            <when test="searchOption == 'title'">
-                AND b.title LIKE CONCAT('%', #{searchWord}, '%')
-            </when>
-            <when test="searchOption == 'contents'">
-                AND b.contents LIKE CONCAT('%', #{searchWord}, '%')
-            </when>
-        </choose>
-    </select>
+            <select id="selectAllSuggestionBoard" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
+                SELECT b.id,
+                b.user_id,
+                b.hit,
+                b.title,
+                b.date,
+                b.category,
+                b.sympathy,
+                u.name
+                FROM boards AS b
+                JOIN users AS u ON b.user_id = u.id
+                WHERE category = 'suggestion'
+                ORDER BY date DESC
+            </select>
 
-    <select id="selectUserLikeStatus" resultType="int" parameterType="com.org.makgol.boards.vo.BoardVo">
-        SELECT count(*)
-        FROM board_likes
-        WHERE b_id = #{b_id}
-          AND user_id = #{user_id}
-    </select>
+            <insert id="insertSuggestionBoard" parameterType="com.org.makgol.boards.vo.BoardCreateRequestVo" useGeneratedKeys="true" keyProperty="id">
+                INSERT INTO boards (user_id, title, date, contents, category, mod_date)
+                VALUES (#{user_id}, #{title}, NOW(), #{contents}, #{category}, NOW())
+            </insert>
+
+            <insert id="insertSuggestionBoardImages" parameterType="java.util.Map">
+                INSERT INTO board_images (board_id, photo, photo_path, date)
+                VALUES
+                <foreach collection="fileList" item="file" separator=",">
+                    (#{id}, #{file.photoName}, #{file.photoPath}, now())
+                </foreach>
+            </insert>
+
+            <select id="showDetailImageBoard" resultMap="boardDetailResult"
+                    parameterType="int">
+                SELECT b.id, b.user_id, b.hit, b.title, b.date, b.contents, b.category, b.sympathy,
+                u.name, u.photo_path as user_photo,
+                bi.photo_path as board_photo
+                FROM boards AS b
+                JOIN users AS u
+                ON b.user_id = u.id
+                JOIN board_images AS bi ON bi.board_id = b.id
+                WHERE b.id = #{id}
+            </select>
+
+            <select id="showDetailBoard" resultMap="boardDetailResult"
+                    parameterType="int">
+                SELECT b.id, b.user_id, b.hit, b.title, b.date, b.contents, b.category, b.sympathy,
+                u.name, u.photo_path as user_photo
+                FROM boards AS b
+                JOIN users AS u
+                ON b.user_id = u.id
+                WHERE b.id = #{id}
+            </select>
 
 
-    <insert id="insertBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
-        INSERT INTO board_likes(b_id, user_id)
-        VALUES (#{b_id}, #{user_id})
-    </insert>
+            <update id="updateHit" parameterType="int">
+                UPDATE boards
+                SET hit = hit + 1
+                WHERE id = #{id}
+            </update>
 
-    <delete id="deleteBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
-        DELETE FROM board_likes
-        WHERE b_id = #{b_id}
-          AND user_id = #{user_id}
-    </delete>
+            <insert id="insertComment" parameterType="com.org.makgol.comment.vo.CommentRequestVo">
+                INSERT INTO comments(user_id, board_id, date, content, nickname)
+                VALUES (#{user_id}, #{board_id}, now(), #{content}, #{nickname})
+            </insert>
+
+            <select id="selectCommentList" resultType="com.org.makgol.comment.vo.CommentResponseVo"
+                    parameterType="int">
+                SELECT *
+                FROM comments
+                JOIN users on comments.user_id = users.id
+                WHERE board_id = #{board_id}
+            </select>
+
+            <update id="updateComment" parameterType="com.org.makgol.comment.vo.CommentRequestVo">
+                UPDATE comments
+                SET nickname=#{nickname},
+                content=#{content},
+                content=#{content},
+                mod_date=now()
+                where id = #{id}
+            </update>
+
+            <delete id="deleteComment" parameterType="int">
+                DELETE
+                FROM comments
+                WHERE id = #{id}
+            </delete>
+
+            <select id="selectBoard" resultMap="boardResult" parameterType="int">
+                SELECT boards.id,
+                boards.user_id,
+                boards.hit,
+                boards.title,
+                boards.date,
+                boards.contents,
+                boards.category,
+                boards.sympathy
+                FROM boards
+                WHERE boards.id = #{id}
+            </select>
+
+            <select id="selectImageBoard" resultMap="boardResult" parameterType="int">
+                SELECT boards.id,
+                boards.user_id,
+                boards.hit,
+                boards.title,
+                boards.date,
+                boards.contents,
+                boards.category,
+                boards.sympathy,
+                board_images.photo,
+                board_images.photo_path
+                FROM boards
+                JOIN board_images ON boards.id = board_images.board_id
+                WHERE boards.id = #{b_id}
+            </select>
+
+            <update id="updateBoard" parameterType="com.org.makgol.boards.vo.BoardCreateRequestVo">
+                UPDATE boards
+                SET title=#{title}, contents=#{contents}
+                WHERE id = #{id}
+            </update>
+
+            <delete id="deleteBoard" parameterType="int">
+                DELETE
+                FROM boards
+                WHERE id = #{b_id}
+            </delete>
+
+            <delete id="deleteBoardImage" parameterType="int">
+                DELETE FROM board_images  WHERE board_id = #{board_id}
+            </delete>
+
+            <select id="selectSearchBoard" resultMap="boardResult"
+                    parameterType="hashmap">
+                SELECT b.id AS b_id, b.user_id, b.hit, b.title, b.date, b.contents,
+                b.category, b.sympathy, u.name, u.photo
+                FROM boards AS b
+                JOIN users AS u
+                ON b.user_id = u.id
+                WHERE category = 'suggestion'
+                <choose>
+                    <when test="searchOption == 'name'">
+                        AND u.name = #{searchWord}
+                    </when>
+                    <when test="searchOption == 'title'">
+                        AND b.title LIKE CONCAT('%', #{searchWord}, '%')
+                    </when>
+                    <when test="searchOption == 'contents'">
+                        AND b.contents LIKE CONCAT('%', #{searchWord}, '%')
+                    </when>
+                </choose>
+            </select>
+
+            <select id="selectUserLikeStatus" resultType="int" parameterType="com.org.makgol.boards.vo.BoardVo">
+                SELECT count(*)
+                FROM board_likes
+                WHERE b_id = #{b_id}
+                AND user_id = #{user_id}
+            </select>
 
 
-    <select id="selectLikeCount" resultType="int" parameterType="int">
-        SELECT count(*)
-        FROM board_likes
-        WHERE b_id = #{b_id};
-    </select>
+            <insert id="insertBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
+                INSERT INTO board_likes(b_id, user_id)
+                VALUES (#{b_id}, #{user_id})
+            </insert>
 
-    <update id="updateBoardSympathy" parameterType="map">
-        UPDATE boards
-        SET sympathy=#{totalLike}
-        WHERE id = #{b_id}
-    </update>
+            <delete id="deleteBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
+                DELETE FROM board_likes
+                WHERE b_id = #{b_id}
+                AND user_id = #{user_id}
+            </delete>
 
-    <delete id="deleteHistoryBoard" parameterType="List">
-        DELETE FROM boards
-        WHERE
+
+            <select id="selectLikeCount" resultType="int" parameterType="int">
+                SELECT count(*)
+                FROM board_likes
+                WHERE b_id = #{b_id};
+            </select>
+
+            <update id="updateBoardSympathy" parameterType="map">
+                UPDATE boards
+                SET sympathy=#{totalLike}
+                WHERE id = #{b_id}
+            </update>
+
+            <delete id="deleteHistoryBoard" parameterType="List">
+                DELETE FROM boards
+                WHERE
+                <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
+                    id = #{id}
+                </foreach>
+            </delete>
+
+    <select id="selectBoardImages" resultType="String" parameterType="List">
+        SELECT photo_path FROM board_images WHERE
         <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
-            id = #{id}
+            board_id = #{id}
         </foreach>
-    </delete>
+    </select>
 
-</mapper>
+
+
+    <delete id="deleteHistoryComment" parameterType="List">
+                DELETE FROM comments
+                WHERE
+                <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
+                    id = #{id}
+                </foreach>
+            </delete>
+
+            <delete id="deleteHistoryLike" parameterType="List">
+                DELETE FROM board_likes
+                WHERE
+                <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
+                    id = #{id}
+                </foreach>
+            </delete>
+
+            <update id="deleteLikes" parameterType="List">
+                UPDATE boards
+                SET sympathy = sympathy-1
+                WHERE
+                <foreach collection="boardidList" item="b_id" separator=" OR " open="(" close=")" >
+                    id = #{b_id}
+                </foreach>
+            </update>
+
+
+        </mapper>
+
+

@@ -4,8 +4,6 @@
         integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <jsp:include page="../ui/display-other-shop-list.jsp"></jsp:include>
-<jsp:include page="../ui/display-map.jsp"></jsp:include>
-<jsp:include page="../ui/display-selected-button.jsp"></jsp:include>
 <script>
     $(".shop_page button").click(async function () {
         const selectEle = $("#option");

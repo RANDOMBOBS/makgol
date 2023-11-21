@@ -26,7 +26,7 @@
         shopInfo.shops = shops;
         shopInfo.keyword = request.keyword;
 
-        const myCoordinate = {myX: request.myX, myY: request.myY};
+        const myCoordinate = {longitude: request.longitude, latitude: request.latitude};
 
         localStorage.setItem("myCoordinate", JSON.stringify(myCoordinate));
 

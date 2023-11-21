@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
     const getModelData = (page) => {
-        const myX = "${x}";
-        const myY = "${y}";
+        const longitude = "${x}";
+        const latitude = "${y}";
         const keyword = "${keyword}";
-        
+
         return {
-            myX,
-            myY,
+            longitude,
+            latitude,
             keyword,
             page,
         };

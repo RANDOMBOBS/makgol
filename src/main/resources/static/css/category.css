@@ -100,3 +100,15 @@ img {
 	z-index: 999;
 	font-size: 16px;
 }
+
+.fileUpload {
+    position: absolute;
+    top:-40%;
+    left:42%;
+    z-index:9999;
+}
+
+.fa-image{
+    color:white;
+}
+

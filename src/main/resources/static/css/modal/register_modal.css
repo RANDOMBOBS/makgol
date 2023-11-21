@@ -42,7 +42,7 @@
     height: 198px;
     border: 3px solid #f1ec10;
     border-radius: 5px;
-    background: url("../../image/user_default.jpeg") no-repeat 0 center/175px 191px;
+    background: url("../../image/default/user_default.jpeg") no-repeat 0 center/175px 191px;
 }
 
 .register_modal .modal_body .register_wrapper #register_form td .key {
