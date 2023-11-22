@@ -15,10 +15,7 @@
     };
 
     const pageInit = async () => {
-        const page = "1";
-        localStorage.setItem("page", page);
-
-        const request = getModelData(page);
+        const request = getModelData();
 
         const shops = await requestApi(request);
 

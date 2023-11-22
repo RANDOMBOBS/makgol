@@ -7,18 +7,20 @@
 <jsp:include page="../../store_util/get-distance.jsp"></jsp:include>
 <script>
     const requestApi = async (payload) => {
-        const {keyword, longitude, latitude, page} = payload
-        const url = "http://localhost:8090/store/list_data?longitude=" + longitude + "&latitude=" + latitude + "&keyword=" + keyword + "&page=" + page;
+        const {keyword, longitude, latitude} = payload
+        const url = "http://localhost:8090/store/list_data?longitude=" + longitude + "&latitude=" + latitude + "&keyword=" + keyword;
+
+        console.log(url)
 
         const {axios} = window;
         const {data} = await axios.get(url);
 
-        const result = data.result.map((item) => {
+        return data.result.map((item) => {
             const numberMyX = Number(longitude);
             const numberMyY = Number(latitude);
             const numberShopX = Number(item.longitude);
             const numberShopY = Number(item.latitude);
-            
+
             const intDistance = getDistance(numberMyY, numberMyX, numberShopY, numberShopX);
 
             return {
@@ -30,12 +32,9 @@
                 shopY: item.latitude,
                 likes: item.likes,
                 category_name: keyword,
-                page
             }
         });
 
-        console.log(result);
-        return result;
 
     };
 </script>

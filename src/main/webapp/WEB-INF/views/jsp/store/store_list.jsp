@@ -30,13 +30,7 @@
             </div>
         </div>
         <div class="shop_info_list"></div>
-        <div class="shop_info_footer">
-            <div class="shop_page">
-                <button class="button_style" value="1">1</button>
-                <button class="button_style" value="2">2</button>
-                <button class="button_style" value="3">3</button>
-            </div>
-        </div>
+        <div class="shop_info_footer"></div>
     </div>
     <div class="guide_line">
         <div class="head_box">

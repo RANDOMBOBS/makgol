@@ -58,15 +58,13 @@ public class StoreController {
     public ResponseEntity<?> findStoreListData(
             @RequestParam String longitude,
             @RequestParam String latitude,
-            @RequestParam String keyword,
-            @RequestParam String page
+            @RequestParam String keyword
     ) {
         RequestStoreListDto requestStoreListDto = RequestStoreListDto
                 .builder()
                 .longitude(longitude)
                 .latitude(latitude)
                 .keyword(keyword)
-                .page(page)
                 .build();
 
         List<ResponseStoreListDto> responseStoreListDto = storeService.findStoreListData(requestStoreListDto);
