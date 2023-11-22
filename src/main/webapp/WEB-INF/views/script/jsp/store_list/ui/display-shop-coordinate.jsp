@@ -4,8 +4,7 @@
         const {kakao} = window;
 
         shops.forEach((shop) => {
-            const shopX = shop.x;
-            const shopY = shop.y;
+            const {shopX, shopY} = shop;
 
             const markerPosition = new kakao.maps.LatLng(shopY, shopX);
 
