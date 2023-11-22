@@ -34,9 +34,7 @@
         } else {
             level = 5;
         }
-
-        console.log(level)
-
+        
         const container = document.querySelector("#map .item_info_body");
         const options = {
             center: new kakao.maps.LatLng(middleY, middleX), level,

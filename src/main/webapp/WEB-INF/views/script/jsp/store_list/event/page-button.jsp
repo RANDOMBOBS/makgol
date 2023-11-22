@@ -17,7 +17,7 @@
 
         const myCoordinate = JSON.parse(localStorage.getItem("myCoordinate"));
 
-        console.log($(this));
+        // console.log($(this));
 
         displayOtherShopList(page, shops);
         displayMap(shops, myCoordinate);

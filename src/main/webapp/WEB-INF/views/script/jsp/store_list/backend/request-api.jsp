@@ -9,9 +9,7 @@
     const requestApi = async (payload) => {
         const {keyword, longitude, latitude} = payload
         const url = "http://localhost:8090/store/list_data?longitude=" + longitude + "&latitude=" + latitude + "&keyword=" + keyword;
-
-        console.log(url)
-
+        
         const {axios} = window;
         const {data} = await axios.get(url);
 
