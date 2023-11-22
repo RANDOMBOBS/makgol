@@ -35,6 +35,7 @@
                     <li><span>전화번호: </span><span></span></li>
                     <li><span>카테고리: </span><span></span></li>
                     <li><span>주소정보: </span><span></span></li>
+                    <li><span id="distance">거리: </span><span></span></li>
                 </ul>
             </div>
             <div id="menu_info">

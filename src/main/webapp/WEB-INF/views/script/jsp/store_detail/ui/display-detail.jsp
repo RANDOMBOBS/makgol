@@ -11,13 +11,16 @@
             param.placeName,
             param.phone,
             param.categoryName,
-            param.addressName,
+            param.addressName
         ];
-
+        
         liEles.forEach((liEle, idx) => {
             const spanEle = liEle.querySelector("span:nth-child(2)");
             spanEle.innerText = detailInfos[idx];
         });
+
+        const distanceEle = document.querySelector("#distance");
+        distanceEle.nextSibling.textContent = getDistance(Number(param.myY), Number(param.myX), Number(param.shopY), Number(param.shopX)) + "m";
     };
 
 </script>
