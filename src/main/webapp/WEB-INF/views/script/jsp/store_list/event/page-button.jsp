@@ -13,8 +13,8 @@
         localStorage.setItem("changedPage", page);
 
         const request = getModelData(page);
-        const data = await requestApi(request);
-        const shops = data.result.documents;
+        const shops = await requestApi(request);
+
         const myCoordinate = JSON.parse(localStorage.getItem("myCoordinate"));
 
         console.log($(this));

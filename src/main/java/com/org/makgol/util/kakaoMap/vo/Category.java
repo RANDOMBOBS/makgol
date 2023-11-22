@@ -1,4 +1,4 @@
-package com.org.makgol.stores.vo;
+package com.org.makgol.util.kakaoMap.vo;
 
 import lombok.Getter;
 

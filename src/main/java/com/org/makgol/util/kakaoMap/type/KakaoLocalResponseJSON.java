@@ -1,10 +1,8 @@
-package com.org.makgol.stores.type;
+package com.org.makgol.util.kakaoMap.type;
 
 import com.org.makgol.stores.vo.StoreRequestVo;
 
 import java.util.List;
-
-
 
 
 public class KakaoLocalResponseJSON {

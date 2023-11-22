@@ -11,9 +11,9 @@ import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
-import com.org.makgol.util.KakaoMapSearch;
 import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
+import com.org.makgol.util.kakaoMap.KakaoMap;
 import com.org.makgol.util.mail.MailSendUtil;
 import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
@@ -26,6 +26,7 @@ import javax.xml.stream.events.Comment;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +36,7 @@ public class UsersService {
     private final MailSendUtil mailSendUtil;
     private final UserDao userDao;
     private final RedisUtil redisUtil;
-    private final KakaoMapSearch kakaoMapSearch;
+    private final KakaoMap kakaoMapSearch;
     private final StoresDao storesDao;
     private final UsersRepository usersRepository;
     private final FileUpload fileUpload;
@@ -48,12 +49,14 @@ public class UsersService {
     //userFindPassword
     public String userFindPassword(String userEmail) {
 
-        if (userDao.findUserEmail(userEmail)) {
+        if (usersRepository.findUserEmail(userEmail)) {
 
             int randomNumber = mailSendUtil.makeRandomNumber();
             String newPassword = String.valueOf(randomNumber);
-
-            if (userDao.updatePassword(newPassword, userEmail)) {
+            Map<String, String> map = new HashMap<>();
+            map.put("newPassword", newPassword);
+            map.put("userEmail", userEmail);
+            if (usersRepository.updatePassword(map)) {
                 mailSendUtil.sendMail(randomNumber, userEmail);
 
             }
@@ -101,9 +104,9 @@ public class UsersService {
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
-        if (userDao.createUser(usersRequestVo)) {
-
-            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
+        if (usersRepository.insertUser(usersRequestVo)) {
+            String email = usersRequestVo.getEmail();
+            UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
             List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
             try {
@@ -175,7 +178,8 @@ public class UsersService {
         }
 
         if(result > 0){
-            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
+            String email = usersRequestVo.getEmail();
+            UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
             List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
             try {

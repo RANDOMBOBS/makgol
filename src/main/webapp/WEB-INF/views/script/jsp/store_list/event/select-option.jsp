@@ -11,8 +11,7 @@
         const changedPage = JSON.parse(localStorage.getItem("changedPage"));
 
         const request = getModelData(changedPage);
-        const data = await requestApi(request);
-        const shops = data.result.documents;
+        const shops = await requestApi(request);
 
         if (option === "distance") {
             alert("거리가 가까운 순으로 표시됩니다.");

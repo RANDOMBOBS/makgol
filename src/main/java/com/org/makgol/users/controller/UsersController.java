@@ -23,7 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsersController {
     private final UsersService userService;
-    private final FileUpload fileUpload;
 
     //joinUser_POST
     @PostMapping("/join")
