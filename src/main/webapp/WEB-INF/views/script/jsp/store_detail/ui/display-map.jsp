@@ -23,19 +23,19 @@
 
         let level = 0;
 
-        if (0 <= intDistance && intDistance < 25) {
+        if (0 <= intDistance && intDistance < 100) {
             level = 1;
-        } else if (25 <= intDistance && intDistance < 50) {
+        } else if (100 <= intDistance && intDistance < 195) {
             level = 2;
-        } else if (50 <= intDistance && intDistance < 300) {
+        } else if (195 <= intDistance && intDistance < 450) {
             level = 3;
-        } else if (300 <= intDistance && intDistance < 600) {
+        } else if (450 <= intDistance && intDistance < 750) {
             level = 4;
-        } else if (600 <= intDistance && intDistance < 1300) {
-            level = 5;
         } else {
-            level = 6;
+            level = 5;
         }
+
+        console.log(level)
 
         const container = document.querySelector("#map .item_info_body");
         const options = {
