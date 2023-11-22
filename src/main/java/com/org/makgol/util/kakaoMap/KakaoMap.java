@@ -7,21 +7,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.org.makgol.stores.dao.StoresDao;
-import com.org.makgol.stores.service.StoreService;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
-import com.org.makgol.stores.vo.Category;
-import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.Crawller;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import com.org.makgol.util.kakaoMap.vo.Category;
+import com.org.makgol.util.kakaoMap.vo.KakaoLocalRequestVo;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 
 import lombok.RequiredArgsConstructor;

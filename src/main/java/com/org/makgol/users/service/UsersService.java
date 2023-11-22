@@ -25,6 +25,7 @@ import javax.xml.stream.events.Comment;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -46,12 +47,14 @@ public class UsersService {
     //userFindPassword
     public String userFindPassword(String userEmail) {
 
-        if (userDao.findUserEmail(userEmail)) {
+        if (usersRepository.findUserEmail(userEmail)) {
 
             int randomNumber = mailSendUtil.makeRandomNumber();
             String newPassword = String.valueOf(randomNumber);
-
-            if (userDao.updatePassword(newPassword, userEmail)) {
+            Map<String, String> map = new HashMap<>();
+            map.put("newPassword", newPassword);
+            map.put("userEmail", userEmail);
+            if (usersRepository.updatePassword(map)) {
                 mailSendUtil.sendMail(randomNumber, userEmail);
 
             }
@@ -99,9 +102,9 @@ public class UsersService {
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
-        if (userDao.createUser(usersRequestVo)) {
-
-            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
+        if (usersRepository.insertUser(usersRequestVo)) {
+            String email = usersRequestVo.getEmail();
+            UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
             List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
             try {
@@ -168,7 +171,8 @@ public class UsersService {
         }
 
         if(result > 0){
-            UsersResponseVo usersResponseVo = userDao.findXY(usersRequestVo);
+            String email = usersRequestVo.getEmail();
+            UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
             List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
             try {

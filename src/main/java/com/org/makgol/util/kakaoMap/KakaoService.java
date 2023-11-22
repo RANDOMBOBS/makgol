@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
-import com.org.makgol.stores.vo.KakaoLocalRequestVo;
+import com.org.makgol.util.kakaoMap.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
