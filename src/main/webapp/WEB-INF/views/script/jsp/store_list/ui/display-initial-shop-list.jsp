@@ -11,12 +11,16 @@
 
         shops.forEach((shop) => {
             const shopInfoListEle = $(".shop_info_list");
-
             const shopInfoItemEle = $("<div>").addClass("shop_info_item");
 
+            const topItemEle = $("<div>").addClass("top_item");
             const placeNameEle = $("<a>")
                 .attr("id", "place_name")
                 .text(shop.place_name)
+            const likeItemEle = $("<p>").attr("id", "likes").text("♥" + shop.likes)
+
+            const topItemComposition = [placeNameEle, likeItemEle];
+            topItemComposition.forEach((composition) => topItemEle.append(composition));
 
             const middleItemEle = $("<div>").addClass("middle_item");
 
@@ -46,7 +50,7 @@
                 underItemEle.append(composition),
             );
 
-            const shopInfoComposition = [placeNameEle, middleItemEle, underItemEle];
+            const shopInfoComposition = [topItemEle, middleItemEle, underItemEle];
 
             shopInfoComposition.forEach((composition) =>
                 shopInfoItemEle.append(composition),
