@@ -18,7 +18,7 @@ public interface UsersRepository {
     Boolean updatePassword(Map<String, String> map);
     String duplicationUserEmail(String email);
     UsersResponseVo findUserByEmail(String email);
-    List<UsersRequestVo> selectUser(String email);
+    List<UsersResponseVo> selectUser(String email);
     int updateUserInfo(UsersRequestVo usersRequestVo);
     List<StoreResponseVo> selectMyStoreList(int user_id);
     List<BoardVo> selectMyPostList(int user_id);

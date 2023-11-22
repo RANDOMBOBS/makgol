@@ -8,7 +8,9 @@ import java.util.List;
 @Component
 public class WeatherInfo {
     public List<Integer> findCoordinate(String address){
-        List<Integer> coordinate = new ArrayList<>();
+        // 유저 주소가 넘어옴! (서울 강남구 강남대로 476)
+        List<Integer> coordinate = new ArrayList<Integer>();
+
         return coordinate;
     }
 }

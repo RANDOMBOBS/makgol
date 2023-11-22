@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.org.makgol.admin.repository.AdminRepository;
+import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import com.org.makgol.users.vo.UsersRequestVo;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,8 +17,8 @@ public class AdminDao {
 
     private final AdminRepository adminRepository;
 
-    public List<UsersRequestVo> selectAllUserList() {
-        List<UsersRequestVo> userVos = new ArrayList<UsersRequestVo>();
+    public List<UsersResponseVo> selectAllUserList() {
+        List<UsersResponseVo> userVos = new ArrayList<UsersResponseVo>();
         userVos = adminRepository.selectAllUserList();
         return userVos;
     }

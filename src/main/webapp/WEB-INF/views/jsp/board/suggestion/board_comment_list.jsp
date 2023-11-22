@@ -17,7 +17,7 @@
 			<li>닉네임은 ${item.getNickname()}</li>
 			<li>내용은 ${item.getContent()}</li>
 			<li>작성일은 ${item.getDate()}</li>
-			<c:if test="${item.getUser_id() == loginedUsersRequestVo.getId()}">
+			<c:if test="${item.getUser_id() == loginedUserVo.getId()}">
 				<li><input type="button" value="수정" onclick="modComment(this)" /></li>
 				<li><input type="button" value="삭제"
 					onclick="delComment(${item.getId()})" /></li>

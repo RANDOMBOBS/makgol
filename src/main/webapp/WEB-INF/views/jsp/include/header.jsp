@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.org.makgol.users.vo.UsersRequestVo" %>
+<%@page import="com.org.makgol.users.vo.UsersResponseVo" %>
 
 <link rel="stylesheet"
     	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -14,8 +15,8 @@
   	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <%
-    UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
-    UsersRequestVo blackList = (UsersRequestVo) session.getAttribute("blackList");
+    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+    UsersResponseVo blackList = (UsersResponseVo) session.getAttribute("blackList");
 %>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
@@ -110,9 +111,9 @@
     </div>
     <p class="img"></p>
     <div class="userTab">
-       <c:if test="${loginedUsersRequestVo != null}">
-         <p class="welcome"> 환영합니다. ${loginedUsersRequestVo.name} 회원님!
-            <img src="http://localhost:8090${loginedUsersRequestVo.photo_path}" alt="프로필사진"/>
+       <c:if test="${loginedUserVo != null}">
+         <p class="welcome"> 환영합니다. ${loginedUserVo.name} 회원님!
+            <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진"/>
          </p>
        </c:if>
         <ul class="depth1">
@@ -127,8 +128,8 @@
             </li>
 
             <c:choose>
-                <c:when test="${loginedUsersRequestVo != null}">
-                    <c:if test="${loginedUsersRequestVo.getGrade() == '관리자'}">
+                <c:when test="${loginedUserVo != null}">
+                    <c:if test="${loginedUserVo.getGrade() == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
                     <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>

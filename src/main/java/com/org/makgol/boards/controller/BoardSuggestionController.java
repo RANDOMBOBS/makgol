@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import com.org.makgol.boards.vo.BoardCreateRequestVo;
 import com.org.makgol.boards.vo.BoardDetailResponseVo;
 import com.org.makgol.comment.vo.CommentRequestVo;
-import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -57,10 +57,10 @@ public class BoardSuggestionController {
 	@GetMapping("/create")
 	public String create(Model model, HttpSession session) {
 		String nextPage = "jsp/board/suggestion/create_board_form";
-		UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
-		String userName = loginedUsersRequestVo.getName();
-		int userId = loginedUsersRequestVo.getId();
-		if (loginedUsersRequestVo != null) {
+		UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+		String userName = loginedUserVo.getName();
+		int userId = loginedUserVo.getId();
+		if (loginedUserVo != null) {
 			model.addAttribute("name", userName);
 			model.addAttribute("user_id", userId);
 		}

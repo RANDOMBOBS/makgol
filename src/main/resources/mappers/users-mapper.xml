@@ -31,7 +31,7 @@
         SELECT email FROM users WHERE email = #{email}
     </select>
 
-    <select id="selectUser" resultType="com.org.makgol.users.vo.UsersRequestVo" parameterType="String">
+    <select id="selectUser" resultType="com.org.makgol.users.vo.UsersResponseVo" parameterType="String">
         SELECT * FROM users WHERE email = #{email}
     </select>
 

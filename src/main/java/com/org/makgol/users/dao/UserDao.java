@@ -9,6 +9,7 @@ import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.repository.UsersRepository;
+import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,7 +18,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import com.org.makgol.users.vo.UsersRequestVo;
 
 
 import lombok.RequiredArgsConstructor;
@@ -31,8 +31,8 @@ public class UserDao {
 
 
 	// 사용자 정보 조회 (로그인)
-	public UsersRequestVo selectUser(String email) {
-		List<UsersRequestVo> list = null;
+	public UsersResponseVo selectUser(String email) {
+		List<UsersResponseVo> list = null;
 		list = usersRepository.selectUser(email);
 		return list.size()>0 ? list.get(0) : null;
 	}
