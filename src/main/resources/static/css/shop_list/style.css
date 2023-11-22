@@ -256,3 +256,12 @@ li {
 #map .guide_line li:nth-child(2) > span:nth-child(1) {
     color: #238cfa;
 }
+
+#map .marker {
+    color: #2c2105;
+    border: none;
+    font-size: 12px;
+    padding: 20px;
+    outline: none;
+    text-align: center;
+}
