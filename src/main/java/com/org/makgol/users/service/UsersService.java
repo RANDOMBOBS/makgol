@@ -16,6 +16,7 @@ import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.mail.MailSendUtil;
 import com.org.makgol.util.redis.RedisUtil;
+import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class UsersService {
     private final StoresDao storesDao;
     private final UsersRepository usersRepository;
     private final FileUpload fileUpload;
+    private final WeatherInfo weatherInfo;
 
     public String userFindId(String userEmail) {
         return userEmail;
@@ -124,7 +126,12 @@ public class UsersService {
         String email = usersRequestVo.getEmail();
         UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(email);
 
-        if(loginedInUsersRequestVo == null){ throw new CustomException(ErrorCode.NOT_FOUND_USER); }
+        if(loginedInUsersRequestVo == null){
+            throw new CustomException(ErrorCode.NOT_FOUND_USER);
+        } else{
+            List<Integer> coordinate = weatherInfo.findCoordinate(loginedInUsersRequestVo.getAddress());
+//            loginedInUsersRequestVo.setCoordinate(coordinate);
+        }
 
         if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
             loginedInUsersRequestVo = null;

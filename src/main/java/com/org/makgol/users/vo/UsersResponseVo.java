@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Data
 public class UsersResponseVo {
@@ -40,4 +41,6 @@ public class UsersResponseVo {
     String date;
 
     String address;
+
+    List<Integer> coordinate;
 }
