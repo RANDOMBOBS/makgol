@@ -5,10 +5,11 @@ import com.org.makgol.stores.vo.StoreResponseVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface StoresRepository {
     StoreResponseVo findByIdPlaceUrl(String place_url);
 
-    List<ResponseStoreListDto> findStoreList(String keyword);
+    List<ResponseStoreListDto> findStoreList(Map<String, String> map);
 }

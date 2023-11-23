@@ -67,6 +67,8 @@ public class StoreController {
                 .keyword(keyword)
                 .build();
 
+        System.out.println("requestStoreListDto = " + requestStoreListDto);
+
         List<ResponseStoreListDto> responseStoreListDto = storeService.findStoreListData(requestStoreListDto);
 
         KakaoLocalResponseVo<List<ResponseStoreListDto>> response = new KakaoLocalResponseVo<>(true, "업장 리스트 정보를 가져옵니다.", responseStoreListDto);
