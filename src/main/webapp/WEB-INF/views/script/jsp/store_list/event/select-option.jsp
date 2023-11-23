@@ -8,17 +8,15 @@
 
     const swap = async function () {
         const option = $(this).val()
-        const changedPage = JSON.parse(localStorage.getItem("changedPage"));
 
-        const request = getModelData(changedPage);
+        const request = getModelData();
         const shops = await requestApi(request);
 
         if (option === "distance") {
             alert("거리가 가까운 순으로 표시됩니다.");
 
             const nearDistanceShop = shops.slice().sort((a, b) => a.distance - b.distance);
-            console.log(nearDistanceShop);
-            displayOtherShopList(changedPage, nearDistanceShop);
+            displayOtherShopList(nearDistanceShop);
         } else if (option === "like") {
             alert("좋아요가 많은 순으로 표시합니다.");
         }

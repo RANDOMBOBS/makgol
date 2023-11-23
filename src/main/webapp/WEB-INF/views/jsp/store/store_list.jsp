@@ -45,7 +45,6 @@
     </div>
 </div>
 <jsp:include page="../../script/jsp/store_list/event/page-init.jsp"></jsp:include>
-<jsp:include page="../../script/jsp/store_list/event/page-button.jsp"></jsp:include>
 <jsp:include page="../../script/jsp/store_list/event/select-option.jsp"></jsp:include>
 <script
         type="text/javascript"
