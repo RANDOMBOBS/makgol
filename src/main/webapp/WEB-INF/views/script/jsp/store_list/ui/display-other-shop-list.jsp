@@ -21,6 +21,9 @@
             detailEle.innerText = "상세 페이지";
             const url = createUrlForDetailPage(shop);
             detailEle.setAttribute("href", url);
+
+            const shopInfoItemEle = $(shopInfoListEle.children.item(idx));
+            shopInfoItemEle.mouseover(() => displaySelectedShop(shop, shops));
         });
     };
 
