@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
-    const displayOtherShopList = (page, shops) => {
-        if (localStorage.getItem("page") === page) return;
-
-        localStorage.setItem("page", page);
+    const displayOtherShopList = (shops) => {
         shops.forEach((shop, idx) => {
             const shopInfoListEle = document.querySelector(".shop_info_list");
             const shops = Array.from(shopInfoListEle.children);
