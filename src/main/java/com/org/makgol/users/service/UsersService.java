@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import javax.xml.stream.events.Comment;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,21 +128,21 @@ public class UsersService {
 
     public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo) {
         String email = usersRequestVo.getEmail();
-        UsersResponseVo loginedInUsersRequestVo = userDao.selectUser(email);
+        UsersResponseVo loginedUserVo = userDao.selectUser(email);
 
         // 만약 로그인을 못했다면?
-        if(loginedInUsersRequestVo == null){
+        if(loginedUserVo == null){
             throw new CustomException(ErrorCode.NOT_FOUND_USER);
         } else{
-            List<Integer> coordinate = weatherInfo.findCoordinate(loginedInUsersRequestVo.getAddress());
+            List<Integer> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());
 //            loginedInUsersRequestVo.setCoordinate(coordinate);
         }
 
-        if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
-            loginedInUsersRequestVo = null;
+        if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
+            loginedUserVo = null;
         }
 
-        return loginedInUsersRequestVo;
+        return loginedUserVo;
     }
 
     public Boolean mailCheckDuplication(String email) {

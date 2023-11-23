@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @Controller
@@ -82,7 +83,7 @@ public class UsersController {
     }
 
     @PostMapping("/loginConfirm")
-    public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session) {
+    public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session){
         String nextPage = "home";
         UsersResponseVo loginedUserVo = userService.loginConfirm(usersRequestVo);
         System.out.println("로그인한 유저 정보는?"+loginedUserVo);
