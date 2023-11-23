@@ -18,6 +18,7 @@
     UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
     UsersResponseVo blackList = (UsersResponseVo) session.getAttribute("blackList");
 %>
+
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
 	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
@@ -148,9 +149,9 @@
 <script>
     $.noConflict();
     var jQ = jQuery;
+    var currentURL = window.location.href;
 
 jQ("#logout_link").on("click", function () {
-        var currentURL = window.location.href;
         jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
     });
 
@@ -158,9 +159,8 @@ jQ("#logout_link").on("click", function () {
     let black = "${blackList}";
     if (black) {
         alert("접근이 제한된 사용자입니다.")
-
         jQ.ajax({
-            url: "/user/logout",
+            url: "/user/blackList",
             type: "GET",
             success: function (rdata) {
                 console.log("세션 초기화 성공")
