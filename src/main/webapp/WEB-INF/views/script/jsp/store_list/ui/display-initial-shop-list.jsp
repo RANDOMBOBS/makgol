@@ -52,7 +52,7 @@
             );
 
             const shopInfoComposition = [topItemEle, middleItemEle, underItemEle];
-            shopInfoItemEle.mouseover(() => displaySelectedShop(shop, shops));
+            shopInfoItemEle.click(() => displaySelectedShop(shop, shops));
 
             shopInfoComposition.forEach((composition) =>
                 shopInfoItemEle.append(composition),

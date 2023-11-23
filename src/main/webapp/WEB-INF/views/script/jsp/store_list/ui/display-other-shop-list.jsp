@@ -20,7 +20,7 @@
             detailEle.setAttribute("href", url);
 
             const shopInfoItemEle = $(shopInfoListEle.children.item(idx));
-            shopInfoItemEle.mouseover(() => displaySelectedShop(shop, shops));
+            shopInfoItemEle.click(() => displaySelectedShop(shop, shops));
         });
     };
 
