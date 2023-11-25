@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.org.makgol.users.vo.UsersRequestVo" %>
 <%@page import="com.org.makgol.users.vo.UsersResponseVo" %>
+<%@ page import="java.util.List" %>
 
 <link rel="stylesheet"
     	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -163,10 +164,10 @@ jQ("#logout_link").on("click", function () {
             url: "/user/blackList",
             type: "GET",
             success: function (rdata) {
-                console.log("세션 초기화 성공")
+                console.log("성공")
             },
             error: function (error) {
-                console.log("세션 초기화 실패")
+                console.log("실패")
             }
         });
     }
@@ -212,4 +213,65 @@ jQ("#logout_link").on("click", function () {
         loginModalEle.style.display = "block";
     });
 
+</script>
+<script>
+    let coordinate = [];
+    coordinate = JSON.parse("${loginedUserVo.coordinate}");
+    let valueX = coordinate[0];
+    let valueY = coordinate[1];
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    if (month > 0 && month < 10) {
+        month = "0" + month;
+    }
+    if (day > 0 && day < 10) {
+        day = "0" + day;
+    }
+    if (hour > 0 && hour < 10) {
+        hour = "0" + hour;
+    } else if (hour == 0) {
+        hour = "00";
+    }
+    if (minute > 0 && minute < 10) {
+        minute = "0" + minute;
+    } else if (minute == 0) {
+        minute = "00";
+    }
+    let nowTime = hour + minute.toString();
+    let nowHourMinute = (parseInt(nowTime) - 44).toString();
+
+    let nowHour = nowHourMinute.substring(0, 2);
+    if (nowHourMinute < 1) {
+        nowHour = 23;
+        day = day - 1;
+    }
+    let baseDate = year + month.toString() + day;
+    let baseTime = nowHour + "30";
+
+
+    $.ajax({
+        method: "GET",
+        url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst",
+        data: {
+            serviceKey:
+                "vKlgMc+1x/SWkkhtWG5Zxi8kOiLSZmhXjwE3eqvf8ItyyUqUaUtqFrHz1vVnObXn6jP+S2ML37kV49u/BtFXGw==",
+            pageNo: "1",
+            numOfRows: "60",
+            dataType: "JSON",
+            base_date: baseDate,
+            base_time: baseTime,
+            nx: valueX,
+            ny: valueY,
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr, status, error);
+        },
+    });
 </script>

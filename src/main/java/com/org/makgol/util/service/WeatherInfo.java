@@ -30,17 +30,20 @@ public class WeatherInfo {
                 apiList.add(aLine);
             }
             for(int i=0; i<apiList.size(); i++){
-               String city1 = apiList.get(i).get(0); // 서울특별시
-               String city2 = apiList.get(i).get(1); // 강남구
-                cityName.add(city1+" "+city2);
+               String city1 = apiList.get(i).get(0);
+               String city2 = apiList.get(i).get(1);
+               cityName.add(city1+" "+city2);
             }
-                System.out.println("cityName = " + cityName);
             for(int i=0; i<cityName.size(); i++){
                 if(address.contains(cityName.get(i))){
-                    System.out.println(cityName.get(i)+"인덱스번호는?"+i);
+                    no = i;
                 }
             }
-
+              String x = apiList.get(no).get(2);
+              String y = apiList.get(no).get(3);
+              coordinate.add(Integer.parseInt(x));
+              coordinate.add(Integer.parseInt(y));
+            System.out.println("csv 파일에서 구한 좌표값 = "+coordinate);
         } catch (Exception e){
             e.printStackTrace();
         }

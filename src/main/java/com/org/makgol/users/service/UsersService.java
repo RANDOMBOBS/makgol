@@ -135,13 +135,12 @@ public class UsersService {
             throw new CustomException(ErrorCode.NOT_FOUND_USER);
         } else{
             List<Integer> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());
-//            loginedInUsersRequestVo.setCoordinate(coordinate);
+            loginedUserVo.setCoordinate(coordinate);
         }
 
         if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
             loginedUserVo = null;
         }
-
         return loginedUserVo;
     }
 

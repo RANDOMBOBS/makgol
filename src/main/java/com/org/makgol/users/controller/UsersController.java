@@ -86,7 +86,6 @@ public class UsersController {
     public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session){
         String nextPage = "home";
         UsersResponseVo loginedUserVo = userService.loginConfirm(usersRequestVo);
-        System.out.println("로그인한 유저 정보는?"+loginedUserVo);
 
         if (loginedUserVo == null) {
             // 로그인 실패 시 'login_ng' 화면을 표시

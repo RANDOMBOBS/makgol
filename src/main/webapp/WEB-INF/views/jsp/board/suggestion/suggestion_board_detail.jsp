@@ -112,7 +112,6 @@ request.setCharacterEncoding("utf-8");
 
 
 	<script>
-    console.log("유저아이디"+user_id, "게시판번호"+b_id)
 		if (user_id) {
 			userLikeStatus(b_id, user_id);
 		}
