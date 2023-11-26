@@ -23,31 +23,8 @@
 <body>
 <jsp:include page="jsp/include/header.jsp"></jsp:include>
 <section>
-    <c:choose>
-        <c:when test="${sky == '맑음'}">
-            <c:set var="backgroundImage" value="../../../resources/static/image/default/sunny.jpeg" />
-        </c:when>
-        <c:when test="${sky == '구름많음'}">
-            <c:set var="backgroundImage" value="../../../resources/static/image/default/cloud.jpeg" />
-        </c:when>
-        <c:when test="${sky == '흐림'}">
-            <c:set var="backgroundImage" value="../../../resources/static/image/default/blur.jpeg" />
-        </c:when>
-        <c:when test="${sky == '비'}">
-            <c:set var="backgroundImage" value="../../../resources/static/image/default/rain.jpeg" />
-        </c:when>
-        <c:when test="${sky == '눈'}">
-            <c:set var="backgroundImage" value="../../../resources/static/image/default/snow.jpeg" />
-        </c:when>
-        <c:when test="${sky == '진눈깨비(눈+비)'}">
-            <c:set var="backgroundImage" value="../../../resources/static/image/default/sleet.jpeg" />
-        </c:when>
-        <c:otherwise>
-            <c:set var="backgroundImage" value="../../../resources/static/image/default/cloud.jpg" />
-        </c:otherwise>
-    </c:choose>
 
-    <article id="article1" style="background-image: url(${backgroundImage})">
+    <article id="article1">
         <p class="selectedCategory">오늘의 점심 메뉴는 ? </p>
         <p class="roulette_pin"></p>
         <button id="spin">시작!</button>

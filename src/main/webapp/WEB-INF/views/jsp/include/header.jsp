@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.org.makgol.users.vo.UsersRequestVo" %>
 <%@page import="com.org.makgol.users.vo.UsersResponseVo" %>
-<%@ page import="java.util.List" %>
+
 
 <link rel="stylesheet"
     	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -363,6 +362,20 @@ jQ("#logout_link").on("click", function () {
 
                 jQ(".temp").text(T1H+"℃, ");
                 jQ(".sky").text(sky);
+                if(sky == "맑음"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sunny.jpeg)");
+                } else if(sky =="구름많음"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/Christmas.png)");
+                }else if(sky =="흐림"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/blur.jpg)");
+                }else if(sky =="비"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
+                }else if(sky =="눈"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow.jpg)");
+                }else if(sky =="진눈깨비(눈+비)"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/top5.png)");
+                }
+
             },
             error: function (xhr, status, error) {
                 console.error(xhr, status, error);
