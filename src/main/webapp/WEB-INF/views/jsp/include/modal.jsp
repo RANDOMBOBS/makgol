@@ -71,8 +71,7 @@
                         <tr>
                             <div class="user_image_select">
                                 <label id="photo_label" for="photo">
-                                    <input style="display: none" type="file" id="photo" name="photo"
-                                           onchange="readURL(this)"/>
+                                    <input style="display: none" type="file" id="photo" name="photo" onchange="readURL(this)"/>
                                 </label>
                             </div>
                         </tr>
@@ -80,14 +79,7 @@
                             <td>
                                 <div class="key">이메일</div>
                                 <label>
-                                    <input
-                                            autocomplete="off"
-                                            class="input_area"
-                                            id="register_email"
-                                            name="userEmail"
-                                            placeholder="이메일을 입력해주세요"
-                                            type="text"
-                                    />
+                                    <input autocomplete="off" class="input_area" id="register_email" name="userEmail" placeholder="이메일을 입력해주세요" type="text"/>
                                 </label>
                                 <div class="option_button">
                                     <button id="email_validate">중복 확인</button>

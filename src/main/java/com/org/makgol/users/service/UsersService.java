@@ -176,6 +176,8 @@ public class UsersService {
             usersRequestVo.setEmail(loginedUserVo.getEmail());
             UsersResponseVo newUserVo = new UsersResponseVo();
             newUserVo.modifyMapper(usersRequestVo);
+            List<Integer> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
+            newUserVo.setCoordinate(coordinate);
             session.setAttribute("loginedUserVo", newUserVo);
             String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
             File oldfile = new File(deleteFile);
