@@ -21,7 +21,8 @@
         } else if (option === "like") {
             alert("좋아요가 많은 순으로 표시합니다.");
 
-            const moreLikeShop = shops.slice().sort((a, b) => a.likes > b.likes);
+            const moreLikeShop = shops.slice().sort((a, b) => b.likes - a.likes);
+            console.log(moreLikeShop);
             displayOtherShopList(moreLikeShop);
         }
     };
