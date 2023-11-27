@@ -18,6 +18,9 @@
             const placeNameEle = $("<a>")
                 .attr("id", "place_name")
                 .text(shop.place_name)
+
+            shop.place_name.length >= 14 && placeNameEle.text(shop.place_name.substring(0, 14) + "...");
+
             const likeItemEle = $("<p>").attr("id", "likes").text("♥" + shop.likes)
 
             const topItemComposition = [placeNameEle, likeItemEle];
