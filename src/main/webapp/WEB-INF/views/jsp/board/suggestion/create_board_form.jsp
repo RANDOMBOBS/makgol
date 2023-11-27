@@ -14,90 +14,74 @@
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
 
-	<div id="create_board">
-		<form action="<c:url value='/board/suggestion/createConfirm' />"
-			method="post" name="create_board_form"  enctype="multipart/form-data">
-			<span>카테고리 선택</span>
-			<select id="category">
-				<option value="">카테고리 선택</option>
-				<option value="notice">공지사항 게시판</option>
-				<option value="suggestion">건의사항 게시판</option>
-				<option value="vent">하소연 게시판</option>
-			</select><br>
-			<span>제목</span>
-			<input type="text" id="title"	placeholder="글제목">
-
-			<span>작성자</span>
-			<input type="text" id="name" value="${name}" readonly disabled> <br>
-			<input type="hidden" id="user_id" value="${user_id}">
-			<span>내용</span>
-			<input type="text" id="contents" placeholder="글내용을 입력해주세요"> <br>
-         <p>이미지는 최대 5장까지 첨부가능합니다.</p>
-             <div class="image_box">
-
-          <label for="file1" style="display: inline-block">
-                       <input
-                         type="file"
-                         id="file1"
-                         onchange="imageURL(this)"
-                       />
-                       <p>
-                         <i class="fa-solid fa-plus"></i>
-                         <img class="preview" src="#" width="150" height="200" />
-                       </p>
-                     </label>
-                     <label for="file2">
-                       <input
-                         type="file"
-                         id="file2"
-                         onchange="imageURL(this)"
-                       />
-                       <p>
-                         <i class="fa-solid fa-plus"></i>
-                         <img class="preview" src="#" width="150" height="200" />
-                       </p>
-                     </label>
-                     <label for="file3">
-                       <input
-                         type="file"
-                         id="file3"
-                         onchange="imageURL(this)"
-                       />
-                       <p>
-                         <i class="fa-solid fa-plus"></i>
-                         <img class="preview" src="#" width="150" height="200" />
-                       </p>
-                     </label>
-                     <label for="file4">
-                       <input
-                         type="file"
-                         id="file4"
-                         onchange="imageURL(this)"
-                       />
-                       <p>
-                         <i class="fa-solid fa-plus"></i>
-                         <img class="preview" src="#" width="150" height="200" />
-                       </p>
-                     </label>
-                     <label for="file5">
-                       <input
-                         type="file"
-                         id="file5"
-                         onchange="imageURL(this)"
-                       />
-                       <p>
-                         <i class="fa-solid fa-plus"></i>
-                         <img class="preview" src="#" width="150" height="200" />
-                       </p>
-                     </label>
-
-
-             </div>
-             <br />
-             <input type="button" value="작성" onclick="CreateBoardForm();" />
-             <input type="reset" value="취소" />
-           </form>
-         </div>
+    <div id="create_board">
+        <form method="post" name="create_board_form" enctype="multipart/form-data" >
+            <p class="new_board">게시글 쓰기</p>
+            <div class="column board_category">
+                <span>카테고리 선택</span>
+                <select name="category">
+                    <option value="">카테고리 선택</option>
+                    <option value="notice">공지사항 게시판</option>
+                    <option value="suggestion">건의사항 게시판</option>
+                    <option value="vent">하소연 게시판</option>
+                </select>
+            </div>
+            <div class="column board_title">
+                <span>제목</span>
+                <input type="text" name="title" class="title" placeholder="글 제목을 입력해주세요." />
+            </div>
+            <div class="column user_name">
+                <span>작성자</span>
+                <input type="text" name="name" value="${name}" class="name" readonly disabled />
+                <input type="hidden" name="user_id" value="${user_id}" />
+            </div>
+            <div class="column board_contents">
+                <span class="contents">내용</span>
+                <textarea name="contents" placeholder="글 내용을 입력해주세요." ></textarea>
+            </div>
+            <p class="image_info">이미지는 최대 5장까지 첨부가능합니다.</p>
+            <div class="image_box">
+                <label for="file1" style="display: inline-block">
+                    <input type="file" id="file1" name="file1" onchange="imageURL(this)"/>
+                    <p>
+                        <i class="fa-solid fa-plus"></i>
+                        <img class="preview" src="#" width="150" height="200" />
+                    </p>
+                </label>
+                <label for="file2">
+                    <input type="file" name="file2" id="file2" onchange="imageURL(this)" />
+                    <p>
+                        <i class="fa-solid fa-plus"></i>
+                        <img class="preview" src="#" width="150" height="200" />
+                    </p>
+                </label>
+                <label for="file3">
+                    <input type="file" name="file3" id="file3" onchange="imageURL(this)" />
+                    <p>
+                        <i class="fa-solid fa-plus"></i>
+                        <img class="preview" src="#" width="150" height="200" />
+                    </p>
+                </label>
+                <label for="file4">
+                    <input type="file" id="file4" name="file4" onchange="imageURL(this)" />
+                    <p>
+                        <i class="fa-solid fa-plus"></i>
+                        <img class="preview" src="#" width="150" height="200" />
+                    </p>
+                </label>
+                <label for="file5">
+                    <input type="file" id="file5" name="file5" onchange="imageURL(this)" />
+                    <p>
+                        <i class="fa-solid fa-plus"></i>
+                        <img class="preview" src="#" width="150" height="200" />
+                    </p>
+                </label>
+            </div>
+            <br />
+            <input type="button" value="작성" onclick="CreateBoardForm();" />
+            <input type="reset" class="cancel" value="취소" />
+        </form>
+    </div>
 
      <script type="text/javascript">
 
@@ -118,64 +102,19 @@
        }
 
        function CreateBoardForm() {
-         let form = document.create_board_form;
-         if (form.category.value == "") {
-           alert("카테고리를 선택해주세요.");
-           form.category.focus();
-         } else if (form.title.value == "") {
-           alert("제목을 입력해주세요");
-           form.title.focus();
-         } else if (form.contents.value == "") {
-           alert("글 내용을 입력해주세요.");
-           form.contents.focus();
-         } else {
-            let formData = new FormData();
-            let user_id = $("#user_id").val()
-            let title = $("#title").val();
-            let contents =  $("#contents").val();
-            let category = $("#category").val();
-            let image1 = $("input[type=file]:eq(0)")[0].files[0];
-            let image2 = $("input[type=file]:eq(1)")[0].files[0];
-            let image3 = $("input[type=file]:eq(2)")[0].files[0];
-            let image4 = $("input[type=file]:eq(3)")[0].files[0];
-            let image5 = $("input[type=file]:eq(4)")[0].files[0];
-
-            formData.append("user_id", user_id);
-            formData.append("title", title);
-            formData.append("contents", contents);
-            formData.append("category", category);
-            formData.append("file1", image1);
-            formData.append("file2", image2);
-            formData.append("file3", image3);
-            formData.append("file4", image4);
-            formData.append("file5", image5);
-
-            jQuery.ajax({
-                    type: "POST",
-                    url: "/board/suggestion/createConfirm",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success:
-                        function (data, status) {
-                            if (status === "success") {
-                                // 회원가입 성공
-                                if (data === true) {
-                                    alert(data);
-                                    window.location.href = "http://localhost:8090";
-                                    // 실패
-                                } else {
-                                    alert(data);
-                                }
-                            } else {
-                                alert("글쓰기 실패")
-                                console.error("통신 오류 : " + status);
-                            }
-                        }
-                });
-            });// 회원가입 버튼_END
-
-         }
+           let form = document.create_board_form;
+           if (form.category.value == "") {
+               alert("카테고리를 선택해주세요.");
+               form.category.focus();
+           } else if (form.title.value == "") {
+               alert("제목을 입력해주세요");
+               form.title.focus();
+           } else if (form.contents.value == "") {
+               alert("글 내용을 입력해주세요.");
+               form.contents.focus();
+           } else {
+               form.submit();
+           }
        }
      </script>
 </body>

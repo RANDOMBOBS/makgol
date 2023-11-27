@@ -276,7 +276,31 @@ jQ("#logout_link").on("click", function () {
     }
     let nowTime = hour + minute.toString();
     let nowHourMinute = (parseInt(nowTime) - 44).toString();
-    if(nowHourMinute < 100){
+    if(nowHourMinute < 0){
+        nowHourMinute = "23"+nowHourMinute;
+        day = day-1;
+        if(day <1){
+            month = month-1;
+            switch (month){
+                case 2:
+                    day = 28;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    day = 30;
+                    break;
+                default :
+                    day = 31;
+                    break;
+            }
+            if(month<1){
+                year = year -1;
+                month = 12;
+            }
+        }
+    } else if(nowHourMinute < 100){
         nowHourMinute = "00"+nowHourMinute;
     } else if(nowHourMinute<1000){
         nowHourMinute = "0"+nowHourMinute
@@ -312,10 +336,7 @@ jQ("#logout_link").on("click", function () {
                 ny: valueY,
             },
             success: function (data) {
-
-
-
-
+                console.log(data)
                 let weatherDatas = data.response.body.items.item
                 console.log(weatherDatas);
                 let temp = weatherDatas.filter((item, index) => item.category ==="T1H");
