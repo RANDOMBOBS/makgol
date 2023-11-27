@@ -37,11 +37,12 @@
             <h4>지도 도우미</h4>
         </div>
         <div class="content_box">
-            <p>식당 정보를 클릭하면 식당 위치가 표시됩니다</p>
+            <p>식당 항목에 마우스를 올리면</p>
+            <p>식당 위치가 표시됩니다</p>
             <ul>
                 <li><span>빨간색 마커 </span><span>사용자님의 위치입니다</span></li>
                 <li><span>파란색 마커 </span><span>식당의 위치입니다</span></li>
-                <li><span>노란색 마커 </span><span>선택한 식당의 위치입니다</span></li>
+                <li><span>초란색 마커 </span><span>선택한 식당의 위치입니다</span></li>
             </ul>
         </div>
     </div>

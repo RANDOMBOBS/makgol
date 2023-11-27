@@ -9,7 +9,7 @@
     const requestApi = async (payload) => {
         const {keyword, longitude, latitude} = payload
         const url = "http://localhost:8090/store/list_data?longitude=" + longitude + "&latitude=" + latitude + "&keyword=" + keyword;
-        
+
         const {axios} = window;
         const {data} = await axios.get(url);
 
@@ -26,8 +26,8 @@
                 distance: intDistance,
                 phone: item.phone,
                 place_name: item.name,
-                shopX: item.longitude,
-                shopY: item.latitude,
+                longitude: item.longitude,
+                latitude: item.latitude,
                 likes: item.likes,
                 category_name: keyword,
             }

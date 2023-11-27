@@ -206,8 +206,8 @@ li {
 #map .guide_line {
     z-index: 998;
     position: absolute;
-    width: 360px;
-    height: 160px;
+    width: 320px;
+    height: 180px;
     background: white;
     border: 7px solid #ffe286;
     border-radius: 12px;
@@ -230,6 +230,7 @@ li {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 12px;
 }
 
 #map .guide_line .content_box p {
@@ -257,11 +258,11 @@ li {
 }
 
 #map .guide_line li:nth-child(2) > span:nth-child(1) {
-    color: #238cfa;
+    color: rgb(85, 153, 255);
 }
 
 #map .guide_line li:nth-child(3) > span:nth-child(1) {
-    color: #FFC200;
+    color: rgb(34, 177, 76);
 }
 
 #map .marker {

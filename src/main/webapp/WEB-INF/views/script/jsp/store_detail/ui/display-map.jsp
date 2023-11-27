@@ -7,7 +7,7 @@
 <jsp:include page="./display-shop-coordinate.jsp"></jsp:include>
 <jsp:include page="../../store_util/get-distance.jsp"></jsp:include>
 <script>
-    const displayMap = (param) => {
+    const displayInitialMap = (param) => {
         const {kakao} = window;
         const {shopX, shopY, myX, myY} = param;
 
@@ -34,7 +34,7 @@
         } else {
             level = 5;
         }
-        
+
         const container = document.querySelector("#map .item_info_body");
         const options = {
             center: new kakao.maps.LatLng(middleY, middleX), level,

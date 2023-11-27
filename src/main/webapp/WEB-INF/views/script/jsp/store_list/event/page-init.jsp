@@ -6,8 +6,7 @@
 <jsp:include page="../util/get-model-data.jsp"></jsp:include>
 <jsp:include page="../backend/request-api.jsp"></jsp:include>
 <jsp:include page="../ui/display-initial-shop-list.jsp"></jsp:include>
-<jsp:include page="../ui/display-map.jsp"></jsp:include>
-<jsp:include page="../ui/display-selected-button.jsp"></jsp:include>
+<jsp:include page="../ui/display-initial-map.jsp"></jsp:include>
 <script>
     const shopInfo = {
         shops: [],
@@ -23,11 +22,9 @@
         shopInfo.keyword = request.keyword;
 
         const myCoordinate = {longitude: request.longitude, latitude: request.latitude};
-
-        localStorage.setItem("myCoordinate", JSON.stringify(myCoordinate));
-
+        
         displayInitialShopList(shopInfo);
-        displayMap(shops, myCoordinate);
+        displayInitialMap(shops, myCoordinate);
 
         $(".shop_page button").eq(0).addClass("selected_button");
     };

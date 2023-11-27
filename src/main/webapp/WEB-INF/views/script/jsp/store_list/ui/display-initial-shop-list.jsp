@@ -5,6 +5,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <jsp:include page="../util/create-url-for-detail-page.jsp"></jsp:include>
 <jsp:include page="./display-selected-shop.jsp"></jsp:include>
+<jsp:include page="./remove-selected-shop.jsp"></jsp:include>
 <script>
     const displayInitialShopList = ({shops, keyword}) => {
         const searchKeywordEle = $("#search_keyword");
@@ -55,7 +56,8 @@
             );
 
             const shopInfoComposition = [topItemEle, middleItemEle, underItemEle];
-            shopInfoItemEle.click(() => displaySelectedShop(shop, shops));
+            shopInfoItemEle.mouseover(() => displaySelectedShop(shop));
+            shopInfoItemEle.mouseout(() => removeSelectedShop(shop));
 
             shopInfoComposition.forEach((composition) =>
                 shopInfoItemEle.append(composition),
