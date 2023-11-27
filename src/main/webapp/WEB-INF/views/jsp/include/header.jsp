@@ -313,12 +313,19 @@ jQ("#logout_link").on("click", function () {
             },
             success: function (data) {
 
-                console.log(data);
-                let T1H = data.response.body.items.item[24].fcstValue;
+
+
+
+                let weatherDatas = data.response.body.items.item
+                console.log(weatherDatas);
+                let temp = weatherDatas.filter((item, index) => item.category ==="T1H");
+                let T1H = temp[0].fcstValue;
                 console.log("기온은?"+T1H);
-                let RN1 = data.response.body.items.item[12].fcstValue;
+                let precipitation = weatherDatas.filter((item, index) => item.category === "RN1" )
+                let RN1 = precipitation[0].fcstValue;
                 console.log("강수량은?"+RN1);
-                let SKY = data.response.body.items.item[18].fcstValue;
+                let skyCondition = weatherDatas.filter((item, index)=> item.category === "SKY")
+                let SKY = skyCondition[0].fcstValue;
                 console.log("하늘상태는?"+SKY);
                 switch (SKY){
                     case "1" :
@@ -361,7 +368,12 @@ jQ("#logout_link").on("click", function () {
                 console.log("하늘 상태 한글로?"+sky);
 
                 jQ(".temp").text(T1H+"℃, ");
-                jQ(".sky").text(sky);
+                if(RN1 != "강수없음"){
+                    jQ(".sky").text(sky+" "+RN1);
+                } else{
+                    jQ(".sky").text(sky);
+                }
+
                 if(sky == "맑음"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sunny.jpeg)");
                 } else if(sky =="구름많음"){
@@ -371,7 +383,7 @@ jQ("#logout_link").on("click", function () {
                 }else if(sky =="비"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
                 }else if(sky =="눈"){
-                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow.jpg)");
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow1.jpg)");
                 }else if(sky =="진눈깨비(눈+비)"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/top5.png)");
                 }

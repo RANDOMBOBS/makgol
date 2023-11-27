@@ -1,8 +1,40 @@
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-  }
+#create_board label {
+
+}
+
+#create_board label:first-child {
+    display: inline-block;
+}
+
+#create_board label input {
+  display: none;
+}
+
+#create_board label p {
+  width: 150px;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+#create_board label p i {
+  position: absolute;
+  top : 0;
+  left : 0;
+  background-color: #eee;
+  display: block;
+  font-size: 70px;
+  text-align: center;
+  line-height: 200px;
+  width: 150px;
+  height: 200px;
+  font-size: 70px;
+}
+#create_board label p img {
+  position: absolute;
+  display: none;
+  top : 0;
+  left : 0;
+}
 
  .board {
     margin: 0 auto;
