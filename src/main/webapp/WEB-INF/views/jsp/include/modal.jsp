@@ -77,7 +77,7 @@
                             </div>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="input_box">
                                 <div class="key">이메일</div>
                                 <label>
                                     <input
@@ -87,15 +87,17 @@
                                             name="userEmail"
                                             placeholder="이메일을 입력해주세요"
                                             type="text"
+                                            maxlength="30"
                                     />
                                 </label>
-                                <div class="option_button">
+                                <div class="option_button" style="display: none">
                                     <button id="email_validate">중복 확인</button>
                                 </div>
                             </td>
+                            <td id="email_input_error" class="input_error">이메일 유효성을 지켜주세요!</td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="input_box">
                                 <div class="key">본인인증</div>
                                 <label>
                                     <input
@@ -105,6 +107,7 @@
                                             placeholder="인증번호 6자리를 입력해주세요"
                                             type="text"
                                             disabled
+                                            maxlength="6"
                                     />
                                 </label>
                                 <div class="option_button">
@@ -115,7 +118,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="input_box">
                                 <div class="key">비밀번호</div>
                                 <label>
                                     <input
@@ -124,12 +127,14 @@
                                             name="userPassword"
                                             placeholder="비밀번호를 입력해주세요"
                                             type="password"
+                                            maxlength="25"
                                     />
                                 </label>
                             </td>
+                            <td id="password_input_error" class="input_error">비밀번호 유효성을 지켜주세요!</td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="input_box">
                                 <div class="key">비밀번호 확인</div>
                                 <label>
                                     <input
@@ -138,16 +143,15 @@
                                             name="userPasswordConfirm"
                                             placeholder="비밀번호를 다시 입력해주세요"
                                             type="password"
+                                            maxlength="25"
                                     />
                                 </label>
-                                <div class="option_button">
-                                    <button id="password_validate">일치 확인</button>
-                                </div>
                                 <input type="hidden" id="password_status">
                             </td>
+                            <td id="re_password_input_error" class="input_error">비밀번호가 일치하지 않아요!</td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="input_box">
                                 <div class="key">이름</div>
                                 <label>
                                     <input
@@ -157,12 +161,15 @@
                                             name="userName"
                                             placeholder="본인 이름을 입력해주세요"
                                             type="text"
+                                            maxlength="4"
                                     />
                                 </label>
+                                <input type="hidden" id="name_status">
                             </td>
+                            <td id="name_input_error" class="input_error">이름은 한글로만 써주세요!</td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="input_box">
                                 <div class="key">전화번호</div>
                                 <label>
                                     <input
@@ -172,12 +179,15 @@
                                             name="userPhone"
                                             placeholder="전화번호를 입력해주세요"
                                             type="text"
+                                            maxlength="11"
                                     />
                                 </label>
+                                <input type="hidden" id="phone_status">
                             </td>
+                            <td id="phone_input_error" class="input_error">-를 포함시키지 말아요!</td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="input_box">
                                 <div class="key">주소</div>
                                 <label>
                                     <input
@@ -244,30 +254,39 @@
     };
 
     const registerModal = () => {
-        const registerModalCloseButtonEle = $(".register_modal .modal_head .close_button")
-
-        registerModalCloseButtonEle.click(() => {
+        $(".register_modal .modal_head .close_button").click(() => {
             $(".modal_cover").css({display: "none"});
             $(".register_modal").css({display: "none"});
         });
 
-        const registerEmailInputEle = $("#register_email");
-        registerEmailInputEle.focus(() => {
-            $("#send_number").css({display: "none"});
+        const registerEmailEle = $("#register_email");
+        const emailStatusEle = $("#email_status");
+
+        registerEmailEle.keyup((event) => {
+            const email = event.target.value;
+            const reg_email = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+
+
+            if (!(reg_email.test(email))) {
+                $("#email_input_error").css({visibility: "unset"})
+                $("#email_validate").parent(".option_button").css({display: "none"})
+            } else {
+                $("#email_input_error").css({visibility: "hidden"})
+                $("#email_validate").parent(".option_button").css({display: "flex"})
+            }
         })
 
-        const emailValidateButtonEle = $("#email_validate");
-        emailValidateButtonEle.click((e) => {
+        registerEmailEle.focusin(() => {
+            const authSelfEle = $("#auth_self");
+            authSelfEle.val("");
+            authSelfEle.attr({disabled: true});
+            $("#send_number").css({display: "none"})
+        })
+
+        $("#email_validate").click((e) => {
             e.preventDefault();
 
-            const reg_email = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-
-            const email = $('#register_email').val(); // 이메일 주소값 얻어오기!
-            if (!reg_email.test(email)) {
-                $('#email').focus();
-                alert("이메일 형식에 맞게 입력해주세요");
-                return;
-            }
+            const email = registerEmailEle.val();
 
             $.ajax({
                 type: "POST",
@@ -284,12 +303,12 @@
                         return;
                     }
                     alert("중복된 이메일입니다.")
+                    emailStatusEle.val("fail")
                 }
             })
         });
 
-        const sendNumberButtonEle = $("#send_number");
-        sendNumberButtonEle.click((e) => {
+        $("#send_number").click((e) => {
             e.preventDefault();
 
             const email = $('#register_email').val();
@@ -342,34 +361,60 @@
             }
         )
 
+        // const reg_pw1 = /^[a-z0-9_-]{6,18}$/; // 단순 6~18자리
+        // const reg_pw2 = /(?=.*[a-zA-ZS])(?=.*?[#?!@$%^&*-]).{6,24}/; // 문자와 특수문자 조합의 6~24 자리
+        // const reg_pw3 = /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/; // 문자, 숫자 1개이상 포함, 8자리 이상
+        let currentPassword;
+        $("#register_password").keyup((event) => {
+            const password = event.target.value;
+            const regPassword = /^[a-z0-9_-]{6,18}$/;
 
-        const passwordValidateButtonEle = $("#password_validate");
-        passwordValidateButtonEle.click((e) => {
-            e.preventDefault();
-            const password = $("#register_password").val();
-            const passwordConfirm = $("#register_password_confirm").val();
-            const passwordStatusEle = $("#password_status");
-
-            // const reg_pw1 = /^[a-z0-9_-]{6,18}$/; // 단순 6~18자리
-            // const reg_pw2 = /(?=.*[a-zA-ZS])(?=.*?[#?!@$%^&*-]).{6,24}/; // 문자와 특수문자 조합의 6~24 자리
-            // const reg_pw3 = /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/; // 문자, 숫자 1개이상 포함, 8자리 이상
-            //
-            // const validatePasswordItems = [reg_pw1.test(password), reg_pw2.test(password), reg_pw3.test(password)];
-            // const hasFalse = validatePasswordItems.includes(false);
-            //
-            // if (hasFalse) {
-            //     passwordStatusEle.val("fail");
-            //     return alert("비밀번호 형식에 맞게 입력해주세요.")
-            // }
-
-            if (password === passwordConfirm) {
-                alert("비밀번호가 일치합니다.")
-                passwordStatusEle.val("success");
+            if (!(regPassword.test(password))) {
+                $("#password_input_error").css({visibility: "unset"})
             } else {
-                alert("비밀번호가 일치하지 않습니다.")
-                passwordStatusEle.val("fail");
+                $("#password_input_error").css({visibility: "hidden"})
+                currentPassword = password;
             }
-        });
+        })
+
+        $("#register_password_confirm").keyup((event) => {
+            const rePassword = event.target.value;
+
+            if (currentPassword !== rePassword) {
+                $("#re_password_input_error").css({visibility: "unset"})
+                $("#password_status").val("fail")
+            } else {
+                $("#re_password_input_error").css({visibility: "hidden"})
+                $("#password_status").val("success")
+            }
+        })
+
+        $("#register_name").keyup((event) => {
+            const name = event.target.value;
+            const regName = /^[가-힣]+$/;
+
+            if (!regName.test(name)) {
+                $("#name_input_error").css({visibility: "unset"})
+                $("#name_status").val("fail");
+            } else {
+                $("#name_input_error").css({visibility: "hidden"})
+                $("#name_status").val("success")
+            }
+        })
+
+        $("#register_phone").keyup((event) => {
+            const phone = event.target.value;
+            const regPhone = /^[0-9]{8,13}$/;
+
+            if (!regPhone.test(phone)) {
+                $("#phone_input_error").css({visibility: "unset"})
+                $("#phone_status").val("fail")
+            } else {
+                $("#phone_input_error").css({visibility: "hidden"})
+                $("#phone_status").val("success")
+            }
+        })
+
 
         const myLocationButtonEle = $("#my_location");
         myLocationButtonEle.click((e) => {
@@ -400,7 +445,6 @@
 
             const formData = new FormData();
 
-            const inputEmail = $("#register_email").val();
             const inputAuthSelf = $("#auth_self").val();
             const inputPassword = $("#register_password").val();
             const inputPasswordConfirm = $("#register_password_confirm").val();
@@ -408,7 +452,7 @@
             const inputPhone = $("#register_phone").val();
             const inputAddress = $("#register_address").val();
 
-            const validateItems = [inputEmail, inputAuthSelf, inputPassword, inputPasswordConfirm, inputName, inputPhone, inputAddress]
+            const validateItems = [inputAuthSelf, inputPassword, inputPasswordConfirm, inputName, inputPhone, inputAddress]
             const hasNull = validateItems.map((item) => !item ? null : item).includes(null);
 
 
@@ -416,8 +460,10 @@
 
             const authStatus = $("#auth_status").val();
             const passwordStatus = $("#password_status").val();
+            const nameStatus = $("#name_status").val();
+            const phoneStatus = $("#phone_status").val();
 
-            const statusItems = [authStatus, passwordStatus];
+            const statusItems = [authStatus, passwordStatus, nameStatus, phoneStatus];
             const hasFail = statusItems.includes("fail");
 
             if (hasFail) return alert("확인 절차가 제대로 이루어지지 않았습니다.")
