@@ -56,14 +56,15 @@
             );
 
             const shopInfoComposition = [topItemEle, middleItemEle, underItemEle];
-            shopInfoItemEle.mouseover(() => displaySelectedShop(shop));
-            shopInfoItemEle.mouseout(() => removeSelectedShop(shop));
 
             shopInfoComposition.forEach((composition) =>
                 shopInfoItemEle.append(composition),
             );
 
             shopInfoListEle.append(shopInfoItemEle);
+
+            shopInfoItemEle.mouseover(() => displaySelectedShop(shop));
+            shopInfoItemEle.mouseout(() => removeSelectedShop(shop));
         });
     }
 </script>

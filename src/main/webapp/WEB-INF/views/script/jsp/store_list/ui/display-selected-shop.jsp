@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
     const displaySelectedShop = (shop) => {
-        console.log(shop);
-
         const initialedKakaomap = hashMap.get("kakaomap");
         const shopCoordinate = new kakao.maps.LatLng(shop.latitude, shop.longitude);
 

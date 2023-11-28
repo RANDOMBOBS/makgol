@@ -26,10 +26,6 @@
             const url = createUrlForDetailPage(shop);
             placeNameEle.setAttribute("href", url);
             detailEle.setAttribute("href", url);
-
-            const shopInfoItemEle = $(shopInfoListEle.children.item(idx));
-            shopInfoItemEle.mouseover(() => displaySelectedShop(shop));
-            shopInfoItemEle.mouseout(() => removeSelectedShop(shop));
         });
     };
 
