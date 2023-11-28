@@ -53,8 +53,14 @@
         }
 
         setMyY(my_y) {
-            const myY = "my_y=" + my_y;
+            const myY = "my_y=" + my_y + "&";
             this.#defaultUrl += myY;
+            return this;
+        }
+
+        setDistance(distance) {
+            const _distance = "distance=" + distance;
+            this.#defaultUrl += _distance;
             return this;
         }
 
@@ -64,11 +70,26 @@
     }
 
     const createUrlForDetailPage = (shop) => {
-        const {place_name, address_name, phone, category_name, place_url, shopX, shopY} =
-            shop;
+
+        const setShopCoordinate = (shop) => {
+            const {longitude, latitude} = shop;
+            const shopX = longitude;
+            const shopY = latitude;
+            return {shopX, shopY};
+        }
+
+        const {place_name, phone, address_name, category_name, place_url, distance} = shop;
+        const {shopX, shopY} = setShopCoordinate(shop);
+
+        const setMyCoordinate = (myCoordinate) => {
+            const {longitude, latitude} = myCoordinate;
+            const myX = longitude;
+            const myY = latitude;
+            return {myX, myY};
+        }
 
         const myCoordinate = JSON.parse(localStorage.getItem("myCoordinate"));
-        const {longitude, latitude} = myCoordinate;
+        const {myX, myY} = setMyCoordinate(myCoordinate);
 
         return new UrlBuilderForDetail()
             .setPlaceName(place_name)
@@ -78,8 +99,9 @@
             .setPlaceUrl(place_url)
             .setShopX(shopX)
             .setShopY(shopY)
-            .setMyX(longitude)
-            .setMyY(latitude)
+            .setMyX(myX)
+            .setMyY(myY)
+            .setDistance(distance)
             .getUrl();
     };
 

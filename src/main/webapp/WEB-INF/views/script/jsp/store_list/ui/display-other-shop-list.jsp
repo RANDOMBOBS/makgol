@@ -24,6 +24,7 @@
             detailEle.innerText = "상세 페이지";
             likesEle.innerText = "♥" + shop.likes;
             const url = createUrlForDetailPage(shop);
+            placeNameEle.setAttribute("href", url);
             detailEle.setAttribute("href", url);
 
             const shopInfoItemEle = $(shopInfoListEle.children.item(idx));
