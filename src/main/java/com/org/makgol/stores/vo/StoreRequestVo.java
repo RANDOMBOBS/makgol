@@ -33,7 +33,7 @@ public class StoreRequestVo {
     //식당사이트
     private String    site;
     //메뉴 업데이트 날짜
-    private LocalDate    menu_update;
+    private LocalDate menu_update;
     //식당 상세페이지
     private String    place_url ;
     //식당정보 업데이트 날짜
@@ -42,9 +42,6 @@ public class StoreRequestVo {
     private String 	  keyword = "empty";
     //메뉴 이름
     private String    menuName = "empty";
-    // 거리
-    private String    distance;
-
 
     @Builder
     public StoreRequestVo(String address_name, String category_name, String distance, String phone, String place_name,String place_url, String road_address_name, String x, String y) {
@@ -79,7 +76,6 @@ public class StoreRequestVo {
         this.category = find_word;
         this.phone = phone;
         this.place_url = place_url;
-        this.distance = distance;
     }
 
     @Builder

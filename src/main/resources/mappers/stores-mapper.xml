@@ -19,4 +19,16 @@
           AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
     </select>
 
+    <insert id="saveCategoryMenu" parameterType="Map">
+        INSERT INTO category_menu (store_id, category, menu_name, date) VALUES (#{store_id}, #{category}, #{menu_name}, now())
+    </insert>
+
+    <insert id="saveMenus" parameterType="Map">
+        INSERT INTO Menus (store_id, menu, price, date) VALUES (#{store_id}, #{menu}, #{price}, now())
+    </insert>
+
+    <insert id="saveStores" parameterType="com.org.makgol.stores.vo.StoreRequestVo">
+        INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date)
+        VALUES (#{name}, #{likes}, #{longitude}, #{latitude}, #{address}, #{load_address}, #{category}, #{opening_hours}, #{phone}, #{site}, #{menu_update}, #{place_url}, #{update_date})
+    </insert>
 </mapper>
