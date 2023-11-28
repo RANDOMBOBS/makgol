@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
-    const getModelData = (page) => {
+    const getModelData = () => {
         const longitude = "${x}";
         const latitude = "${y}";
         const keyword = "${keyword}";
@@ -9,7 +9,6 @@
             longitude,
             latitude,
             keyword,
-            page,
         };
     };
 </script>

@@ -21,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -33,8 +34,14 @@ public class StoreService {
     public List<ResponseStoreListDto> findStoreListData(RequestStoreListDto requestStoreListDto) {
         List<ResponseStoreListDto> result = null;
         try {
+            Map<String, String> map = new HashMap<>();
             String keyword = requestStoreListDto.getKeyword();
-            result = storesRepository.findStoreList(keyword);
+            String longitude = requestStoreListDto.getLongitude();
+            String latitude = requestStoreListDto.getLatitude();
+            map.put("category", keyword);
+            map.put("longitude", longitude);
+            map.put("latitude", latitude);
+            result = storesRepository.findStoreList(map);
         } catch (Exception e) {
             e.printStackTrace();
         }

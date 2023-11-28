@@ -15,7 +15,7 @@
         const displayFunctions = [
             displayImage,
             displayDetail,
-            displayMap,
+            displayInitialMap,
             displayReview,
         ];
 

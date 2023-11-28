@@ -30,28 +30,24 @@
             </div>
         </div>
         <div class="shop_info_list"></div>
-        <div class="shop_info_footer">
-            <div class="shop_page">
-                <button class="button_style" value="1">1</button>
-                <button class="button_style" value="2">2</button>
-                <button class="button_style" value="3">3</button>
-            </div>
-        </div>
+        <div class="shop_info_footer"></div>
     </div>
     <div class="guide_line">
         <div class="head_box">
             <h4>지도 도우미</h4>
         </div>
         <div class="content_box">
+            <p>식당 항목에 마우스를 올리면</p>
+            <p>식당 위치가 표시됩니다</p>
             <ul>
                 <li><span>빨간색 마커 </span><span>사용자님의 위치입니다</span></li>
                 <li><span>파란색 마커 </span><span>식당의 위치입니다</span></li>
+                <li><span>초란색 마커 </span><span>선택한 식당의 위치입니다</span></li>
             </ul>
         </div>
     </div>
 </div>
 <jsp:include page="../../script/jsp/store_list/event/page-init.jsp"></jsp:include>
-<jsp:include page="../../script/jsp/store_list/event/page-button.jsp"></jsp:include>
 <jsp:include page="../../script/jsp/store_list/event/select-option.jsp"></jsp:include>
 <script
         type="text/javascript"
