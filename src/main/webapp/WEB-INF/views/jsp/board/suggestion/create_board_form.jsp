@@ -14,10 +14,10 @@
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
 
-     <div id="create_board">
+     <div id="suggestion_board">
         	<form action="<c:url value='/board/suggestion/createConfirm' />"
         			method="post" name="create_board_form"  enctype="multipart/form-data">
-            <p class="new_board">게시글 쓰기</p>
+            <p class="write_board">게시글 작성</p>
             <div class="column board_category">
               <span class="description">카테고리 선택</span>
               <select name="category">
@@ -27,14 +27,10 @@
                 <option value="vent">하소연 게시판</option>
               </select>
             </div>
+
             <div class="column board_title">
               <span class="description">제목</span>
-              <input
-                type="text"
-                name="title"
-                class="title"
-                placeholder="글 제목을 입력해주세요."
-              />
+              <input type="text" name="title" class="title" placeholder="글 제목을 입력해주세요." />
             </div>
             <div class="column user_name">
               <span class="description">작성자</span>
@@ -151,7 +147,7 @@
             <div class="buttons">
               <input
                 type="button"
-                class="create"
+                class="ok_board"
                 value="작성"
                 onclick="CreateBoardForm();"
               />
