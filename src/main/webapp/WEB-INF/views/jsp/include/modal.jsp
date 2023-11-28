@@ -131,7 +131,7 @@
                                     />
                                 </label>
                             </td>
-                            <td id="password_input_error" class="input_error">비밀번호 유효성을 지켜주세요!</td>
+                            <td id="password_input_error" class="input_error">문자 숫자를 포함시켜주세요!</td>
                         </tr>
                         <tr>
                             <td class="input_box">
@@ -367,7 +367,7 @@
         let currentPassword;
         $("#register_password").keyup((event) => {
             const password = event.target.value;
-            const regPassword = /^[a-z0-9_-]{6,18}$/;
+            const regPassword = /(?=.*\d)(?=.*[a-zA-ZS]).{8,}/;
 
             if (!(regPassword.test(password))) {
                 $("#password_input_error").css({visibility: "unset"})
