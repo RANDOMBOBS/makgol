@@ -42,7 +42,7 @@
             <ul>
                 <li><span>빨간색 마커 </span><span>사용자님의 위치입니다</span></li>
                 <li><span>파란색 마커 </span><span>식당의 위치입니다</span></li>
-                <li><span>초란색 마커 </span><span>선택한 식당의 위치입니다</span></li>
+                <li><span>초록색 마커 </span><span>선택한 식당의 위치입니다</span></li>
             </ul>
         </div>
     </div>
