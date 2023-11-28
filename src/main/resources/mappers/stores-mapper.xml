@@ -12,10 +12,11 @@
     </select>
 
     <select id="findStoreList" resultType="com.org.makgol.stores.dto.ResponseStoreListDto"
-            parameterType="String">
+            parameterType="hashmap">
         SELECT *
-        FROM stores
-        WHERE category = #{keyword}
+        FROM mak_gol.stores
+        WHERE category = #{category}
+          AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
     </select>
 
 </mapper>

@@ -4,6 +4,8 @@
         integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <jsp:include page="../util/create-url-for-detail-page.jsp"></jsp:include>
+<jsp:include page="./display-selected-shop.jsp"></jsp:include>
+<jsp:include page="./remove-selected-shop.jsp"></jsp:include>
 <script>
     const displayInitialShopList = ({shops, keyword}) => {
         const searchKeywordEle = $("#search_keyword");
@@ -17,6 +19,9 @@
             const placeNameEle = $("<a>")
                 .attr("id", "place_name")
                 .text(shop.place_name)
+
+            shop.place_name.length >= 14 && placeNameEle.text(shop.place_name.substring(0, 14) + "...");
+
             const likeItemEle = $("<p>").attr("id", "likes").text("♥" + shop.likes)
 
             const topItemComposition = [placeNameEle, likeItemEle];
@@ -51,6 +56,8 @@
             );
 
             const shopInfoComposition = [topItemEle, middleItemEle, underItemEle];
+            shopInfoItemEle.mouseover(() => displaySelectedShop(shop));
+            shopInfoItemEle.mouseout(() => removeSelectedShop(shop));
 
             shopInfoComposition.forEach((composition) =>
                 shopInfoItemEle.append(composition),
