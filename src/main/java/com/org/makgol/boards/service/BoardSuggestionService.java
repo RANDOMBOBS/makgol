@@ -156,7 +156,6 @@ public class BoardSuggestionService {
             files.add(boardCreateRequestVo.getFile5());
         }
 
-
         // if(파일이 있을때), else(파일이 없을때)
         if (files.size() > 0) {
             List<FileInfo> fileList = fileUpload.fileListUpload(files);

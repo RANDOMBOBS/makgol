@@ -2,11 +2,12 @@ package com.org.makgol.admin.service;
 
 import java.util.List;
 
+import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.org.makgol.admin.dao.AdminDao;
-import com.org.makgol.users.vo.UsersRequestVo;
 
 @Service
 
@@ -14,7 +15,7 @@ public class AdminService {
 	@Autowired
 	AdminDao adminDao;
 
-	public List<UsersRequestVo> getUserList() {
+	public List<UsersResponseVo> getUserList() {
 		return adminDao.selectAllUserList();
 	}
 

@@ -1,4 +1,4 @@
-<%@page import="com.org.makgol.users.vo.UsersRequestVo"%>
+<%@page import="com.org.makgol.users.vo.UsersResponseVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -34,10 +34,10 @@
 
 <!-- 글쓰기 버튼 클릭시 페이지 이동 -->
 <%
-   UsersRequestVo loginedAdminVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
+   UsersRequestVo loginedAdminVo = (UsersRequestVo) session.getAttribute("loginedUserVo");
    if (loginedAdminVo != null) {
 %>
-    <c:if test="${loginedUsersRequestVo.grade == '관리자'}">
+    <c:if test="${loginedUserVo.grade == '관리자'}">
             <a href="/board/noticeCreateForm">글쓰기</a>
     </c:if>
 <%

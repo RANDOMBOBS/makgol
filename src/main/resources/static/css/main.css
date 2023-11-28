@@ -18,7 +18,6 @@ ul, li {
 	width: 100%;
 	position: relative;
 	height: 800px;
-	background-image: url(../image/default/background.jpeg);
 	background-size: cover;
 	background-position: center;
 }

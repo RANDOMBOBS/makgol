@@ -16,6 +16,7 @@ import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.kakaoMap.KakaoMap;
 import com.org.makgol.util.mail.MailSendUtil;
 import com.org.makgol.util.redis.RedisUtil;
+import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import javax.xml.stream.events.Comment;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,7 @@ public class UsersService {
     private final StoresDao storesDao;
     private final UsersRepository usersRepository;
     private final FileUpload fileUpload;
+    private final WeatherInfo weatherInfo;
 
     public String userFindId(String userEmail) {
         return userEmail;
@@ -123,17 +126,22 @@ public class UsersService {
         return false;
     }// joinUser_END
 
-    public UsersRequestVo loginConfirm(UsersRequestVo usersRequestVo) {
+    public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo) {
         String email = usersRequestVo.getEmail();
-        UsersRequestVo loginedInUsersRequestVo = userDao.selectUser(email);
+        UsersResponseVo loginedUserVo = userDao.selectUser(email);
 
-        if(loginedInUsersRequestVo == null){ throw new CustomException(ErrorCode.NOT_FOUND_USER); }
-
-        if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedInUsersRequestVo.getPassword())) {
-            loginedInUsersRequestVo = null;
+        // 만약 로그인을 못했다면?
+        if(loginedUserVo == null){
+            throw new CustomException(ErrorCode.NOT_FOUND_USER);
+        } else{
+            List<Integer> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());
+            loginedUserVo.setCoordinate(coordinate);
         }
 
-        return loginedInUsersRequestVo;
+        if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
+            loginedUserVo = null;
+        }
+        return loginedUserVo;
     }
 
     public Boolean mailCheckDuplication(String email) {
@@ -144,6 +152,7 @@ public class UsersService {
     }
 
     public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpSession session) {
+        System.out.println("바뀐회원정보는??"+usersRequestVo);
         String oldFileName = oldFile.substring(oldFile.lastIndexOf("/") + 1);
         String currentDirectory = System.getProperty("user.dir");
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
@@ -157,21 +166,24 @@ public class UsersService {
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
+        System.out.println("유저정보는???????"+usersRequestVo);
 
         int result = userDao.updateUserInfo(usersRequestVo);
 
         if (result > 0) {
-            UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
-            usersRequestVo.setName(loginedUsersRequestVo.getName());
-            usersRequestVo.setEmail(loginedUsersRequestVo.getEmail());
-            session.setAttribute("loginedUsersRequestVo", usersRequestVo);
+            UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+            usersRequestVo.setName(loginedUserVo.getName());
+            usersRequestVo.setEmail(loginedUserVo.getEmail());
+            UsersResponseVo newUserVo = new UsersResponseVo();
+            newUserVo.modifyMapper(usersRequestVo);
+            List<Integer> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
+            newUserVo.setCoordinate(coordinate);
+            session.setAttribute("loginedUserVo", newUserVo);
             String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
             File oldfile = new File(deleteFile);
             oldfile.delete();
-        }
 
-        if(result > 0){
-            String email = usersRequestVo.getEmail();
+            String email = newUserVo.getEmail();
             UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
             List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
@@ -184,9 +196,10 @@ public class UsersService {
                 HashMap<String, Object> storeMap = kakaoMapSearch.storeInfoRequest(storeRequestVoList);
                 storesDao.insertStore(storeMap);
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
-        }
+            }
+
 
         return result;
     }

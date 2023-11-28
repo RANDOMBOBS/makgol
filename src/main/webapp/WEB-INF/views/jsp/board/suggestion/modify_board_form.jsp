@@ -49,8 +49,19 @@
 			<span>내용</span><input type="text" name="contents" value="${boardVo.contents}" placeholder="글내용을 입력해주세요"><br>
 			<span>내용</span><input type="hidden" name="oldImages" value="${boardVo.images}"><br>
 			<p>이미지는 최대 5장까지 첨부가능합니다.</p>
-			<span>첨부파일 1</span>
-			<input type="file" name="file1"><br>
+
+            <c:if test="${not empty boardVo.images}">
+                <c:forEach var="item" items="${boardVo.images}"  varStatus="status">
+                    <label for="file${status.index+1}"
+                        <span><img src="http://localhost:8090${item}"></span>
+                        <input type="file" id="file${status.index+1}" name="file${status.index+1}">
+                    </label>
+                    <br>
+                </c:forEach>
+		    </c:if>
+
+
+
 			<span>첨부파일 2</span>
 			<input type="file" name="file2"><br>
 			<span>첨부파일 3</span>
