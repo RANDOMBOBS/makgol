@@ -445,6 +445,7 @@
 
             const formData = new FormData();
 
+            const inputEmail = $("#register_email").val();
             const inputAuthSelf = $("#auth_self").val();
             const inputPassword = $("#register_password").val();
             const inputPasswordConfirm = $("#register_password_confirm").val();
