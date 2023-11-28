@@ -161,56 +161,8 @@
           </form>
         </div>
 
-        <script type="text/javascript">
-          function imageURL(input) {
-            if (input.files && input.files[0]) {
-              var reader = new FileReader();
-              reader.onload = function (e) {
-                jQuery(input)
-                  .next()
-                  .children(".preview")
-                  .attr("src", e.target.result);
-                jQuery(input)
-                  .next()
-                  .children(".fa-plus")
-                  .attr("style", "display:none");
-                jQuery(input).parent().next().attr("style", "display:block");
-                jQuery(input).next().children("img").attr("style", "display:flex");
-              };
-              reader.readAsDataURL(input.files[0]);
-            }
-          }
 
-      function deleteImage(input) {
-        jQuery(input)
-          .prev()
-          .children()
-          .find(".preview")
-          .attr("style", "display:none");
-        jQuery(input)
-          .prev()
-          .children()
-          .find(".fa-plus")
-          .attr("style", "display:block");
-        jQuery(input).attr("style", "display:none");
-        jQuery(input).prev().find("input").val("");
-      }
+	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>
 
-          function CreateBoardForm() {
-            let form = document.create_board_form;
-            if (form.category.value == "") {
-              alert("카테고리를 선택해주세요.");
-              form.category.focus();
-            } else if (form.title.value == "") {
-              alert("제목을 입력해주세요");
-              form.title.focus();
-            } else if (form.contents.value == "") {
-              alert("글 내용을 입력해주세요.");
-              form.contents.focus();
-            } else {
-              form.submit();
-            }
-          }
-        </script>
       </body>
 </html>
