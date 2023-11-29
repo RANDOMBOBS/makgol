@@ -19,4 +19,16 @@
           AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
     </select>
 
+    <select id="findStoreIdWithPlaceName" resultType="String" parameterType="String">
+        SELECT id
+        FROM mak_gol.stores
+        WHERE name = #{name}
+    </select>
+
+    <select id="findStoreMenuWithId" resultType="com.org.makgol.stores.dto.StoreMenuDto" parameterType="String">
+        SELECT menu, price
+        FROM mak_gol.menus
+        WHERE store_id = #{storeId}
+    </select>
+
 </mapper>
