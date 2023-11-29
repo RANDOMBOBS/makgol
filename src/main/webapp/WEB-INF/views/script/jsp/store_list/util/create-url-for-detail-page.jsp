@@ -4,33 +4,9 @@
     class UrlBuilderForDetail {
         #defaultUrl = "<c:url value='/store/detail' />?";
 
-        setPlaceName(place_name) {
-            const placeNameQuery = "place_name=" + place_name + "&";
-            this.#defaultUrl += placeNameQuery;
-            return this;
-        }
-
-        setPhone(phone) {
-            const phoneQuery = "phone=" + phone + "&";
-            this.#defaultUrl += phoneQuery;
-            return this;
-        }
-
-        setAddressName(address_name) {
-            const addressNameQuery = "address_name=" + address_name + "&";
-            this.#defaultUrl += addressNameQuery;
-            return this;
-        }
-
-        setCategoryName(category_name) {
-            const categoryName = "category_name=" + category_name + "&";
-            this.#defaultUrl += categoryName;
-            return this;
-        }
-
-        setPlaceUrl(place_url) {
-            const placeUrl = "place_url=" + place_url + "&";
-            this.#defaultUrl += placeUrl;
+        setShopId(shop_id) {
+            const shopId = "shop_id=" + shop_id + "&";
+            this.#defaultUrl += shopId;
             return this;
         }
 
@@ -78,7 +54,7 @@
             return {shopX, shopY};
         }
 
-        const {place_name, phone, address_name, category_name, place_url, distance} = shop;
+        const {id, distance} = shop;
         const {shopX, shopY} = setShopCoordinate(shop);
 
         const setMyCoordinate = (myCoordinate) => {
@@ -92,11 +68,7 @@
         const {myX, myY} = setMyCoordinate(myCoordinate);
 
         return new UrlBuilderForDetail()
-            .setPlaceName(place_name)
-            .setPhone(phone)
-            .setAddressName(address_name)
-            .setCategoryName(category_name)
-            .setPlaceUrl(place_url)
+            .setShopId(id)
             .setShopX(shopX)
             .setShopY(shopY)
             .setMyX(myX)

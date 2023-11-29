@@ -18,6 +18,7 @@
             const intDistance = getDistance(numberMyY, numberMyX, numberShopY, numberShopX);
 
             return {
+                id: item.id,
                 address_name: item.address,
                 distance: intDistance,
                 phone: item.phone,
@@ -28,8 +29,6 @@
                 category_name: keyword,
             }
         });
-
-
     };
 </script>
 
