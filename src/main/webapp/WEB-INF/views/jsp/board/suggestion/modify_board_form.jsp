@@ -63,7 +63,9 @@
         </div>
 
         <input type="hidden" name="oldImages" value="${boardVo.images}">
+
         <p class="image_info">이미지는 최대 5장까지 첨부가능합니다.</p>
+
 		<div class="image_box">
             <div class="image">
               <label for="file1">
@@ -77,6 +79,7 @@
                 <i class="fa-solid fa-xmark"></i>
               </span>
             </div>
+
             <div class="image">
               <label for="file2">
                 <input type="file" name="file2" id="file2" onchange="imageURL(this)"/>
@@ -89,6 +92,7 @@
                 <i class="fa-solid fa-xmark"></i>
               </span>
             </div>
+
             <div class="image">
               <label for="file3">
                 <input type="file" name="file3" id="file3" onchange="imageURL(this)" />
@@ -101,6 +105,7 @@
                 <i class="fa-solid fa-xmark"></i>
               </span>
             </div>
+
             <div class="image">
               <label for="file4">
                 <input type="file" name="file4" id="file4" onchange="imageURL(this)" />
@@ -113,6 +118,7 @@
                 <i class="fa-solid fa-xmark"></i>
               </span>
             </div>
+
             <div class="image">
               <label for="file5">
                 <input type="file" name="file5" id="file5" onchange="imageURL(this)" />
@@ -125,13 +131,15 @@
                 <i class="fa-solid fa-xmark"></i>
               </span>
             </div>
-
         </div>
+
         <br>
+
         <div class="buttons">
 			<input type="button" class="ok_board" value="수정" onclick="ModifyBoardForm();">
 			<input type="button" value="취소" onclick="history.go(-1)"/>
 		</div>
+
 		 <c:forEach var="index" begin="0" end="4">
              <c:if test="${not empty boardVo.images[index]}">
                  <input type="text" class="oldImage" name="oldImage${index + 1}" value="${boardVo.images[index]}">

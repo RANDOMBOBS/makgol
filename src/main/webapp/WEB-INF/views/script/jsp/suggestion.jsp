@@ -238,6 +238,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   });
 
   function imageURL(input) {
+      jQ(input).next().children(".preview").attr("style", "display:none");
+      jQ(input).next().children(".fa-plus").attr("style", "display:block");
+
     if (input.files && input.files[0]) {
       var reader = new FileReader();
       reader.onload = function (e) {
@@ -245,7 +248,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         jQ(input).next().children(".fa-plus").attr("style", "display:none");
         jQ(input).parent().next().attr("style", "display:block");
         jQ(input).next().children("img").attr("style", "display:flex");
-let index = jQ('form[name="modify_board_form"] input[type="file"]').index(input);
+        let index = jQ(input).closest('.image').index();
         jQ(".oldImage:eq(" + index + ")").val("null");
       };
       reader.readAsDataURL(input.files[0]);
@@ -253,18 +256,12 @@ let index = jQ('form[name="modify_board_form"] input[type="file"]').index(input)
   }
 
   function deleteImage(input) {
-    jQ(input)
-      .prev()
-      .children()
-      .find(".preview")
-      .attr("style", "display:none");
-    jQ(input)
-      .prev()
-      .children()
-      .find(".fa-plus")
-      .attr("style", "display:block");
+    jQ(input).prev().children().find(".preview").attr("style", "display:none");
+    jQ(input).prev().children().find(".fa-plus").attr("style", "display:block");
     jQ(input).attr("style", "display:none");
     jQ(input).prev().find("input").val("");
+let index = jQ(input).closest('.image').index();
+    jQ(".oldImage:eq(" + index + ")").val("null");
   }
 
   function CreateBoardForm() {

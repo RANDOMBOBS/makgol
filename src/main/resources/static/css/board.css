@@ -111,7 +111,7 @@
 }
 
 #suggestion_board form .image_box label input {
-
+  display : none;
 }
 
 #suggestion_board form .image_box label .no_image {
@@ -164,6 +164,9 @@
   right: 0;
   width: 80px;
 }
+
+
+
 
 .board {
   margin: 0 auto;

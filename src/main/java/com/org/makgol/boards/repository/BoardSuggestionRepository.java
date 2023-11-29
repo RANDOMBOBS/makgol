@@ -34,6 +34,8 @@ public interface BoardSuggestionRepository {
 
     int deleteComment(int id);
 
+
+    List<FileInfo> selectExistingFile(List<String> existingFile);
     List<BoardVo> selectImageBoard(int b_id);
     List<BoardVo> selectBoard(int b_id);
 

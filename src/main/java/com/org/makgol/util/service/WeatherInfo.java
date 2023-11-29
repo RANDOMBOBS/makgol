@@ -43,7 +43,6 @@ public class WeatherInfo {
               String y = apiList.get(no).get(3);
               coordinate.add(Integer.parseInt(x));
               coordinate.add(Integer.parseInt(y));
-            System.out.println("csv 파일에서 구한 좌표값 = "+coordinate);
         } catch (Exception e){
             e.printStackTrace();
         }

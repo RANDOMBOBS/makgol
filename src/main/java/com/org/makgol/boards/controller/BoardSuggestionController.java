@@ -180,8 +180,6 @@ public class BoardSuggestionController {
 	@PostMapping("/modifyConfirm")
 	public String modifyConfirm(@ModelAttribute BoardCreateRequestVo boardCreateRequestVo, @RequestParam("oldImages") String oldImages, @RequestParam("id") int board_id) {
 		boardCreateRequestVo.setId(board_id);
-		System.out.println("사진"+oldImages);
-		System.out.println("아이디는?"+board_id+"보드는?"+boardCreateRequestVo);
 		String nextPage = "jsp/board/suggestion/modify_board_ok";
 		int result = boardService.modifyBoardConfirm(boardCreateRequestVo, oldImages);
 		if (result < 1) {
