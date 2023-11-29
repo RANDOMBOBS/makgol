@@ -4,7 +4,7 @@
         integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <jsp:include page="../util/get-model-data.jsp"></jsp:include>
-<jsp:include page="../backend/request-api.jsp"></jsp:include>
+<jsp:include page="../backend/request-store-list.jsp"></jsp:include>
 <jsp:include page="../ui/display-initial-shop-list.jsp"></jsp:include>
 <jsp:include page="../ui/display-initial-map.jsp"></jsp:include>
 <script>
@@ -16,7 +16,7 @@
     const pageInit = async () => {
         const request = getModelData();
 
-        const shops = await requestApi(request);
+        const shops = await requestStoreList(request);
 
         shopInfo.shops = shops;
         shopInfo.keyword = request.keyword;

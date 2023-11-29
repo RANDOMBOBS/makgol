@@ -6,7 +6,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <jsp:include page="../../store_util/get-distance.jsp"></jsp:include>
 <script>
-    const requestApi = async (payload) => {
+    const requestStoreList = async (payload) => {
         const {keyword, longitude, latitude} = payload
         const url = "http://localhost:8090/store/list_data?longitude=" + longitude + "&latitude=" + latitude + "&keyword=" + keyword;
 
