@@ -182,39 +182,39 @@ public class KakaoMap{
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-        String[] CategoryChinaFriedMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+        String[] CategoryChinaFriedMenu = Arrays.stream(Category.CategoryChinaFriedMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-        String[] CategoryChinaRoastMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+        String[] CategoryChinaRoastMenu = Arrays.stream(Category.CategoryChinaRoastMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-        String[] CategoryJapanRoastMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+        String[] CategoryJapanRoastMenu = Arrays.stream(Category.CategoryJapanRoastMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-        String[] CategoryJapanFrideMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+        String[] CategoryJapanFrideMenu = Arrays.stream(Category.CategoryJapanFrideMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-        String[] CategoryJapanRiceMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+        String[] CategoryJapanRiceMenu = Arrays.stream(Category.CategoryJapanRiceMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-        String[] CategoryJapanNoodleMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+        String[] CategoryJapanNoodleMenu = Arrays.stream(Category.CategoryJapanNoodleMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-        String[] CategoryGlobal_bMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+        String[] CategoryGlobal_bMenu = Arrays.stream(Category.CategoryGlobal_bMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-        String[] CategoryGlobal_tMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+        String[] CategoryGlobal_tMenu = Arrays.stream(Category.CategoryGlobal_tMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-        String[] CategoryGlobal_mMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+        String[] CategoryGlobal_mMenu = Arrays.stream(Category.CategoryGlobal_mMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
 
