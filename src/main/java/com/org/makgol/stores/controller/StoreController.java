@@ -3,12 +3,14 @@ package com.org.makgol.stores.controller;
 import com.org.makgol.stores.bean.HttpTransactionLogger;
 import com.org.makgol.stores.dto.RequestStoreListDto;
 import com.org.makgol.stores.dto.ResponseStoreListDto;
+import com.org.makgol.stores.dto.StoreMenuDto;
 import com.org.makgol.stores.service.StoreService;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.KakaoLocalResponseVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -67,11 +69,21 @@ public class StoreController {
                 .keyword(keyword)
                 .build();
 
-        System.out.println("requestStoreListDto = " + requestStoreListDto);
-
         List<ResponseStoreListDto> responseStoreListDto = storeService.findStoreListData(requestStoreListDto);
 
         KakaoLocalResponseVo<List<ResponseStoreListDto>> response = new KakaoLocalResponseVo<>(true, "업장 리스트 정보를 가져옵니다.", responseStoreListDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value= "/menu_data")
+    @ResponseBody
+    public ResponseEntity<?> findStoreMenuData(
+            @RequestParam String place_name
+    ) {
+        String storeId = storeService.findStoreIdWithPlaceName(place_name);
+        List<StoreMenuDto> storeMenuDtos = storeService.findStoreMenuWithId(storeId);
+
+        KakaoLocalResponseVo<List<StoreMenuDto>> response = new KakaoLocalResponseVo<>(true, "업장 이름에 해당하는 메뉴를 가져옵니다.", storeMenuDtos);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
