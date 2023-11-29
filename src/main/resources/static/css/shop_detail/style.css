@@ -10,6 +10,7 @@ li {
 
 body {
     background: #ffeed2;
+    height: 1200px;
 }
 
 header {
@@ -54,23 +55,23 @@ article {
 }
 
 article #picture {
-    width: 440px;
+    width: 360px;
     height: 280px;
     position: relative;
     top: 20px;
-    left: 40px;
+    left: 165px;
 }
 
 article #intro {
-    width: 440px;
-    height: 480px;
+    width: 360px;
+    height: 760px;
     position: relative;
     top: 40px;
-    left: 40px;
+    left: 165px;
 }
 
 article #intro .detail_category {
-    height: 40px;
+    height: 60px;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -78,12 +79,19 @@ article #intro .detail_category {
 }
 
 article #intro ul {
+    flex-direction: column;
     margin: 0 30px;
+}
+
+article #intro ul li {
+    display: flex;
+    justify-content: flex-start;
 }
 
 article #intro ul span:nth-child(1) {
     font-weight: bolder;
     color: coral;
+    margin-right: 10px;
 }
 
 article #intro ul span:nth-child(2) {
@@ -92,6 +100,11 @@ article #intro ul span:nth-child(2) {
 
 article #intro ul > li {
     margin-top: 5px;
+}
+
+article #intro #menu_wrapper {
+    height: 400px;
+    overflow-y: auto;
 }
 
 article #map {
@@ -158,8 +171,8 @@ article #map .guide_line li:nth-child(2) > span:nth-child(1) {
 
 article #review {
     width: 600px;
-    height: 255px;
+    height: 540px;
     position: absolute;
-    bottom: 20px;
+    top: 640px;
     right: 405px;
 }

@@ -42,7 +42,9 @@
                 <div class="detail_category">
                     <h3>메뉴 정보</h3>
                 </div>
-                <ul></ul>
+                <div id="menu_wrapper">
+                    <ul id="menu_list"></ul>
+                </div>
             </div>
         </div>
         <div class="item_info_footer"></div>
