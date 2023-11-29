@@ -97,7 +97,7 @@ public class UsersService {
 
     //joinUser
     public Boolean joinUser(UsersRequestVo usersRequestVo) {
-        //사용자 패스워드 암호화
+        //1.사용자 회원가입 기능
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
         if (usersRequestVo.getPhotoFile() != null) {
@@ -109,6 +109,7 @@ public class UsersService {
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
+        //2. 사용자 위치 정보 기반 식당 데이터 세이브
         if (usersRepository.insertUser(usersRequestVo)) {
             saveStoresProcess(usersRequestVo.getEmail());
 

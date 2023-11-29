@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.org.makgol.stores.vo.StoreRequestMenuVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
@@ -235,6 +237,27 @@ public class Crawller {
             } catch (Exception e) {log.info("update_date");}
 
 
+            WebElement cont_photo;
+            try{
+                cont_photo = element.findElement(By.cssSelector("#mArticle > div.cont_photo > div.photo_area > ul > li.size_l > a"));
+                String URL = cont_photo.getAttribute("style");
+
+                // 정규표현식 패턴 설정
+                String pattern = "background-image: url\\(\"//(.*?)\\?fname=(http[^\\s'\"]+)\"\\);";
+                Pattern r_p = Pattern.compile(pattern);
+
+                // 입력 문자열과 패턴을 사용하여 매칭을 찾음
+                Matcher m = r_p.matcher(URL);
+                if (m.find()) {
+                    // 찾은 매칭을 출력
+                    String editedURL = m.group(1) + m.group(2);
+                    storeRequestVo.setPhoto(editedURL);
+                } else {
+                    System.out.println("매칭되는 부분을 찾을 수 없습니다.");
+                }
+            }catch (Exception e){log.info("photo");}
+
+
             //데이터 확인
             log.info("thread "+ thread_num +": 이름 : "+ storeRequestVo.getName());
             log.info("thread "+ thread_num +": 주소 : "+ storeRequestVo.getAddress());
@@ -245,6 +268,8 @@ public class Crawller {
             log.info("thread "+ thread_num +": 업데이트 : "+ storeRequestVo.getUpdate_date());
             log.info("thread "+ thread_num +": 영업시간 : "+ storeRequestVo.getOpening_hours());
             log.info("thread "+ thread_num +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            log.info("thread "+ thread_num +": 이미지 : "+ storeRequestVo.getPhoto());
+
 
             // 메뉴 정보 가져오기
             List<WebElement> element_menu = element.findElements(By.cssSelector("#mArticle > div.cont_menu > ul > li"));

@@ -164,6 +164,7 @@ public class KakaoMap{
             log.info("hashIndex "+ index +": 업데이트 : "+ storeRequestVo.getUpdate_date());
             log.info("hashIndex "+ index +": 영업시간 : "+ storeRequestVo.getOpening_hours());
             log.info("hashIndex "+ index +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            log.info("hashIndex "+ index +": 이미지 : "+ storeRequestVo.getPhoto());
             System.out.println();
         }
     }

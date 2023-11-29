@@ -28,7 +28,7 @@
     </insert>
 
     <insert id="saveStores" parameterType="com.org.makgol.stores.vo.StoreRequestVo">
-        INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date)
-        VALUES (#{name}, #{likes}, #{longitude}, #{latitude}, #{address}, #{load_address}, #{category}, #{opening_hours}, #{phone}, #{site}, #{menu_update}, #{place_url}, #{update_date})
+        INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date, photo)
+        VALUES (#{name}, #{likes}, #{longitude}, #{latitude}, #{address}, #{load_address}, #{category}, #{opening_hours}, #{phone}, #{site}, #{menu_update}, #{place_url}, #{update_date}, #{photo})
     </insert>
 </mapper>

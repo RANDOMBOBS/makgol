@@ -9,6 +9,7 @@ import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,10 @@ import java.util.List;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UsersController {
+
     private final UsersService userService;
+
+    String url = "'//img1.kakaocdn.net/cthumb/local/C320x320/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FD7FF6F557FF540B088CFCCAA7C8D6B7F')\"";
 
     //joinUser_POST
     @PostMapping("/join")
