@@ -23,7 +23,6 @@ public class StoresDao {
     private final StoresRepository storesReposiory;
 
     public void insertStore(HashMap<String, Object> storeMap) throws Exception {
-        System.out.println(storeMap.size() / 2);
         StoreResponseVo storeResponseVo;
         for (int index = 0; index < storeMap.size() / 2; index++) {
             System.out.println("------" + index + "-------");
@@ -46,15 +45,6 @@ public class StoresDao {
                 storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
 
                 if (!storeRequestVo.getMenuName().equals("empty")) {
-                    /*
-                    String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name, date) VALUES (?, ?, ?, now())";
-                    jdbcTemplate.update(insertStoresMenuSql,
-                            storeResponseVo.getId(),
-                            storeRequestVo.getKeyword(),
-                            storeRequestVo.getMenuName()
-                    );
-                     */
-
                     Map<String, Object> map = new HashMap<>();
                     map.put("store_id", storeResponseVo.getId());
                     map.put("category", storeRequestVo.getKeyword());
@@ -67,15 +57,6 @@ public class StoresDao {
                     if (storeRequestMenuVoList.get(menuIndex).getMenu() == null) {
                         continue;
                     }
-                    /*
-                    String insertStoresMenuSql = "INSERT INTO Menus (store_id, menu, price, date) VALUES (?, ?, ?, now())";
-
-                    jdbcTemplate.update(insertStoresMenuSql,
-                            storeResponseVo.getId(),
-                            storeRequestMenuVoList.get(menuIndex).getMenu(),
-                            storeRequestMenuVoList.get(menuIndex).getPrice()
-                    );
-                    */
 
                     Map<String, Object> map = new HashMap<>();
                     map.put("store_id", storeResponseVo.getId());
@@ -86,36 +67,14 @@ public class StoresDao {
                 continue;
             }
 
-            /*
-            String insertStoresSql = "INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date, distance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-            //int result = 0;
-            jdbcTemplate.update(insertStoresSql,
-                    storeRequestVo.getName(), storeRequestVo.getLikes(), storeRequestVo.getLongitude(),
-                    storeRequestVo.getLatitude(), storeRequestVo.getAddress(), storeRequestVo.getLoad_address(),
-                    storeRequestVo.getCategory(), storeRequestVo.getOpening_hours(), storeRequestVo.getPhone(),
-                    storeRequestVo.getSite(), storeRequestVo.getMenu_update(), storeRequestVo.getPlace_url(),
-                    storeRequestVo.getUpdate_date(), storeRequestVo.getDistance());
-            */
-
             storesReposiory.saveStores(storeRequestVo);
-
             log.info("insert storeInfo --> : {}", storeRequestVo.getPlace_url());
 
-
-            //try { store_id = jdbcTemplate.queryForObject(sql, Integer.class, storeRequestVo.getPlace_url()); } catch (Exception e) {e.printStackTrace();}
             storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
 
 
             if (!storeRequestVo.getMenuName().equals("empty")) {
-                /*
-                String insertStoresMenuSql = "INSERT INTO category_menu (store_id, category, menu_name, date) VALUES (?, ?, ?, now())";
-                jdbcTemplate.update(insertStoresMenuSql,
-                        storeResponseVo.getId(),
-                        storeRequestVo.getKeyword(),
-                        storeRequestVo.getMenuName()
-                );
-                 */
+
                 Map<String, Object> map = new HashMap<>();
                 map.put("store_id", storeResponseVo.getId());
                 map.put("category", storeRequestVo.getKeyword());
@@ -128,16 +87,6 @@ public class StoresDao {
                 if (storeRequestMenuVoList.get(menuIndex).getMenu() == null) {
                     continue;
                 }
-
-                /*
-                String insertStoresMenuSql = "INSERT INTO Menus (store_id, menu, price, date) VALUES (?, ?, ?, now())";
-
-                jdbcTemplate.update(insertStoresMenuSql,
-                        storeResponseVo.getId(),
-                        storeRequestMenuVoList.get(menuIndex).getMenu(),
-                        storeRequestMenuVoList.get(menuIndex).getPrice()
-                );
-                 */
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("store_id", storeResponseVo.getId());

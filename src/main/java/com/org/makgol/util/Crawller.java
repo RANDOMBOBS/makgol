@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.org.makgol.stores.vo.StoreRequestMenuVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,7 +20,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
 
-
+@Slf4j
 public class Crawller {
 
     private int thread_count = 10;
@@ -151,7 +152,7 @@ public class Crawller {
                 element 			= searchButton.findElement(By.xpath("//*[@id=\"mArticle\"]"));
             } catch (Exception e) {
                 element 			= driver.findElement(By.cssSelector("#mArticle"));
-                System.out.println("element");
+                log.info("element");
             }
 
             // 웹 페이지에서 태그를 찾아서 데이터 가져오기
@@ -166,7 +167,7 @@ public class Crawller {
                 } else {
                     storeRequestVo.setOpening_hours(opening_hours);
                 }
-            } catch (Exception e) {System.out.println("span.time_operation");}
+            } catch (Exception e) {log.info("span.time_operation");}
 
 
             // 크롤링 멈춤 방지용 try catch
@@ -198,7 +199,7 @@ public class Crawller {
                     storeRequestVo.setPhone(phone);
                 }
 
-    		} catch (Exception e) {System.out.println("span.txt_contact");}
+    		} catch (Exception e) {log.info("span.txt_contact");}
 
             WebElement update_getMenu;
             String getMenu_update;
@@ -231,19 +232,19 @@ public class Crawller {
                 }
 
 
-            } catch (Exception e) {System.out.println("update_date");}
+            } catch (Exception e) {log.info("update_date");}
 
 
             //데이터 확인
-            System.out.println("thread "+ thread_num +": 이름 : "+ storeRequestVo.getName());
-            System.out.println("thread "+ thread_num +": 주소 : "+ storeRequestVo.getAddress());
-            System.out.println("thread "+ thread_num +": 도로명 : "+ storeRequestVo.getLoad_address());
-            System.out.println("thread "+ thread_num +": 전화번호 : "+ storeRequestVo.getPhone());
-            System.out.println("thread "+ thread_num +": 카테고리 : "+ storeRequestVo.getCategory());
-            System.out.println("thread "+ thread_num +": 상세페이지 : "+ storeRequestVo.getPlace_url());
-            System.out.println("thread "+ thread_num +": 업데이트 : "+ storeRequestVo.getUpdate_date());
-            System.out.println("thread "+ thread_num +": 영업시간 : "+ storeRequestVo.getOpening_hours());
-            System.out.println("thread "+ thread_num +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            log.info("thread "+ thread_num +": 이름 : "+ storeRequestVo.getName());
+            log.info("thread "+ thread_num +": 주소 : "+ storeRequestVo.getAddress());
+            log.info("thread "+ thread_num +": 도로명 : "+ storeRequestVo.getLoad_address());
+            log.info("thread "+ thread_num +": 전화번호 : "+ storeRequestVo.getPhone());
+            log.info("thread "+ thread_num +": 카테고리 : "+ storeRequestVo.getCategory());
+            log.info("thread "+ thread_num +": 상세페이지 : "+ storeRequestVo.getPlace_url());
+            log.info("thread "+ thread_num +": 업데이트 : "+ storeRequestVo.getUpdate_date());
+            log.info("thread "+ thread_num +": 영업시간 : "+ storeRequestVo.getOpening_hours());
+            log.info("thread "+ thread_num +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
 
             // 메뉴 정보 가져오기
             List<WebElement> element_menu = element.findElements(By.cssSelector("#mArticle > div.cont_menu > ul > li"));
@@ -286,11 +287,11 @@ public class Crawller {
             }
 
             // HashMap에 결과 저장
-                //System.out.println("before hash put : " + thread_count + " : " + storeRequestVo.getName());
+                //log.info("before hash put : " + thread_count + " : " + storeRequestVo.getName());
 
                 hashMap.put("store_menu_" + index, storeRequestMenuVos);
                 hashMap.put("store_info_" + index, storeRequestVo);
-                System.out.println("hashMap.size() --> : " + hashMap.size()/2);
+                log.info("hashMap.size() --> : " + hashMap.size()/2);
 
                 try{Thread.sleep(500);}catch(Exception e){}
                 driver.close();

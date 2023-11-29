@@ -13,11 +13,13 @@ import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.Crawller;
 import com.org.makgol.util.kakaoMap.vo.Category;
 import com.org.makgol.util.kakaoMap.vo.KakaoLocalRequestVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class KakaoMap{
@@ -153,15 +155,15 @@ public class KakaoMap{
         for(int index=0; index<(hashMap.size()/2); index ++){
             StoreRequestVo storeRequestVo = (StoreRequestVo) hashMap.get("store_info_" + index);
             if(storeRequestVo == null){ continue; }
-            System.out.println("hashIndex "+ index +": 이름 : "+ storeRequestVo.getName());
-            System.out.println("hashIndex "+ index +": 주소 : "+ storeRequestVo.getAddress());
-            System.out.println("hashIndex "+ index +": 도로명 : "+ storeRequestVo.getLoad_address());
-            System.out.println("hashIndex "+ index +": 전화번호 : "+ storeRequestVo.getPhone());
-            System.out.println("hashIndex "+ index +": 카테고리 : "+ storeRequestVo.getCategory());
-            System.out.println("hashIndex "+ index +": 상세페이지 : "+ storeRequestVo.getPlace_url());
-            System.out.println("hashIndex "+ index +": 업데이트 : "+ storeRequestVo.getUpdate_date());
-            System.out.println("hashIndex "+ index +": 영업시간 : "+ storeRequestVo.getOpening_hours());
-            System.out.println("hashIndex "+ index +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            log.info("hashIndex "+ index +": 이름 : "+ storeRequestVo.getName());
+            log.info("hashIndex "+ index +": 주소 : "+ storeRequestVo.getAddress());
+            log.info("hashIndex "+ index +": 도로명 : "+ storeRequestVo.getLoad_address());
+            log.info("hashIndex "+ index +": 전화번호 : "+ storeRequestVo.getPhone());
+            log.info("hashIndex "+ index +": 카테고리 : "+ storeRequestVo.getCategory());
+            log.info("hashIndex "+ index +": 상세페이지 : "+ storeRequestVo.getPlace_url());
+            log.info("hashIndex "+ index +": 업데이트 : "+ storeRequestVo.getUpdate_date());
+            log.info("hashIndex "+ index +": 영업시간 : "+ storeRequestVo.getOpening_hours());
+            log.info("hashIndex "+ index +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
             System.out.println();
         }
     }
