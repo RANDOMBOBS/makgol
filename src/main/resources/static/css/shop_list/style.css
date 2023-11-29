@@ -48,9 +48,7 @@ li {
 
 #map .shop_info_area {
     position: absolute;
-    width: 500px;
-    /*height: 740px;*/
-    /*padding: 40px;*/
+    width: 472px;
     background: #ffeeae;
     z-index: 999;
     top: 17px;
@@ -90,12 +88,20 @@ li {
 
 #map .shop_info_area .shop_info_list {
     background: white;
-    height: 650px;
+    height: 690px;
     overflow-y: scroll;
 }
 
 #map .shop_info_area .shop_info_list::-webkit-scrollbar {
-    display: none;
+    width: 12px;
+}
+
+#map .shop_info_area .shop_info_list::-webkit-scrollbar-thumb {
+    background-color: #debf5e;
+}
+
+#map .shop_info_area .shop_info_list::-webkit-scrollbar-track {
+    background-color: #f3e7d0;
 }
 
 #map .shop_info_area .shop_info_list {
@@ -105,6 +111,7 @@ li {
 
 #map .shop_info_area .shop_info_list .shop_info_item {
     height: 140px;
+    width: 420px;
     margin: 20px;
     padding: 13px;
     background: #ffffff;
@@ -117,6 +124,12 @@ li {
     background: #fdf97e;
 }
 
+#map .shop_info_area .shop_info_list .shop_info_item .top_item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2px;
+}
+
 #map .shop_info_area .shop_info_list .shop_info_item #place_name {
     display: flex;
     justify-content: left;
@@ -125,6 +138,12 @@ li {
     font-weight: bolder;
     text-decoration: none;
     color: black;
+}
+
+
+#map .shop_info_area .shop_info_list .shop_info_item #likes {
+    color: red;
+    font-size: 20px;
 }
 
 #map .shop_info_area .shop_info_list .shop_info_item #place_name:hover {
@@ -172,6 +191,7 @@ li {
     justify-content: center;
     background: #ffe286;
     border-radius: 0 0 20px 20px;
+    height: 30px;
 }
 
 #map .shop_info_area .shop_info_footer .shop_page {
@@ -186,8 +206,8 @@ li {
 #map .guide_line {
     z-index: 998;
     position: absolute;
-    width: 300px;
-    height: 120px;
+    width: 320px;
+    height: 180px;
     background: white;
     border: 7px solid #ffe286;
     border-radius: 12px;
@@ -195,11 +215,6 @@ li {
     right: 40px;
     display: flex;
     flex-direction: column;
-    opacity: 0.8;
-}
-
-#map .guide_line:hover {
-    opacity: 1;
 }
 
 #map .guide_line .head_box {
@@ -212,8 +227,17 @@ li {
 #map .guide_line .content_box {
     flex-grow: 2;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 12px;
+}
+
+#map .guide_line .content_box p {
+    font-size: 14px;
+    word-spacing: 2px;
+    margin-bottom: 5px;
+    color: #0fdec0;
 }
 
 #map .guide_line li {
@@ -234,5 +258,18 @@ li {
 }
 
 #map .guide_line li:nth-child(2) > span:nth-child(1) {
-    color: #238cfa;
+    color: rgb(85, 153, 255);
+}
+
+#map .guide_line li:nth-child(3) > span:nth-child(1) {
+    color: rgb(34, 177, 76);
+}
+
+#map .marker {
+    color: #2c2105;
+    border: none;
+    font-size: 12px;
+    padding: 20px;
+    outline: none;
+    text-align: center;
 }

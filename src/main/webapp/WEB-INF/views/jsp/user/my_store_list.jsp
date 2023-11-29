@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.org.makgol.users.vo.UsersRequestVo"%>
+<%@page import="com.org.makgol.users.vo.UsersResponseVo"%>
 
 <!DOCTYPE html>
  <meta charset="UTF-8">
@@ -14,7 +14,7 @@
     <table>
     <c:forEach var="item" items="${storeVos}">
        <tr>
-        <td class="store_photo"><img src="<c:url value='/resources/static/image/김치찌개.jpg' />" alt="${item.name}" /></td>
+        <td class="store_photo"><img src="<c:url value='/resources/static/image/default/김치찌개.jpg' />" alt="${item.name}" /></td>
         <td class="store_info">
           <ul>
             <li>${item.name}</li>

@@ -1,83 +1,105 @@
 package com.org.makgol.stores.service;
 
 
-import java.util.HashMap;
-import java.util.List;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.org.makgol.stores.dto.RequestStoreListDto;
+import com.org.makgol.stores.dto.ResponseStoreListDto;
+import com.org.makgol.stores.repository.StoresRepository;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
+import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
-import lombok.AllArgsConstructor;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
 public class StoreService {
-	
-	private final RestTemplate restTemplate;
-	private final HttpHeaders headers;
 
-	public KakaoLocalResponseJSON callKakaoLocalAPI(KakaoLocalRequestVo searchRequestVo) {
-		String x = searchRequestVo.getX();
-		String y = searchRequestVo.getY();
-		String keyword = searchRequestVo.getKeyword();
-		int radius = searchRequestVo.getRadius();
-		int size = searchRequestVo.getSize();
-		int page = searchRequestVo.getPage();
+    private final RestTemplate restTemplate;
+    private final HttpHeaders headers;
+    private final StoresRepository storesRepository;
 
-		UriComponents uri = UriComponentsBuilder
-				.fromHttpUrl("https://dapi.kakao.com/v2/local/search/keyword.json")
-				.queryParam("y", y)
-				.queryParam("x", x)
-				.queryParam("query", keyword)
-				.queryParam("radius", radius)
-				.queryParam("size", size)
-				.queryParam("page", page)
-				.queryParam("category_group_code", "FD6")
-				.build();
+    public List<ResponseStoreListDto> findStoreListData(RequestStoreListDto requestStoreListDto) {
+        List<ResponseStoreListDto> result = null;
+        try {
+            Map<String, String> map = new HashMap<>();
+            String keyword = requestStoreListDto.getKeyword();
+            String longitude = requestStoreListDto.getLongitude();
+            String latitude = requestStoreListDto.getLatitude();
+            map.put("category", keyword);
+            map.put("longitude", longitude);
+            map.put("latitude", latitude);
+            result = storesRepository.findStoreList(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
-		headers.set("Authorization", "KakaoAK e2a97497252d13a304751d99a85ea67c");
+    public KakaoLocalResponseJSON callKakaoLocalAPI(KakaoLocalRequestVo searchRequestVo) {
+        String x = searchRequestVo.getX();
+        String y = searchRequestVo.getY();
+        String keyword = searchRequestVo.getKeyword();
+        int radius = searchRequestVo.getRadius();
+        int size = searchRequestVo.getSize();
+        int page = searchRequestVo.getPage();
 
-		HttpEntity<String> request = new HttpEntity<>(headers);
+        UriComponents uri = UriComponentsBuilder
+                .fromHttpUrl("https://dapi.kakao.com/v2/local/search/keyword.json")
+                .queryParam("y", y)
+                .queryParam("x", x)
+                .queryParam("query", keyword)
+                .queryParam("radius", radius)
+                .queryParam("size", size)
+                .queryParam("page", page)
+                .queryParam("category_group_code", "FD6")
+                .build();
 
+        headers.set("Authorization", "KakaoAK e2a97497252d13a304751d99a85ea67c");
 
-		return restTemplate.exchange(uri.toString(), HttpMethod.GET, request, KakaoLocalResponseJSON.class).getBody();
-	}
-
-
-
-	public void getMenu(List<StoreRequestVo> storeRequestVoList) throws JsonMappingException, JsonProcessingException {
-
-
-		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://localhost:8090/api/v1/crawl/kakaoStoreCrwall";
-
-		// HTTP 요청 헤더 설정
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
-		// HTTP 요청 본문에 List<StoreRequestVo> 객체 추가
-		HttpEntity<List<StoreRequestVo>> request = new HttpEntity<>(storeRequestVoList, headers);
-
-		// 서버로 HTTP GET 요청 보내기
-		restTemplate.exchange(
-				url,
-				HttpMethod.POST,
-				request,
-				new ParameterizedTypeReference<HashMap<String, Object>>() {}
-		);
+        HttpEntity<String> request = new HttpEntity<>(headers);
 
 
-		// 응답 처리
+        return restTemplate.exchange(uri.toString(), HttpMethod.GET, request, KakaoLocalResponseJSON.class).getBody();
+    }
+
+
+    public void getMenu(List<StoreRequestVo> storeRequestVoList) throws JsonProcessingException {
+
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8090/api/v1/crawl/kakaoStoreCrwall";
+
+        // HTTP 요청 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // HTTP 요청 본문에 List<StoreRequestVo> 객체 추가
+        HttpEntity<List<StoreRequestVo>> request = new HttpEntity<>(storeRequestVoList, headers);
+
+        // 서버로 HTTP GET 요청 보내기
+        restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                request,
+                new ParameterizedTypeReference<HashMap<String, Object>>() {
+                }
+        );
+
+
+        // 응답 처리
 //		if (resStoreMap.getStatusCode() == HttpStatus.OK) {
 //			for (int index = 0; index < storeMap.size()/2; index++) {
 //		    	System.out.println("====================="+index+"=====================");
@@ -104,6 +126,6 @@ public class StoreService {
 //		} else {
 //		    System.out.println("서버 응답 오류: " + resStoreMap.getStatusCode());
 //		}
-	}
+    }
 
 }

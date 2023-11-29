@@ -27,26 +27,26 @@
         <table>
             <tr>
                 <td>
-                <img src="http://localhost:8090${loginedUsersRequestVo.photo_path}" alt="프로필사진"/>
+                <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진"/>
                 </td>
             </tr>
             <tr>
-                <td>${loginedUsersRequestVo.name}</td>
+                <td>${loginedUserVo.name}</td>
             </tr>
             <tr>
-                <td>${loginedUsersRequestVo.email}</td>
+                <td>${loginedUserVo.email}</td>
             </tr>
             <tr>
-                <td>${loginedUsersRequestVo.phone}</td>
+                <td>${loginedUserVo.phone}</td>
             </tr>
             <tr>
-                <td>${loginedUsersRequestVo.address}</td>
+                <td>${loginedUserVo.address}</td>
             </tr>
         </table>
     </div>
 
    <c:url value='/user/myStoreList' var='my_store_url'>
-      <c:param name='user_id' value='${loginedUsersRequestVo.id}' />
+      <c:param name='user_id' value='${loginedUserVo.id}' />
    </c:url>
 
 

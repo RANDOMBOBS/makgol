@@ -23,8 +23,9 @@
 <body>
 <jsp:include page="jsp/include/header.jsp"></jsp:include>
 <section>
+
     <article id="article1">
-        <p class="selectedCategory">오늘의 점심 메뉴는 ?</p>
+        <p class="selectedCategory">오늘의 점심 메뉴는 ? </p>
         <p class="roulette_pin"></p>
         <button id="spin">시작!</button>
         <div class="roulette_position">
@@ -78,9 +79,8 @@
     <div id="article3">
         <div class="top_menu">
             <div class="topmenu_main_div">
-                <span><img id="top5image" src="<c:url value='/resources/static/image/top5.png' />"></span>
+                <span><img id="top5image" src="<c:url value='/resources/static/image/default/top5.png' />"></span>
                 <span>Top 5</span>
-                <span><img id="top5image" src="<c:url value='/resources/static/image/top5.png' />"></span>
             </div>
             <div class="topmenu_list">
                 <div class="topmenu_list_div">
@@ -90,7 +90,7 @@
     </div>
 
     <div id="event">
-        <div><img src="<c:url value='/resources/static/image/Christmas.png' />"></div>
+        <div><img src="<c:url value='/resources/static/image/default/Christmas.png' />"></div>
     </div>
 
 
@@ -164,6 +164,7 @@
             }
         });
     }
+
 </script>
 </body>
 </html>

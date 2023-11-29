@@ -2,6 +2,8 @@ package com.org.makgol.admin.controller;
 
 import java.util.List;
 
+import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.org.makgol.admin.service.AdminService;
-import com.org.makgol.users.vo.UsersRequestVo;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,11 +28,12 @@ public class AdminController {
 	@RequestMapping(value = "/userList", method = { RequestMethod.GET, RequestMethod.POST })
 	public String userList(Model model){
 		String nextPage = "jsp/admin/user_list";
-		List<UsersRequestVo> userVos = adminService.getUserList();
+		List<UsersResponseVo> userVos = adminService.getUserList();
 		if(userVos != null) {
 			model.addAttribute("userVos", userVos);
 		}
 		return nextPage;
+
 	}
 
 	@ResponseBody

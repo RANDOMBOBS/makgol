@@ -59,7 +59,7 @@ public class FileUpload {
 
             try {
                 fileList.get(index).transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-                fileInfo.setPhotoPath(uploadFolder+"\\"+uniqueName + fileExtension);
+                fileInfo.setPhotoPath(filePathMatcher+uniqueName+fileExtension);
                 fileInfo.setPhotoName(fileRealName);
                 fileInfoList.add(fileInfo);
             } catch (IllegalStateException e) {
@@ -72,6 +72,7 @@ public class FileUpload {
     }
 
     public FileInfo fileUpload(MultipartFile file) {
+
         FileInfo fileInfo = new FileInfo();
         List<FileInfo> fileInfoList = new ArrayList<>();
 

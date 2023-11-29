@@ -4,13 +4,16 @@ pageEncoding="UTF-8"%>
 
 
 <ul class="category_list_ul">
-  <c:forEach var="item" items="${categoryVo }" begin="0" end="15">
+  <c:forEach var="item" items="${categoryVo}" begin="0" end="15">
     <li class="menu_list">
      <form class="fileUpload" method="post" enctype="multipart/form-data" >
         <label for="imgUpload"><i class="fa-solid fa-image"></i></label>
         <input type="file" id="imgUpload" style="display:none;"></input>
+        <input type="hidden" name="name" value="${item.menu_name}"><input>
+        <buton submit
      </form>
-      <img src="<c:url value='/resources/static/image/김치찌개.jpg' />">
+    </form>
+      <img src="<c:url value='/resources/static/image/default/김치찌개.jpg' />">
       <span class="menu_name">${item.menu_name}</span>
       <span class="menu_gogo">근처식당 찾아보기 >></span>
     </li>

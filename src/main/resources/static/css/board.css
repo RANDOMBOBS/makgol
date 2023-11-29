@@ -1,22 +1,201 @@
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-  }
+#create_board {
+  margin: 0 auto;
+  width: 800px;
+}
 
- .board {
+#create_board .new_board {
+  text-align: left;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px 0;
+  border-bottom: 2px solid #aaa;
+}
+
+#create_board form {
+  position: relative;
+}
+
+#create_board form .column {
+  margin: 7px 0;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  height: 40px;
+}
+
+#create_board form .column span.description {
+  display: inline-block;
+  width: 130px;
+  text-align: left;
+  font-weight: bold;
+}
+
+#create_board form .column select {
+  width: 200px;
+  height: 30px;
+}
+
+#create_board form .column select option {
+  height: 30px;
+}
+
+#create_board form .column select option:first-child {
+  display: none;
+}
+
+#create_board form .column .name {
+  text-align: left;
+}
+
+#create_board form .column .title {
+  text-align: left;
+  text-indent: 1em;
+  width: 650px;
+  height: 30px;
+}
+
+#create_board form .column .name {
+  width: 200px;
+  height: 30px;
+  text-indent: 1em;
+}
+
+#create_board form .board_contents {
+  height: 500px;
+  align-items: flex-start;
+  margin: 13px 0;
+}
+
+#create_board form .column textarea {
+  text-align: left;
+  padding: 10px;
+  font-family: sans-serif;
+  resize: none;
+  width: 650px;
+  height: 500px;
+}
+
+#create_board form .image_info {
+  text-align: left;
+  color: #a3a3a3;
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+#create_board form .image_box {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+#create_board form .image_box .image {
+  position: relative;
+}
+
+#create_board form .image_box .image .delete_image {
+  display: none;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+}
+
+#create_board form .image_box .delete_image i {
+  border: 1px solid #333;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+#create_board form .image_box label input {
+  display: none;
+}
+
+#create_board form .image_box label .no_image {
+  width: 150px;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+
+#create_board form .image_box label .no_image i {
+  color: #aaa;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #ddd;
+  display: block;
+  font-size: 50px;
+  text-align: center;
+  line-height: 200px;
+  width: 150px;
+  height: 200px;
+}
+#create_board form .image_box label .no_image img {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+}
+
+#create_board form .buttons input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 100px;
+  margin: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#create_board form .buttons input.create {
+  background-color: #000;
+  color: #fff;
+  border: none;
+}
+
+#create_board form .buttons input.board_list {
+  position: absolute;
+  right: 0;
+  width: 80px;
+}
+
+.board {
+  margin: 0 auto;
+}
+
+.contents {
+  width: 500px;
+  height: 350px;
+}
+
+.notice_detail_ul {
+  display: inline-block;
+}
+.title {
+  width: 100px;
+}
+
+
+
+
+.board {
     margin: 0 auto;
- }
+}
 
+.contents {
+    width: 500px;
+    height: 350px;
+}
 
- .contents{
-    width:500px;
-    height:350px;
- }
-
- .notice_detail_ul{
-    display:inline-block;
- }
- .title{
-    width:100px;
- }
+.notice_detail_ul {
+    display: inline-block;
+}
+.title {
+    width: 100px;
+}

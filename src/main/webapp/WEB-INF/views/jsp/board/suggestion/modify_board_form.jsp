@@ -33,11 +33,11 @@
 
 	<div>
 		<form
-			action="<c:url value='/board/suggestion/modifyConfirm' ><c:param name='b_id' value='${boardVo.b_id}' />
+			action="<c:url value='/board/suggestion/modifyConfirm' ><c:param name='id' value='${boardVo.b_id}' />
 		</c:url>"
 			method="post" name="modify_board_form" enctype="multipart/form-data">
 			<span>카테고리 선택</span>
-			<select name="category" readonly disabled>
+			<select name="category">
 				<option value="">카테고리 선택</option>
 				<option value="notice"	<c:if test="${boardVo.category == 'notice'}">selected</c:if>>공지사항 게시판</option>
 				<option value="suggestion" <c:if test="${boardVo.category == 'suggestion'}">selected</c:if>>건의사항 게시판</option>
@@ -47,8 +47,29 @@
 			<span>제목</span> <input type="text" name="title" 	value="${boardVo.title}" placeholder="글제목"><br>
 			<span>작성자</span> <input type="text" name="name" value="${boardVo.name}" readonly disabled><br>
 			<span>내용</span><input type="text" name="contents" value="${boardVo.contents}" placeholder="글내용을 입력해주세요"><br>
-			<span>내용</span><input type="hidden" name="oldFile" value="${boardVo.attachment}"><br>
-			<span>내용</span><input type="file" name="file" ><br>
+			<span>내용</span><input type="hidden" name="oldImages" value="${boardVo.images}"><br>
+			<p>이미지는 최대 5장까지 첨부가능합니다.</p>
+
+            <c:if test="${not empty boardVo.images}">
+                <c:forEach var="item" items="${boardVo.images}"  varStatus="status">
+                    <label for="file${status.index+1}"
+                        <span><img src="http://localhost:8090${item}"></span>
+                        <input type="file" id="file${status.index+1}" name="file${status.index+1}">
+                    </label>
+                    <br>
+                </c:forEach>
+		    </c:if>
+
+
+
+			<span>첨부파일 2</span>
+			<input type="file" name="file2"><br>
+			<span>첨부파일 3</span>
+			<input type="file" name="file3"><br>
+			<span>첨부파일 4</span>
+			<input type="file" name="file4"><br>
+			<span>첨부파일 5</span>
+			<input type="file" name="file5"><br>
 			<input type="button" value="수정" onclick="ModifyBoardForm();">
 			<input type="button" value="취소" onclick="history.go(-1)"/>
 		</form>

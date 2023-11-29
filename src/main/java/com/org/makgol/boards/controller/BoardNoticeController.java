@@ -4,8 +4,8 @@ package com.org.makgol.boards.controller;
 import com.org.makgol.boards.service.BoardNoticeService;
 import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
-import com.org.makgol.users.vo.UsersRequestVo;
 
+import com.org.makgol.users.vo.UsersResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,9 +50,9 @@ public class BoardNoticeController {
     @GetMapping("/noticeCreateForm")
     public String noticeCreateForm(Model model, HttpSession session) {
         String nextPage = "jsp/board/notice/notice_create_form";
-        UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
-        int userId = loginedUsersRequestVo.getId();
-        String grade = loginedUsersRequestVo.getGrade();
+        UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+        int userId = loginedUserVo.getId();
+        String grade = loginedUserVo.getGrade();
         model.addAttribute("user_id", userId);
         model.addAttribute("grade", grade);
         return nextPage;

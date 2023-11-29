@@ -31,7 +31,7 @@ pageEncoding="UTF-8" isErrorPage="true"%>
   </head>
   <body>
     <div class="errorpage">
-      <img id="image" src="<c:url value='/resources/static/image/error.gif' />">
+      <img id="image" src="<c:url value='/resources/static/image/default/error.gif' />">
       <span>500 에러 페이지</span>
     </div>
     
@@ -45,7 +45,7 @@ pageEncoding="UTF-8" isErrorPage="true"%>
         
         function loopImage() {
             if (loopCount < 10) { // 루프를 원하는 횟수로 설정
-                image.src = "<c:url value='/resources/static/image/error.gif' />"; // 이미지를 다시 로드
+                image.src = "<c:url value='/resources/static/image/default/error.gif' />"; // 이미지를 다시 로드
                 loopCount++;
                 setTimeout(loopImage, 4000); // 4초마다 반복
             }

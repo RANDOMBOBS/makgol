@@ -1,9 +1,12 @@
 package com.org.makgol.stores.controller;
 
 import com.org.makgol.stores.bean.HttpTransactionLogger;
+import com.org.makgol.stores.dto.RequestStoreListDto;
+import com.org.makgol.stores.dto.ResponseStoreListDto;
 import com.org.makgol.stores.service.StoreService;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
+import com.org.makgol.stores.vo.KakaoLocalResponseVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,17 +56,23 @@ public class StoreController {
     @GetMapping(value = "/list_data")
     @ResponseBody
     public ResponseEntity<?> findStoreListData(
-//            @RequestParam String x,
-//            @RequestParam String y,
-//            @RequestParam String keyword,
-//            @RequestParam String page
+            @RequestParam String longitude,
+            @RequestParam String latitude,
+            @RequestParam String keyword
     ) {
-//        System.out.println("x = " + x);
-//        System.out.println("y = " + y);
-//        System.out.println("keyword = " + keyword);
-//        System.out.println("page = " + page);
-        System.out.println("welcome");
-        return new ResponseEntity<>("Hello", HttpStatus.OK);
+        RequestStoreListDto requestStoreListDto = RequestStoreListDto
+                .builder()
+                .longitude(longitude)
+                .latitude(latitude)
+                .keyword(keyword)
+                .build();
+
+        System.out.println("requestStoreListDto = " + requestStoreListDto);
+
+        List<ResponseStoreListDto> responseStoreListDto = storeService.findStoreListData(requestStoreListDto);
+
+        KakaoLocalResponseVo<List<ResponseStoreListDto>> response = new KakaoLocalResponseVo<>(true, "업장 리스트 정보를 가져옵니다.", responseStoreListDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(value = "/kakao-local-api")

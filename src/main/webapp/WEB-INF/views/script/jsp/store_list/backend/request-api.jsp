@@ -6,20 +6,20 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     const requestApi = async (payload) => {
-        const {axios} = window;
-        const {myX, myY, keyword, page} = payload;
+        const {keyword, longitude, latitude, page} = payload
+
+        const url = "http://localhost:8090/store/list_data?longitude=" + longitude + "&latitude=" + latitude + "&keyword=" + keyword + "&page=" + page;
 
         $.ajax({
             type: "GET",
-            url: "<c:url value='/store/list_data' />",
-            dataType: "json",
+            url,
+            contentType: "application/json",
             success(data) {
                 console.log("성공")
                 console.log(data);
-            },
-            error(err) {
-                console.log("실패")
-                console.error(err)
+            }, error(err) {
+                console.log("에러");
+                console.error(err);
             }
         })
 
@@ -174,5 +174,6 @@
         }
         // console.log(data)
         return data;
-    };
+    }
+
 </script>

@@ -7,7 +7,7 @@
 
 
     <update id="updateUploadImage" parameterType="com.org.makgol.category.vo.CategoryRequestVo">
-        UPDATE category_menu SET photo = {#photo} where menu_name= {#menu_name} and id
+        UPDATE category_menu SET photo = #{photo} where menu_name= #{menu_name} and id
     </update>
 
 

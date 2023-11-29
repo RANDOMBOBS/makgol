@@ -64,11 +64,11 @@
     }
 
     const createUrlForDetailPage = (shop) => {
-        const {place_name, address_name, phone, category_name, place_url, x, y} =
+        const {place_name, address_name, phone, category_name, place_url, shopX, shopY} =
             shop;
 
         const myCoordinate = JSON.parse(localStorage.getItem("myCoordinate"));
-        const {myX, myY} = myCoordinate;
+        const {longitude, latitude} = myCoordinate;
 
         return new UrlBuilderForDetail()
             .setPlaceName(place_name)
@@ -76,10 +76,10 @@
             .setAddressName(address_name)
             .setCategoryName(category_name)
             .setPlaceUrl(place_url)
-            .setShopX(x)
-            .setShopY(y)
-            .setMyX(myX)
-            .setMyY(myY)
+            .setShopX(shopX)
+            .setShopY(shopY)
+            .setMyX(longitude)
+            .setMyY(latitude)
             .getUrl();
     };
 
