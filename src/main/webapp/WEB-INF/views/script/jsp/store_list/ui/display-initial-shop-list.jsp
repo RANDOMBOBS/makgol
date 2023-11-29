@@ -7,9 +7,9 @@
     const displayInitialShopList = ({shops, keyword}) => {
         const searchKeywordEle = $("#search_keyword");
         searchKeywordEle.text(keyword);
+        const shopInfoListEle = $(".shop_info_list");
 
         shops.forEach((shop) => {
-            const shopInfoListEle = $(".shop_info_list");
             const shopInfoItemEle = $("<div>").addClass("shop_info_item");
 
             const topItemEle = $("<div>").addClass("top_item");
