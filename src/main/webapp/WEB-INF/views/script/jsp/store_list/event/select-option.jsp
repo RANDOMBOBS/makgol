@@ -11,7 +11,7 @@
         const option = $(this).val()
 
         const request = getModelData();
-        const shops = await requestApi(request);
+        const shops = await requestStoreList(request);
 
         if (option === "distance") {
             alert("거리가 가까운 순으로 표시됩니다.");
