@@ -120,20 +120,29 @@
     <div class="userTab">
         <c:choose>
        <c:when test="${loginedUserVo != null}">
-         <p class="welcome">
-            <span><i class="fa-solid fa-location-dot"></i> ${weatherAddress}</span>
-            <span class="temp"></span>
-            <span class="sky">맑음</span>
-            <span>${loginedUserVo.name}</span>
-            <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진"/>
-         </p>
-       </c:when>
-        <c:otherwise>
-            <p class="welcome">
-                <span><i class="fa-solid fa-location-dot"></i> 서울특별시 강남구</span>
+         <div class="welcome">
+            <div class="weather_info">
+                <span class="address"><i class="fa-solid fa-location-dot"></i> ${weatherAddress}</span>
                 <span class="temp"></span>
                 <span class="sky"></span>
-            </p>
+                <span class="emoticon"></span>
+            </div>
+            <div class="user_info">
+                <span>${loginedUserVo.name}</span>
+                <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진"/>
+            </div>
+         </div>
+       </c:when>
+        <c:otherwise>
+            <div class="welcome">
+                <div class="weather_info">
+                    <span class="address"><i class="fa-solid fa-location-dot"></i> 서울특별시 강남구</span>
+                    <span class="temp"></span>
+                    <span class="sky"></span>
+                    <span class="emoticon"></span>
+
+                </div>
+            </div>
         </c:otherwise>
         </c:choose>
         <ul class="depth1">
@@ -397,16 +406,22 @@ jQ("#logout_link").on("click", function () {
 
                 if(sky == "맑음"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sunny.jpeg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-sun'></i>");
                 } else if(sky =="구름많음"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/Christmas.png)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun'></i>")
                 }else if(sky =="흐림"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/blur.jpg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud'></i>")
                 }else if(sky =="비"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-showers-heavy'></i>")
                 }else if(sky =="눈"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow1.jpg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-snowflake'></i>")
                 }else if(sky =="진눈깨비(눈+비)"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/top5.png)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'></i>")
                 }
 
             },

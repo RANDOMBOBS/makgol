@@ -9,9 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.org.makgol.stores.vo.StoreRequestMenuVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,7 +22,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
 
-
+@Slf4j
 public class Crawller {
 
     private int thread_count = 10;
@@ -151,7 +154,7 @@ public class Crawller {
                 element 			= searchButton.findElement(By.xpath("//*[@id=\"mArticle\"]"));
             } catch (Exception e) {
                 element 			= driver.findElement(By.cssSelector("#mArticle"));
-                System.out.println("element");
+                log.info("element");
             }
 
             // 웹 페이지에서 태그를 찾아서 데이터 가져오기
@@ -166,7 +169,7 @@ public class Crawller {
                 } else {
                     storeRequestVo.setOpening_hours(opening_hours);
                 }
-            } catch (Exception e) {System.out.println("span.time_operation");}
+            } catch (Exception e) {log.info("span.time_operation");}
 
 
             // 크롤링 멈춤 방지용 try catch
@@ -198,7 +201,7 @@ public class Crawller {
                     storeRequestVo.setPhone(phone);
                 }
 
-    		} catch (Exception e) {System.out.println("span.txt_contact");}
+    		} catch (Exception e) {log.info("span.txt_contact");}
 
             WebElement update_getMenu;
             String getMenu_update;
@@ -231,19 +234,42 @@ public class Crawller {
                 }
 
 
-            } catch (Exception e) {System.out.println("update_date");}
+            } catch (Exception e) {log.info("update_date");}
+
+
+            WebElement cont_photo;
+            try{
+                cont_photo = element.findElement(By.cssSelector("#mArticle > div.cont_photo > div.photo_area > ul > li.size_l > a"));
+                String URL = cont_photo.getAttribute("style");
+
+                // 정규표현식 패턴 설정
+                String pattern = "background-image: url\\(\"//(.*?)\\?fname=(http[^\\s'\"]+)\"\\);";
+                Pattern r_p = Pattern.compile(pattern);
+
+                // 입력 문자열과 패턴을 사용하여 매칭을 찾음
+                Matcher m = r_p.matcher(URL);
+                if (m.find()) {
+                    // 찾은 매칭을 출력
+                    String editedURL = m.group(1) + m.group(2);
+                    storeRequestVo.setPhoto(editedURL);
+                } else {
+                    System.out.println("매칭되는 부분을 찾을 수 없습니다.");
+                }
+            }catch (Exception e){log.info("photo");}
 
 
             //데이터 확인
-            System.out.println("thread "+ thread_num +": 이름 : "+ storeRequestVo.getName());
-            System.out.println("thread "+ thread_num +": 주소 : "+ storeRequestVo.getAddress());
-            System.out.println("thread "+ thread_num +": 도로명 : "+ storeRequestVo.getLoad_address());
-            System.out.println("thread "+ thread_num +": 전화번호 : "+ storeRequestVo.getPhone());
-            System.out.println("thread "+ thread_num +": 카테고리 : "+ storeRequestVo.getCategory());
-            System.out.println("thread "+ thread_num +": 상세페이지 : "+ storeRequestVo.getPlace_url());
-            System.out.println("thread "+ thread_num +": 업데이트 : "+ storeRequestVo.getUpdate_date());
-            System.out.println("thread "+ thread_num +": 영업시간 : "+ storeRequestVo.getOpening_hours());
-            System.out.println("thread "+ thread_num +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            log.info("thread "+ thread_num +": 이름 : "+ storeRequestVo.getName());
+            log.info("thread "+ thread_num +": 주소 : "+ storeRequestVo.getAddress());
+            log.info("thread "+ thread_num +": 도로명 : "+ storeRequestVo.getLoad_address());
+            log.info("thread "+ thread_num +": 전화번호 : "+ storeRequestVo.getPhone());
+            log.info("thread "+ thread_num +": 카테고리 : "+ storeRequestVo.getCategory());
+            log.info("thread "+ thread_num +": 상세페이지 : "+ storeRequestVo.getPlace_url());
+            log.info("thread "+ thread_num +": 업데이트 : "+ storeRequestVo.getUpdate_date());
+            log.info("thread "+ thread_num +": 영업시간 : "+ storeRequestVo.getOpening_hours());
+            log.info("thread "+ thread_num +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            log.info("thread "+ thread_num +": 이미지 : "+ storeRequestVo.getPhoto());
+
 
             // 메뉴 정보 가져오기
             List<WebElement> element_menu = element.findElements(By.cssSelector("#mArticle > div.cont_menu > ul > li"));
@@ -286,11 +312,11 @@ public class Crawller {
             }
 
             // HashMap에 결과 저장
-                //System.out.println("before hash put : " + thread_count + " : " + storeRequestVo.getName());
+                //log.info("before hash put : " + thread_count + " : " + storeRequestVo.getName());
 
                 hashMap.put("store_menu_" + index, storeRequestMenuVos);
                 hashMap.put("store_info_" + index, storeRequestVo);
-                System.out.println("hashMap.size() --> : " + hashMap.size()/2);
+                log.info("hashMap.size() --> : " + hashMap.size()/2);
 
                 try{Thread.sleep(500);}catch(Exception e){}
                 driver.close();
