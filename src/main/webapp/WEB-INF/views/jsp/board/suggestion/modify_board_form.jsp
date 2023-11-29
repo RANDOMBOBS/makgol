@@ -142,7 +142,7 @@
 
 		 <c:forEach var="index" begin="0" end="4">
              <c:if test="${not empty boardVo.images[index]}">
-                 <input type="text" class="oldImage" name="oldImage${index + 1}" value="${boardVo.images[index]}">
+                 <input type="hidden" class="oldImage" name="oldImage${index + 1}" value="${boardVo.images[index]}">
              </c:if>
          </c:forEach>
 

@@ -12,7 +12,6 @@ import java.util.*;
 @Component
 public class WeatherInfo {
     public List<Integer> findCoordinate(String address){
-        System.out.println("address = " + address);
         List<Integer> coordinate = new ArrayList<Integer>();
         try {
             FileReader fileReader = new FileReader("src\\main\\resources\\static\\csv\\기상청41_단기예보 조회서비스_오픈API활용가이드_격자_위경도(20230611).csv", Charset.forName("EUC-KR"));

@@ -125,7 +125,9 @@ ul, li {
     border-radius: 20px;
 }
 
-#header .userTab {
+#header  .userTab {
+    display : flex;
+    flex-direction: column;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -133,17 +135,44 @@ ul, li {
 }
 
 #header .userTab .welcome {
-    text-align: right;
+    margin: 0 15px;
+    font-size : 16px;
+    font-weight : bold;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    color: #333;
 }
 
-#header .userTab .welcome img {
+#header .userTab .welcome .weather_info .address {
+color : #666;
+}
+
+#header .userTab .welcome .weather_info .address .fa-location-dot{
+color : #ffa500;
+}
+
+
+#header .userTab .welcome .user_info{
+    display :flex;
+    align-items:center;
+    margin-left : 40px;
+}
+
+#header .userTab .welcome .user_info span {
+padding : 5px
+}
+
+#header .userTab .welcome .user_info img {
     width: 30px;
     height: 30px;
-    border-radius: 50%
+    border-radius: 50%;
+    border: 1px solid #000;
 }
 
 #header .userTab .depth1 {
     display: flex;
+    justify-content: space-between
 }
 
 #header .userTab .depth1 > li > a {
