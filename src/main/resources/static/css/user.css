@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+.my_page_title {
+  margin: 50px 0;
+}
+
+#my_page {
+  margin: 30px auto;
+  display: flex;
+  max-width: 1200px;
+  justify-content: space-around;
+  position: relative;
+}
+
+#my_page .my_info {
+  font-size: 20px;
+  font-weight: bold;
+  width: 480px;
+  height: 700px;
+  border: 3px solid #ddd;
+  background-color: #ffe16f;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#my_page .hole {
+  position: absolute;
+  top: 0;
+  top: 20px;
+  border-radius: 7px;
+  width: 80px;
+  height: 30px;
+  background-color: #fff;
+}
+
+#my_page .my_info .title {
+  font-size: 30px;
+  font-weight: bold;
+  width: 230px;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 10px;
+  background-color: #ffa500;
+  position: relative;
+  left: 50%;
+  top: 40px;
+  transform: translateX(-50%);
+}
+
+#my_page .my_info .info_table tr {
+  height: 35px;
+}
+
+#my_page .my_info .info_table tr td img {
+  border: 2px solid #ffa500;
+  border-radius: 50%;
+  width: 290px;
+  height: 320px;
+}
+
+#my_page .my_info .info_table tr:nth-child(2) td:first-child {
+  padding: 10px;
+  font-size: 35px;
+  letter-spacing: 15px;
+}
+
+#my_page .my_info .info_table tr:nth-child(3) {
+  font-size: 0.9em;
+}
+
+#my_page .mod_my_info {
+  position: absolute;
+  bottom: 30px;
+}
+
+#my_page .mod_my_info a {
+  text-decoration: underline;
+  color: #ff8c00;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#my_page .mod_my_info a:hover {
+  color: #555;
+}
+
+#my_page .my_history {
+  font-size: 20px;
+  font-weight: bold;
+  width: 480px;
+  height: 700px;
+  border: 3px solid #ddd;
+  background-color: #ffe16f;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#my_page .my_history .history_table col:nth-child(1) {
+  width: 230px;
+}
+
+#my_page .my_history .history_table tr {
+  height: 60px;
+}
+
+#my_page .my_history .history_table tr td {
+  text-align: left;
+}
+
+#my_page .my_history .history_table tr td:nth-child(2) a {
+  text-decoration: underline;
+  color: #ff8c00;
+}
+
+#my_page .my_history .history_table tr td:nth-child(2) a:hover {
+  color: #555;
+}
+
+#my_page .my_history .history_table tr:first-child td i {
+}
