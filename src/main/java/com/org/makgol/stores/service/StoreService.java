@@ -4,6 +4,7 @@ package com.org.makgol.stores.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.org.makgol.stores.dto.RequestStoreListDto;
 import com.org.makgol.stores.dto.ResponseStoreListDto;
+import com.org.makgol.stores.dto.StoreMenuDto;
 import com.org.makgol.stores.repository.StoresRepository;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
@@ -42,6 +43,26 @@ public class StoreService {
             map.put("longitude", longitude);
             map.put("latitude", latitude);
             result = storesRepository.findStoreList(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String findStoreIdWithPlaceName(String name) {
+        String id = "";
+        try{
+            id = storesRepository.findStoreIdWithPlaceName(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public List<StoreMenuDto> findStoreMenuWithId(String storeId) {
+        List<StoreMenuDto> result = null;
+        try {
+            result = storesRepository.findStoreMenuWithId(storeId);
         } catch (Exception e) {
             e.printStackTrace();
         }
