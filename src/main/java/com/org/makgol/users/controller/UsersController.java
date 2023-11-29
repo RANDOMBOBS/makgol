@@ -28,8 +28,6 @@ public class UsersController {
 
     private final UsersService userService;
 
-    String url = "'//img1.kakaocdn.net/cthumb/local/C320x320/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FD7FF6F557FF540B088CFCCAA7C8D6B7F')\"";
-
     //joinUser_POST
     @PostMapping("/join")
     public ResponseEntity<?> joinUser(@ModelAttribute @Valid UsersRequestVo usersRequestVo) {
