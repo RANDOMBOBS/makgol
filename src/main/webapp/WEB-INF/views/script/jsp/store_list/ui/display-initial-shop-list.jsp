@@ -6,6 +6,7 @@
 <jsp:include page="../util/create-url-for-detail-page.jsp"></jsp:include>
 <jsp:include page="./display-selected-shop.jsp"></jsp:include>
 <jsp:include page="./remove-selected-shop.jsp"></jsp:include>
+<jsp:include page="../event/mouse.jsp"></jsp:include>
 <script>
     const displayInitialShopList = ({shops, keyword}) => {
         const searchKeywordEle = $("#search_keyword");
@@ -63,8 +64,7 @@
 
             shopInfoListEle.append(shopInfoItemEle);
 
-            shopInfoItemEle.mouseover(() => displaySelectedShop(shop));
-            shopInfoItemEle.mouseout(() => removeSelectedShop(shop));
+            mouse(shop, shopInfoItemEle);
         });
     }
 </script>
