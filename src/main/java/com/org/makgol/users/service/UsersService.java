@@ -16,9 +16,13 @@ import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.HashMap;
@@ -32,7 +36,7 @@ import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UsersService {
+public class UsersService implements LogoutHandler {
 
     private final MailSendUtil mailSendUtil;
     private final UserDao userDao;
@@ -183,7 +187,6 @@ public class UsersService {
     }
 
 
-
     public List<BoardVo> getMyPostList(int user_id){
         return userDao.selectMyPostList(user_id);
     }
@@ -196,8 +199,10 @@ public class UsersService {
         return userDao.selectMyLikePostList(user_id);
     }
 
+    @Override
+    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
-
+    }
 }
 
 
