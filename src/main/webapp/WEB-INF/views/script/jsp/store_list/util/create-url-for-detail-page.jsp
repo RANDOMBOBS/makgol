@@ -34,6 +34,12 @@
             return this;
         }
 
+        setDistance(_distance) {
+            const distance = "distance=" + _distance;
+            this.#defaultUrl += distance;
+            return this;
+        }
+
         getUrl() {
             return this.#defaultUrl;
         }
@@ -48,7 +54,7 @@
             return {shopX, shopY};
         }
 
-        const {id} = shop;
+        const {id, distance} = shop;
         const {shopX, shopY} = setShopCoordinate(shop);
 
         const setMyCoordinate = (myCoordinate) => {
@@ -67,6 +73,7 @@
             .setShopY(shopY)
             .setMyX(myX)
             .setMyY(myY)
+            .setDistance(distance)
             .getUrl();
     };
 
