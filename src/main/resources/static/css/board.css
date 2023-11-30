@@ -1,9 +1,16 @@
-#suggestion_board {
-  margin: 0 auto;
-  width: 800px;
+body {
+  background-color: #ffeed2;
 }
 
-#suggestion_board .write_board {
+#board_write {
+   background-color: #fff;
+      margin: 50px auto;
+      padding: 50px;
+      width: 1000px;
+      border: 1px solid #eee;
+}
+
+#board_write .write_board {
   text-align: left;
   font-size: 24px;
   font-weight: bold;
@@ -11,62 +18,62 @@
   border-bottom: 2px solid #aaa;
 }
 
-#suggestion_board form {
+#board_write .write_board_form {
   position: relative;
 }
 
-#suggestion_board form .column {
-  margin: 7px 0;
+#board_write .write_board_form .column {
+  margin: 13px 0;
   display: flex;
   align-items: center;
   text-align: left;
   height: 40px;
 }
 
-#suggestion_board form .column span.description {
+#board_write .write_board_form .column span.description {
   display: inline-block;
   width: 130px;
   text-align: left;
   font-weight: bold;
 }
 
-#suggestion_board form .column select {
+#board_write .write_board_form .column select {
   width: 200px;
   height: 30px;
 }
 
-#suggestion_board form .column select option {
+#board_write .write_board_form .column select option {
   height: 30px;
 }
 
-#suggestion_board form .column select option:first-child {
+#board_write .write_board_form .column select option:first-child {
   display: none;
 }
 
-#suggestion_board form .column .name {
+#board_write .write_board_form .column .name {
   text-align: left;
 }
 
-#suggestion_board form .column .title {
+#board_write .write_board_form .column .title {
   text-align: left;
   text-indent: 1em;
   width: 650px;
   height: 30px;
 }
 
-#suggestion_board form .column .name {
+#board_write .write_board_form .column .name {
   width: 200px;
   height: 30px;
   text-indent: 1em;
 }
 
-#suggestion_board form .board_contents {
+#board_write .write_board_form .board_contents {
   height: 500px;
   align-items: flex-start;
   margin: 13px 0;
 }
 
-#suggestion_board form .column textarea {
+#board_write .write_board_form .column textarea {
   text-align: left;
   padding: 10px;
   font-family: sans-serif;
@@ -75,24 +82,24 @@
   height: 500px;
 }
 
-#suggestion_board form .image_info {
+#board_write .write_board_form .image_info {
   text-align: left;
   color: #a3a3a3;
   padding: 10px 0;
   font-size: 15px;
 }
 
-#suggestion_board form .image_box {
+#board_write .write_board_form .image_box {
   display: flex;
   justify-content: space-between;
   position: relative;
 }
 
-#suggestion_board form .image_box .image {
+#board_write .write_board_form .image_box .image {
   position: relative;
 }
 
-#suggestion_board form .image_box .image .delete_image {
+#board_write .write_board_form .image_box .image .delete_image {
   display: none;
   position: absolute;
   cursor: pointer;
@@ -100,7 +107,7 @@
   right: 0;
 }
 
-#suggestion_board form .image_box .delete_image i {
+#board_write .write_board_form .image_box .delete_image i {
   border: 1px solid #333;
   width: 30px;
   height: 30px;
@@ -110,18 +117,18 @@
   color: #fff;
 }
 
-#suggestion_board form .image_box label input {
+#board_write .write_board_form .image_box label input {
   display : none;
 }
 
-#suggestion_board form .image_box label .no_image {
+#board_write .write_board_form .image_box label .no_image {
   width: 150px;
   height: 200px;
   cursor: pointer;
   position: relative;
 }
 
-#suggestion_board form .image_box label .no_image i {
+#board_write .write_board_form .image_box label .no_image i {
   color: #aaa;
   position: absolute;
   top: 0;
@@ -134,14 +141,14 @@
   width: 150px;
   height: 200px;
 }
-#suggestion_board form .image_box label .no_image img {
+#board_write .write_board_form .image_box label .no_image img {
   position: absolute;
   display: none;
   top: 0;
   left: 0;
 }
 
-#suggestion_board form .buttons input {
+#board_write .write_board_form .buttons input {
   background-color: #fff;
   color: #000;
   border: 1px solid #000;
@@ -153,13 +160,13 @@
   cursor: pointer;
 }
 
-#suggestion_board form .buttons input.ok_board {
+#board_write .write_board_form .buttons input.ok_board {
   background-color: #000;
   color: #fff;
   border: none;
 }
 
-#suggestion_board form .buttons input.board_list {
+#board_write .write_board_form .buttons input.board_list {
   position: absolute;
   right: 0;
   width: 80px;

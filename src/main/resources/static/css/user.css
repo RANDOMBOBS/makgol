@@ -1,10 +1,27 @@
 @charset "UTF-8";
 
-.my_page_title {
-  margin: 50px 0;
+
+body {
+  background-color: #ffeed2;
 }
 
 #my_page {
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 50px;
+    width: 1200px;
+    border: 1px solid #eee;
+}
+
+.my_page_title {
+    text-align: left;
+    text-indent: 0.5em;
+    padding: 15px 0;
+    margin: 0 30px;
+    border-bottom: 3px solid #000;
+}
+
+#my_page .my_page_content {
   margin: 30px auto;
   display: flex;
   max-width: 1200px;
@@ -12,7 +29,7 @@
   position: relative;
 }
 
-#my_page .my_info {
+#my_page .my_page_content .my_info {
   font-size: 20px;
   font-weight: bold;
   width: 480px;
@@ -26,7 +43,8 @@
   flex-direction: column;
 }
 
-#my_page .hole {
+#my_page .my_page_content .hole {
+  z-index: 2;
   position: absolute;
   top: 0;
   top: 20px;
@@ -36,7 +54,7 @@
   background-color: #fff;
 }
 
-#my_page .my_info .title {
+#my_page .my_page_content .my_info .title {
   font-size: 30px;
   font-weight: bold;
   width: 230px;
@@ -50,45 +68,45 @@
   transform: translateX(-50%);
 }
 
-#my_page .my_info .info_table tr {
+#my_page .my_page_content .my_info .info_table tr {
   height: 35px;
 }
 
-#my_page .my_info .info_table tr td img {
+#my_page .my_page_content .my_info .info_table tr td img {
   border: 2px solid #ffa500;
-  border-radius: 50%;
   width: 290px;
   height: 320px;
 }
 
-#my_page .my_info .info_table tr:nth-child(2) td:first-child {
+#my_page .my_page_content .my_info .info_table tr:nth-child(2) td {
   padding: 10px;
   font-size: 35px;
-  letter-spacing: 15px;
+  letter-spacing: 2px;
 }
 
-#my_page .my_info .info_table tr:nth-child(3) {
+#my_page .my_page_content .my_info .info_table tr:nth-child(3) {
   font-size: 0.9em;
 }
 
-#my_page .mod_my_info {
+#my_page .my_page_content .mod_my_info {
   position: absolute;
   bottom: 30px;
 }
 
-#my_page .mod_my_info a {
+#my_page .my_page_content .mod_my_info a {
   text-decoration: underline;
   color: #ff8c00;
   font-size: 20px;
   font-weight: bold;
 }
 
-#my_page .mod_my_info a:hover {
+#my_page .my_page_content .mod_my_info a:hover {
   color: #555;
 }
 
-#my_page .my_history {
-  font-size: 20px;
+#my_page .my_page_content .my_history {
+  font-family: "Gamja Flower", sans-serif;
+  font-size: 30px;
   font-weight: bold;
   width: 480px;
   height: 700px;
@@ -96,31 +114,52 @@
   background-color: #ffe16f;
   border-radius: 10px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
-#my_page .my_history .history_table col:nth-child(1) {
-  width: 230px;
+#my_page .my_page_content .my_history .horizon {
+  position: absolute;
+  border: 1px dashed #ddd;
+  width: inherit;
 }
 
-#my_page .my_history .history_table tr {
-  height: 60px;
+#my_page .my_page_content .my_history .vertical {
+  position: absolute;
+  border: 1px dashed #ddd;
+  height: inherit;
 }
 
-#my_page .my_history .history_table tr td {
-  text-align: left;
+#my_page .my_page_content .my_history .history_table {
+  display: flex;
+  align-content: space-around;
+  flex-wrap: wrap;
+  height: inherit;
 }
 
-#my_page .my_history .history_table tr td:nth-child(2) a {
-  text-decoration: underline;
-  color: #ff8c00;
+#my_page .my_page_content .my_history .history_table ul {
+  width: 50%;
+  position: relative;
 }
 
-#my_page .my_history .history_table tr td:nth-child(2) a:hover {
-  color: #555;
+#my_page .my_page_content .my_history .history_table ul:nth-child(1),
+#my_page .my_page_content .my_history .history_table ul:nth-child(2) {
+  margin-top: 30px;
 }
 
-#my_page .my_history .history_table tr:first-child td i {
+#my_page .my_page_content .my_history .history_table ul li {
+  padding: 10px 0;
+}
+
+#my_page .my_page_content .my_history .history_table ul li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#my_page .my_page_content .my_history .history_table ul li img {
+  width: 150px;
+  height: 150px;
 }

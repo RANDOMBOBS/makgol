@@ -14,9 +14,9 @@
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
 
-     <div id="suggestion_board">
+     <div id="board_write">
         <form action="<c:url value='/board/suggestion/createConfirm' />"
-              method="post" name="create_board_form"  enctype="multipart/form-data">
+              method="post" name="create_board_form" class="write_board_form"  enctype="multipart/form-data">
         <p class="write_board">게시글 작성</p>
 
         <div class="column board_category">
