@@ -16,7 +16,6 @@ import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
-import com.org.makgol.util.kakaoMap.KakaoMap;
 import com.org.makgol.util.mail.MailSendUtil;
 import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
@@ -26,16 +25,14 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import javax.xml.stream.events.Comment;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
+
 
 @Slf4j
 @Service
@@ -49,6 +46,7 @@ public class UsersService {
     private final UsersRepository usersRepository;
     private final FileUpload fileUpload;
     private final WeatherInfo weatherInfo;
+    private final StoreService storeService;
 
 
     //userFindPassword
@@ -107,17 +105,20 @@ public class UsersService {
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
+        if (usersRepository.insertUser(usersRequestVo)) {
 
-        CompletableFuture<String> future = fetchDataAsync();
-
-        // 비동기 작업이 완료되면 결과를 출력
-        future.thenAccept(result -> {
-            System.out.println(result);
-        });
-
+            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+            // 비동기 작업이 완료되면 결과를 출력
+            future.thenAccept(result_info -> {
+                log.info("saveStoresInfo --> : {}", result_info);
+            });
+        }
 
         return true;
     }// joinUser_END
+
+
+
 
     public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo) {
         String email = usersRequestVo.getEmail();
@@ -176,8 +177,14 @@ public class UsersService {
             File oldfile = new File(deleteFile);
             oldfile.delete();
 
-            }
 
+            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+            // 비동기 작업이 완료되면 결과를 출력
+            future.thenAccept(result_info -> {
+                log.info("saveStoresInfo --> : {}", result_info);
+            });
+
+            }
 
         return result;
     }

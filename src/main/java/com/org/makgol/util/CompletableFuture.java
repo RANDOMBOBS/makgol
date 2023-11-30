@@ -1,17 +1,29 @@
 package com.org.makgol.util;
 
+import com.org.makgol.stores.service.StoreService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+
+@Component
 public class CompletableFuture {
-    public static java.util.concurrent.CompletableFuture<String> fetchDataAsync() {
+    static StoreService storeService;
+
+    @Autowired
+    public CompletableFuture(StoreService storeService) {
+        this.storeService = storeService;
+    }
+
+    public static java.util.concurrent.CompletableFuture<String> fetchDataAsync(String email) {
         return java.util.concurrent.CompletableFuture.supplyAsync(() -> {
             // 비동기 작업 수행 후 결과 반환
-            try {
-                for(int i=0; i < 10; i++) {
-                    Thread.sleep(1000); // 예시를 위해 1초 대기
-                    System.out.println(i);
-                }
-            } catch (InterruptedException e) {
+            try{
+                storeService.saveStoresProcess(email);
+            } catch (Exception e){
                 e.printStackTrace();
             }
+
             return "Data fetched successfully";
         });
     }

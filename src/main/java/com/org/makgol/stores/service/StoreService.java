@@ -152,6 +152,7 @@ public class StoreService {
     }
 
     public boolean saveStoresProcess(String email){
+        log.info("saveStoresProcess");
         UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
         List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
