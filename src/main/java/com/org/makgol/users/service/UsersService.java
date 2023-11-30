@@ -32,6 +32,10 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 
 @Slf4j
 @Service
@@ -59,7 +63,6 @@ public class UsersService {
             map.put("userEmail", userEmail);
             if (usersRepository.updatePassword(map)) {
                 mailSendUtil.sendMail(randomNumber, userEmail);
-
             }
             return newPassword;
 
@@ -103,6 +106,14 @@ public class UsersService {
             usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
+
+
+        CompletableFuture<String> future = fetchDataAsync();
+
+        // 비동기 작업이 완료되면 결과를 출력
+        future.thenAccept(result -> {
+            System.out.println(result);
+        });
 
 
         return true;
