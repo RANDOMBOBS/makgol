@@ -65,12 +65,7 @@ public class BoardSuggestionService {
             return boardDao.insertSuggestionBoard(boardCreateRequestVo);
         }
     }
-    이름 : 김치찌개
-    파일 : org.mkwajdawohjdoawjdoawjoi @ WKKAWDOawkod
 
-    들어왔나?
-    파일 이름 : 공백
-    용량 사이즈 : 0
 
     /**
      * suggestion 글 상세보기

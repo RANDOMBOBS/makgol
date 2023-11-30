@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.org.makgol.category.repository.CategoryRepository;
 import com.org.makgol.category.vo.CategoryRequestVo;
+import com.org.makgol.util.file.FileInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @Repository
@@ -27,7 +29,7 @@ public class CategoryListDao {
 	private final CategoryRepository categoryRepository;
 
 	public List<CategoryListVo> selectCategory(String where) {
-		String sql = "SELECT DISTINCT menu_name FROM category_menu " + where;
+		String sql = "SELECT DISTINCT menu_name,photo,photoPath FROM category_menu " + where;
 		List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
 		try {
 			RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);
@@ -67,5 +69,11 @@ public class CategoryListDao {
 	}
 
 
+	public int updateCateFile(CategoryRequestVo categoryRequestVo){
+		System.out.println(categoryRequestVo);
+		int result = -1;
+		result = categoryRepository.updateUploadImage(categoryRequestVo);
+		return result;
+	}
 
 }

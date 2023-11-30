@@ -5,10 +5,10 @@
 
 <mapper namespace="com.org.makgol.category.repository.CategoryRepository">
 
-
     <update id="updateUploadImage" parameterType="com.org.makgol.category.vo.CategoryRequestVo">
-        UPDATE category_menu SET photo = #{photo} where menu_name= #{menu_name} and id
+        UPDATE category_menu
+        SET photo = #{photo}, photoPath = #{photoPath}
+        WHERE menu_name = #{menu_name} AND id
     </update>
-
 
 </mapper>

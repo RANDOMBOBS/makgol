@@ -11,5 +11,5 @@ public class CategoryListVo {
     String category;
     String date;
     String photo;
-
+    String photoPath;
 }

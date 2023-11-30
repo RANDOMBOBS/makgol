@@ -7,9 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class CategoryRequestVo {
 
     String menu_name;
-    MultipartFile image;
     String photo;
-
+    String photoPath;
+    MultipartFile photoFile;
 }
 
 
