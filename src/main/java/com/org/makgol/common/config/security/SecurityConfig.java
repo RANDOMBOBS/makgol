@@ -55,7 +55,14 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/**").permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
+                .antMatchers(
+                        "/"                     // main page
+                        , "/user/login"                     // request login
+                        , "/resources/static/css/**"        // css
+                        , "/resources/static/image/**"      // image
+                        , "/resources/static/js/modal/**"   // modal js
+                )
+                .permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 //.antMatchers("/api/account/logout").hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
                 //.antMatchers("/", "/user/join", "/user/login").permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 //.antMatchers("/api/account/logout").hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
@@ -64,7 +71,7 @@ public class SecurityConfig {
                 .and()
                 .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 .logout(logoutConfig -> { logoutConfig
-                        .logoutUrl("/auth/logout")
+                        .logoutUrl("/user/logout")
                         .addLogoutHandler(logoutService)
                         .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()));
                 });
