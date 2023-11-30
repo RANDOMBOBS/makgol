@@ -115,7 +115,7 @@ article #intro .detail_header {
     padding-bottom: 6px;
     border-bottom: 3px solid rgb(255, 140, 90);
     text-align: left;
-    width: 90%;
+    width: 91%;
 }
 
 article #intro ul {
@@ -144,7 +144,11 @@ article #intro ul > li {
 
 article #intro #menu_wrapper {
     height: 400px;
-    overflow-y: auto;
+    overflow-y: scroll;
+}
+
+article #intro #menu_wrapper::-webkit-scrollbar {
+    width: 0;
 }
 
 article #map {
