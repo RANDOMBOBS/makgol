@@ -29,11 +29,6 @@ public class SecurityConfig {
     private final LogoutHandler logoutService;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 
@@ -58,9 +53,12 @@ public class SecurityConfig {
                 .antMatchers(
                         "/"                     // main page
                         , "/user/login"                     // request login
+                        , "/user/loginConfirm"              // request login
                         , "/resources/static/css/**"        // css
                         , "/resources/static/image/**"      // image
                         , "/resources/static/js/modal/**"   // modal js
+                        , "/views/**"
+                        , "/user/blackList"
                 )
                 .permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 //.antMatchers("/api/account/logout").hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
@@ -78,5 +76,10 @@ public class SecurityConfig {
 
         return http.build();
 
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
