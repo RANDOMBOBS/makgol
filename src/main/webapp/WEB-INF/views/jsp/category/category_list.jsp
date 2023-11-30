@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
 
 
 <ul class="category_list_ul">
-  <c:forEach var="item" items="${categoryVo }" begin="0" end="15">
+  <c:forEach var="item" items="${categoryVo }" begin="0" end="${fn:length(categoryVo) - 1}">
     <li class="menu_list">
      <form action="<c:url value='/category/cateFile'/>" class="fileUpload" method="post" enctype="multipart/form-data" >
              <input type="file" name="photoFile">

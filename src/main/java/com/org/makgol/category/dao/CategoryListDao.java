@@ -29,7 +29,7 @@ public class CategoryListDao {
 	private final CategoryRepository categoryRepository;
 
 	public List<CategoryListVo> selectCategory(String where) {
-		String sql = "SELECT DISTINCT menu_name,photo,photoPath FROM category_menu " + where;
+		String sql = "SELECT menu_name,photo,photoPath FROM category_menu " + where;
 		List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
 		try {
 			RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);

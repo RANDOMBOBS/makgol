@@ -16,7 +16,11 @@
 <body>
 
 <jsp:include page="../include/header.jsp"></jsp:include>
-    <section>
+    <section class="section">
+    <div class="categoryMain_clip"> <img src="<c:url value='/resources/static/image/default/clip.png' />" alt="클립"></div>
+                    <div class="categoryMenuPan">
+                        <div class="categoryMenuPage">
+                            <div class="categoryMain_img"> <img src="<c:url value='/resources/static/image/default/Menu.png' />" alt="메뉴"></div>
        <div id="category_main_div">
           <ul class="category_main_ul">
              <li><button type="button" class="active" onclick="menuList()">전체보기</button></li>
@@ -29,6 +33,8 @@
           </ul>
        </div>
        <div id="category_list_div"></div>
+       </div>
+       </div>
     </section>
     <jsp:include page="../../script/jsp/category.jsp"></jsp:include>
 

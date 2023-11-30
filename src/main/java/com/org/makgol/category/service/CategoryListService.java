@@ -55,7 +55,7 @@ public class CategoryListService {
 			categoryRequestVo.setPhotoPath(fileInfo.getPhotoPath());
 			categoryRequestVo.setPhoto(fileInfo.getPhotoName());
 		} else {
-			categoryRequestVo.setPhotoPath("/resources/static/image/김치찌개.jpg");
+			categoryRequestVo.setPhotoPath("/resources/static/image/default/김치찌개.jpg");
 			categoryRequestVo.setPhoto("김치찌개.jpg");
 		}
 		return categoryDao.updateCateFile(categoryRequestVo);

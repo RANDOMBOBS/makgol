@@ -3,10 +3,13 @@
 body{
     background-color:#ffeed2;
 }
-
+.section{
+    width:1200px;
+    margin:0 auto;
+}
 ul, li {
     list-style: none;
-}
+        }
 button {
     border: 0;
     background-color: transparent;
@@ -39,7 +42,6 @@ button.active {
 .category_main_ul li {
     text-align: center;
 }
-
 .category_list_ul {
     display: flex;
     justify-content: space-between;
@@ -51,7 +53,7 @@ button.active {
 }
 
 #category_list_div {
-    width: 1200px;
+    width: 1120px;
     margin: 0 auto;
 }
 
@@ -127,4 +129,37 @@ img {
     color: #cdcaca;
     font-size: 20px;
     font-family: "Noto Sans KR", sans-serif;
+}
+.categoryMain_img{
+    text-align: center;
+    position: relative;
+    height: 90px;
+}
+.categoryMain_img img{
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top:-65%;
+    left: 39%;
+}
+.categoryMain_clip{
+    text-align: center;
+    position: absolute;
+    left: 46%;
+    top: 12%;
+}
+.categoryMain_clip img{
+    width: 150px;
+    height: 150px;
+}
+.categoryMenuPan{
+    margin-top: 100px;
+    border: 7px solid #000;
+    background-color: #62340b;
+}
+.categoryMenuPage{
+    border: 1px solid grey;
+    box-shadow: 5px 5px 10px -5px;
+    margin: 15px;
+    background-color: white;
 }
