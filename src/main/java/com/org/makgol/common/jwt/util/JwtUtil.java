@@ -16,11 +16,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -38,6 +40,11 @@ public class JwtUtil {
     private static final long REFRESH_TIME =  2 * 60 * 1000L;
     public static final String ACCESS_TOKEN = "Access_Token";
     public static final String REFRESH_TOKEN = "Refresh_Token";
+    public static final String HEADER = "header";
+    public static final String COOKIE = "cookie";
+    public static final String REVOKED = "revoked";
+    public static final String EXPIRED = "expired";
+
 
 
     @Value("${jwt.secret.key}")
@@ -52,9 +59,29 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(bytes);
     }
 
-    // header 토큰을 가져오는 기능
-    public String getHeaderToken(HttpServletRequest request, String type) {
-        return type.equals("Access") ? request.getHeader(ACCESS_TOKEN) :request.getHeader(REFRESH_TOKEN);
+    // header, cookie 토큰을 가져오는 기능
+    public String getToken(HttpServletRequest request, String type, String type2) {
+        if(type2.equals(HEADER)) {
+            return type.equals("Access") ? request.getHeader(ACCESS_TOKEN) : request.getHeader(REFRESH_TOKEN);
+
+        } else {
+            String accessToken = ""; String refreshToken = ""; Cookie[] cookies = request.getCookies();
+            if(cookies != null){
+                for(Cookie cookie:cookies) {
+                    switch (cookie.getName()){
+                        case ACCESS_TOKEN:
+                            accessToken = cookie.getValue();
+                            continue;
+                        case REFRESH_TOKEN:
+                            refreshToken = cookie.getValue();
+                            continue;
+                        default:
+                            System.out.println("쿠키가 존제 하지않음");
+                    }
+                }
+            }
+            return type.equals("Access") ? accessToken : refreshToken;
+        }
     }
 
     // 토큰 생성
@@ -97,19 +124,15 @@ public class JwtUtil {
         // 1차 토큰 검증
         if(!tokenValidation(token)) return false;
 
-        log.info("findByAccountNickname");
         // DB에 저장한 토큰 비교
         //Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUserEmail(getEmailFromToken(token));
-        Optional<TokenResponseVo> refreshToken = getUserById(getEmailFromToken(token));
+        Optional<TokenResponseVo> refreshToken = findTokenByEmail(getEmailFromToken(token));
 
 
         return refreshToken.isPresent() && token.equals(refreshToken.get().getToken());
     }
 
-    public Optional<TokenResponseVo> getUserById(String email) {
-        TokenResponseVo tokenResponseVo = refreshTokenRepository.findByUserEmail(email);
-        return Optional.ofNullable(tokenResponseVo);
-    }
+
 
     // 인증 객체 생성
     public Authentication createAuthentication(String email) {
@@ -136,4 +159,28 @@ public class JwtUtil {
     public void setHeaderRefreshToken(HttpServletResponse response, String refreshToken) {
         response.setHeader("Refresh_Token", refreshToken);
     }
+
+
+    // 토큰 검색 쿼리
+    public Optional<TokenResponseVo> findTokenByEmail(String email) {
+        TokenResponseVo tokenResponseVo = refreshTokenRepository.findTokenByEmail(email);
+        return Optional.ofNullable(tokenResponseVo);
+    }
+
+    public void saveToken(Map<String, Object> map) {
+        refreshTokenRepository.saveToken(map);
+        //return Optional.ofNullable(tokenResponseVo);
+    }
+
+    public void saveTokenUpdate(String email, String type) {
+        if(type.equals(REVOKED)){
+            refreshTokenRepository.saveTokenUpdateRevoked(email);
+
+        } else if(type.equals(REVOKED)){
+            refreshTokenRepository.saveTokenUpdateExpried(email);
+
+        }
+    }
+
+
 }

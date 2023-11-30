@@ -54,6 +54,7 @@ public class SecurityConfig {
                         "/"                     // main page
                         , "/user/login"                     // request login
                         , "/user/loginConfirm"              // request login
+                        , "/user/join"                      // request join
                         , "/resources/static/css/**"        // css
                         , "/resources/static/image/**"      // image
                         , "/resources/static/js/modal/**"   // modal js

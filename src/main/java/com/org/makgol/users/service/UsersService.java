@@ -4,6 +4,9 @@ import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.common.exception.CustomException;
 import com.org.makgol.common.exception.ErrorCode;
+import com.org.makgol.common.jwt.util.JwtUtil;
+import com.org.makgol.common.jwt.vo.TokenResponseVo;
+import com.org.makgol.common.jwt.vo.TokenVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
@@ -16,11 +19,13 @@ import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,6 +33,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
@@ -37,13 +43,16 @@ import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 @Service
 @RequiredArgsConstructor
 public class UsersService implements LogoutHandler {
-
-    private final MailSendUtil mailSendUtil;
-    private final UserDao userDao;
-    private final RedisUtil redisUtil;
+    @Value("${domain.name}")
+    private String domainName;
+    private final JwtUtil         jwtUtil;
+    private final UserDao         userDao;
+    private final RedisUtil       redisUtil;
+    private final FileUpload      fileUpload;
+    private final WeatherInfo     weatherInfo;
+    private final MailSendUtil    mailSendUtil;
     private final UsersRepository usersRepository;
-    private final FileUpload fileUpload;
-    private final WeatherInfo weatherInfo;
+
 
 
     //userFindPassword
@@ -104,9 +113,9 @@ public class UsersService implements LogoutHandler {
 
         if (usersRepository.saveUser(usersRequestVo)) {
 
-            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
-            // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+//            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+//            // 비동기 작업이 완료되면 결과를 출력
+//            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
 
         return true;
@@ -115,7 +124,7 @@ public class UsersService implements LogoutHandler {
 
 
 
-    public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo) {
+    public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
         String email = usersRequestVo.getEmail();
         UsersResponseVo loginedUserVo = userDao.selectUser(email);
 
@@ -129,8 +138,49 @@ public class UsersService implements LogoutHandler {
 
         if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
             loginedUserVo = null;
+
+        } else {
+            // 아이디 정보로 Token생성
+            TokenVo tokenVo = jwtUtil.createAllToken(email);
+            // Refresh토큰 있는지 확인
+            Optional<TokenResponseVo> refreshToken = jwtUtil.findTokenByEmail(email);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("token", tokenVo.getRefreshToken());
+            map.put("email", email);
+            map.put("expired", false);
+            map.put("revoked", false);
+
+            // 있다면 새토큰 발급후 업데이트
+            if(refreshToken.isPresent()) {
+                jwtUtil.saveTokenUpdate(email, JwtUtil.REVOKED);
+                jwtUtil.saveToken(map);
+
+                // 없다면 새로 만들고 디비 저장
+            } else {
+                jwtUtil.saveToken(map);
+
+            }
+            //access token in header, refresh token in cookie
+            setAccessTokenInHeader(response, tokenVo.getAccessToken());
+            setRefreshTokenInCookie(response, tokenVo.getAccessToken());
         }
+
         return loginedUserVo;
+    }
+
+    private void setAccessTokenInHeader(HttpServletResponse response, String accessToken) {
+        response.addHeader(JwtUtil.ACCESS_TOKEN, accessToken);
+    }
+
+    private void setRefreshTokenInCookie(HttpServletResponse response, String refreshToken) {
+        Cookie cookie = new Cookie(JwtUtil.REFRESH_TOKEN, refreshToken);
+        cookie.setDomain(domainName);       // 여기서는 localhost로 설정되어 해당 도메인에서만 쿠키가 유효합니다.
+        cookie.setPath("/");                // "/"로 설정되어 해당 도메인 전체에서 쿠키가 유효합니다.
+        cookie.setMaxAge(7 * 24 * 60 * 60); // 1주일간 유지
+        cookie.setHttpOnly(true);           //javascript로 접근이 불가능하게 함
+        //cookie.setSecure(true);           //https 일 경우에만 쿠키 전송
+        response.addCookie(cookie);
     }
 
     public Boolean mailCheckDuplication(String email) {

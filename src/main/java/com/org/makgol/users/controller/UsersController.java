@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
@@ -85,9 +86,9 @@ public class UsersController {
     }
 
     @PostMapping("/loginConfirm")
-    public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session){
+    public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session, HttpServletResponse response){
         String nextPage = "home";
-        UsersResponseVo loginedUserVo = userService.loginConfirm(usersRequestVo);
+        UsersResponseVo loginedUserVo = userService.loginConfirm(usersRequestVo, response);
 
         if (loginedUserVo == null) {
             // 로그인 실패 시 'login_ng' 화면을 표시

@@ -30,8 +30,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         // WebSecurityConfig 에서 보았던 UsernamePasswordAuthenticationFilter 보다 먼저 동작을 하게 됩니다.
 
         // Access / Refresh 헤더에서 토큰을 가져옴.
-        String accessToken = jwtUtil.getHeaderToken(request, "Access");
-        String refreshToken = jwtUtil.getHeaderToken(request, "Refresh");
+        String accessToken = jwtUtil.getToken(request, "Access" , jwtUtil.HEADER);
+        String refreshToken = jwtUtil.getToken(request, "Refresh", jwtUtil.COOKIE);
 
         log.info("accessToken --> : {}", accessToken);
         log.info("refreshToken --> : {}", refreshToken);
@@ -57,9 +57,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     // Security context에 인증 정보 넣기
                     setAuthentication(jwtUtil.getEmailFromToken(newAccessToken));
                 }
-                // 리프레시 토큰이 만료 || 리프레시 토큰이 DB와 비교했을때 똑같지 않다면
                 else {
                     jwtExceptionHandler(response, "RefreshToken Expired", HttpStatus.BAD_REQUEST);
+                    jwtUtil.saveTokenUpdate(refreshToken, JwtUtil.EXPIRED);
                     return;
                 }
             }
