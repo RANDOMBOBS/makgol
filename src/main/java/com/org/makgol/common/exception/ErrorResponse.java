@@ -1,4 +1,4 @@
-package com.org.makgol.global.exception;
+package com.org.makgol.common.exception;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
