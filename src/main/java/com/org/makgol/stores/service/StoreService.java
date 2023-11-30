@@ -140,16 +140,6 @@ public class StoreService {
 //		}
     }
 
-    public boolean saveStores(String email) {
-
-        UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
-
-        if(usersResponseVo != null){
-            return saveStoresProcess(usersResponseVo.getEmail());
-        }
-
-        return false;
-    }
 
     public boolean saveStoresProcess(String email){
         log.info("saveStoresProcess");
@@ -189,7 +179,7 @@ public class StoreService {
                     if (!storeRequestVo.getMenuName().equals("empty")) {
                         Map<String, Object> map = new HashMap<>();
                         map.put("store_id", storeResponseVo.getId());
-                        map.put("category", storeRequestVo.getKeyword());
+                        map.put("category", storeRequestVo.getCategory());
                         map.put("menu_name", storeRequestVo.getKeyword());
 
                         storesRepository.saveCategoryMenu(map);
@@ -219,7 +209,7 @@ public class StoreService {
 
                     Map<String, Object> map = new HashMap<>();
                     map.put("store_id", storeResponseVo.getId());
-                    map.put("category", storeRequestVo.getKeyword());
+                    map.put("category", storeRequestVo.getCategory());
                     map.put("menu_name", storeRequestVo.getKeyword());
                     storesRepository.saveCategoryMenu(map);
 

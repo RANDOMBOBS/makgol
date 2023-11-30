@@ -102,10 +102,5 @@ public class StoreController {
         return "store/store_list";
     }
 
-    @PostMapping(value = "/save/{email}")
-    public boolean save(@PathVariable String email){
-
-        return storeService.saveStores(email);
-    }
 
 }

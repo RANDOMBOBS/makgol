@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -33,7 +34,6 @@ import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 @Service
 @RequiredArgsConstructor
 public class UsersService {
-
 
     private final MailSendUtil mailSendUtil;
     private final UserDao userDao;
