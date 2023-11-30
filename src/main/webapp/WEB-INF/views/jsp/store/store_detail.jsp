@@ -14,11 +14,13 @@
 <body>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <article>
-    <div class="item_area" id="picture">
+    <div class="item_area" id="photo">
         <div class="item_info_head">
             <h1>업장 사진</h1>
         </div>
-        <div class="item_info_body"></div>
+        <div class="item_info_body">
+            <img />
+        </div>
         <div class="item_info_footer"></div>
     </div>
     <div class="item_area" id="intro">
@@ -26,9 +28,15 @@
             <h1>업장 상세 정보</h1>
         </div>
         <div class="item_info_body">
-            <div id="basic_info">
+            <div id="user_interaction">
+               <div>
+                    <a><i id="likes" class="fa-solid fa-heart"> 좋아요</i></a>
+                    <a><i id="head_office" class="fa-solid fa-house"> 본점 찾아가기</i></a>
+               </div>
+            </div>
+            <div class="info_box" id="basic_info">
                 <div class="detail_category">
-                    <h3>기본 정보</h3>
+                    <h3 class="detail_header">기본 정보</h3>
                 </div>
                 <ul>
                     <li><span>업장이름: </span><span></span></li>
@@ -38,9 +46,9 @@
                     <li><span>좋아요수: </span><span></span></li>
                 </ul>
             </div>
-            <div id="menu_info">
+            <div class="info_box" id="menu_info">
                 <div class="detail_category">
-                    <h3>메뉴 정보</h3>
+                    <h3 class="detail_header">메뉴 정보</h3>
                 </div>
                 <div id="menu_wrapper">
                     <ul id="menu_list"></ul>
