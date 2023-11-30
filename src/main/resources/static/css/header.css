@@ -154,7 +154,7 @@ table {
 }
 
 #header .userTab .welcome .weather_info .address .fa-location-dot {
-  color: #ffa500;
+  color: red;
 }
 
 #header .userTab .welcome .user_info {

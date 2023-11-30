@@ -145,40 +145,41 @@ public class UsersService {
 
     public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpSession session) {
         System.out.println("바뀐회원정보는??"+usersRequestVo);
+        UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+        System.out.println("세션 유저 정보?"+loginedUserVo);
+
         String oldFileName = oldFile.substring(oldFile.lastIndexOf("/") + 1);
         String currentDirectory = System.getProperty("user.dir");
+        int result =0;
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
 
         if (usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()) {
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
+            result = userDao.updateUserPhotoInfo(usersRequestVo);
+            if(result > 0){
+                String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
+                File oldfile = new File(deleteFile);
+                oldfile.delete();
+            }
         } else {
-            usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
-            usersRequestVo.setPhoto("user_default.jpeg");
+            result = userDao.updateUserInfo(usersRequestVo);
+            usersRequestVo.setPhoto_path(loginedUserVo.getPhoto_path());
+            usersRequestVo.setPhoto(loginedUserVo.getPhoto());
         }
 
-        System.out.println("유저정보는???????"+usersRequestVo);
-
-        int result = userDao.updateUserInfo(usersRequestVo);
-
         if (result > 0) {
-            UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
             usersRequestVo.setName(loginedUserVo.getName());
             usersRequestVo.setEmail(loginedUserVo.getEmail());
             UsersResponseVo newUserVo = new UsersResponseVo();
             newUserVo.modifyMapper(usersRequestVo);
+            System.out.println("새로 저장할 유저 정보?"+newUserVo);
             List<Integer> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
             newUserVo.setCoordinate(coordinate);
             session.setAttribute("loginedUserVo", newUserVo);
-            String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
-            File oldfile = new File(deleteFile);
-            oldfile.delete();
-
             saveStoresProcess(usersRequestVo.getEmail());
             }
-
-
         return result;
     }
 

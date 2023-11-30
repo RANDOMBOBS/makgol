@@ -406,22 +406,22 @@ jQ("#logout_link").on("click", function () {
 
                 if(sky == "맑음"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sunny.jpeg)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-sun'></i>");
+                    jQ(".emoticon").html("<i class='fa-solid fa-sun' style='color:#ffa500'></i>");
                 } else if(sky =="구름많음"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/Christmas.png)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun' style='color:#00e5ff' ></i>")
                 }else if(sky =="흐림"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/blur.jpg)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud'  style='color:#6f6f6f'></i>")
                 }else if(sky =="비"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-showers-heavy'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-showers-heavy'  style='color:#074dbb'></i>")
                 }else if(sky =="눈"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow1.jpg)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-snowflake'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-snowflake'  style='color:#7fb1ff'></i>")
                 }else if(sky =="진눈깨비(눈+비)"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/top5.png)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'  style='color:#8cb9ff'></i>")
                 }
 
             },

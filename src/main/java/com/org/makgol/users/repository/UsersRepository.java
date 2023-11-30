@@ -20,6 +20,7 @@ public interface UsersRepository {
     UsersResponseVo findUserByEmail(String email);
     List<UsersResponseVo> selectUser(String email);
     int updateUserInfo(UsersRequestVo usersRequestVo);
+    int updateUserPhotoInfo(UsersRequestVo usersRequestVo);
     List<StoreResponseVo> selectMyStoreList(int user_id);
     List<BoardVo> selectMyPostList(int user_id);
     List<CommentResponseVo> selectMyCommentList(int user_id);
