@@ -4,11 +4,6 @@ import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.global.exception.CustomException;
 import com.org.makgol.global.exception.ErrorCode;
-import com.org.makgol.stores.dao.StoresDao;
-import com.org.makgol.stores.repository.StoresRepository;
-import com.org.makgol.stores.service.StoreService;
-import com.org.makgol.stores.vo.StoreRequestMenuVo;
-import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
@@ -46,7 +41,6 @@ public class UsersService {
     private final UsersRepository usersRepository;
     private final FileUpload fileUpload;
     private final WeatherInfo weatherInfo;
-    private final StoreService storeService;
 
 
     //userFindPassword
@@ -105,13 +99,11 @@ public class UsersService {
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
-        if (usersRepository.insertUser(usersRequestVo)) {
+        if (usersRepository.saveUser(usersRequestVo)) {
 
             CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
             // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> {
-                log.info("saveStoresInfo --> : {}", result_info);
-            });
+            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
 
         return true;
@@ -180,9 +172,7 @@ public class UsersService {
 
             CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
             // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> {
-                log.info("saveStoresInfo --> : {}", result_info);
-            });
+            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
 
             }
 
