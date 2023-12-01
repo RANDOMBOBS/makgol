@@ -13,13 +13,14 @@ import java.util.Map;
 @Mapper
 public interface UsersRepository {
 
-    Boolean insertUser(UsersRequestVo usersRequestVo);
+    Boolean saveUser(UsersRequestVo usersRequestVo);
     Boolean findUserEmail(String email);
     Boolean updatePassword(Map<String, String> map);
     String duplicationUserEmail(String email);
     UsersResponseVo findUserByEmail(String email);
     List<UsersResponseVo> selectUser(String email);
     int updateUserInfo(UsersRequestVo usersRequestVo);
+    int updateUserPhotoInfo(UsersRequestVo usersRequestVo);
     List<StoreResponseVo> selectMyStoreList(int user_id);
     List<BoardVo> selectMyPostList(int user_id);
     List<CommentResponseVo> selectMyCommentList(int user_id);

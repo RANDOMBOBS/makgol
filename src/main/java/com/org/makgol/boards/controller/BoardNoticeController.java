@@ -120,49 +120,5 @@ public class BoardNoticeController {
         return nextPage;
     }
 
-    @ResponseBody
-    @PostMapping("/noticeLikeCount")
-    public Map<String,Integer> noticeLikeCount(@RequestBody BoardLikeVo boardLikeVo){
-        Map<String,Integer> map = new HashMap<>();
-        int count = boardNoticeService.noticeLikeCount(boardLikeVo);
-        map.put("likeCnt",count);
-        return map;
-    }
-
-
-    @ResponseBody
-    @PostMapping("/noticeLikeStatus")
-    public Map<String,Integer> noticeLikeStatus (@RequestBody BoardLikeVo boardLikeVo){
-        Map<String,Integer> map = new HashMap<>();
-        int status = boardNoticeService.noticeLikeStatus(boardLikeVo);
-        map.put("status", status);
-        return map;
-    }
-
-    @ResponseBody
-    @PostMapping("/noticeLikeInsert")
-    public Map<String,Integer> noticeLikeInsert (@RequestBody BoardLikeVo boardLikeVo){
-        Map<String,Integer> map = new HashMap<>();
-        int count = 0;
-        int result = boardNoticeService.noticeLikeInsert(boardLikeVo);
-        if(result>0){
-            count = boardNoticeService.noticeLikeCount(boardLikeVo);
-        }
-        map.put("likeCnt", count);
-        return map;
-    }
-
-    @ResponseBody
-    @PostMapping("/noticeLikeDelete")
-    public Map<String,Integer> noticeLikeDelete (@RequestBody BoardLikeVo boardLikeVo){
-        Map<String,Integer> map = new HashMap<>();
-        int count = 0;
-        int result = boardNoticeService.noticeLikeDelete(boardLikeVo);
-        if(result>0){
-            count = boardNoticeService.noticeLikeCount(boardLikeVo);
-        }
-        map.put("likeCnt", count);
-        return map;
-    }
 }
 

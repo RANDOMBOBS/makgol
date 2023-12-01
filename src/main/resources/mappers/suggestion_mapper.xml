@@ -31,9 +31,14 @@
                 <result property="board_photo_path" column="board_photo"/>
             </resultMap>
 
+            <resultMap id="existingFileResult" type="com.org.makgol.util.file.FileInfo">
+                <result property="photoName" column="photo"/>
+                <result property="photoPath" column="photo_path"/>
+            </resultMap>
 
 
-            <select id="selectAllSuggestionBoard" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
+
+    <select id="selectAllSuggestionBoard" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
                 SELECT b.id,
                 b.user_id,
                 b.hit,
@@ -146,6 +151,14 @@
                 JOIN board_images ON boards.id = board_images.board_id
                 WHERE boards.id = #{b_id}
             </select>
+
+            <select id="selectExistingFile" resultMap="existingFileResult" parameterType="List">
+                SELECT photo, photo_path FROM board_images WHERE
+                <foreach collection="existingFile" item="oldImage" separator=" OR " open="(" close=")">
+                    photo_path = #{oldImage}
+                </foreach>
+            </select>
+
 
             <update id="updateBoard" parameterType="com.org.makgol.boards.vo.BoardCreateRequestVo">
                 UPDATE boards

@@ -4,8 +4,9 @@
 
 
 <ul class="topmenu_list_ul">
-	<c:forEach var="item" items="${categoryVo}" begin="0" end="4">
+	<c:forEach var="item" items="${categoryVo}" begin="0" end="4" varStatus="loop">
 		<li class="topmenu_list">
+		<img class="top_1_5img" src="<c:url value='/resources/static/image/default/top_${loop.index + 1}.png'/>">
 		<img class="top_img" src="<c:url value='/resources/static/image/default/김치찌개.jpg' />">
 		<span class="top_menu_name">${item.menu_name}</span>
 		<span class="top_menu_gogo">근처식당 찾아보기 >></span>

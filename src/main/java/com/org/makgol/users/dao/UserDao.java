@@ -43,6 +43,12 @@ public class UserDao {
 		return result;
 	}
 
+	public int updateUserPhotoInfo(UsersRequestVo usersRequestVo){
+		int result = -1;
+		result = usersRepository.updateUserPhotoInfo(usersRequestVo);
+		return result;
+	}
+
 	public List<StoreResponseVo> selectMyStoreList(int user_id){
 		List<StoreResponseVo> storeVos = null;
 		storeVos = usersRepository.selectMyStoreList(user_id);

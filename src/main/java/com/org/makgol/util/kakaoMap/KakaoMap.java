@@ -13,11 +13,13 @@ import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.Crawller;
 import com.org.makgol.util.kakaoMap.vo.Category;
 import com.org.makgol.util.kakaoMap.vo.KakaoLocalRequestVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class KakaoMap{
@@ -115,6 +117,8 @@ public class KakaoMap{
         kakaoLocalRequestVo.setY(String.valueOf(usersResponseVo.getLatitude()));
         kakaoLocalRequestVo.setX(String.valueOf(usersResponseVo.getLongitude()));
 
+        //kakaoMapSearch.search(foodCategories, kakaoLocalRequestVo);
+        List<StoreRequestVo> storeRequestVoList = new ArrayList<StoreRequestVo>();
 
         //String[] foodCategories = Arrays.stream(Category.CategoryFood.values()).map(Enum::name).toArray(String[]::new);
 
@@ -122,20 +126,98 @@ public class KakaoMap{
         String[] CategoryKoreaStewMenu = Arrays.stream(Category.CategoryKoreaStewMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryKoreaStewMenu, kakaoLocalRequestVo, storeRequestVoList);
+
 
         String[] CategoryKoreaRoastMenu = Arrays.stream(Category.CategoryKoreaRoastMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryKoreaRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
+
 
         String[] CategoryKoreaRiceMenu = Arrays.stream(Category.CategoryKoreaRiceMenu.values())
                 .map(Enum::name)
                 .toArray(String[]::new);
-
-        //kakaoMapSearch.search(foodCategories, kakaoLocalRequestVo);
-        List<StoreRequestVo> storeRequestVoList = new ArrayList<StoreRequestVo>();
-        storeRequestVoList = searchMenu(CategoryKoreaStewMenu, kakaoLocalRequestVo, storeRequestVoList);
-        storeRequestVoList = searchMenu(CategoryKoreaRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
         storeRequestVoList = searchMenu(CategoryKoreaRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryKoreaSnasickMenu = Arrays.stream(Category.CategoryKoreaSnasickMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryKoreaSnasickMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryKoreaNoodleMenu = Arrays.stream(Category.CategoryKoreaNoodleMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryKoreaNoodleMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryWesternNoodleMenu = Arrays.stream(Category.CategoryWesternNoodleMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+
+        String[] CategoryWesternRiceMenu = Arrays.stream(Category.CategoryWesternRiceMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryWesternRoastMenu = Arrays.stream(Category.CategoryWesternRoastMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryWesternETCMenu = Arrays.stream(Category.CategoryWesternETCMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryChinaNoodleMenu = Arrays.stream(Category.CategoryChinaNoodleMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryChinaRiceMenu = Arrays.stream(Category.CategoryChinaRiceMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryChinaETCMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryChinaFriedMenu = Arrays.stream(Category.CategoryChinaFriedMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryChinaRoastMenu = Arrays.stream(Category.CategoryChinaRoastMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryJapanRoastMenu = Arrays.stream(Category.CategoryJapanRoastMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryJapanFrideMenu = Arrays.stream(Category.CategoryJapanFrideMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryJapanRiceMenu = Arrays.stream(Category.CategoryJapanRiceMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryJapanNoodleMenu = Arrays.stream(Category.CategoryJapanNoodleMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryGlobal_bMenu = Arrays.stream(Category.CategoryGlobal_bMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryGlobal_tMenu = Arrays.stream(Category.CategoryGlobal_tMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
+        String[] CategoryGlobal_mMenu = Arrays.stream(Category.CategoryGlobal_mMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+
 
         int i=0;
         //확인하기
@@ -153,15 +235,16 @@ public class KakaoMap{
         for(int index=0; index<(hashMap.size()/2); index ++){
             StoreRequestVo storeRequestVo = (StoreRequestVo) hashMap.get("store_info_" + index);
             if(storeRequestVo == null){ continue; }
-            System.out.println("hashIndex "+ index +": 이름 : "+ storeRequestVo.getName());
-            System.out.println("hashIndex "+ index +": 주소 : "+ storeRequestVo.getAddress());
-            System.out.println("hashIndex "+ index +": 도로명 : "+ storeRequestVo.getLoad_address());
-            System.out.println("hashIndex "+ index +": 전화번호 : "+ storeRequestVo.getPhone());
-            System.out.println("hashIndex "+ index +": 카테고리 : "+ storeRequestVo.getCategory());
-            System.out.println("hashIndex "+ index +": 상세페이지 : "+ storeRequestVo.getPlace_url());
-            System.out.println("hashIndex "+ index +": 업데이트 : "+ storeRequestVo.getUpdate_date());
-            System.out.println("hashIndex "+ index +": 영업시간 : "+ storeRequestVo.getOpening_hours());
-            System.out.println("hashIndex "+ index +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            log.info("hashIndex "+ index +": 이름 : "+ storeRequestVo.getName());
+            log.info("hashIndex "+ index +": 주소 : "+ storeRequestVo.getAddress());
+            log.info("hashIndex "+ index +": 도로명 : "+ storeRequestVo.getLoad_address());
+            log.info("hashIndex "+ index +": 전화번호 : "+ storeRequestVo.getPhone());
+            log.info("hashIndex "+ index +": 카테고리 : "+ storeRequestVo.getCategory());
+            log.info("hashIndex "+ index +": 상세페이지 : "+ storeRequestVo.getPlace_url());
+            log.info("hashIndex "+ index +": 업데이트 : "+ storeRequestVo.getUpdate_date());
+            log.info("hashIndex "+ index +": 영업시간 : "+ storeRequestVo.getOpening_hours());
+            log.info("hashIndex "+ index +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            log.info("hashIndex "+ index +": 이미지 : "+ storeRequestVo.getPhoto());
             System.out.println();
         }
     }

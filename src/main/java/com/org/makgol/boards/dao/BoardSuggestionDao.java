@@ -13,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,12 +149,17 @@ public class BoardSuggestionDao {
         }catch (Exception e){
             throw e;
         }
+    }
+
+    public List<FileInfo> selectExistingFile(List<String> existingFile){
+        List<FileInfo> existingFileInfo = new ArrayList<FileInfo>();
+        existingFileInfo = boardSuggestionRepository.selectExistingFile(existingFile);
+        return existingFileInfo;
 
     }
 
     @Transactional(rollbackFor = Exception.class)
     public int updateSuggestionBoard(BoardCreateRequestVo boardCreateRequestVo, List<FileInfo> fileList) {
-        System.out.println("넘어온값"+boardCreateRequestVo);
         int boardResult = -1;
         int boardImageListResult = -1;
         int board_id = boardCreateRequestVo.getId();

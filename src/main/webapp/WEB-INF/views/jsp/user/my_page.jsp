@@ -3,75 +3,85 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>막내야 골라봐 | 회원정보수정 (MODIFY_USER_INFO)</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>막내야 골라봐 | 회원정보수정 (MODIFY_USER_INFO)</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap"
+          rel="stylesheet"
+        />
+        <link href="<c:url value='/resources/static/css/user.css' />" rel="stylesheet" type="text/css" />
+    </head>
 
-</head>
+    <body>
+    <jsp:include page="../include/header.jsp"></jsp:include>
+      <div id="my_page">
+        <h1 class="my_page_title">마이페이지</h1>
+         <div class="my_page_content">
+           <div class="my_info">
+             <p class="hole"></p>
+             <table class="info_table">
+               <tr>
+                 <td>
+                   <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진" />
+                 </td>
+               </tr>
+               <tr>
+                 <td>${loginedUserVo.name} / ${loginedUserVo.grade}</td>
+               </tr>
+               <tr>
+                 <td>${loginedUserVo.email}</td>
+               </tr>
+               <tr>
+                 <td>${loginedUserVo.phone}</td>
+               </tr>
+               <tr>
+                 <td>${loginedUserVo.address}</td>
+               </tr>
+             </table>
+             <span class="mod_my_info"><a href="<c:url value='/user/modifyUser'/>">수정하기</a></span>
+           </div>
 
-<body>
+           <c:url value='/user/myStoreList' var='my_store_url'>
+             <c:param name='user_id' value='${loginedUserVo.id}' />
+           </c:url>
 
-<jsp:include page="../include/header.jsp"></jsp:include>
-
-<h1>마이페이지</h1>
-
-
-<div
-        id="my_page"
-        style="display: flex; width: 800px; justify-content: space-between"
->
-    <div id="my_info">
-        <span>내 정보</span>
-        <span><a href="<c:url value='/user/modifyUser'/>">수정하기</a></span>
-
-        <table>
-            <tr>
-                <td>
-                <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진"/>
-                </td>
-            </tr>
-            <tr>
-                <td>${loginedUserVo.name}</td>
-            </tr>
-            <tr>
-                <td>${loginedUserVo.email}</td>
-            </tr>
-            <tr>
-                <td>${loginedUserVo.phone}</td>
-            </tr>
-            <tr>
-                <td>${loginedUserVo.address}</td>
-            </tr>
-        </table>
-    </div>
-
-   <c:url value='/user/myStoreList' var='my_store_url'>
-      <c:param name='user_id' value='${loginedUserVo.id}' />
-   </c:url>
-
-
-
-    <div id="my_history">
-        <span>내 활동이력</span>
-        <table>
-            <tr>
-                <td>좋아요한 식당</td>
-                <td><a href="${my_store_url}">보러가기</a></td>
-            </tr>
-            <tr>
-                <td>작성한 글</td>
-                <td><a href="<c:url value='/user/myHistory?show=myPosts'/>">보러가기</a></td>
-            </tr>
-            <tr>
-                <td>작성한 댓글</td>
-                <td><a href="<c:url value='/user/myHistory?show=myComments'/>">보러가기</a></td>
-            </tr>
-            <tr>
-                <td>공감한 글</td>
-                <td><a href="<c:url value='/user/myHistory?show=myLikePosts'/>">보러가기</a></td>
-            </tr>
-        </table>
-    </div>
-</div>
-</body>
+           <div class="my_history">
+             <p class="hole"></p>
+             <p class="horizon"></p>
+             <p class="vertical"></p>
+             <div class="history_table">
+               <ul>
+                 <li><a href="${my_store_url}"></a></li>
+                 <li><img src="../../../resources/static/image/default/my_restaurant.png" alt="식당아이콘" /></li>
+                 <li>좋아요한 식당</li>
+               </ul>
+               <ul>
+                 <li>
+                   <a href="<c:url value='/user/myHistory?show=myPosts'/>"></a>
+                 </li>
+                 <li><img src="../../../resources/static/image/default/my_board.png" alt="게시판아이콘" /></li>
+                 <li>작성한 글</li>
+               </ul>
+               <ul>
+                 <li>
+                   <a href="<c:url value='/user/myHistory?show=myComments'/>"></a>
+                 </li>
+                 <li><img src="../../../resources/static/image/default/my_comment.png" alt="댓글아이콘" /></li>
+                 <li>작성한 댓글</li>
+               </ul>
+               <ul>
+                 <li>
+                   <a href="<c:url value='/user/myHistory?show=myLikePosts'/>"></a>
+                 </li>
+                 <li><img src="../../../resources/static/image/default/my_like_board.png" alt="공감아이콘" /></li>
+                 <li>공감한 글</li>
+               </ul>
+             </div>
+           </div>
+         </div>
+       </div>
+    </body>
 </html>
