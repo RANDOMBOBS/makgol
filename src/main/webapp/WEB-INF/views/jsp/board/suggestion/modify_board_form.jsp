@@ -2,6 +2,22 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,10 +47,10 @@
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
 
-	<div id="suggestion_board">
+	<div id="board_write">
 	  <form
 			action="<c:url value='/board/suggestion/modifyConfirm' ><c:param name='id' value='${boardVo.b_id}' />
-		    </c:url>" method="post" name="modify_board_form" enctype="multipart/form-data">
+		    </c:url>" method="post" name="modify_board_form" class="write_board_form" enctype="multipart/form-data">
 		<p class="write_board">게시글 수정</p>
 
 		<div class="column board_category">

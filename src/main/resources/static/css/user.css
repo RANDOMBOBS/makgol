@@ -1,22 +1,39 @@
 @charset "UTF-8";
 
-.my_page_title {
-  margin: 50px 0;
+
+body {
+  background-color: #fffdd3;
 }
 
 #my_page {
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 50px;
+    width: 1000px;
+    border: 1px solid #eee;
+}
+
+.my_page_title {
+    text-align: left;
+    text-indent: 0.5em;
+    padding: 15px 0;
+    margin: 0 30px;
+    border-bottom: 3px solid #000;
+}
+
+#my_page .my_page_content {
   margin: 30px auto;
   display: flex;
-  max-width: 1200px;
+  max-width: 1000px;
   justify-content: space-around;
   position: relative;
 }
 
-#my_page .my_info {
-  font-size: 20px;
+#my_page .my_page_content .my_info {
+  font-size: 18px;
   font-weight: bold;
-  width: 480px;
-  height: 700px;
+  width: 400px;
+  height: 600px;
   border: 3px solid #ddd;
   background-color: #ffe16f;
   border-radius: 10px;
@@ -26,7 +43,8 @@
   flex-direction: column;
 }
 
-#my_page .hole {
+#my_page .my_page_content .hole {
+  z-index: 2;
   position: absolute;
   top: 0;
   top: 20px;
@@ -36,7 +54,7 @@
   background-color: #fff;
 }
 
-#my_page .my_info .title {
+#my_page .my_page_content .my_info .title {
   font-size: 30px;
   font-weight: bold;
   width: 230px;
@@ -50,77 +68,265 @@
   transform: translateX(-50%);
 }
 
-#my_page .my_info .info_table tr {
+#my_page .my_page_content .my_info .info_table tr {
   height: 35px;
 }
 
-#my_page .my_info .info_table tr td img {
+#my_page .my_page_content .my_info .info_table tr td img {
   border: 2px solid #ffa500;
-  border-radius: 50%;
-  width: 290px;
-  height: 320px;
+  width: 250px;
+  height: 270px;
 }
 
-#my_page .my_info .info_table tr:nth-child(2) td:first-child {
+#my_page .my_page_content .my_info .info_table tr:nth-child(2) td {
   padding: 10px;
-  font-size: 35px;
-  letter-spacing: 15px;
+  font-size: 30px;
+  letter-spacing: 2px;
 }
 
-#my_page .my_info .info_table tr:nth-child(3) {
+#my_page .my_page_content .my_info .info_table tr:nth-child(3) {
   font-size: 0.9em;
 }
 
-#my_page .mod_my_info {
+#my_page .my_page_content .mod_my_info {
   position: absolute;
   bottom: 30px;
 }
 
-#my_page .mod_my_info a {
+#my_page .my_page_content .mod_my_info a {
   text-decoration: underline;
   color: #ff8c00;
   font-size: 20px;
   font-weight: bold;
 }
 
-#my_page .mod_my_info a:hover {
+#my_page .my_page_content .mod_my_info a:hover {
   color: #555;
 }
 
-#my_page .my_history {
-  font-size: 20px;
+#my_page .my_page_content .my_history {
+  font-family: "Gamja Flower", sans-serif;
+  font-size: 25px;
   font-weight: bold;
-  width: 480px;
-  height: 700px;
+  width: 400px;
+  height: 600px;
   border: 3px solid #ddd;
   background-color: #ffe16f;
   border-radius: 10px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#my_page .my_page_content .my_history .horizon {
+  position: absolute;
+  border: 1px dashed #ddd;
+  width: inherit;
+}
+
+#my_page .my_page_content .my_history .vertical {
+  position: absolute;
+  border: 1px dashed #ddd;
+  height: inherit;
+}
+
+#my_page .my_page_content .my_history .history_table {
+  display: flex;
+  align-content: space-around;
+  flex-wrap: wrap;
+  height: inherit;
+}
+
+#my_page .my_page_content .my_history .history_table ul {
+  width: 50%;
+  position: relative;
+}
+
+#my_page .my_page_content .my_history .history_table ul:nth-child(1),
+#my_page .my_page_content .my_history .history_table ul:nth-child(2) {
+  margin-top: 30px;
+}
+
+#my_page .my_page_content .my_history .history_table ul li {
+  padding: 10px 0;
+}
+
+#my_page .my_page_content .my_history .history_table ul li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#my_page .my_page_content .my_history .history_table ul li img {
+  width: 120px;
+  height: 120px;
+}
+
+
+#modify_user {
+  background-color: #fff;
+  margin: 50px auto;
+  padding: 50px;
+  width: 1000px;
+  border: 1px solid #eee;
+}
+
+#modify_user .modify_user_title {
+  text-align: left;
+  text-indent: 0.5em;
+  padding: 15px 0;
+  margin: 0 30px;
+  border-bottom: 3px solid #000;
+}
+
+#modify_user .modify_user_form {
+  padding: 50px;
+}
+
+#modify_user .modify_user_form .profile_image {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+}
+
+#modify_user .modify_user_form .profile_image .photo_file {
+  display: none;
+}
+
+#modify_user .modify_user_form .profile_image img {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 3px solid #bbb;
+}
+
+#modify_user .modify_user_form .profile_image i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 80px;
+  font-weight: bold;
+  color: #fff;
+  display: none;
+}
+
+#modify_user .modify_user_form .profile_image:hover img {
+  filter: brightness(80%);
+}
+
+#modify_user .modify_user_form .profile_image:hover i {
+  z-index: 9;
+  display: block;
+}
+
+#modify_user .modify_user_form .column {
+  border: 2px solid #ffe16f;
+  background-color: #fdf97e;
+  border-radius: 5px;
+  width: 500px;
+  height: 50px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-#my_page .my_history .history_table col:nth-child(1) {
-  width: 230px;
+#modify_user .modify_user_form .column .description {
+  background-color: #ffe286;
+  display: inline-block;
+  width: 200px;
+  font-weight: bold;
+  height: inherit;
+  line-height: 50px;
 }
 
-#my_page .my_history .history_table tr {
-  height: 60px;
+#modify_user .modify_user_form .column input {
+  background: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
 }
 
-#my_page .my_history .history_table tr td {
-  text-align: left;
+#modify_user .modify_user_form .email {
+  position: relative;
 }
 
-#my_page .my_history .history_table tr td:nth-child(2) a {
-  text-decoration: underline;
-  color: #ff8c00;
+#modify_user .modify_user_form .email .caution {
+  position: absolute;
+  bottom: 120%;
+  font-weight: bold;
+  font-size: 0.8em;
+  color: #666;
 }
 
-#my_page .my_history .history_table tr td:nth-child(2) a:hover {
+
+#modify_user .modify_user_form .email input,
+#modify_user .modify_user_form .name input {
   color: #555;
+  font-weight: bold;
 }
 
-#my_page .my_history .history_table tr:first-child td i {
+#modify_user .modify_user_form .password_check {
+  position: relative;
+}
+
+#modify_user .modify_user_form .password_check button {
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+  color: #ffa500;
+  width: 55px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #fff;
+}
+
+#modify_user .modify_user_form .address {
+  position: relative;
+  padding-right: 55px
+
+}
+
+#modify_user .modify_user_form .address .search {
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+  color: #ffa500;
+  width: 55px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #fff;
+}
+
+#modify_user .modify_user_form #map {
+  background-color: #000;
+  width: 500px;
+  height: 300px;
+  margin: 30px auto;
+}
+
+#modify_user .modify_user_form .button {
+  border: 2px solid #fdf97e;
+  background-color: #ffe16f;
+  border-radius: 5px;
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+}
+#modify_user .modify_user_form .cancel {
+  border: 2px solid #ffe16f;
+  background: none;
 }

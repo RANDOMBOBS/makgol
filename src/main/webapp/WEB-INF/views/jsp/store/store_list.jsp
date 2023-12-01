@@ -42,13 +42,17 @@
             <ul>
                 <li><span>빨간색 마커 </span><span>사용자님의 위치입니다</span></li>
                 <li><span>파란색 마커 </span><span>식당의 위치입니다</span></li>
-                <li><span>초란색 마커 </span><span>선택한 식당의 위치입니다</span></li>
+                <li><span>초록색 마커 </span><span>선택한 식당의 위치입니다</span></li>
             </ul>
         </div>
     </div>
 </div>
 <jsp:include page="../../script/jsp/store_list/event/page-init.jsp"></jsp:include>
 <jsp:include page="../../script/jsp/store_list/event/select-option.jsp"></jsp:include>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script
         type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5e40f301ec35188c140844617fdf45bf"

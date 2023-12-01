@@ -238,8 +238,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   });
 
   function imageURL(input) {
-      jQ(input).next().children(".preview").attr("style", "display:none");
-      jQ(input).next().children(".fa-plus").attr("style", "display:block");
+             jQ(input).next().children(".preview").attr("style", "display:none");
+             jQ(input).next().children(".fa-plus").attr("style", "display:block");
 
     if (input.files && input.files[0]) {
       var reader = new FileReader();
