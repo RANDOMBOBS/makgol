@@ -72,6 +72,7 @@ public class FileUpload {
     }
 
     public FileInfo fileUpload(MultipartFile file) {
+
         FileInfo fileInfo = new FileInfo();
 
 

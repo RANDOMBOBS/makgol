@@ -66,6 +66,7 @@ public class BoardSuggestionService {
         }
     }
 
+
     /**
      * suggestion 글 상세보기
      **/
