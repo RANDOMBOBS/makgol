@@ -4,6 +4,7 @@ package com.org.makgol.stores.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.org.makgol.stores.dto.RequestStoreListDto;
 import com.org.makgol.stores.dto.ResponseStoreListDto;
+import com.org.makgol.stores.dto.StoreDetailDto;
 import com.org.makgol.stores.dto.StoreMenuDto;
 import com.org.makgol.stores.repository.StoresRepository;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
@@ -57,6 +58,16 @@ public class StoreService {
             e.printStackTrace();
         }
         return id;
+    }
+
+    public StoreDetailDto findStoreDetailWithId(String storeId) {
+        StoreDetailDto result = null;
+        try {
+            result = storesRepository.findStoreDetailWithId(storeId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public List<StoreMenuDto> findStoreMenuWithId(String storeId) {

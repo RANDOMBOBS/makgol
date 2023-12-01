@@ -3,6 +3,7 @@ package com.org.makgol.stores.controller;
 import com.org.makgol.stores.bean.HttpTransactionLogger;
 import com.org.makgol.stores.dto.RequestStoreListDto;
 import com.org.makgol.stores.dto.ResponseStoreListDto;
+import com.org.makgol.stores.dto.StoreDetailDto;
 import com.org.makgol.stores.dto.StoreMenuDto;
 import com.org.makgol.stores.service.StoreService;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
@@ -15,10 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,15 +73,21 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value= "/menu_data")
+    @GetMapping(value="/detail_data/store_id/{store_id}")
     @ResponseBody
-    public ResponseEntity<?> findStoreMenuData(
-            @RequestParam String place_name
-    ) {
-        String storeId = storeService.findStoreIdWithPlaceName(place_name);
-        List<StoreMenuDto> storeMenuDtos = storeService.findStoreMenuWithId(storeId);
+    public ResponseEntity<?> findStoreDetailData(@PathVariable String store_id) {
+        StoreDetailDto storeDetailDtos = storeService.findStoreDetailWithId(store_id);
 
-        KakaoLocalResponseVo<List<StoreMenuDto>> response = new KakaoLocalResponseVo<>(true, "업장 이름에 해당하는 메뉴를 가져옵니다.", storeMenuDtos);
+        KakaoLocalResponseVo<StoreDetailDto> response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 세부정보를 가져옵니다.", storeDetailDtos);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value= "/menu_data/store_id/{store_id}")
+    @ResponseBody
+    public ResponseEntity<?> findStoreMenuData(@PathVariable String store_id) {
+        List<StoreMenuDto> storeMenuDtos = storeService.findStoreMenuWithId(store_id);
+
+        KakaoLocalResponseVo<List<StoreMenuDto>> response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 메뉴를 가져옵니다.", storeMenuDtos);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -6,6 +6,6 @@ import lombok.ToString;
 @ToString
 @Data
 public class StoreMenuDto {
-    String menu;
-    String price;
+   private String menu;
+   private String price;
 }
