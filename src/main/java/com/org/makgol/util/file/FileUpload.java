@@ -72,8 +72,9 @@ public class FileUpload {
     }
 
     public FileInfo fileUpload(MultipartFile file) {
+
         FileInfo fileInfo = new FileInfo();
-        List<FileInfo> fileInfoList = new ArrayList<>();
+
 
             String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
             long size = file.getSize(); //파일 사이즈

@@ -2,12 +2,8 @@ package com.org.makgol.users.service;
 
 import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.boards.vo.BoardVo;
-import com.org.makgol.global.exception.CustomException;
-import com.org.makgol.global.exception.ErrorCode;
-import com.org.makgol.stores.dao.StoresDao;
-import com.org.makgol.stores.repository.StoresRepository;
-import com.org.makgol.stores.vo.StoreRequestMenuVo;
-import com.org.makgol.stores.vo.StoreRequestVo;
+import com.org.makgol.common.exception.CustomException;
+import com.org.makgol.common.exception.ErrorCode;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
@@ -15,7 +11,6 @@ import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
-import com.org.makgol.util.kakaoMap.KakaoMap;
 import com.org.makgol.util.mail.MailSendUtil;
 import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
@@ -25,32 +20,27 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import javax.xml.stream.events.Comment;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+
+import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
+
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UsersService {
 
-
     private final MailSendUtil mailSendUtil;
     private final UserDao userDao;
     private final RedisUtil redisUtil;
-    private final KakaoMap kakaoMapSearch;
-    private final StoresDao storesDao;
     private final UsersRepository usersRepository;
     private final FileUpload fileUpload;
     private final WeatherInfo weatherInfo;
-    private final StoresRepository storesRepository;
 
-    public String userFindId(String userEmail) {
-        return userEmail;
-    }
 
     //userFindPassword
     public String userFindPassword(String userEmail) {
@@ -64,7 +54,6 @@ public class UsersService {
             map.put("userEmail", userEmail);
             if (usersRepository.updatePassword(map)) {
                 mailSendUtil.sendMail(randomNumber, userEmail);
-
             }
             return newPassword;
 
@@ -109,14 +98,18 @@ public class UsersService {
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
-        //2. 사용자 위치 정보 기반 식당 데이터 세이브
-        if (usersRepository.insertUser(usersRequestVo)) {
-            saveStoresProcess(usersRequestVo.getEmail());
+        if (usersRepository.saveUser(usersRequestVo)) {
 
-            return true;
+            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+            // 비동기 작업이 완료되면 결과를 출력
+            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
-        return false;
+
+        return true;
     }// joinUser_END
+
+
+
 
     public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo) {
         String email = usersRequestVo.getEmail();
@@ -178,8 +171,11 @@ public class UsersService {
             List<Integer> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
             newUserVo.setCoordinate(coordinate);
             session.setAttribute("loginedUserVo", newUserVo);
-            saveStoresProcess(usersRequestVo.getEmail());
-            }
+
+            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+            // 비동기 작업이 완료되면 결과를 출력
+            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+        }
         return result;
     }
 
@@ -202,94 +198,7 @@ public class UsersService {
     }
 
 
-    public void saveStoresProcess(String email){
-        UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
-        List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);
 
-        try {
-            //업장 중복 체크
-            log.info("before storeRequestVoList --> : {}", storeRequestVoList.size());
-            log.info("duplication count --> : {} ", storesDao.checkStore(storeRequestVoList));
-            log.info("after storeRequestVoList --> : {}", storeRequestVoList.size());
-
-            HashMap<String, Object> storeMap = kakaoMapSearch.storeInfoRequest(storeRequestVoList);
-
-            //store 업장 데이터 넣기
-            StoreResponseVo storeResponseVo;
-            for (int index = 0; index < storeMap.size() / 2; index++) {
-                System.out.println("------" + index + "-------");
-
-                StoreRequestVo storeRequestVo = (StoreRequestVo) storeMap.get("store_info_" + index);
-                List<StoreRequestMenuVo> storeRequestMenuVoList = (List<StoreRequestMenuVo>) storeMap.get("store_menu_" + index);
-
-                //store에 정보가 없을 경우
-                if (storeRequestVo == null) {
-                    System.out.println("storeRequestVo == null");
-                    continue;
-                }
-
-                storeResponseVo = storesRepository.findByIdPlaceUrl(storeRequestVo.getPlace_url());
-
-
-                if (storeResponseVo != null) {
-                    log.info("이미 존제 함. storeRequestVo.getPlace_url() --> : {} ", storeRequestVo.getPlace_url());
-
-                    storeResponseVo = storesRepository.findByIdPlaceUrl(storeRequestVo.getPlace_url());
-
-                    if (!storeRequestVo.getMenuName().equals("empty")) {
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("store_id", storeResponseVo.getId());
-                        map.put("category", storeRequestVo.getKeyword());
-                        map.put("menu_name", storeRequestVo.getKeyword());
-
-                        storesRepository.saveCategoryMenu(map);
-                    }
-
-                    for (int menuIndex = 0; menuIndex < storeRequestMenuVoList.size(); menuIndex++) {
-                        if (storeRequestMenuVoList.get(menuIndex).getMenu() == null) {
-                            continue;
-                        }
-
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("store_id", storeResponseVo.getId());
-                        map.put("menu", storeRequestMenuVoList.get(menuIndex).getMenu());
-                        map.put("price", storeRequestMenuVoList.get(menuIndex).getPrice());
-                        storesRepository.saveMenus(map);
-                    }
-                    continue;
-                }
-
-                storesRepository.saveStores(storeRequestVo);
-                log.info("insert storeInfo --> : {}", storeRequestVo.getPlace_url());
-
-                storeResponseVo = storesRepository.findByIdPlaceUrl(storeRequestVo.getPlace_url());
-
-
-                if (!storeRequestVo.getMenuName().equals("empty")) {
-
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("store_id", storeResponseVo.getId());
-                    map.put("category", storeRequestVo.getKeyword());
-                    map.put("menu_name", storeRequestVo.getKeyword());
-                    storesRepository.saveCategoryMenu(map);
-
-                }
-
-                for (int menuIndex = 0; menuIndex < storeRequestMenuVoList.size(); menuIndex++) {
-                    if (storeRequestMenuVoList.get(menuIndex).getMenu() == null) {
-                        continue;
-                    }
-
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("store_id", storeResponseVo.getId());
-                    map.put("menu", storeRequestMenuVoList.get(menuIndex).getMenu());
-                    map.put("price", storeRequestMenuVoList.get(menuIndex).getPrice());
-                    storesRepository.saveMenus(map);
-                }
-            }
-
-        } catch (Exception e) {}
-    }
 }
 
 

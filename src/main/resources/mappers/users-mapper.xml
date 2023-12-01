@@ -18,7 +18,7 @@
     </resultMap>
 
 
-    <insert id="insertUser" parameterType="com.org.makgol.users.vo.UsersRequestVo">
+    <insert id="saveUser" parameterType="com.org.makgol.users.vo.UsersRequestVo">
         INSERT INTO users (name, email, password, phone, photo, photo_path, date, address, longitude, latitude)
         VALUES (#{name}, #{email}, #{password}, #{phone}, #{photo}, #{photo_path}, now(), #{address}, #{longitude}, #{latitude})
     </insert>
