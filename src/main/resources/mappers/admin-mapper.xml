@@ -13,7 +13,7 @@
     </select>
 
 
-    <update id="UpdateGrade" parameterType="com.org.makgol.users.vo.UsersResponseVo">
+    <update id="UpdateGrade" parameterType="com.org.makgol.users.vo.UsersRequestVo">
         UPDATE users
         SET grade = #{grade}
         where id = #{id}

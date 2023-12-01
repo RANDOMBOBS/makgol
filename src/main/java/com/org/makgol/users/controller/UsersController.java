@@ -6,8 +6,10 @@ import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,14 +18,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UsersController {
+
     private final UsersService userService;
-    private final FileUpload fileUpload;
 
     //joinUser_POST
     @PostMapping("/join")
@@ -82,22 +85,19 @@ public class UsersController {
     }
 
     @PostMapping("/loginConfirm")
-    public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session) {
-        // 기본적으로 로그인 성공 시 'login_ok' 화면을 표시
+    public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session){
         String nextPage = "home";
+        UsersResponseVo loginedUserVo = userService.loginConfirm(usersRequestVo);
 
-        // 사용자 로그인 정보를 서비스를 통해 확인
-        UsersRequestVo loginedUsersRequestVo = userService.loginConfirm(usersRequestVo);
-        System.out.println("로그인한 유저 정보는?"+loginedUsersRequestVo);
-        if (loginedUsersRequestVo == null) {
+        if (loginedUserVo == null) {
             // 로그인 실패 시 'login_ng' 화면을 표시
             nextPage = "jsp/user/user_login_ng";
         } else {
-            if (!(loginedUsersRequestVo.getGrade() != null && "블랙리스트".equals(loginedUsersRequestVo.getGrade()))) {
+            if (!(loginedUserVo.getGrade() != null && "블랙리스트".equals(loginedUserVo.getGrade()))) {
                 // 로그인 성공 시 사용자 정보를 세션에 저장하고 세션
-                session.setAttribute("loginedUsersRequestVo", loginedUsersRequestVo);
+                session.setAttribute("loginedUserVo", loginedUserVo);
             } else {
-                session.setAttribute("blackList", loginedUsersRequestVo);
+                session.setAttribute("blackList", loginedUserVo);
             }
         }
         return nextPage;
@@ -105,7 +105,6 @@ public class UsersController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session, @RequestParam("link") String link){
-        session.removeAttribute("blackList");
         session.invalidate();
         if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")||link.contains("/user/loginConfirm")){
             return "home";
@@ -113,6 +112,14 @@ public class UsersController {
             return "redirect:" + link;
         }
     }
+
+    @GetMapping("/blackList")
+    public String blackList(HttpSession session){
+        session.removeAttribute("blackList");
+        session.invalidate();
+        return "home";
+    }
+
 
     @GetMapping("/myPage")
     public String myPage() {

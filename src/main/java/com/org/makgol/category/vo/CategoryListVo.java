@@ -10,5 +10,6 @@ public class CategoryListVo {
     String menu_name;
     String category;
     String date;
-
+    String photo;
+    String photoPath;
 }

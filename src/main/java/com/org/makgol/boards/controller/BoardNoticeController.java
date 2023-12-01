@@ -4,8 +4,8 @@ package com.org.makgol.boards.controller;
 import com.org.makgol.boards.service.BoardNoticeService;
 import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
-import com.org.makgol.users.vo.UsersRequestVo;
 
+import com.org.makgol.users.vo.UsersResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,9 +50,9 @@ public class BoardNoticeController {
     @GetMapping("/noticeCreateForm")
     public String noticeCreateForm(Model model, HttpSession session) {
         String nextPage = "jsp/board/notice/notice_create_form";
-        UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
-        int userId = loginedUsersRequestVo.getId();
-        String grade = loginedUsersRequestVo.getGrade();
+        UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+        int userId = loginedUserVo.getId();
+        String grade = loginedUserVo.getGrade();
         model.addAttribute("user_id", userId);
         model.addAttribute("grade", grade);
         return nextPage;
@@ -120,49 +120,5 @@ public class BoardNoticeController {
         return nextPage;
     }
 
-    @ResponseBody
-    @PostMapping("/noticeLikeCount")
-    public Map<String,Integer> noticeLikeCount(@RequestBody BoardLikeVo boardLikeVo){
-        Map<String,Integer> map = new HashMap<>();
-        int count = boardNoticeService.noticeLikeCount(boardLikeVo);
-        map.put("likeCnt",count);
-        return map;
-    }
-
-
-    @ResponseBody
-    @PostMapping("/noticeLikeStatus")
-    public Map<String,Integer> noticeLikeStatus (@RequestBody BoardLikeVo boardLikeVo){
-        Map<String,Integer> map = new HashMap<>();
-        int status = boardNoticeService.noticeLikeStatus(boardLikeVo);
-        map.put("status", status);
-        return map;
-    }
-
-    @ResponseBody
-    @PostMapping("/noticeLikeInsert")
-    public Map<String,Integer> noticeLikeInsert (@RequestBody BoardLikeVo boardLikeVo){
-        Map<String,Integer> map = new HashMap<>();
-        int count = 0;
-        int result = boardNoticeService.noticeLikeInsert(boardLikeVo);
-        if(result>0){
-            count = boardNoticeService.noticeLikeCount(boardLikeVo);
-        }
-        map.put("likeCnt", count);
-        return map;
-    }
-
-    @ResponseBody
-    @PostMapping("/noticeLikeDelete")
-    public Map<String,Integer> noticeLikeDelete (@RequestBody BoardLikeVo boardLikeVo){
-        Map<String,Integer> map = new HashMap<>();
-        int count = 0;
-        int result = boardNoticeService.noticeLikeDelete(boardLikeVo);
-        if(result>0){
-            count = boardNoticeService.noticeLikeCount(boardLikeVo);
-        }
-        map.put("likeCnt", count);
-        return map;
-    }
 }
 

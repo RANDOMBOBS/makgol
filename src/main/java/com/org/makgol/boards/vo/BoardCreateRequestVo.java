@@ -18,6 +18,11 @@ public class BoardCreateRequestVo {
     MultipartFile file3;
     MultipartFile file4;
     MultipartFile file5;
+    String oldImage1;
+    String oldImage2;
+    String oldImage3;
+    String oldImage4;
+    String oldImage5;
     List<FileInfo> fileList;
     String photo;
     String photo_path;

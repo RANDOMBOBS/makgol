@@ -54,7 +54,7 @@ request.setCharacterEncoding("utf-8");
 	<div>
 		<p>
 			<label for="like" >
-			    <input type="checkbox" id="like" style="display: none" data-b-id="${boardVo.id}" data-user-id="${loginedUsersRequestVo.id}"/>
+			    <input type="checkbox" id="like" style="display: none" data-b-id="${boardVo.id}" data-user-id="${loginedUserVo.id}"/>
 			    <i class="fa-regular fa-thumbs-up">${boardVo.sympathy}</i>
 			</label>
 		</p>
@@ -72,7 +72,7 @@ request.setCharacterEncoding("utf-8");
     			<c:param name="images" value="${boardVo.images}" />
     		</c:url>
 
-		<c:if test="${boardVo.user_id == loginedUsersRequestVo.getId()}">
+		<c:if test="${boardVo.user_id == loginedUserVo.getId()}">
 			<a href="${modify_url}">수정</a>
 			<a href="#javaScript" onclick="boardDelete()">삭제</a>
 		</c:if>
@@ -84,11 +84,11 @@ request.setCharacterEncoding("utf-8");
 	<form name="create_comment_form">
 		<p>댓글</p>
 		<c:choose>
-			<c:when test="${loginedUsersRequestVo != null}">
+			<c:when test="${loginedUserVo != null}">
 				<input type="hidden" name="board_id" value="${boardVo.id}" />
 				<input type="hidden" name="user_id"
-					value="${loginedUsersRequestVo.getId()}" />
-				<input type="hidden" name="grade" value="${loginedUsersRequestVo.getGrade()}">
+					value="${loginedUserVo.getId()}" />
+				<input type="hidden" name="grade" value="${loginedUserVo.getGrade()}">
 				<input type="text" name="nickname" placeholder="닉네임" />
 				<br />
 				<input type="text" name="content" placeholder="댓글을 입력해주세요." />
@@ -112,7 +112,6 @@ request.setCharacterEncoding("utf-8");
 
 
 	<script>
-    console.log("유저아이디"+user_id, "게시판번호"+b_id)
 		if (user_id) {
 			userLikeStatus(b_id, user_id);
 		}

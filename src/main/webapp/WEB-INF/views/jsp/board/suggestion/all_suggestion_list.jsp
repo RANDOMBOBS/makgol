@@ -1,4 +1,4 @@
-<%@page import="com.org.makgol.users.vo.UsersRequestVo"%>
+<%@page import="com.org.makgol.users.vo.UsersResponseVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -34,7 +34,7 @@
 
 
 	<%
-	UsersRequestVo loginedUserVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
+	UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
 	if (loginedUserVo != null) {
 	%>
 	<a href="<c:url value='/board/suggestion/create'/>">글쓰기</a>
@@ -42,3 +42,4 @@
 	<%
 	}
 	%>
+
