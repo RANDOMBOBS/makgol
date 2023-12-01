@@ -31,6 +31,20 @@
         WHERE store_id = #{storeId}
     </select>
 
+    <select id="findStoreReviewWithId" resultType="com.org.makgol.stores.dto.StoreReviewDto" parameterType="String">
+        SELECT rv.id, rv.user_id, rv.content, rv.date, rvi.photo_path
+        FROM mak_gol.reviews AS rv
+        LEFT JOIN mak_gol.review_images AS rvi
+        ON rv.id = rvi.review_id
+        WHERE store_id = #{storeId}
+    </select>
+
+    <select id="findUserNameAndPhotoWithId" resultType="com.org.makgol.stores.dto.UserInfoDto" parameterType="Integer">
+        SELECT name, photo_path
+        FROM mak_gol.users
+        WHERE id = #{userId}
+    </select>
+
     <insert id="saveCategoryMenu" parameterType="Map">
         INSERT INTO category_menu (store_id, category, menu_name, date) VALUES (#{store_id}, #{category}, #{menu_name}, now())
     </insert>

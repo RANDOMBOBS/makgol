@@ -1,25 +1,24 @@
 package com.org.makgol.stores.controller;
 
 import com.org.makgol.stores.bean.HttpTransactionLogger;
-import com.org.makgol.stores.dto.RequestStoreListDto;
-import com.org.makgol.stores.dto.ResponseStoreListDto;
-import com.org.makgol.stores.dto.StoreDetailDto;
-import com.org.makgol.stores.dto.StoreMenuDto;
+import com.org.makgol.stores.dto.*;
 import com.org.makgol.stores.service.StoreService;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.KakaoLocalResponseVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/store")
@@ -88,6 +87,33 @@ public class StoreController {
         List<StoreMenuDto> storeMenuDtos = storeService.findStoreMenuWithId(store_id);
 
         KakaoLocalResponseVo<List<StoreMenuDto>> response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 메뉴를 가져옵니다.", storeMenuDtos);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/review_data/store_id/{store_id}")
+    @ResponseBody
+    public ResponseEntity<?> findStoreReviewData(@PathVariable String store_id) {
+        List<StoreReviewDto> storeReviewDtos = storeService.findStoreReviewWithId(store_id);
+        List<ResponseStoreReviewDto> responseStoreReviewDtos = new ArrayList<>();
+
+        for (int i = 0; i < storeReviewDtos.size(); i++) responseStoreReviewDtos.add(new ResponseStoreReviewDto());
+
+        List<UserInfoDto> userNameAndPhoto = storeReviewDtos
+                .stream()
+                .map((review) -> storeService.findUserNameAndPhotoWithId(review.getUser_id()))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        for (int i = 0 ; i < responseStoreReviewDtos.size(); i++) {
+            responseStoreReviewDtos.get(i).setId(storeReviewDtos.get(i).getId());
+            responseStoreReviewDtos.get(i).setContent(storeReviewDtos.get(i).getContent());
+            responseStoreReviewDtos.get(i).setDate(storeReviewDtos.get(i).getDate());
+            responseStoreReviewDtos.get(i).setReview_photo_path(storeReviewDtos.get(i).getPhoto_path());
+            responseStoreReviewDtos.get(i).setName(userNameAndPhoto.get(i).getName());
+            responseStoreReviewDtos.get(i).setUser_photo_path(userNameAndPhoto.get(i).getPhoto_path());
+        }
+
+        KakaoLocalResponseVo<List<ResponseStoreReviewDto>> response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 리뷰를 가져옵니다.", responseStoreReviewDtos);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

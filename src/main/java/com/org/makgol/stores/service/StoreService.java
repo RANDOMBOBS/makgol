@@ -3,10 +3,7 @@ package com.org.makgol.stores.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.org.makgol.stores.dao.StoresDao;
-import com.org.makgol.stores.dto.RequestStoreListDto;
-import com.org.makgol.stores.dto.ResponseStoreListDto;
-import com.org.makgol.stores.dto.StoreDetailDto;
-import com.org.makgol.stores.dto.StoreMenuDto;
+import com.org.makgol.stores.dto.*;
 import com.org.makgol.stores.repository.StoresRepository;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
@@ -14,7 +11,6 @@ import com.org.makgol.stores.vo.StoreRequestMenuVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.repository.UsersRepository;
-import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.kakaoMap.KakaoMap;
 import lombok.AllArgsConstructor;
@@ -86,6 +82,26 @@ public class StoreService {
         List<StoreMenuDto> result = null;
         try {
             result = storesRepository.findStoreMenuWithId(storeId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<StoreReviewDto> findStoreReviewWithId(String storeId) {
+        List<StoreReviewDto> result = null;
+        try{
+            result = storesRepository.findStoreReviewWithId(storeId);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<UserInfoDto> findUserNameAndPhotoWithId(int userId) {
+        List<UserInfoDto> result = null;
+        try {
+            result = storesRepository.findUserNameAndPhotoWithId(userId);
         } catch (Exception e) {
             e.printStackTrace();
         }
