@@ -1,24 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    const displayImage = (param) => {
-        const pictureBodyEle = document.querySelector("#picture .item_info_body");
+    const displayImage = (photo) => {
+        const photoEle = $("#photo img");
 
-        if (!param.placeImage) {
-            const h3Ele = document.createElement("h3");
-            h3Ele.style.color = "#99958b";
-            h3Ele.innerText = "아직 사진이 없습니다.";
-
-            pictureBodyEle.style.background = "#cfcbc2";
-            pictureBodyEle.style.display = "flex";
-            pictureBodyEle.style.justifyContent = "center";
-            pictureBodyEle.style.alignItems = "center";
-            pictureBodyEle.appendChild(h3Ele);
+        if (!photo || !photo.includes("?fname=")) {
+            photoEle.attr({src: "http://localhost:8090/resources/static/image/default/error.gif"}).css({width: "100%", height: "75%"})
+            const spanEle = $("<span>")
+            spanEle.css({position: "relative", bottom:"22px", fontSize: "14px", color: "orange"}).text("아직 이미지가 없어요!")
+            $("#photo .item_info_body").append(spanEle)
         } else {
-            alert("dsd");
+            photoEle.attr({src: "https://" + photo}).css({width:"100%", height: "244px", borderRadius: "0 0 19px 19px"})
         }
     };
 

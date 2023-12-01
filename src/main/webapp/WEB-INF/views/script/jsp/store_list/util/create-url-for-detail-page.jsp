@@ -4,33 +4,9 @@
     class UrlBuilderForDetail {
         #defaultUrl = "<c:url value='/store/detail' />?";
 
-        setPlaceName(place_name) {
-            const placeNameQuery = "place_name=" + place_name + "&";
-            this.#defaultUrl += placeNameQuery;
-            return this;
-        }
-
-        setPhone(phone) {
-            const phoneQuery = "phone=" + phone + "&";
-            this.#defaultUrl += phoneQuery;
-            return this;
-        }
-
-        setAddressName(address_name) {
-            const addressNameQuery = "address_name=" + address_name + "&";
-            this.#defaultUrl += addressNameQuery;
-            return this;
-        }
-
-        setCategoryName(category_name) {
-            const categoryName = "category_name=" + category_name + "&";
-            this.#defaultUrl += categoryName;
-            return this;
-        }
-
-        setPlaceUrl(place_url) {
-            const placeUrl = "place_url=" + place_url + "&";
-            this.#defaultUrl += placeUrl;
+        setShopId(shop_id) {
+            const shopId = "shop_id=" + shop_id + "&";
+            this.#defaultUrl += shopId;
             return this;
         }
 
@@ -53,8 +29,14 @@
         }
 
         setMyY(my_y) {
-            const myY = "my_y=" + my_y;
+            const myY = "my_y=" + my_y + "&";
             this.#defaultUrl += myY;
+            return this;
+        }
+
+        setDistance(_distance) {
+            const distance = "distance=" + _distance;
+            this.#defaultUrl += distance;
             return this;
         }
 
@@ -64,22 +46,34 @@
     }
 
     const createUrlForDetailPage = (shop) => {
-        const {place_name, address_name, phone, category_name, place_url, shopX, shopY} =
-            shop;
+
+        const setShopCoordinate = (shop) => {
+            const {longitude, latitude} = shop;
+            const shopX = longitude;
+            const shopY = latitude;
+            return {shopX, shopY};
+        }
+
+        const {id, distance} = shop;
+        const {shopX, shopY} = setShopCoordinate(shop);
+
+        const setMyCoordinate = (myCoordinate) => {
+            const {longitude, latitude} = myCoordinate;
+            const myX = longitude;
+            const myY = latitude;
+            return {myX, myY};
+        }
 
         const myCoordinate = JSON.parse(localStorage.getItem("myCoordinate"));
-        const {longitude, latitude} = myCoordinate;
+        const {myX, myY} = setMyCoordinate(myCoordinate);
 
         return new UrlBuilderForDetail()
-            .setPlaceName(place_name)
-            .setPhone(phone)
-            .setAddressName(address_name)
-            .setCategoryName(category_name)
-            .setPlaceUrl(place_url)
+            .setShopId(id)
             .setShopX(shopX)
             .setShopY(shopY)
-            .setMyX(longitude)
-            .setMyY(latitude)
+            .setMyX(myX)
+            .setMyY(myY)
+            .setDistance(distance)
             .getUrl();
     };
 
