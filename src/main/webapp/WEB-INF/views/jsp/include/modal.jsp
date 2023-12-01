@@ -9,6 +9,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>
+
+    <script>
+            jQuery(document).ready(function () {
+               // 회원가입 버튼
+                           jQuery("#submit_login").click(function () {
+
+                               const formData = new FormData();
+                               const email = jQuery("#login_email").val();
+                               const password = jQuery("#login_password").val();
+
+                               formData.append("email", email);
+                               formData.append("password", password);
+
+                               jQuery.ajax({
+                                   type: "POST",
+                                   url: "http://localhost:8090/user/loginConfirm",
+                                   data: formData,
+                                   processData: false,
+                                   contentType: false,
+                                   success: function (data, status, xhr) {
+                                      token = xhr.getResponseHeader("Access_token");
+                                      localStorage.setItem("Access_token", token);
+                                      location.href = "/";
+                                   }
+                               });
+                           });// 회원가입 버튼_END
+            });
+    </script>
+
 </head>
 <body>
 <div class="modal_cover">
@@ -19,7 +48,7 @@
         </div>
         <div class="modal_body">
             <div class="login_wrapper">
-                <form action="/user/loginConfirm" id="login_form" method="post">
+                <form  id="login_form" method="post">
                     <label>
                         <input
                                 autocomplete="off"
@@ -45,7 +74,7 @@
                             <span>아이디 저장하기 </span>
                         </label>
                     </div>
-                    <input id="submit_login" type="submit" value="Login"/>
+                    <input id="submit_login" type="button" value="Login"/>
                 </form>
             </div>
             <div class="user_option">

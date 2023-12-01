@@ -126,7 +126,7 @@ public class UsersService implements LogoutHandler {
 
     public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
         String email = usersRequestVo.getEmail();
-        UsersResponseVo loginedUserVo = userDao.selectUser(email);
+        UsersResponseVo loginedUserVo = usersRepository.findUserByEmail(email);
 
         // 만약 로그인을 못했다면?
         if(loginedUserVo == null){
@@ -157,13 +157,10 @@ public class UsersService implements LogoutHandler {
                 jwtUtil.saveToken(map);
 
                 // 없다면 새로 만들고 디비 저장
-            } else {
-                jwtUtil.saveToken(map);
-
-            }
+            } else { jwtUtil.saveToken(map); }
             //access token in header, refresh token in cookie
             setAccessTokenInHeader(response, tokenVo.getAccessToken());
-            setRefreshTokenInCookie(response, tokenVo.getAccessToken());
+            setRefreshTokenInCookie(response, tokenVo.getRefreshToken());
         }
 
         return loginedUserVo;
