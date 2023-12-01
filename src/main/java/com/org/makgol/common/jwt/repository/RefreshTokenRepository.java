@@ -8,8 +8,8 @@ import java.util.Optional;
 
 @Mapper
 public interface RefreshTokenRepository {
-    TokenResponseVo findTokenByEmail(String emailFromToken);
-    void saveToken(Map<String, Object> map);
-    void saveTokenUpdateRevoked(String email);
-    void saveTokenUpdateExpried(String email);
+    TokenResponseVo findByEmail(String emailFromToken);
+    void save(Map<String, Object> map);
+    void saveUpdateRevoked(String email);
+    void saveUpdateExpried(String email);
 }

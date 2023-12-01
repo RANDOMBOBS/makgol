@@ -163,21 +163,21 @@ public class JwtUtil {
 
     // 토큰 검색 쿼리
     public Optional<TokenResponseVo> findTokenByEmail(String email) {
-        TokenResponseVo tokenResponseVo = refreshTokenRepository.findTokenByEmail(email);
+        TokenResponseVo tokenResponseVo = refreshTokenRepository.findByEmail(email);
         return Optional.ofNullable(tokenResponseVo);
     }
 
     public void saveToken(Map<String, Object> map) {
-        refreshTokenRepository.saveToken(map);
+        refreshTokenRepository.save(map);
         //return Optional.ofNullable(tokenResponseVo);
     }
 
     public void saveTokenUpdate(String email, String type) {
         if(type.equals(REVOKED)){
-            refreshTokenRepository.saveTokenUpdateRevoked(email);
+            refreshTokenRepository.saveUpdateRevoked(email);
 
         } else if(type.equals(REVOKED)){
-            refreshTokenRepository.saveTokenUpdateExpried(email);
+            refreshTokenRepository.saveUpdateExpried(email);
 
         }
     }

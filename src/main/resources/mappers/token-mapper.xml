@@ -5,20 +5,20 @@
 
 <mapper namespace="com.org.makgol.common.jwt.repository.RefreshTokenRepository">
 
-    <select id="findTokenByEmail" resultType="com.org.makgol.common.jwt.vo.TokenResponseVo" parameterType="String">
+    <select id="findByEmail" resultType="com.org.makgol.common.jwt.vo.TokenResponseVo" parameterType="String">
         SELECT * FROM users WHERE email = #{email}
     </select>
 
-    <insert id="saveToken" parameterType="Map">
+    <insert id="save" parameterType="Map">
         INSERT INTO refresh_token (token, email, expired, revoked, date)
         VALUES (#{token}, #{email}, #{expired}, #{revoked}, now())
     </insert>
 
-    <select id="saveTokenUpdateRevoked" parameterType="String">
+    <select id="saveUpdateRevoked" parameterType="String">
         UPDATE refresh_token SET revoked = true WHERE email = #{email} AND (expired = false OR revoked = false)
     </select>
 
-    <select id="saveTokenUpdateExpried" parameterType="String">
+    <select id="saveUpdateExpried" parameterType="String">
         UPDATE refresh_token SET expired = true WHERE email = #{email} AND (expired = false OR revoked = false)
     </select>
 
