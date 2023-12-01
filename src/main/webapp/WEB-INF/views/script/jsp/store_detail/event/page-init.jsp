@@ -9,6 +9,7 @@
 <jsp:include page="../backend/request-store-detail.jsp"></jsp:include>
 <jsp:include page="../backend/request-store-menu.jsp"></jsp:include>
 <jsp:include page="../backend/request-store-review.jsp"></jsp:include>
+<jsp:include page="./increase-likes.jsp"></jsp:include>
 <script>
     const pageInit = async () => {
         const {shopId, shopX, shopY, myX, myY, distance} = getUrlParam();
@@ -24,6 +25,8 @@
         displayMenu(menus);
         displayInitialMap({shopX, shopY, myX, myY, distance});
         displayReview(reviews);
+
+        $("#likes").click(() => increaseLikes(shopId));
     };
 
     pageInit();
