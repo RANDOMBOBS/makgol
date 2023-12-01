@@ -17,6 +17,8 @@
         const request = getModelData();
 
         const shops = await requestApi(request);
+        console.log("½Ä´ç")
+        console.log(shops)
 
         shopInfo.shops = shops;
         shopInfo.keyword = request.keyword;
