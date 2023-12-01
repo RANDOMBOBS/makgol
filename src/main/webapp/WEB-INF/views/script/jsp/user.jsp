@@ -140,7 +140,6 @@ function allMyCheckbox() {
                     myCheck = false;
                 }
             });
-
             jQ("#allMyCheckbox").prop("checked", myCheck);
         });
 

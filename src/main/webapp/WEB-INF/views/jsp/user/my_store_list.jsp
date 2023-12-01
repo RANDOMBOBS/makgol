@@ -14,7 +14,19 @@
     <table>
     <c:forEach var="item" items="${storeVos}">
        <tr>
-        <td class="store_photo"><img src="<c:url value='/resources/static/image/default/김치찌개.jpg' />" alt="${item.name}" /></td>
+    <td class="store_photo">
+        <c:choose>
+            <c:when test="${(not empty item.photo) && (item.photo.contains('fname='))}">
+                <img src="<c:url value='https://${item.photo}' />" alt="${item.photo}" />
+            </c:when>
+            <c:otherwise>
+                <img src="http://localhost:8090/resources/static/image/default/error.gif" alt="이미지가 없습니다." />
+            </c:otherwise>
+        </c:choose>
+    </td>
+
+
+
         <td class="store_info">
           <ul>
             <li>${item.name}</li>
@@ -22,9 +34,10 @@
             <li>${item.phone}</li>
           </ul>
         </td>
+
         <td><a href="#">식당 보러가기</a></td>
       </tr>
-      </c:forEach>
+    </c:forEach>
     </table>
 </body>
 </html>

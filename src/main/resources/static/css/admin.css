@@ -1,0 +1,115 @@
+
+body {
+  background-color: #fffdd3;
+}
+
+#user_management {
+  background-color: #fff;
+  margin: 50px auto;
+  padding: 50px;
+  width: 1500px;
+  border: 1px solid #eee;
+}
+
+.management_page_title {
+  text-align: left;
+  text-indent: 0.5em;
+  padding: 15px 0;
+  margin: 0 30px;
+  border-bottom: 3px solid #000;
+}
+
+#user_management .user_list {
+  margin: 30px;
+}
+
+#user_management .user_list .change_role {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  font-weight: bold;
+  font-size: 20px;
+}
+#user_management .user_list .change_role span {
+  padding: 0 15px;
+}
+
+#user_management .user_list .change_role select {
+  height: 28px;
+  width: 200px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid;
+}
+
+#user_management .user_list .change_role button {
+  margin: 0 20px;
+  border-radius: 5px;
+  border: 2px solid #ffa500;
+
+  background-color: #ffe16f;
+  width: 120px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#user_management .user_list .all_user_list {
+  margin: 30px 15px;
+}
+
+#user_management .user_list .all_user_list table {
+  width: 100%;
+  margin: 0 auto;
+}
+
+#user_management .user_list .all_user_list table col:nth-child(1) {
+  width: 30px;
+}
+
+#user_management .user_list .all_user_list table col:nth-child(2) {
+  width: 90px;
+}
+
+#user_management .user_list .all_user_list table col:nth-child(3) {
+  width: 150px;
+}
+
+#user_management .user_list .all_user_list table col:nth-child(5) {
+  width: 200px;
+}
+#user_management .user_list .all_user_list table col:nth-child(6) {
+  width: 200px;
+}
+#user_management .user_list .all_user_list table col:nth-child(7) {
+  width: 150px;
+}
+#user_management .user_list .all_user_list table col:nth-child(4) {
+  width: auto;
+}
+
+#user_management .user_list .all_user_list table thead {
+  height: 50px;
+  border: 2px solid #ffe286;
+  background-color: #fdf97e;
+}
+
+#user_management .user_list .all_user_list table thead th {
+  border: 2px solid #ffe286;
+}
+
+#user_management .user_list .all_user_list table tbody tr {
+  border: 2px solid #ffe286;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+#user_management .user_list .all_user_list table tbody td {
+  height : 100px;
+  color: #555;
+}
+
+#user_management .user_list .all_user_list table tbody td img {
+  width: 70px;
+  height: 70px;
+}

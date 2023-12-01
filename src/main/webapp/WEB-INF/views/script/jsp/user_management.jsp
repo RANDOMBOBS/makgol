@@ -10,7 +10,7 @@
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
-				jQ(".allUserList").html(rdata);
+				jQ(".all_user_list").html(rdata);
 			},
 			error : function(error) {
 				console.error(error)
@@ -59,6 +59,22 @@
 	}
 
 
+		jQ(".all_user_list").on("click", ".eachCheckbox", function(){
+			let check = true;
+			jQ(".eachCheckbox").each(function() {
+				if(!jQ(this).prop("checked")){
+					check = false;
+				}
+			})
+				jQ("#allCheckbox").prop("checked", check);
+		})
 
-
+    jQ(".one_user").click(function() {
+        let thisCheckbox = jQ(this).find("input")
+        if(thisCheckbox.is(":checked")){
+           thisCheckbox.prop("checked", false);
+        } else {
+           thisCheckbox.prop("checked", true);
+        }
+    })
 </script>
