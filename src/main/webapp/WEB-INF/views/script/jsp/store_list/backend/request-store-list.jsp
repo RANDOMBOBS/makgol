@@ -10,10 +10,10 @@
         const {data} = await axios.get(url);
 
         return data.result.map((item) => {
-            const numberMyX = Number(longitude);
-            const numberMyY = Number(latitude);
-            const numberShopX = Number(item.longitude);
-            const numberShopY = Number(item.latitude);
+            const numberMyX = parseFloat(longitude);
+            const numberMyY = parseFloat(latitude);
+            const numberShopX = parseFloat(item.longitude);
+            const numberShopY = parseFloat(item.latitude);
 
             const intDistance = getDistance(numberMyY, numberMyX, numberShopY, numberShopX);
 
