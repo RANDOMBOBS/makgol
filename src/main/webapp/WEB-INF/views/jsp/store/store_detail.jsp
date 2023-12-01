@@ -62,6 +62,7 @@
             <h1>업장 위치</h1>
         </div>
         <div class="item_info_body">
+            <div id="distance"></div>
             <div class="guide_line">
                 <div class="head_box">
                     <h4>지도 도우미</h4>
