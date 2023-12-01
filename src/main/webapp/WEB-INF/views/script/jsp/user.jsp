@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
-let user_id = ${loginedUsersRequestVo.id}
+let user_id = ${loginedUserVo.id}
 
 function myPostList(){
     jQ.ajax({

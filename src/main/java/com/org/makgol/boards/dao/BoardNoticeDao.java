@@ -71,21 +71,6 @@ public class BoardNoticeDao {
         return result;
     } // end
 
-    public int selectLikeCount (BoardLikeVo boardLikeVo) throws DataAccessException{
-        return boardNoticeRepository.selectLikeCount(boardLikeVo);
-    }
-
-    public int selectLikeStatus (BoardLikeVo boardLikeVo) throws DataAccessException {
-        return boardNoticeRepository.selectLikeStatus(boardLikeVo);
-    }
-
-    public int insertLikeCount (BoardLikeVo boardLikeVo) throws DataAccessException {
-        return boardNoticeRepository.insertLikeCount(boardLikeVo);
-    }
-
-    public int deleteLikeCount (BoardLikeVo boardLikeVo) throws DataAccessException {
-        return boardNoticeRepository.DeleteLikeCount(boardLikeVo);
-    }
 
 
 

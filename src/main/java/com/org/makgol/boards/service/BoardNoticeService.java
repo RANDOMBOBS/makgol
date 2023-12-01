@@ -58,18 +58,5 @@ public class BoardNoticeService {
         return boardNoticeDao.deleteNotice(b_id);
     }
 
-    public int noticeLikeCount (BoardLikeVo boardLikeVo){
-        return boardNoticeDao.selectLikeCount(boardLikeVo);
-    }
-    public int noticeLikeStatus (BoardLikeVo boardLikeVo){
-        return boardNoticeDao.selectLikeStatus(boardLikeVo);
-    }
-
-    public int noticeLikeInsert (BoardLikeVo boardLikeVo) {
-        return boardNoticeDao.insertLikeCount(boardLikeVo);
-    }
-    public int noticeLikeDelete (BoardLikeVo boardLikeVo) {
-        return boardNoticeDao.deleteLikeCount(boardLikeVo);
-    }
 
 }

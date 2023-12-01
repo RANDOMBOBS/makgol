@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +65,7 @@ public class BoardSuggestionService {
             return boardDao.insertSuggestionBoard(boardCreateRequestVo);
         }
     }
+
 
     /**
      * suggestion 글 상세보기
@@ -139,37 +141,109 @@ public class BoardSuggestionService {
      **/
     public int modifyBoardConfirm(BoardCreateRequestVo boardCreateRequestVo, String oldImages) {
         List<MultipartFile> files = new ArrayList<MultipartFile>();
+        List<String> existingFile = new ArrayList<String>();
+        List<FileInfo> existingFileInfo = new ArrayList<FileInfo>();
         int result = -1;
+
+        if (boardCreateRequestVo.getOldImage1() != null && !boardCreateRequestVo.getOldImage1().isEmpty()) {
+            existingFile.add(boardCreateRequestVo.getOldImage1());
+        }
+        if (boardCreateRequestVo.getOldImage2() != null && !boardCreateRequestVo.getOldImage2().isEmpty()) {
+            existingFile.add(boardCreateRequestVo.getOldImage2());
+        }
+        if (boardCreateRequestVo.getOldImage3() != null && !boardCreateRequestVo.getOldImage3().isEmpty()) {
+            existingFile.add(boardCreateRequestVo.getOldImage3());
+        }
+        if (boardCreateRequestVo.getOldImage4() != null && !boardCreateRequestVo.getOldImage4().isEmpty()) {
+            existingFile.add(boardCreateRequestVo.getOldImage4());
+        }
+        if (boardCreateRequestVo.getOldImage5() != null && !boardCreateRequestVo.getOldImage5().isEmpty()) {
+            existingFile.add(boardCreateRequestVo.getOldImage5());
+        }
+
+
         if (boardCreateRequestVo.getFile1() != null && !boardCreateRequestVo.getFile1().isEmpty()) {
             files.add(boardCreateRequestVo.getFile1());
+        } else {
+            files.add(null);
         }
         if (boardCreateRequestVo.getFile2() != null && !boardCreateRequestVo.getFile2().isEmpty()) {
             files.add(boardCreateRequestVo.getFile2());
+        } else {
+            files.add(null);
         }
         if (boardCreateRequestVo.getFile3() != null && !boardCreateRequestVo.getFile3().isEmpty()) {
             files.add(boardCreateRequestVo.getFile3());
+        } else {
+            files.add(null);
         }
         if (boardCreateRequestVo.getFile4() != null && !boardCreateRequestVo.getFile4().isEmpty()) {
             files.add(boardCreateRequestVo.getFile4());
+        }else {
+            files.add(null);
         }
         if (boardCreateRequestVo.getFile5() != null && !boardCreateRequestVo.getFile5().isEmpty()) {
             files.add(boardCreateRequestVo.getFile5());
+        } files.add(null);
+
+
+        if(existingFile.size() >0 ) {
+            existingFileInfo = boardDao.selectExistingFile(existingFile);
         }
 
 
+        List<FileInfo> fileList = fileUpload.editFileListUpload(files);
+        for(int i=0 ; i<existingFileInfo.size(); i++){
+            for(int j=0; j<fileList.size(); j++){
+                if(fileList.get(j) == null){
+                    fileList.set(j, existingFileInfo.get(i));
+                    break;
+                }
+            }
+        }
+
+
+        for (int i = fileList.size()-1; i >= 0; i--) {
+            if (fileList.get(i) == null) {
+                fileList.remove(i);
+            }
+        }
+
+
+
+        boolean images = false;
+        for (int i = 0; i < fileList.size(); i++ ){
+            if(fileList.get(i) != null){
+                images = true;
+            }
+        }
+
+        
         // if(파일이 있을때), else(파일이 없을때)
-        if (files.size() > 0) {
-            List<FileInfo> fileList = fileUpload.fileListUpload(files);
+        if (images) {
             result = boardDao.updateSuggestionBoard(boardCreateRequestVo, fileList);
+
         } else {
             result = boardDao.updateSuggestionBoard(boardCreateRequestVo);
         }
+
+
         if (result > 0) {
             String currentDirectory = System.getProperty("user.dir");
             String[] oldImageList = null;
             List<String> oldImageNames = new ArrayList<String>();
             oldImages = oldImages.substring(1, oldImages.length() - 1);
+            oldImages = oldImages.replace(" ","");
             oldImageList = oldImages.split(",");
+
+            for(int i=0; i<existingFileInfo.size(); i++){
+                for (int j=0; j<oldImageList.length; j++){
+                    if(oldImageList[j].equals(existingFileInfo.get(i).getPhotoPath())){
+                        oldImageList[j]= "";
+                    }
+                }
+            }
+
             for (int i = 0; i < oldImageList.length; i++) {
                 String oldImage = oldImageList[i];
                 String oldImageName = oldImage.substring(oldImage.lastIndexOf("/") + 1, oldImage.length());

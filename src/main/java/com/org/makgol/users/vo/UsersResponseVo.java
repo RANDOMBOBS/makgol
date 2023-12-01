@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Data
 public class UsersResponseVo {
@@ -40,4 +41,22 @@ public class UsersResponseVo {
     String date;
 
     String address;
+
+    List<Integer> coordinate;
+
+    public void modifyMapper(UsersRequestVo usersRequestVo){
+        this.id = usersRequestVo.getId();
+        this.name = usersRequestVo.getName();
+        this.email = usersRequestVo.getEmail();
+        this.password = usersRequestVo.getPassword();
+        this.phone = usersRequestVo.getPhone();
+        this.photo = usersRequestVo.getPhoto();
+        this.photo_path = usersRequestVo.getPhoto_path();
+        this.longitude = usersRequestVo.getLongitude();
+        this.latitude = usersRequestVo.getLatitude();
+        this.grade = usersRequestVo.getGrade();
+        this.date = usersRequestVo.getDate();
+        this.address = usersRequestVo.getAddress();
+
+    }
 }
