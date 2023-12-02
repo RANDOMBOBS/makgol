@@ -30,6 +30,14 @@
           <button type="button" onclick="updateGrade()">변경하기</button>
         </div>
 
+        <div class="search">
+          <select name="selectOption" id="selectOption">
+              <option value="userName">회원명</option>
+              <option value="userRole">회원등급</option>
+          </select>
+          <input type="text" name="searchText" id="searchText" placeholder="회원명을 입력해주세요">
+          <button type="button" onclick="searchUserList()"/><i class='fa-solid fa-magnifying-glass'></i></button>
+        </div>
 	  <div class="all_user_list"></div>
      </div>
 	<jsp:include page="../../script/jsp/user_management.jsp"></jsp:include>

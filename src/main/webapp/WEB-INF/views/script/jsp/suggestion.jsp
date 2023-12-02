@@ -260,11 +260,11 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     jQ(input).prev().children().find(".fa-plus").attr("style", "display:block");
     jQ(input).attr("style", "display:none");
     jQ(input).prev().find("input").val("");
-let index = jQ(input).closest('.image').index();
+    let index = jQ(input).closest('.image').index();
     jQ(".oldImage:eq(" + index + ")").val("null");
   }
 
-  function CreateBoardForm() {
+  function createBoardForm() {
     let form = document.create_board_form;
     if (form.category.value == "") {
       alert("카테고리를 선택해주세요.");
@@ -278,5 +278,18 @@ let index = jQ(input).closest('.image').index();
     } else {
       form.submit();
     }
+  }
+
+  function resetContents(){
+      let images = jQ(".image")
+      console.log(images)
+      jQ(images).children().find(".preview").attr("style", "display:none");
+      jQ(images).children().find(".fa-plus").attr("style", "display:block");
+      jQ(".delete_image").attr("style", "display:none");
+      jQ(images).children().find("input").val("");
+  }
+
+  function returnToList(){
+      window.location.href="http://localhost:8090/board/suggestion"
   }
 </script>

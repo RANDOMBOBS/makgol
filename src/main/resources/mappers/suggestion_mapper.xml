@@ -194,6 +194,7 @@
                     <when test="searchOption == 'contents'">
                         AND b.contents LIKE CONCAT('%', #{searchWord}, '%')
                     </when>
+
                 </choose>
             </select>
 
