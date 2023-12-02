@@ -18,7 +18,6 @@
 
     <title>막내야 골라봐 | 메인 (MAIN)</title>
 
-
 </head>
 <body>
 <jsp:include page="jsp/include/header.jsp"></jsp:include>

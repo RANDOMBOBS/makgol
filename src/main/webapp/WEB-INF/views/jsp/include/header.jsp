@@ -161,7 +161,8 @@
                     <c:if test="${loginedUserVo.getGrade() == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
-                    <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
+                    <li><a href="#" id="myPage">MYPAGE</a></li>
+                    <!--<li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>-->
                     <li><a href="<c:url value=''/>" id="logout_link">LOGOUT</a></li>
                 </c:when>
                 <c:otherwise>

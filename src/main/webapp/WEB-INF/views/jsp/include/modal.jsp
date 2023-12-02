@@ -12,7 +12,21 @@
 
     <script>
             jQuery(document).ready(function () {
-               // 회원가입 버튼
+                var Access_token = localStorage.getItem("Access_token");
+                jQuery("#myPage").click(function () {
+                     var xhr = new XMLHttpRequest();
+                          var url = "/user/myPage";  // 실제 엔드포인트에 대체해야 함
+
+                          // GET 요청에 Access_token을 헤더에 추가
+                          xhr.open("GET", url);
+                          xhr.setRequestHeader("Access_token", Access_token);
+
+                          // 요청 전송
+                          xhr.send();
+                });
+
+
+               // 로그인 버튼
                            jQuery("#submit_login").click(function () {
 
                                const formData = new FormData();
@@ -34,7 +48,7 @@
                                       location.href = "/";
                                    }
                                });
-                           });// 회원가입 버튼_END
+                           });// 로그인 버튼
             });
     </script>
 

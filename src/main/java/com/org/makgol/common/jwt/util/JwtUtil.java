@@ -75,8 +75,7 @@ public class JwtUtil {
                         case REFRESH_TOKEN:
                             refreshToken = cookie.getValue();
                             continue;
-                        default:
-                            System.out.println("쿠키가 존제 하지않음");
+
                     }
                 }
             }
@@ -107,7 +106,10 @@ public class JwtUtil {
     // 토큰 검증
     public Boolean tokenValidation(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            Jwts.parserBuilder().
+                    setSigningKey(key).
+                    build().
+                    parseClaimsJws(token);
             return true;
         } catch (Exception ex) {
             log.error(ex.getMessage());
@@ -182,5 +184,8 @@ public class JwtUtil {
         }
     }
 
+    public boolean checkExEndRv(String token) {
 
+        return refreshTokenRepository.checkExEndRv(token);
+    }
 }

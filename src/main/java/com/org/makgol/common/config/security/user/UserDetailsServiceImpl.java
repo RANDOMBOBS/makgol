@@ -22,10 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		try {
 			Users user = usersRepository.findByEmail(email);
+			log.info(user.toString());
 			log.info("account.toString() -- > : {}", user.toString());
 			UserDetailsImpl userDetails = new UserDetailsImpl();
 			userDetails.setUsers(user);
 			return userDetails;
+
 		} catch(Exception e) {
 			new RuntimeException("Not Found user");
 		}

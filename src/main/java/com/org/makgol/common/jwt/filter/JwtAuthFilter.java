@@ -2,7 +2,13 @@ package com.org.makgol.common.jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.makgol.common.GlobalResDto;
+import com.org.makgol.common.exception.CustomException;
+import com.org.makgol.common.exception.ErrorCode;
 import com.org.makgol.common.jwt.util.JwtUtil;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -36,7 +42,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         log.info("accessToken --> : {}", accessToken);
         log.info("refreshToken --> : {}", refreshToken);
 
-        if(accessToken != null) {
+        try {
+        if(accessToken != null && jwtUtil.checkExEndRv(refreshToken)) {
             // 어세스 토큰값이 유효하다면 setAuthentication를 통해
             // security context에 인증 정보저장
             if(jwtUtil.tokenValidation(accessToken)){
@@ -56,13 +63,32 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     jwtUtil.setHeaderAccessToken(response, newAccessToken);
                     // Security context에 인증 정보 넣기
                     setAuthentication(jwtUtil.getEmailFromToken(newAccessToken));
-                }
-                else {
+                } else {
                     jwtExceptionHandler(response, "RefreshToken Expired", HttpStatus.BAD_REQUEST);
                     jwtUtil.saveTokenUpdate(refreshToken, JwtUtil.EXPIRED);
                     return;
                 }
             }
+        }
+        }catch (SignatureException e) {
+            log.info("잘못된 JWT 서명입니다.");
+            request.setAttribute("exception", ErrorCode.WRONG_TYPE_SIGNATURE.getCode());
+        } catch (MalformedJwtException e) {
+            log.info("유효하지 않은 구성의 JWT 토큰입니다.");
+            request.setAttribute("exception", ErrorCode.WRONG_TYPE_TOKEN.getCode());
+        } catch (ExpiredJwtException e) {
+            log.info("만료된 JWT 토큰입니다.");
+            request.setAttribute("exception", ErrorCode.EXPIRED_ACCESS_TOKEN.getCode());
+        } catch (UnsupportedJwtException e) {
+            log.info("지원되지 않는 형식이나 구성의 JWT 토큰입니다.");
+            request.setAttribute("exception", ErrorCode.WRONG_TYPE_TOKEN.getCode());
+        } catch (IllegalArgumentException e) {
+            log.info(e.toString().split(":")[1].trim());
+            request.setAttribute("exception", ErrorCode.INVALID_ACCESS_TOKEN.getCode());
+        } catch (CustomException e) {
+            System.out.println("에러가 발생했을 때, request에 attribute를 세팅하고 RestAuthenticationEntryPoint로 request를 넘겨준다.");
+            log.info("Access Token이 존재하지 않습니다.");
+            request.setAttribute("exception", ErrorCode.ACCESS_TOKEN_NOT_EXIST.getCode());
         }
 
         filterChain.doFilter(request,response);

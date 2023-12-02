@@ -12,4 +12,5 @@ public interface RefreshTokenRepository {
     void save(Map<String, Object> map);
     void saveUpdateRevoked(String email);
     void saveUpdateExpried(String email);
+    boolean checkExEndRv(String token);
 }

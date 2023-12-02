@@ -20,6 +20,8 @@ import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -171,13 +173,23 @@ public class UsersService implements LogoutHandler {
     }
 
     private void setRefreshTokenInCookie(HttpServletResponse response, String refreshToken) {
-        Cookie cookie = new Cookie(JwtUtil.REFRESH_TOKEN, refreshToken);
-        cookie.setDomain(domainName);       // 여기서는 localhost로 설정되어 해당 도메인에서만 쿠키가 유효합니다.
-        cookie.setPath("/");                // "/"로 설정되어 해당 도메인 전체에서 쿠키가 유효합니다.
-        cookie.setMaxAge(7 * 24 * 60 * 60); // 1주일간 유지
-        cookie.setHttpOnly(true);           //javascript로 접근이 불가능하게 함
-        //cookie.setSecure(true);           //https 일 경우에만 쿠키 전송
-        response.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from(JwtUtil.REFRESH_TOKEN, refreshToken)
+                .domain(domainName)
+                .path("/")
+                .sameSite("Lax")            //sameSite 모르면 검색!! 중요함!!! 돼지꼬리 떙떙!!
+                .httpOnly(true)
+                .secure(false)
+                .maxAge(7 * 24 * 60 * 60)
+                .build();
+          response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+//        Cookie cookie = new Cookie(JwtUtil.REFRESH_TOKEN, refreshToken);
+//        cookie.setDomain(domainName);       // 여기서는 localhost로 설정되어 해당 도메인에서만 쿠키가 유효합니다.
+//        cookie.setPath("/");                // "/"로 설정되어 해당 도메인 전체에서 쿠키가 유효합니다.
+//        cookie.setMaxAge(7 * 24 * 60 * 60); // 1주일간 유지
+//        cookie.setHttpOnly(true);           //javascript로 접근이 불가능하게 함
+//        cookie.setSecure(false);           //https 일 경우에만 쿠키 전송
+//          response.addCookie(cookie);
     }
 
     public Boolean mailCheckDuplication(String email) {
