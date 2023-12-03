@@ -47,8 +47,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             // 어세스 토큰값이 유효하다면 setAuthentication를 통해
             // security context에 인증 정보저장
             if(jwtUtil.tokenValidation(accessToken)){
-                System.out.println("if(jwtUtil.tokenValidation(accessToken)){");
                 setAuthentication(jwtUtil.getEmailFromToken(accessToken));
+                System.out.println("if(jwtUtil.tokenValidation(accessToken)){");
             }
             // 어세스 토큰이 만료된 상황 && 리프레시 토큰 또한 존재하는 상황
             else if (refreshToken != null) {
