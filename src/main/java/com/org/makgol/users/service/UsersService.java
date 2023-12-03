@@ -179,7 +179,7 @@ public class UsersService implements LogoutHandler {
                 .sameSite("Lax")            //sameSite 모르면 검색!! 중요함!!! 돼지꼬리 떙떙!!
                 .httpOnly(true)
                 .secure(false)
-                .maxAge(7 * 24 * 60 * 60)
+                //.maxAge(7 * 24 * 60 * 60)
                 .build();
           response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 

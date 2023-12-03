@@ -36,8 +36,8 @@ public class JwtUtil {
 //    private static final long ACCESS_TIME = 30 * 60 * 1000L;
 //    private static final long REFRESH_TIME =  7 * 24 * 60 * 60 * 1000L;
 
-    private static final long ACCESS_TIME =  60 * 1000L;
-    private static final long REFRESH_TIME =  2 * 60 * 1000L;
+    private static final long ACCESS_TIME =  30 * 60 * 1000L;
+    private static final long REFRESH_TIME =  7 * 24 * 60 * 60 * 1000L;
     public static final String ACCESS_TOKEN = "Access_Token";
     public static final String REFRESH_TOKEN = "Refresh_Token";
     public static final String HEADER = "header";
@@ -97,6 +97,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(email)
                 .setExpiration(new Date(date.getTime() + time))
+                //.setExpiration(new Date(System.currentTimeMillis() + time))
                 .setIssuedAt(date)
                 .signWith(key, signatureAlgorithm)
                 .compact();
@@ -141,8 +142,8 @@ public class JwtUtil {
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         // spring security 내에서 가지고 있는 객체입니다. (UsernamePasswordAuthenticationToken)
 
-        log.info("userDetails --> : {} ", userDetails.getAuthorities());
         log.info("userDetails --> : {} ", userDetails.getUsername());
+        log.info("userDetails --> : {} ", userDetails.getAuthorities());
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }

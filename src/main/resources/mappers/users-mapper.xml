@@ -79,7 +79,7 @@
     </select>
 
     <select id="findByEmail" resultType="com.org.makgol.users.vo.Users" parameterType="String">
-        SELECT * FROM user WHERE email = #{email}
+        SELECT * FROM users WHERE email = #{email}
     </select>
 
 </mapper>

@@ -9,6 +9,7 @@ import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -123,9 +125,7 @@ public class UsersController {
 
 
     @GetMapping("/myPage")
-    public String myPage() {
-        return "jsp/user/my_page";
-    }
+    public String myPage() {return "jsp/user/my_page";}
 
     @GetMapping("/modifyUser")
     public String modify_user() {

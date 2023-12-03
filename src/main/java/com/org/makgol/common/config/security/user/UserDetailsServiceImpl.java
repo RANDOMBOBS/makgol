@@ -15,23 +15,15 @@ import org.springframework.stereotype.Service;
 // userDetailsImple에 account를 넣어주는 서비스입니다.
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	private final UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
 
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-		try {
-			Users user = usersRepository.findByEmail(email);
-			log.info(user.toString());
-			log.info("account.toString() -- > : {}", user.toString());
-			UserDetailsImpl userDetails = new UserDetailsImpl();
-			userDetails.setUsers(user);
-			return userDetails;
+        Users user = usersRepository.findByEmail(email);
+        UserDetailsImpl userDetails = new UserDetailsImpl();
+        userDetails.setUsers(user);
+        return userDetails;
 
-		} catch(Exception e) {
-			new RuntimeException("Not Found user");
-		}
-
-		return null;
-	}
+    }
 }
