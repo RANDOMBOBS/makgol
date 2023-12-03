@@ -21,9 +21,9 @@
 		<div class="suggestion_board_contents">
 			<form name="search_board_form">
 				<select name="search">
-					<option value="">선택</option>
-					<option value="title">글제목</option>
-					<option value="contents">글내용</option>
+					<option value="titleContents">제목+내용</option>
+					<option value="title">제목</option>
+					<option value="contents">내용</option>
 					<option value="name">작성자</option>
 				</select>
 				<input type="text" name="searchWord" placeholder="검색어를 입력해주세요" />

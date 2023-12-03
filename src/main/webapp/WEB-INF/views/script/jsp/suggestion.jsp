@@ -15,6 +15,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       dataType: "html",
       success: function (rdata) {
         jQ(".board_list").html(rdata);
+          jQ("select[name=search]").val("titleContents");
+          jQ("input[name=searchWord]").val("");
       },
       error: function (error) {
         alert("allBoardList 오류");
@@ -151,10 +153,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     let form = document.search_board_form;
     let searchOption = jQ("select[name=search]").val();
     let searchWord = jQ("input[name=searchWord]").val();
-    if (searchOption == "") {
-      alert("검색옵션을 입력해주세요");
-      form.search.focus();
-    } else if (searchWord == "") {
+   if (searchWord == "") {
       alert("검색어를 입력해주세요");
       form.searchWord.focus();
     } else {
@@ -169,8 +168,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         contentType: "application/json; charset=utf-8",
         success: function (rdata) {
           jQ(".board_list").html(rdata);
-          jQ("select[name=search]").val("");
-          jQ("input[name=searchWord]").val("");
+
         },
         error: function (error) {
           alert("searchBoard 오류");

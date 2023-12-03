@@ -62,6 +62,24 @@ body {
   align-items: flex-end;
 }
 
+#suggestion_board .suggestion_board_contents .board_list h3{
+  width: 100%;
+  text-align: left;
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+#suggestion_board .suggestion_board_contents .board_list h4{
+width: 100%;
+text-align: center;
+margin: 100px auto;
+font-size: 23px;
+}
+
+#suggestion_board .suggestion_board_contents .board_list h3 span{
+  font-size: 1.3em;
+}
+
 #suggestion_board .suggestion_board_contents .board_list table {
   width: 100%;
 }
