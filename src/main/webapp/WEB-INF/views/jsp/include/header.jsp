@@ -42,26 +42,21 @@
 <script>
     jQuery(document).ready(function () {
         var Access_token = localStorage.getItem("Access_token");
-        /*
         jQuery("#myPage").click(function () {
             var settings = {
                 "url": "http://localhost:8090/user/myPage",
                 "method": "GET",
                 "timeout": 0,
-                "headers": {
-                    "Access_token": Access_token,
-                    "Content-Type": `application/json`
-                },
+                "headers": { "Access_token": Access_token
+                            ,"Content-Type": "application/json"
 
+                },
             };
 
             $.ajax(settings).done(function (response) {
                 console.log(response);
-                localStorage.getItem("Access_token");
-                window.location.href = "/user/myPage"
             });
         });
-        */
         // 로그인 버튼
         jQuery("#submit_login").click(function () {
 
