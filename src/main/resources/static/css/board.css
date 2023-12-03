@@ -115,7 +115,7 @@ col:nth-child(6) {
 }
 
 #suggestion_board .suggestion_board_contents .board_list table tbody {
-  border: 1px solid #ffe286;
+  border: 2px solid #ffe286;
   font-size: 0.9em;
 }
 

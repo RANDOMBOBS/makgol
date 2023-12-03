@@ -265,24 +265,9 @@ jQ("#logout_link").on("click", function () {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
-        let hour = date.getHours();
+    let hour = date.getHours();
     let minute = date.getMinutes();
-    if (month > 0 && month < 10) {
-        month = "0" + month;
-    }
-    if (day > 0 && day < 10) {
-        day = "0" + day;
-    }
-    if (hour > 0 && hour < 10) {
-        hour = "0" + hour;
-    } else if (hour == 0) {
-        hour = "00";
-    }
-    if (minute > 0 && minute < 10) {
-        minute = "0" + minute;
-    } else if (minute == 0) {
-        minute = "00";
-    }
+
     let nowTime = hour + minute.toString();
     let nowHourMinute = (parseInt(nowTime) - 44).toString();
     if(nowHourMinute < 0){
@@ -313,6 +298,22 @@ jQ("#logout_link").on("click", function () {
         nowHourMinute = "00"+nowHourMinute;
     } else if(nowHourMinute<1000){
         nowHourMinute = "0"+nowHourMinute
+    }
+    if (month > 0 && month < 10) {
+        month = "0" + month;
+    }
+    if (day > 0 && day < 10) {
+        day = "0" + day;
+    }
+    if (hour > 0 && hour < 10) {
+        hour = "0" + hour;
+    } else if (hour == 0) {
+        hour = "00";
+    }
+    if (minute > 0 && minute < 10) {
+        minute = "0" + minute;
+    } else if (minute == 0) {
+        minute = "00";
     }
     let nowHour = nowHourMinute.substring(0, 2);
     let baseDate = year + month.toString() + day;

@@ -184,4 +184,28 @@ public class FileUpload {
         return fileInfoList;
     }
 
+
+    public static void deleteFileList(String oldImages) {
+        System.out.println("oldImages = " + oldImages);
+        String currentDirectory = System.getProperty("user.dir"); // 현재 이미지 경로 찾기
+        String[] oldImageList = null; // 삭제될 이미지들을 받을 배열
+        List<String> oldImageNames = new ArrayList<String>();   // 삭제된 이미지들의 이름을 받을 배열
+        oldImages = oldImages.substring(1, oldImages.length() - 1); // [ 123, 456, 789 ] -----> 123, 456, 789
+        oldImages = oldImages.replace(" ","");  // 공백 제거 123,456,789
+        oldImageList = oldImages.split(","); // 삭제될 이미지들을 ,기준으로 잘라서 넣음 [123, 456, 789]
+
+        for (int i = 0; i < oldImageList.length; i++) {
+            String oldImageName = oldImageList[i].substring(oldImageList[i].lastIndexOf("/") + 1);
+            oldImageNames.add(oldImageName);
+        }
+        // oldImageNames배열의 값들에 하나씩 접근해서 파일을 삭제함
+        for (int i = 0; i < oldImageNames.size(); i++) {
+            String image = oldImageNames.get(i);
+            String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
+            File file = new File(deleteFile);
+            file.delete();
+        }
+
+    }
+
 }
