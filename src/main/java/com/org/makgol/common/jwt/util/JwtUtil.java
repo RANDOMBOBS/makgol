@@ -186,7 +186,8 @@ public class JwtUtil {
     }
 
     public boolean checkExEndRv(String token) {
-
-        return refreshTokenRepository.checkExEndRv(token);
+        try {
+            return refreshTokenRepository.checkExEndRv(token);
+        } catch (Exception e){ return false; }
     }
 }

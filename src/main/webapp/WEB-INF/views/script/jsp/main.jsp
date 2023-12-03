@@ -87,6 +87,7 @@
 	btn.addEventListener("click", handleButtonClick);
 
 	   function todayMenuList() {
+	   var Access_token = localStorage.getItem("Access_token");
         		jQ.ajax({
         			url : "/main/todayMenuList",
         			type : "GET",
@@ -97,11 +98,15 @@
         			},
         			error : function(error) {
         				alert('today 오류');
-        			}
+        			},beforeSend : function(xhr) {
+                        xhr.setRequestHeader("Access_token", Access_token);
+                    }
         		});
         	}
 
 	function topMenuList() {
+	var Access_token = localStorage.getItem("Access_token");
+	        var header = new
     		jQ.ajax({
     			url : "/main/topMenuList",
     			type : "GET",
@@ -112,7 +117,9 @@
     			},
     			error : function(error) {
     				alert('TOP 오류');
-    			}
+    			},beforeSend : function(xhr){
+                    xhr.setRequestHeader("Access_token", Access_token);
+                }
     		});
     	}
 

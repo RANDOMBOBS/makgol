@@ -67,6 +67,8 @@ public class SecurityConfig {
                         , "/user/myPage"
                         , "/user/modifyUser"
                         , "/user/modifyUserConfirm"
+                        , "/main/todayMenuList"
+                        , "/main/topMenuList"
                 ).hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
                 //.antMatchers("/", "/user/join", "/user/login").permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 //.antMatchers("/api/account/logout").hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())

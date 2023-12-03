@@ -10,47 +10,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>
 
-    <script>
-            jQuery(document).ready(function () {
-                var Access_token = localStorage.getItem("Access_token");
-                jQuery("#myPage").click(function () {
-                     var xhr = new XMLHttpRequest();
-                          var url = "/user/myPage";  // 실제 엔드포인트에 대체해야 함
 
-                          // GET 요청에 Access_token을 헤더에 추가
-                          xhr.open("GET", url);
-                          xhr.setRequestHeader("Access_token", Access_token);
-
-                          // 요청 전송
-                          xhr.send();
-                });
-
-
-               // 로그인 버튼
-                           jQuery("#submit_login").click(function () {
-
-                               const formData = new FormData();
-                               const email = jQuery("#login_email").val();
-                               const password = jQuery("#login_password").val();
-
-                               formData.append("email", email);
-                               formData.append("password", password);
-
-                               jQuery.ajax({
-                                   type: "POST",
-                                   url: "http://localhost:8090/user/loginConfirm",
-                                   data: formData,
-                                   processData: false,
-                                   contentType: false,
-                                   success: function (data, status, xhr) {
-                                      token = xhr.getResponseHeader("Access_token");
-                                      localStorage.setItem("Access_token", token);
-                                      location.href = "/";
-                                   }
-                               });
-                           });// 로그인 버튼
-            });
-    </script>
 
 </head>
 <body>
