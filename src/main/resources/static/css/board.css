@@ -1,13 +1,191 @@
+
+
 body {
   background-color: #fffdd3;
 }
 
+#suggestion_board {
+  background-color: #fff;
+  margin: 50px auto;
+  padding: 50px;
+  width: 1200px;
+  border: 1px solid #eee;
+  border-radius: 15px;
+}
+
+#suggestion_board .suggestion_board_title {
+  text-align: left;
+  text-indent: 0.5em;
+  padding: 15px 0;
+  margin: 0 30px;
+  border-bottom: 3px solid #000;
+}
+
+#suggestion_board .suggestion_board_contents {
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#suggestion_board .suggestion_board_contents form {
+  width: 340px;
+  margin: 20px 25px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+#suggestion_board .suggestion_board_contents form select {
+  border: none;
+  font-weight: bold;
+  height: 30px;
+}
+
+#suggestion_board .suggestion_board_contents form input {
+  height: 30px;
+  border: none;
+  width: 200px;
+}
+
+#suggestion_board .suggestion_board_contents form button {
+  height: 30px;
+  width: 30px;
+  border: none;
+  background: none;
+}
+
+#suggestion_board .suggestion_board_contents .board_list {
+  width: 95%;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#suggestion_board .suggestion_board_contents .board_list h3{
+  width: 100%;
+  text-align: left;
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+#suggestion_board .suggestion_board_contents .board_list h4{
+width: 100%;
+text-align: center;
+margin: 100px auto;
+font-size: 23px;
+}
+
+#suggestion_board .suggestion_board_contents .board_list h3 span{
+  font-size: 1.3em;
+}
+
+#suggestion_board .suggestion_board_contents .board_list table {
+  width: 100%;
+}
+
+#suggestion_board
+.suggestion_board_contents
+.board_list
+table
+col:nth-child(1) {
+  width: 100px;
+}
+#suggestion_board
+.suggestion_board_contents
+.board_list
+table
+col:nth-child(2) {
+  width: auto;
+}
+#suggestion_board
+.suggestion_board_contents
+.board_list
+table
+col:nth-child(3) {
+  width: 150px;
+}
+#suggestion_board
+.suggestion_board_contents
+.board_list
+table
+col:nth-child(4) {
+  width: 120px;
+}
+#suggestion_board .suggestion_board_contents .board_list table col:nth-child(5),
+#suggestion_board
+.suggestion_board_contents
+.board_list
+table
+col:nth-child(6) {
+  width: 70px;
+}
+
+#suggestion_board .suggestion_board_contents .board_list table thead {
+  height: 50px;
+  height: 50px;
+  border: 2px solid #ffe286;
+  background-color: #fdf97e;
+}
+
+#suggestion_board .suggestion_board_contents .board_list table thead th {
+  border: 2px solid #ffe286;
+}
+
+#suggestion_board .suggestion_board_contents .board_list table tbody {
+  border: 2px solid #ffe286;
+  font-size: 0.9em;
+}
+
+#suggestion_board .suggestion_board_contents .board_list table tbody tr {
+  height: 50px;
+  border-bottom: 1px solid #ffe286;
+}
+
+
+#suggestion_board
+.suggestion_board_contents
+.board_list
+table
+tr
+td:nth-child(2) a{
+  padding: 0 20px;
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: left;
+}
+
+#suggestion_board
+.suggestion_board_contents
+.board_list
+table
+tr
+td:nth-child(2):hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#suggestion_board .suggestion_board_contents .board_list > a {
+  display: block;
+  border-radius: 5px;
+  width: 90px;
+  height: 35px;
+  line-height: 35px;
+  margin: 20px 0;
+  border: 1px solid #000;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+
 #board_write {
-   background-color: #fff;
-      margin: 50px auto;
-      padding: 50px;
-      width: 1000px;
-      border: 1px solid #eee;
+  background-color: #fff;
+  margin: 50px auto;
+  padding: 50px;
+  width: 1000px;
+  border: 1px solid #eee;
 }
 
 #board_write .write_board {
@@ -118,7 +296,7 @@ body {
 }
 
 #board_write .write_board_form .image_box label input {
-  display : none;
+  display: none;
 }
 
 #board_write .write_board_form .image_box label .no_image {
@@ -172,9 +350,6 @@ body {
   width: 80px;
 }
 
-
-
-
 .board {
   margin: 0 auto;
 }
@@ -191,21 +366,18 @@ body {
   width: 100px;
 }
 
-
-
-
 .board {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .contents {
-    width: 500px;
-    height: 350px;
+  width: 500px;
+  height: 350px;
 }
 
 .notice_detail_ul {
-    display: inline-block;
+  display: inline-block;
 }
 .title {
-    width: 100px;
+  width: 100px;
 }

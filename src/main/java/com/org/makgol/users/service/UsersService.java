@@ -204,20 +204,18 @@ public class UsersService implements LogoutHandler {
         UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
         System.out.println("세션 유저 정보?"+loginedUserVo);
 
-        String oldFileName = oldFile.substring(oldFile.lastIndexOf("/") + 1);
-        String currentDirectory = System.getProperty("user.dir");
+
         int result =0;
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
-
         if (usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()) {
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
             result = userDao.updateUserPhotoInfo(usersRequestVo);
             if(result > 0){
-                String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + oldFileName;
-                File oldfile = new File(deleteFile);
-                oldfile.delete();
+                oldFile = "["+oldFile+"]";
+                System.out.println("예전파일은?" +oldFile);
+                FileUpload.deleteFileList(oldFile);
             }
         } else {
             result = userDao.updateUserInfo(usersRequestVo);

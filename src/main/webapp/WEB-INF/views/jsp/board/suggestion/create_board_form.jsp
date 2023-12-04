@@ -117,9 +117,9 @@
         <br />
 
         <div class="buttons">
-          <input type="button" class="ok_board" value="작성" onclick="CreateBoardForm();" />
-          <input type="reset" class="cancel" value="초기화" />
-          <input type="button" class="board_list" value="글목록" />
+          <input type="button" class="ok_board" value="작성" onclick="createBoardForm();" />
+          <input type="reset" class="cancel" value="초기화" onclick="resetContents()"/>
+          <input type="button" class="board_list" value="글목록" onclick="returnToList()"/>
         </div>
       </form>
     </div>

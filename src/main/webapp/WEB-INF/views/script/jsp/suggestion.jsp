@@ -15,6 +15,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       dataType: "html",
       success: function (rdata) {
         jQ(".board_list").html(rdata);
+          jQ("select[name=search]").val("titleContents");
+          jQ("input[name=searchWord]").val("");
       },
       error: function (error) {
         alert("allBoardList 오류");
@@ -151,10 +153,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     let form = document.search_board_form;
     let searchOption = jQ("select[name=search]").val();
     let searchWord = jQ("input[name=searchWord]").val();
-    if (searchOption == "") {
-      alert("검색옵션을 입력해주세요");
-      form.search.focus();
-    } else if (searchWord == "") {
+   if (searchWord == "") {
       alert("검색어를 입력해주세요");
       form.searchWord.focus();
     } else {
@@ -169,8 +168,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         contentType: "application/json; charset=utf-8",
         success: function (rdata) {
           jQ(".board_list").html(rdata);
-          jQ("select[name=search]").val("");
-          jQ("input[name=searchWord]").val("");
+
         },
         error: function (error) {
           alert("searchBoard 오류");
@@ -260,11 +258,11 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     jQ(input).prev().children().find(".fa-plus").attr("style", "display:block");
     jQ(input).attr("style", "display:none");
     jQ(input).prev().find("input").val("");
-let index = jQ(input).closest('.image').index();
+    let index = jQ(input).closest('.image').index();
     jQ(".oldImage:eq(" + index + ")").val("null");
   }
 
-  function CreateBoardForm() {
+  function createBoardForm() {
     let form = document.create_board_form;
     if (form.category.value == "") {
       alert("카테고리를 선택해주세요.");
@@ -278,5 +276,18 @@ let index = jQ(input).closest('.image').index();
     } else {
       form.submit();
     }
+  }
+
+  function resetContents(){
+      let images = jQ(".image")
+      console.log(images)
+      jQ(images).children().find(".preview").attr("style", "display:none");
+      jQ(images).children().find(".fa-plus").attr("style", "display:block");
+      jQ(".delete_image").attr("style", "display:none");
+      jQ(images).children().find("input").val("");
+  }
+
+  function returnToList(){
+      window.location.href="http://localhost:8090/board/suggestion"
   }
 </script>

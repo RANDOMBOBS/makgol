@@ -6,34 +6,34 @@ body {
 }
 
 #my_page {
-    background-color: #fff;
-    margin: 50px auto;
-    padding: 50px;
-    width: 1000px;
-    border: 1px solid #eee;
+  background-color: #fff;
+  margin: 50px auto;
+  padding: 50px;
+  width: 1500px;
+  border: 1px solid #eee;
 }
 
 .my_page_title {
-    text-align: left;
-    text-indent: 0.5em;
-    padding: 15px 0;
-    margin: 0 30px;
-    border-bottom: 3px solid #000;
+      text-align: left;
+      text-indent: 0.5em;
+      padding: 15px 0;
+      margin: 0 30px;
+      border-bottom: 3px solid #000;
 }
 
 #my_page .my_page_content {
   margin: 30px auto;
   display: flex;
-  max-width: 1000px;
+  max-width: 1500px;
   justify-content: space-around;
   position: relative;
 }
 
 #my_page .my_page_content .my_info {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
-  width: 400px;
-  height: 600px;
+  width: 550px;
+  height: 750px;
   border: 3px solid #ddd;
   background-color: #ffe16f;
   border-radius: 10px;
@@ -74,13 +74,13 @@ body {
 
 #my_page .my_page_content .my_info .info_table tr td img {
   border: 2px solid #ffa500;
-  width: 250px;
-  height: 270px;
+  width: 350px;
+  height: 350px;
 }
 
 #my_page .my_page_content .my_info .info_table tr:nth-child(2) td {
   padding: 10px;
-  font-size: 30px;
+  font-size: 45px;
   letter-spacing: 2px;
 }
 
@@ -106,10 +106,10 @@ body {
 
 #my_page .my_page_content .my_history {
   font-family: "Gamja Flower", sans-serif;
-  font-size: 25px;
+  font-size: 35px;
   font-weight: bold;
-  width: 400px;
-  height: 600px;
+  width: 550px;
+  height: 750px;
   border: 3px solid #ddd;
   background-color: #ffe16f;
   border-radius: 10px;
@@ -160,8 +160,8 @@ body {
 }
 
 #my_page .my_page_content .my_history .history_table ul li img {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
 }
 
 
