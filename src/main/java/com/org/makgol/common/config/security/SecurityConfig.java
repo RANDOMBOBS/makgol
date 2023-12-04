@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/**"                     // main page
+                        "/"                     // main page
                         , "/user/login"                     // request login
                         , "/user/loginConfirm"              // request login
                         , "/user/join"                      // request join
