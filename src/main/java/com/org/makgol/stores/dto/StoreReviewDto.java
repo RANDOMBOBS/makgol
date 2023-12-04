@@ -10,5 +10,4 @@ public class StoreReviewDto {
     int user_id;
     String date;
     String content;
-    String photo_path;
 }
