@@ -8,6 +8,7 @@ import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.KakaoLocalResponseVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/store")
@@ -94,24 +94,31 @@ public class StoreController {
     @ResponseBody
     public ResponseEntity<?> findStoreReviewData(@PathVariable String store_id) {
         List<StoreReviewDto> storeReviewDtos = storeService.findStoreReviewWithId(store_id);
-        List<ResponseStoreReviewDto> responseStoreReviewDtos = new ArrayList<>();
 
-        for (int i = 0; i < storeReviewDtos.size(); i++) responseStoreReviewDtos.add(new ResponseStoreReviewDto());
+        List<ResponseStoreReviewDto> responseStoreReviewDtos = IntStream
+                .range(0, storeReviewDtos.size())
+                .mapToObj(i -> new ResponseStoreReviewDto())
+                .collect(Collectors.toList());
 
-        List<UserInfoDto> userNameAndPhoto = storeReviewDtos
+        List<UserInfoDto> userInfoDtos = storeReviewDtos
                 .stream()
                 .map((review) -> storeService.findUserNameAndPhotoWithId(review.getUser_id()))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
-        for (int i = 0 ; i < responseStoreReviewDtos.size(); i++) {
-            responseStoreReviewDtos.get(i).setId(storeReviewDtos.get(i).getId());
-            responseStoreReviewDtos.get(i).setContent(storeReviewDtos.get(i).getContent());
-            responseStoreReviewDtos.get(i).setDate(storeReviewDtos.get(i).getDate());
-            responseStoreReviewDtos.get(i).setReview_photo_path(storeReviewDtos.get(i).getPhoto_path());
-            responseStoreReviewDtos.get(i).setName(userNameAndPhoto.get(i).getName());
-            responseStoreReviewDtos.get(i).setUser_photo_path(userNameAndPhoto.get(i).getPhoto_path());
-        }
+        IntStream.range(0, responseStoreReviewDtos.size())
+                .forEach(i -> {
+                    ResponseStoreReviewDto responseStoreReviewDto = responseStoreReviewDtos.get(i);
+                    StoreReviewDto storeReviewDto = storeReviewDtos.get(i);
+                    UserInfoDto userInfoDto = userInfoDtos.get(i);
+
+                    responseStoreReviewDto.setId(storeReviewDto.getId());
+                    responseStoreReviewDto.setContent(storeReviewDto.getContent());
+                    responseStoreReviewDto.setDate(storeReviewDto.getDate());
+                    responseStoreReviewDto.setReview_photo_path(storeReviewDto.getPhoto_path());
+                    responseStoreReviewDto.setName(userInfoDto.getName());
+                    responseStoreReviewDto.setUser_photo_path(userInfoDto.getPhoto_path());
+                });
 
         KakaoLocalResponseVo<List<ResponseStoreReviewDto>> response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 리뷰를 가져옵니다.", responseStoreReviewDtos);
         return new ResponseEntity<>(response, HttpStatus.OK);
