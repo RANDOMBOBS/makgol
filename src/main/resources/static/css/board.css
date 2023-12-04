@@ -11,6 +11,7 @@ body {
   width: 1200px;
   border: 1px solid #eee;
   border-radius: 15px;
+
 }
 
 #suggestion_board .suggestion_board_title {
@@ -186,6 +187,8 @@ td:nth-child(2):hover {
   padding: 50px;
   width: 1000px;
   border: 1px solid #eee;
+  border-radius: 15px
+
 }
 
 #board_write .write_board {
@@ -319,6 +322,7 @@ td:nth-child(2):hover {
   width: 150px;
   height: 200px;
 }
+
 #board_write .write_board_form .image_box label .no_image img {
   position: absolute;
   display: none;

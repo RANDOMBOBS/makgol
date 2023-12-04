@@ -208,4 +208,35 @@ public class FileUpload {
 
     }
 
+    public static void modifyFileList(String oldImages,List<FileInfo> existingFileInfo){
+        String currentDirectory = System.getProperty("user.dir"); // 현재 이미지 경로 찾기
+        String[] oldImageList = null; // 삭제될 이미지들을 받을 배열
+        List<String> oldImageNames = new ArrayList<String>();   // 삭제된 이미지들의 이름을 받을 배열
+        oldImages = oldImages.substring(1, oldImages.length() - 1); // [ 123, 456, 789 ] -----> 123, 456, 789
+        oldImages = oldImages.replace(" ","");  // 공백 제거 123,456,789
+        oldImageList = oldImages.split(","); // 삭제될 이미지들을 ,기준으로 잘라서 넣음 [123, 456, 789]
+
+        // 삭제될 이미지들을 하나씩 순서대로 접근해서 수정후에도 남는 사진과 일치하다면 그 자리를 공백으로 바꿈 [123,,789]
+        for(int i=0; i<existingFileInfo.size(); i++){
+            for (int j=0; j<oldImageList.length; j++){
+                if(oldImageList[j].equals(existingFileInfo.get(i).getPhotoPath())){
+                    oldImageList[j]= "";
+                }
+            }
+        }
+        // 이미지 이름 찾아내서 oldImageNames배열에 담음 (/fileUpload/01b8c34c.jpg ----> 01b8c34c.jpg)
+        for (int i = 0; i < oldImageList.length; i++) {
+            String oldImageName = oldImageList[i].substring(oldImageList[i].lastIndexOf("/") + 1);
+            oldImageNames.add(oldImageName);
+        }
+        // oldImageNames배열의 값들에 하나씩 접근해서 파일을 삭제함
+        for (int i = 0; i < oldImageNames.size(); i++) {
+            String image = oldImageNames.get(i);
+            String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
+            File file = new File(deleteFile);
+            file.delete();
+        }
+
+    }
+
 }
