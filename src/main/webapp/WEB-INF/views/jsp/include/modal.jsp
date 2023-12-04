@@ -10,8 +10,6 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>
 
-
-
 </head>
 <body>
 <div class="modal_cover">
@@ -48,7 +46,7 @@
                             <span>아이디 저장하기 </span>
                         </label>
                     </div>
-                    <input id="submit_login" type="button" value="Login"/>
+                    <input id="submit_login" type="submit" value="Login"/>
                 </form>
             </div>
             <div class="user_option">

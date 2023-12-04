@@ -6,7 +6,7 @@
 <mapper namespace="com.org.makgol.common.jwt.repository.RefreshTokenRepository">
 
     <select id="findByEmail" resultType="com.org.makgol.common.jwt.vo.TokenResponseVo" parameterType="String">
-        SELECT * FROM users WHERE email = #{email}
+        SELECT * FROM refresh_token WHERE email = #{email} AND (expired = false AND revoked = false)
     </select>
 
     <insert id="save" parameterType="Map">
@@ -15,15 +15,22 @@
     </insert>
 
     <select id="saveUpdateRevoked" parameterType="String">
-        UPDATE refresh_token SET revoked = true WHERE email = #{email} AND (expired = false OR revoked = false)
+        UPDATE refresh_token SET revoked = true WHERE email = #{email} AND (expired = false AND revoked = false)
     </select>
 
     <select id="saveUpdateExpried" parameterType="String">
-        UPDATE refresh_token SET expired = true WHERE email = #{email} AND (expired = false OR revoked = false)
+        UPDATE refresh_token SET expired = true WHERE email = #{email} AND (expired = false AND revoked = false)
     </select>
 
     <select id="checkExEndRv" resultType="boolean" parameterType="String">
         SELECT * FROM refresh_token WHERE token = #{token} and expired = false and revoked = false
     </select>
 
+    <select id="findByToken" resultType="com.org.makgol.common.jwt.vo.TokenResponseVo" parameterType="String">
+        SELECT * FROM refresh_token WHERE token = #{token}
+    </select>
+
+    <select id="findbyEmailandDate" resultType="com.org.makgol.common.jwt.vo.TokenResponseVo" parameterType="Map">
+        SELECT * FROM refresh_token WHERE email = #{email} AND date = #{date}
+    </select>
 </mapper>

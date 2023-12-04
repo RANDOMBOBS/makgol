@@ -87,7 +87,6 @@
 	btn.addEventListener("click", handleButtonClick);
 
 	   function todayMenuList() {
-	   var Access_token = localStorage.getItem("Access_token");
         		jQ.ajax({
         			url : "/main/todayMenuList",
         			type : "GET",
@@ -103,7 +102,6 @@
         	}
 
 	function topMenuList() {
-	var Access_token = localStorage.getItem("Access_token");
 	        var header = new
     		jQ.ajax({
     			url : "/main/topMenuList",

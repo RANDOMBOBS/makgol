@@ -5,6 +5,7 @@ import com.org.makgol.common.jwt.exception.RestAuthenticationEntryPoint;
 import com.org.makgol.common.jwt.filter.JwtAuthFilter;
 import com.org.makgol.common.jwt.handler.TokenAccessDeniedHandler;
 import com.org.makgol.common.jwt.util.JwtUtil;
+import com.org.makgol.users.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
+    private final UsersService usersService;
     private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
     private final LogoutHandler logoutService;
 
@@ -60,6 +62,8 @@ public class SecurityConfig {
                         , "/resources/static/js/modal/**"   // modal js
                         , "/views/**"
                         , "/user/blackList"
+                        , "/main/todayMenuList"
+                        , "/main/topMenuList"
                 )
                 .permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 .antMatchers(
@@ -67,15 +71,13 @@ public class SecurityConfig {
                         , "/user/myPage"
                         , "/user/modifyUser"
                         , "/user/modifyUserConfirm"
-                        , "/main/todayMenuList"
-                        , "/main/topMenuList"
                 ).hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
                 //.antMatchers("/", "/user/join", "/user/login").permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 //.antMatchers("/api/account/logout").hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
                 //.antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthFilter(jwtUtil, usersService), UsernamePasswordAuthenticationFilter.class)
                 .logout(logoutConfig -> { logoutConfig
                         .logoutUrl("/user/logout")
                         .addLogoutHandler(logoutService)

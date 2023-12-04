@@ -20,10 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -88,6 +85,18 @@ public class JwtUtil {
         return new TokenVo(createToken(email, "Access"), createToken(email, "Refresh"));
     }
 
+    public TokenVo createSettingToken(String email) {
+        String refreshToken = createToken(email, "Refresh");
+        saveToken(refreshToken, email);
+        Optional<TokenResponseVo> tokenResponseVo = findByToken(refreshToken);
+        log.info("tokenResponseVo.get().getData() -- > : {} ", tokenResponseVo.get().getData());
+        String accessToken = createAccessToken(email, tokenResponseVo.get().getData());
+
+        return new TokenVo(accessToken, refreshToken);
+    }
+
+
+
     public String createToken(String email, String type) {
 
         Date date = new Date();
@@ -96,6 +105,23 @@ public class JwtUtil {
 
         return Jwts.builder()
                 .setSubject(email)
+                .setExpiration(new Date(date.getTime() + time))
+                //.setExpiration(new Date(System.currentTimeMillis() + time))
+                .setIssuedAt(date)
+                .signWith(key, signatureAlgorithm)
+                .compact();
+
+    }
+
+    public String createAccessToken(String email, Date refreshDate) {
+
+        Date date = new Date();
+
+        long time = ACCESS_TIME;
+
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("refreshDate", refreshDate)
                 .setExpiration(new Date(date.getTime() + time))
                 //.setExpiration(new Date(System.currentTimeMillis() + time))
                 .setIssuedAt(date)
@@ -150,7 +176,22 @@ public class JwtUtil {
 
     // 토큰에서 email 가져오는 기능
     public String getEmailFromToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    // 토큰에서 refreshDate 가져오는 기능
+    public Date getPayloadRefreshDate(String token) {
+        return (Date) Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("refreshDate");
     }
 
     // 악세스 토큰 헤더 설정
@@ -170,24 +211,46 @@ public class JwtUtil {
         return Optional.ofNullable(tokenResponseVo);
     }
 
-    public void saveToken(Map<String, Object> map) {
+    public Optional<TokenResponseVo> findByToken(String refreshToken) {
+        TokenResponseVo tokenResponseVo = refreshTokenRepository.findByToken(refreshToken);
+        return Optional.ofNullable(tokenResponseVo);
+    }
+
+    public Optional<TokenResponseVo> findbyEmailandDate(String email, Date refreshDate) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("email", email);
+        map.put("date", String.valueOf(refreshDate));
+        TokenResponseVo tokenResponseVo = refreshTokenRepository.findbyEmailandDate(map);
+        return Optional.ofNullable(tokenResponseVo);
+    }
+
+    public void saveToken(String token, String email) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", token);
+        map.put("email", email);
+        map.put("expired", false);
+        map.put("revoked", false);
+
         refreshTokenRepository.save(map);
         //return Optional.ofNullable(tokenResponseVo);
     }
 
     public void saveTokenUpdate(String email, String type) {
+
         if(type.equals(REVOKED)){
             refreshTokenRepository.saveUpdateRevoked(email);
 
-        } else if(type.equals(REVOKED)){
-            refreshTokenRepository.saveUpdateExpried(email);
-
-        }
+        } else if(type.equals(EXPIRED)){ refreshTokenRepository.saveUpdateExpried(email); }
     }
 
     public boolean checkExEndRv(String token) {
         try {
+            tokenValidation(token);
             return refreshTokenRepository.checkExEndRv(token);
         } catch (Exception e){ return false; }
     }
+
+
+
 }

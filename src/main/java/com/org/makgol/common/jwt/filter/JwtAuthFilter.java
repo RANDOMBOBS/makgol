@@ -5,6 +5,8 @@ import com.org.makgol.common.GlobalResDto;
 import com.org.makgol.common.exception.CustomException;
 import com.org.makgol.common.exception.ErrorCode;
 import com.org.makgol.common.jwt.util.JwtUtil;
+import com.org.makgol.common.jwt.vo.TokenResponseVo;
+import com.org.makgol.users.service.UsersService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -21,12 +23,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final UsersService usersService;
+
 
     @Override
     // HTTP 요청이 오면 WAS(tomcat)가 HttpServletRequest, HttpServletResponse 객체를 만들어 줍니다.
@@ -36,42 +42,46 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         // WebSecurityConfig 에서 보았던 UsernamePasswordAuthenticationFilter 보다 먼저 동작을 하게 됩니다.
 
         // Access / Refresh 헤더에서 토큰을 가져옴.
-        String accessToken = jwtUtil.getToken(request, "Access" , jwtUtil.HEADER);
-        String refreshToken = jwtUtil.getToken(request, "Refresh", jwtUtil.COOKIE);
-
+        String accessToken = jwtUtil.getToken(request, "Access", jwtUtil.COOKIE);
         log.info("accessToken --> : {}", accessToken);
-        log.info("refreshToken --> : {}", refreshToken);
 
+        String email = jwtUtil.getEmailFromToken(accessToken);
+        Optional<TokenResponseVo> tokenResponseVo = Optional.of(new TokenResponseVo());
+        try{
+            tokenResponseVo = jwtUtil.findbyEmailandDate(email, jwtUtil.getPayloadRefreshDate(accessToken));
+        } catch (Exception e){}
         try {
-        if(accessToken != null && jwtUtil.checkExEndRv(refreshToken)) {
-            // 어세스 토큰값이 유효하다면 setAuthentication를 통해
-            // security context에 인증 정보저장
-            if(jwtUtil.tokenValidation(accessToken)){
-                setAuthentication(jwtUtil.getEmailFromToken(accessToken));
-                System.out.println("if(jwtUtil.tokenValidation(accessToken)){");
-            }
-            // 어세스 토큰이 만료된 상황 && 리프레시 토큰 또한 존재하는 상황
-            else if (refreshToken != null) {
-                // 리프레시 토큰 검증 && 리프레시 토큰 DB에서  토큰 존재유무 확인
-                boolean isRefreshToken = jwtUtil.refreshTokenValidation(refreshToken);
-                // 리프레시 토큰이 유효하고 리프레시 토큰이 DB와 비교했을때 똑같다면
-                if (isRefreshToken) {
-                    // 리프레시 토큰으로 아이디 정보 가져오기
-                    String loginId = jwtUtil.getEmailFromToken(refreshToken);
-                    // 새로운 어세스 토큰 발급
-                    String newAccessToken = jwtUtil.createToken(loginId, "Access");
-                    // 헤더에 어세스 토큰 추가
-                    jwtUtil.setHeaderAccessToken(response, newAccessToken);
-                    // Security context에 인증 정보 넣기
-                    setAuthentication(jwtUtil.getEmailFromToken(newAccessToken));
-                } else {
-                    jwtExceptionHandler(response, "RefreshToken Expired", HttpStatus.BAD_REQUEST);
-                    jwtUtil.saveTokenUpdate(refreshToken, JwtUtil.EXPIRED);
-                    return;
+
+            if (accessToken != null) {
+                // 어세스 토큰값이 유효하다면 setAuthentication를 통해
+                // security context에 인증 정보저장
+                if (jwtUtil.tokenValidation(accessToken) && jwtUtil.checkExEndRv(tokenResponseVo.get().getToken())) {
+                    setAuthentication(jwtUtil.getEmailFromToken(accessToken));
+                }
+                // 어세스 토큰이 만료된 상황 && 리프레시 토큰 또한 존재하는 상황
+                else if (tokenResponseVo.isPresent()) {
+                    // 리프레시 토큰 검증 && 리프레시 토큰 DB에서  토큰 존재유무 확인
+                    boolean isRefreshToken = jwtUtil.refreshTokenValidation(tokenResponseVo.get().getToken());
+
+                    // 리프레시 토큰이 유효하고 리프레시 토큰이 DB와 비교했을때 똑같다면
+                    if (isRefreshToken) {
+                        // 리프레시 토큰으로 아이디 정보 가져오기
+                        String loginId = jwtUtil.getEmailFromToken(tokenResponseVo.get().getToken());
+                        // 새로운 어세스 토큰 발급
+                        String newAccessToken = jwtUtil.createAccessToken(loginId, tokenResponseVo.get().getData());
+                        // 헤더에 어세스 토큰 추가 -> cookie로 변경
+                        // jwtUtil.setHeaderAccessToken(response, newAccessToken);
+                        usersService.setTokenInCookie(response, newAccessToken, "Access");
+                        // Security context에 인증 정보 넣기
+                        setAuthentication(jwtUtil.getEmailFromToken(newAccessToken));
+                    } else {
+                        jwtExceptionHandler(response, "RefreshToken Expired", HttpStatus.BAD_REQUEST);
+                        jwtUtil.saveTokenUpdate(tokenResponseVo.get().getToken(), JwtUtil.EXPIRED);
+                        return;
+                    }
                 }
             }
-        }
-        }catch (SignatureException e) {
+        } catch (SignatureException e) {
             log.info("잘못된 JWT 서명입니다.");
             request.setAttribute("exception", ErrorCode.WRONG_TYPE_SIGNATURE.getCode());
         } catch (MalformedJwtException e) {
@@ -92,7 +102,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             request.setAttribute("exception", ErrorCode.ACCESS_TOKEN_NOT_EXIST.getCode());
         }
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
     // SecurityContext 에 Authentication 객체를 저장합니다.
