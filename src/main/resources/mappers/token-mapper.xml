@@ -27,7 +27,7 @@
     </select>
 
     <select id="findByToken" resultType="com.org.makgol.common.jwt.vo.TokenResponseVo" parameterType="String">
-        SELECT * FROM refresh_token WHERE token = #{token}
+        SELECT id, token, email, expired, revoked, DATE_FORMAT(date, '%Y-%m-%d %H:%i:%s') AS date FROM refresh_token WHERE token = #{token};
     </select>
 
     <select id="findbyEmailandDate" resultType="com.org.makgol.common.jwt.vo.TokenResponseVo" parameterType="Map">

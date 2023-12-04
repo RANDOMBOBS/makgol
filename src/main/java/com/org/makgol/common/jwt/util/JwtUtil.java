@@ -10,6 +10,8 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Key;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Slf4j
@@ -33,8 +36,8 @@ public class JwtUtil {
 //    private static final long ACCESS_TIME = 30 * 60 * 1000L;
 //    private static final long REFRESH_TIME =  7 * 24 * 60 * 60 * 1000L;
 
-    private static final long ACCESS_TIME =  30 * 60 * 1000L;
-    private static final long REFRESH_TIME =  7 * 24 * 60 * 60 * 1000L;
+    private static final long ACCESS_TIME = 30 * 60 * 1000L;
+    private static final long REFRESH_TIME = 7 * 24 * 60 * 60 * 1000L;
     public static final String ACCESS_TOKEN = "Access_Token";
     public static final String REFRESH_TOKEN = "Refresh_Token";
     public static final String HEADER = "header";
@@ -43,6 +46,8 @@ public class JwtUtil {
     public static final String EXPIRED = "expired";
 
 
+    @Value("${domain.name}")
+    private String domainName;
 
     @Value("${jwt.secret.key}")
     private String secretKey;
@@ -58,14 +63,16 @@ public class JwtUtil {
 
     // header, cookie 토큰을 가져오는 기능
     public String getToken(HttpServletRequest request, String type, String type2) {
-        if(type2.equals(HEADER)) {
+        if (type2.equals(HEADER)) {
             return type.equals("Access") ? request.getHeader(ACCESS_TOKEN) : request.getHeader(REFRESH_TOKEN);
 
         } else {
-            String accessToken = ""; String refreshToken = ""; Cookie[] cookies = request.getCookies();
-            if(cookies != null){
-                for(Cookie cookie:cookies) {
-                    switch (cookie.getName()){
+            String accessToken = "";
+            String refreshToken = "";
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    switch (cookie.getName()) {
                         case ACCESS_TOKEN:
                             accessToken = cookie.getValue();
                             continue;
@@ -86,15 +93,23 @@ public class JwtUtil {
     }
 
     public TokenVo createSettingToken(String email) {
+
         String refreshToken = createToken(email, "Refresh");
         saveToken(refreshToken, email);
         Optional<TokenResponseVo> tokenResponseVo = findByToken(refreshToken);
-        log.info("tokenResponseVo.get().getData() -- > : {} ", tokenResponseVo.get().getData());
-        String accessToken = createAccessToken(email, tokenResponseVo.get().getData());
+        log.info("tokenResponseVo.get().getDate() --> : {}", tokenResponseVo.get().getDate());
+        String accessToken = createAccessToken(email, tokenResponseVo.get().getDate());
 
         return new TokenVo(accessToken, refreshToken);
     }
 
+    public String formatDate(Date date){
+        // 포맷을 원하는 형식으로 설정합니다.
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // 날짜를 문자열로 변환합니다.
+
+        return dateFormat.format(date);
+    }
 
 
     public String createToken(String email, String type) {
@@ -113,7 +128,7 @@ public class JwtUtil {
 
     }
 
-    public String createAccessToken(String email, Date refreshDate) {
+    public String createAccessToken(String email, String refreshDate) {
 
         Date date = new Date();
 
@@ -151,7 +166,7 @@ public class JwtUtil {
     public Boolean refreshTokenValidation(String token) {
 
         // 1차 토큰 검증
-        if(!tokenValidation(token)) return false;
+        if (!tokenValidation(token)) return false;
 
         // DB에 저장한 토큰 비교
         //Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUserEmail(getEmailFromToken(token));
@@ -160,7 +175,6 @@ public class JwtUtil {
 
         return refreshToken.isPresent() && token.equals(refreshToken.get().getToken());
     }
-
 
 
     // 인증 객체 생성
@@ -185,8 +199,8 @@ public class JwtUtil {
     }
 
     // 토큰에서 refreshDate 가져오는 기능
-    public Date getPayloadRefreshDate(String token) {
-        return (Date) Jwts.parserBuilder()
+    public String getPayloadRefreshDate(String token) {
+        return (String) Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
@@ -216,10 +230,10 @@ public class JwtUtil {
         return Optional.ofNullable(tokenResponseVo);
     }
 
-    public Optional<TokenResponseVo> findbyEmailandDate(String email, Date refreshDate) {
+    public Optional<TokenResponseVo> findbyEmailandDate(String email, String refreshDate) {
         Map<String, Object> map = new HashMap<>();
         map.put("email", email);
-        map.put("date", String.valueOf(refreshDate));
+        map.put("date", refreshDate);
         TokenResponseVo tokenResponseVo = refreshTokenRepository.findbyEmailandDate(map);
         return Optional.ofNullable(tokenResponseVo);
     }
@@ -238,19 +252,52 @@ public class JwtUtil {
 
     public void saveTokenUpdate(String email, String type) {
 
-        if(type.equals(REVOKED)){
+        if (type.equals(REVOKED)) {
             refreshTokenRepository.saveUpdateRevoked(email);
 
-        } else if(type.equals(EXPIRED)){ refreshTokenRepository.saveUpdateExpried(email); }
+        } else if (type.equals(EXPIRED)) {
+            refreshTokenRepository.saveUpdateExpried(email);
+        }
     }
 
     public boolean checkExEndRv(String token) {
         try {
             tokenValidation(token);
             return refreshTokenRepository.checkExEndRv(token);
-        } catch (Exception e){ return false; }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
+    public void setTokenInCookie(HttpServletResponse response, String token, String type) {
+
+        ResponseCookie cookie = type.equals("Access") ? ResponseCookie.from(JwtUtil.ACCESS_TOKEN, token)
+                .domain(domainName)
+                .path("/")
+                .sameSite("Lax")            //sameSite 모르면 검색!! 중요함!!! 돼지꼬리 떙떙!!
+                .httpOnly(true)
+                .secure(false)
+                .maxAge(2 * 60 * 60)
+                .build()
+                : ResponseCookie.from(JwtUtil.REFRESH_TOKEN, token)
+                .domain(domainName)
+                .path("/")
+                .sameSite("Lax")            //sameSite 모르면 검색!! 중요함!!! 돼지꼬리 떙떙!!
+                .httpOnly(true)
+                .secure(false)
+                //.maxAge(7 * 24 * 60 * 60)
+                .build();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+
+//        Cookie cookie = new Cookie(JwtUtil.REFRESH_TOKEN, refreshToken);
+//        cookie.setDomain(domainName);       // 여기서는 localhost로 설정되어 해당 도메인에서만 쿠키가 유효합니다.
+//        cookie.setPath("/");                // "/"로 설정되어 해당 도메인 전체에서 쿠키가 유효합니다.
+//        cookie.setMaxAge(7 * 24 * 60 * 60); // 1주일간 유지
+//        cookie.setHttpOnly(true);           //javascript로 접근이 불가능하게 함
+//        cookie.setSecure(false);           //https 일 경우에만 쿠키 전송
+//          response.addCookie(cookie);
+    }
 
 }

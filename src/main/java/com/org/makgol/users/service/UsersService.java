@@ -45,8 +45,7 @@ import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 @Service
 @RequiredArgsConstructor
 public class UsersService implements LogoutHandler {
-    @Value("${domain.name}")
-    private String domainName;
+
     private final JwtUtil         jwtUtil;
     private final UserDao         userDao;
     private final RedisUtil       redisUtil;
@@ -142,21 +141,13 @@ public class UsersService implements LogoutHandler {
             loginedUserVo = null;
 
         } else {
-            // 아이디 정보로 Token생성
+
+            // 1. 기존에 있던 리프레쉬 토큰을 취소 시킨다.
+            jwtUtil.saveTokenUpdate(email, JwtUtil.REVOKED);
+            // 2. 리프레쉬를 만들고 date 값을 가져와 access 토큰에 주입 시켜 연관관계를 형성 시킨다.
             TokenVo tokenVo = jwtUtil.createSettingToken(email);
-                    // Refresh토큰 있는지 확인
-            Optional<TokenResponseVo> refreshToken = jwtUtil.findTokenByEmail(email);
-
-            // 있다면 새토큰 발급후 업데이트
-            if(refreshToken.isPresent()) {
-                jwtUtil.saveTokenUpdate(email, JwtUtil.REVOKED);
-                jwtUtil.saveToken(tokenVo.getRefreshToken(), email);
-
-                // 없다면 새로 만들고 디비 저장
-            } else { jwtUtil.saveToken(tokenVo.getRefreshToken(), email); }
-
-            //access token in header, refresh token in cookie
-            setTokenInCookie(response, tokenVo.getAccessToken(), "Access");
+            // 3. 악세스 토큰을 쿠키에 담아 클라이언트에게 전송 시킨다.
+            jwtUtil.setTokenInCookie(response, tokenVo.getAccessToken(), "Access");
         }
 
         return loginedUserVo;
@@ -166,36 +157,7 @@ public class UsersService implements LogoutHandler {
         response.addHeader(JwtUtil.ACCESS_TOKEN, accessToken);
     }
 
-    public void setTokenInCookie(HttpServletResponse response, String token, String type) {
 
-        ResponseCookie cookie = type.equals("Access") ? ResponseCookie.from(JwtUtil.ACCESS_TOKEN, token)
-                .domain(domainName)
-                .path("/")
-                .sameSite("Lax")            //sameSite 모르면 검색!! 중요함!!! 돼지꼬리 떙떙!!
-                .httpOnly(true)
-                .secure(false)
-                .maxAge(2 * 60 * 60)
-                .build()
-                :ResponseCookie.from(JwtUtil.REFRESH_TOKEN, token)
-                .domain(domainName)
-                .path("/")
-                .sameSite("Lax")            //sameSite 모르면 검색!! 중요함!!! 돼지꼬리 떙떙!!
-                .httpOnly(true)
-                .secure(false)
-                //.maxAge(7 * 24 * 60 * 60)
-                .build();
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-
-
-//        Cookie cookie = new Cookie(JwtUtil.REFRESH_TOKEN, refreshToken);
-//        cookie.setDomain(domainName);       // 여기서는 localhost로 설정되어 해당 도메인에서만 쿠키가 유효합니다.
-//        cookie.setPath("/");                // "/"로 설정되어 해당 도메인 전체에서 쿠키가 유효합니다.
-//        cookie.setMaxAge(7 * 24 * 60 * 60); // 1주일간 유지
-//        cookie.setHttpOnly(true);           //javascript로 접근이 불가능하게 함
-//        cookie.setSecure(false);           //https 일 경우에만 쿠키 전송
-//          response.addCookie(cookie);
-    }
 
     public Boolean mailCheckDuplication(String email) {
 

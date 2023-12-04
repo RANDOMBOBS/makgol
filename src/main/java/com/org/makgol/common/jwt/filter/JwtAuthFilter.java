@@ -31,7 +31,6 @@ import java.util.Optional;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UsersService usersService;
 
 
     @Override
@@ -45,13 +44,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String accessToken = jwtUtil.getToken(request, "Access", jwtUtil.COOKIE);
         log.info("accessToken --> : {}", accessToken);
 
-        String email = jwtUtil.getEmailFromToken(accessToken);
-        Optional<TokenResponseVo> tokenResponseVo = Optional.of(new TokenResponseVo());
-        try{
-            tokenResponseVo = jwtUtil.findbyEmailandDate(email, jwtUtil.getPayloadRefreshDate(accessToken));
-        } catch (Exception e){}
         try {
-
+            String email = jwtUtil.getEmailFromToken(accessToken);
+            Optional<TokenResponseVo> tokenResponseVo = jwtUtil.findbyEmailandDate(email, jwtUtil.getPayloadRefreshDate(accessToken));
             if (accessToken != null) {
                 // 어세스 토큰값이 유효하다면 setAuthentication를 통해
                 // security context에 인증 정보저장
@@ -68,10 +63,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         // 리프레시 토큰으로 아이디 정보 가져오기
                         String loginId = jwtUtil.getEmailFromToken(tokenResponseVo.get().getToken());
                         // 새로운 어세스 토큰 발급
-                        String newAccessToken = jwtUtil.createAccessToken(loginId, tokenResponseVo.get().getData());
+                        String newAccessToken = jwtUtil.createAccessToken(loginId, tokenResponseVo.get().getDate());
                         // 헤더에 어세스 토큰 추가 -> cookie로 변경
                         // jwtUtil.setHeaderAccessToken(response, newAccessToken);
-                        usersService.setTokenInCookie(response, newAccessToken, "Access");
+                        jwtUtil.setTokenInCookie(response, newAccessToken, "Access");
                         // Security context에 인증 정보 넣기
                         setAuthentication(jwtUtil.getEmailFromToken(newAccessToken));
                     } else {

@@ -26,7 +26,6 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
-    private final UsersService usersService;
     private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
     private final LogoutHandler logoutService;
 
@@ -53,7 +52,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/"                     // main page
+                        "/**"                     // main page
                         , "/user/login"                     // request login
                         , "/user/loginConfirm"              // request login
                         , "/user/join"                      // request join
@@ -77,7 +76,7 @@ public class SecurityConfig {
                 //.antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtAuthFilter(jwtUtil, usersService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 .logout(logoutConfig -> { logoutConfig
                         .logoutUrl("/user/logout")
                         .addLogoutHandler(logoutService)
