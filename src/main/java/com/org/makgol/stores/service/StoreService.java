@@ -88,7 +88,7 @@ public class StoreService {
         return result;
     }
 
-    public List<StoreReviewDto> findStoreReviewWithId(String storeId) {
+    public List<StoreReviewDto> findStoreReviewWithId(int storeId) {
         List<StoreReviewDto> result = null;
         try{
             result = storesRepository.findStoreReviewWithId(storeId);
@@ -98,10 +98,20 @@ public class StoreService {
         return result;
     }
 
-    public List<UserInfoDto> findUserNameAndPhotoWithId(int userId) {
+    public List<String> findStoreReviewImageWithId(int reviewId) {
+        List<String> result = null;
+        try{
+            result = storesRepository.findStoreReviewImageWithId(reviewId);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<UserInfoDto> findUserInfo(int userId) {
         List<UserInfoDto> result = null;
         try {
-            result = storesRepository.findUserNameAndPhotoWithId(userId);
+            result = storesRepository.findUserInfo(userId);
         } catch (Exception e) {
             e.printStackTrace();
         }

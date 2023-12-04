@@ -16,9 +16,9 @@ public interface StoresRepository {
     String findStoreIdWithPlaceName(String placeName);
     StoreDetailDto findStoreDetailWithId(String storeId);
     List<StoreMenuDto> findStoreMenuWithId(String storeId);
-    List<StoreReviewDto> findStoreReviewWithId(String storeId);
-
-    List<UserInfoDto> findUserNameAndPhotoWithId(int userId);
+    List<StoreReviewDto> findStoreReviewWithId(int storeId);
+    List<String> findStoreReviewImageWithId(int reviewId);
+    List<UserInfoDto> findUserInfo(int userId);
     void saveCategoryMenu(Map<String, Object> map);
     void saveMenus(Map<String, Object> map);
     void saveStores(StoreRequestVo storeRequestVo);

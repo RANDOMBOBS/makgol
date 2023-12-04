@@ -15,8 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -92,8 +91,11 @@ public class StoreController {
 
     @GetMapping(value = "/review_data/store_id/{store_id}")
     @ResponseBody
-    public ResponseEntity<?> findStoreReviewData(@PathVariable String store_id) {
+    public ResponseEntity<?> findStoreReviewData(@PathVariable int store_id) {
         List<StoreReviewDto> storeReviewDtos = storeService.findStoreReviewWithId(store_id);
+        Map<Integer, List<String>> storeReviewImages = new HashMap<>();
+
+        storeReviewDtos.forEach(review -> storeReviewImages.put(review.getId(), storeService.findStoreReviewImageWithId(review.getId())));
 
         List<ResponseStoreReviewDto> responseStoreReviewDtos = IntStream
                 .range(0, storeReviewDtos.size())
@@ -102,7 +104,7 @@ public class StoreController {
 
         List<UserInfoDto> userInfoDtos = storeReviewDtos
                 .stream()
-                .map((review) -> storeService.findUserNameAndPhotoWithId(review.getUser_id()))
+                .map((review) -> storeService.findUserInfo(review.getUser_id()))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
@@ -115,7 +117,7 @@ public class StoreController {
                     responseStoreReviewDto.setId(storeReviewDto.getId());
                     responseStoreReviewDto.setContent(storeReviewDto.getContent());
                     responseStoreReviewDto.setDate(storeReviewDto.getDate());
-                    responseStoreReviewDto.setReview_photo_path(storeReviewDto.getPhoto_path());
+                    responseStoreReviewDto.setReview_photo_path(storeReviewImages.get(storeReviewDto.getId()));
                     responseStoreReviewDto.setName(userInfoDto.getName());
                     responseStoreReviewDto.setUser_photo_path(userInfoDto.getPhoto_path());
                 });
