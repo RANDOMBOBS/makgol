@@ -65,7 +65,7 @@ public class CategoryListDao {
 	}
 
 	public List<CategoryListVo> selectCategoryCafe() {
-		return selectCategory("WHERE category='카페/디저트'");
+		return selectCategory("WHERE category='카페'");
 	}
 
 

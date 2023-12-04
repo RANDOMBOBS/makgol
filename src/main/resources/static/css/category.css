@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body{
-    background-color:#ffeed2;
+    background-image:url("https://png.pngtree.com/thumb_back/fw800/background/20231020/pngtree-detailed-view-of-wooden-plank-table-flooring-showcasing-natural-pattern-texture-image_13651860.png");
 }
 .section{
     width:1200px;
@@ -37,6 +37,7 @@ button.active {
     justify-content: space-between;
     flex-wrap: wrap;
     width:600px;
+    z-index:997;
 }
 
 .category_main_ul li {
@@ -156,6 +157,7 @@ img {
     margin-top: 100px;
     border: 7px solid #000;
     background-color: #62340b;
+    box-shadow: 5px 5px 10px -5px;
 }
 .categoryMenuPage{
     border: 1px solid grey;
