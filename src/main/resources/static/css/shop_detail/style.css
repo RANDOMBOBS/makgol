@@ -59,7 +59,7 @@ article #photo {
     width: 360px;
     height: 280px;
     position: relative;
-    top: 20px;
+    top: 50px;
     left: 125px;
 }
 
@@ -67,7 +67,7 @@ article #intro {
     width: 360px;
     height: 760px;
     position: relative;
-    top: 40px;
+    top: 70px;
     left: 125px;
 }
 
@@ -155,7 +155,7 @@ article #map {
     width: 600px;
     height: 500px;
     position: relative;
-    bottom: 1020px;
+    bottom: 990px;
     left: 505px;
 }
 
@@ -226,6 +226,121 @@ article #review {
     width: 600px;
     height: 540px;
     position: relative;
-    bottom: 1001px;
+    bottom: 971px;
     left: 505px;
 }
+
+article #review #review_list {
+    height: 400px;
+    background: #cccccc;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+article #review #review_list::-webkit-scrollbar {
+    width: 12px;
+}
+
+article #review #review_list::-webkit-scrollbar-thumb {
+    background-color: #c2c2b5;
+}
+
+article #review #review_list::-webkit-scrollbar-track {
+    background-color: #eae7d9;
+}
+
+article #review #review_list .review_item {
+    display: flex;
+    height: 100px;
+    background: whitesmoke;
+    border-bottom: 1px solid #b0b09a;
+}
+
+article #review #review_list .review_item .user_image {
+    width: 50px;
+    height: 50px;
+    border:1px solid black;
+    border-radius: 50px;
+}
+
+article #review #review_list .review_item .user_name {
+    font-size: 13px;
+    color: #ff8a00;
+}
+
+article #review #review_list .review_item .review_profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+}
+
+article #review #review_list .review_item .review_content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+article #review #review_list .review_item .review_content .content {
+    width: 340px;
+    height: 80px;
+    background: #ffffff;
+    border: 1px solid gainsboro;
+    bottom: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    color: #6b6b6b;
+}
+
+article #review #review_list .review_item .review_etc {
+    display: flex;
+    flex: 1;
+}
+
+article #review #review_list .review_item .review_etc .etc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+article #review #review_list .review_item .review_etc .etc .date_box {
+    width: 75px;
+    font-size: 12px;
+}
+
+article #review #review_list .review_item .review_etc .etc .option_box {
+    margin-top: 6px;
+}
+
+article #review #review_list .review_item .review_etc .etc .button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+article #review #review_list .review_item .review_etc .option_box .modify_button:hover {
+    color: blue;
+}
+
+article #review #review_list .review_item .review_etc .option_box .delete_button:hover {
+    color: red;
+}
+
+article #review #review_list .review_item .review_etc .review_image_box {
+    display: flex;
+    align-items: center;
+}
+
+
+article #review #review_list .review_item .review_etc .review_image {
+    border: 1px solid black;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+

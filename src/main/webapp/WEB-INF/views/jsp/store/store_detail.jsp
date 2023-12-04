@@ -83,7 +83,17 @@
         <div class="item_info_head">
             <h1>업장 리뷰</h1>
         </div>
-        <div class="item_info_body"></div>
+        <div class="item_info_body">
+            <div id="review_wrapper">
+                <ul id="review_list"></ul>
+                <div id="review_form">
+                    <form>
+                        <input type="text" />
+                        <input type="submit" value="제출"/>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="item_info_footer"></div>
     </div>
 </article>

@@ -16,7 +16,7 @@
         const [detail, menus, reviews] = await Promise.all([
             requestStoreDetail(shopId),
             requestStoreMenu(shopId),
-            requestStoreReview()
+            requestStoreReview(shopId)
         ]);
 
         displayImage(detail.photo);
