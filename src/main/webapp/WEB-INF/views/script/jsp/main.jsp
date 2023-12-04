@@ -98,9 +98,7 @@
         			},
         			error : function(error) {
         				alert('today 오류');
-        			},beforeSend : function(xhr) {
-                        xhr.setRequestHeader("Access_token", Access_token);
-                    }
+        			}
         		});
         	}
 
@@ -117,9 +115,7 @@
     			},
     			error : function(error) {
     				alert('TOP 오류');
-    			},beforeSend : function(xhr){
-                    xhr.setRequestHeader("Access_token", Access_token);
-                }
+    			}
     		});
     	}
 

@@ -22,7 +22,7 @@
         </div>
         <div class="modal_body">
             <div class="login_wrapper">
-                <form  id="login_form" method="post">
+                <form action="http://localhost:8090/user/loginConfirm" id="login_form" method="post">
                     <label>
                         <input
                                 autocomplete="off"

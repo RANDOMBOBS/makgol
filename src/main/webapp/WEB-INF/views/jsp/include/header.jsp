@@ -39,50 +39,6 @@
 <c:set var="address" value="${loginedUserVo.address.split(' ')}"/>
 <c:set var="weatherAddress" value="${address[0]} ${address[1]}"/>
 
-<script>
-    jQuery(document).ready(function () {
-        var Access_token = localStorage.getItem("Access_token");
-        jQuery("#myPage").click(function () {
-            var settings = {
-                "url": "http://localhost:8090/user/myPage",
-                "method": "GET",
-                "timeout": 0,
-                "headers": { "Access_token": Access_token
-                            ,"Content-Type": "application/json"
-
-                },
-            };
-
-            $.ajax(settings).done(function (response) {
-                console.log(response);
-            });
-        });
-        // 로그인 버튼
-        jQuery("#submit_login").click(function () {
-
-            const formData = new FormData();
-            const email = jQuery("#login_email").val();
-            const password = jQuery("#login_password").val();
-
-            formData.append("email", email);
-            formData.append("password", password);
-
-            jQuery.ajax({
-                type: "POST",
-                url: "http://localhost:8090/user/loginConfirm",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data, status, xhr) {
-                    token = xhr.getResponseHeader("Access_token");
-                    localStorage.setItem("Access_token", token);
-                    location.href = "/";
-                }
-            });
-        });// 로그인 버튼
-    });//document
-</script>
-
 <header id="header">
     <div class="all_category">
         <div class="show_category">
@@ -205,8 +161,7 @@
                     <c:if test="${loginedUserVo.getGrade() == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
-                    <li><a href="#" id="myPage">MYPAGE</a></li>
-                    <!--<li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>-->
+                    <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
                     <li><a href="<c:url value=''/>" id="logout_link">LOGOUT</a></li>
                 </c:when>
                 <c:otherwise>
