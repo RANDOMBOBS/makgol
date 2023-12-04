@@ -87,8 +87,12 @@
             <div id="review_wrapper">
                 <ul id="review_list"></ul>
                 <div id="review_form">
-                    <form>
-                        <input type="text" />
+                    <div class="review_profile">
+                        <img class="user_image" src="http://localhost:8090/resources/static/image/default/user_default.jpeg">
+                        <span class="user_name">사용자</span>
+                    </div>
+                    <form class="review_content">
+                        <input type="text" class="content" />
                         <input type="submit" value="제출"/>
                     </form>
                 </div>

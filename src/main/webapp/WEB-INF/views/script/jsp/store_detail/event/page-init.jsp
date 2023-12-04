@@ -6,6 +6,7 @@
 <jsp:include page="../ui/display-menu.jsp"></jsp:include>
 <jsp:include page="../ui/display-map.jsp"></jsp:include>
 <jsp:include page="../ui/display-review.jsp"></jsp:include>
+<jsp:include page="../ui/display-review-form.jsp"></jsp:include>
 <jsp:include page="../backend/request-store-detail.jsp"></jsp:include>
 <jsp:include page="../backend/request-store-menu.jsp"></jsp:include>
 <jsp:include page="../backend/request-store-review.jsp"></jsp:include>
@@ -25,6 +26,7 @@
         displayMenu(menus);
         displayInitialMap({shopX, shopY, myX, myY, distance});
         displayReview(reviews);
+        displayReviewForm();
 
         $("#likes").click(() => increaseLikes(shopId));
     };
