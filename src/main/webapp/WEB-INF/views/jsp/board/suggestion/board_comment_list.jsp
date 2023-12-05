@@ -13,25 +13,27 @@
 <c:forEach var="item" items="${commentVos}">
 	<div class="one_comment">
 		<ul>
-			<li><img src="http://localhost:8090${item.photo_path}"/></li>
-			<li>닉네임은 ${item.getNickname()}</li>
-			<li>내용은 ${item.getContent()}</li>
-			<li>작성일은 ${item.getDate()}</li>
+			<li class="photo"><img src="http://localhost:8090${item.photo_path}"/></li>
+			<li class="nickname">${item.getNickname()}</li>
+			<li class="date">${item.getDate()}</li>
 			<c:if test="${item.getUser_id() == loginedUserVo.getId()}">
-				<li><input type="button" value="수정" onclick="modComment(this)" /></li>
-				<li><input type="button" value="삭제"
-					onclick="delComment(${item.getId()})" /></li>
+				<li class="button">
+					<input type="button" value="수정" onclick="modComment(this)" />
+					<input type="button" value="삭제" onclick="delComment(${item.getId()})" />
+				</li>
 			</c:if>
 		</ul>
-		<div style="display: none" class="modCancle">
+		<p class="content">${item.getContent()}</p>
+
+		<div style="display: none" class="mod_cancle">
 			<form name="modify_comment_form" method="POST">
-				<p>수정박스입니다.</p>
-				<input type="text" name="nickname" value='${item.getNickname()}' /><br />
-				<input type="text" name="content" value='${item.getContent()}' /><br />
-				<input type="hidden" name="id" value='${item.getId()}' /><br /> <input
-					type="button" value="수정할게용" onclick="modifyCommentForm(this)">
-				<input type="button" value="취소" onclick="modifyCancle(this)">
-				<br>
+				<input type="text" name="nickname" class="nickname" value='${item.getNickname()}' /><br />
+				<textarea name="content">${item.getContent()}</textarea>
+				<input type="hidden" name="id" value='${item.getId()}' />
+				<div class="buttons">
+					<input type="button" value="수정" onclick="modifyCommentForm(this)">
+					<input type="button" value="취소" onclick="modifyCancle(this)">
+				</div>
 			</form>
 		</div>
 	</div>
