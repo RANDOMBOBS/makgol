@@ -1,5 +1,6 @@
 package com.org.makgol.users.service;
 
+import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.common.exception.CustomException;
@@ -191,7 +192,7 @@ public class UsersService {
         return userDao.selectMyCommentList(user_id);
     }
 
-    public List<BoardVo> getMyLikePost(int user_id){
+    public List<BoardLikeVo> getMyLikePost(int user_id){
         return userDao.selectMyLikePostList(user_id);
     }
 
