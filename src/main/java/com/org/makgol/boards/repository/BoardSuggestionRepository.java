@@ -1,7 +1,8 @@
 package com.org.makgol.boards.repository;
 
 import com.org.makgol.boards.vo.BoardVo;
-import com.org.makgol.comment.vo.CommentVo;
+import com.org.makgol.comment.vo.CommentRequestVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 @Mapper
 public interface BoardSuggestionRepository {
+
     List<BoardVo> selectAllSuggestionBoard();
 
     int insertSuggestionBoard(BoardVo boardVo);
@@ -17,11 +19,11 @@ public interface BoardSuggestionRepository {
 
     int updateHit(int b_id);
 
-    int insertComment(CommentVo commentVo);
+    int insertComment(CommentRequestVo commentRequestVo);
 
-    List<CommentVo> selectCommentList(int board_id);
+    List<CommentResponseVo> selectCommentList(int board_id);
 
-    int updateComment(CommentVo commentVo);
+    int updateComment(CommentResponseVo commentResponseVo);
 
     int deleteComment(int id);
 
@@ -42,4 +44,9 @@ public interface BoardSuggestionRepository {
     int selectLikeCount(int b_id);
 
     void updateBoardSympathy(Map<String, Integer> map);
+    int deleteHistoryBoard(List<Integer> idList);
+    int deleteHistoryComment(List<Integer> idList);
+    int deleteHistoryLike(List<Integer> idList);
+    void deleteLikes(List<Integer> boardidList);
+
 }

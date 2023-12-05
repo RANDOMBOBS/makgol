@@ -2,6 +2,7 @@ package com.org.makgol.boards.dao;
 
 
 import com.org.makgol.boards.repository.BoardNoticeRepository;
+import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -41,6 +42,7 @@ public class BoardNoticeDao {
     // Notice detail page
     public BoardVo selectDetailNotice(int b_id) {
         List<BoardVo> boardVo = null;
+        boardNoticeRepository.updateNoticeHit(b_id);
         boardVo = boardNoticeRepository.selectDetailNotice(b_id);
         return boardVo.size() > 0 ? boardVo.get(0) : null;
     } // end
@@ -68,5 +70,9 @@ public class BoardNoticeDao {
         result= boardNoticeRepository.deleteNotice(b_id);
         return result;
     } // end
+
+
+
+
 
 }

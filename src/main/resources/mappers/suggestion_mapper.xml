@@ -2,8 +2,8 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.org.makgol.boards.repository.BoardSuggestionRepository">
+
     <resultMap id="boardResult" type="com.org.makgol.boards.vo.BoardVo">
         <result property="b_id" column="id"/>
         <result property="user_id" column="user_id"/>
@@ -65,22 +65,21 @@
         WHERE id = #{id}
     </update>
 
-    <insert id="insertComment" parameterType="com.org.makgol.comment.vo.CommentVo">
+    <insert id="insertComment" parameterType="com.org.makgol.comment.vo.CommentRequestVo">
         INSERT INTO comments(user_id, board_id, date, content, nickname)
         VALUES (#{user_id},
                 #{board_id}, now(), #{content}, #{nickname})
     </insert>
 
-    <select id="selectCommentList" resultType="com.org.makgol.comment.vo.CommentVo"
+    <select id="selectCommentList" resultType="com.org.makgol.comment.vo.CommentResponseVo"
             parameterType="int">
         SELECT *
         FROM comments
-                 join users on comments.user_id =
-                               users.id
-        where board_id = #{board_id}
+        JOIN users on comments.user_id = users.id
+        WHERE board_id = #{board_id}
     </select>
 
-    <update id="updateComment" parameterType="com.org.makgol.comment.vo.CommentVo">
+    <update id="updateComment" parameterType="com.org.makgol.comment.vo.CommentRequestVo">
         UPDATE comments
         SET nickname=#{nickname},
             content=#{content},
@@ -114,7 +113,7 @@
     <delete id="deleteBoard" parameterType="int">
         DELETE
         FROM boards
-        WHERE id = #{id}
+        WHERE id = #{b_id}
     </delete>
 
     <select id="selectSearchBoard" resultMap="boardResult"
@@ -140,20 +139,19 @@
 
     <select id="selectUserLikeStatus" resultType="int" parameterType="com.org.makgol.boards.vo.BoardVo">
         SELECT count(*)
-        FROM board_like
+        FROM board_likes
         WHERE b_id = #{b_id}
           AND user_id = #{user_id}
     </select>
 
 
     <insert id="insertBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
-        INSERT INTO board_like(b_id, user_id)
+        INSERT INTO board_likes(b_id, user_id)
         VALUES (#{b_id}, #{user_id})
     </insert>
 
     <delete id="deleteBoardLike" parameterType="com.org.makgol.boards.vo.BoardVo">
-        DELETE
-        FROM board_like
+        DELETE FROM board_likes
         WHERE b_id = #{b_id}
           AND user_id = #{user_id}
     </delete>
@@ -161,7 +159,7 @@
 
     <select id="selectLikeCount" resultType="int" parameterType="int">
         SELECT count(*)
-        FROM board_like
+        FROM board_likes
         WHERE b_id = #{b_id};
     </select>
 
@@ -169,6 +167,39 @@
         UPDATE boards
         SET sympathy=#{totalLike}
         WHERE id = #{b_id}
+    </update>
+
+    <delete id="deleteHistoryBoard" parameterType="List">
+        DELETE FROM boards
+        WHERE
+        <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
+            id = #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteHistoryComment" parameterType="List">
+        DELETE FROM comments
+        WHERE
+        <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
+            id = #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteHistoryLike" parameterType="List">
+        DELETE FROM board_likes
+        WHERE
+        <foreach collection="idList" item="id" separator=" OR " open="(" close=")">
+            id = #{id}
+        </foreach>
+    </delete>
+
+    <update id="deleteLikes" parameterType="List">
+        UPDATE boards
+        SET sympathy = sympathy-1
+        WHERE
+        <foreach collection="boardidList" item="b_id" separator=" OR " open="(" close=")" >
+            id = #{b_id}
+        </foreach>
     </update>
 
 

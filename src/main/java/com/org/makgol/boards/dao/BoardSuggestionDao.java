@@ -2,12 +2,12 @@ package com.org.makgol.boards.dao;
 
 import com.org.makgol.boards.repository.BoardSuggestionRepository;
 import com.org.makgol.boards.vo.BoardVo;
-import com.org.makgol.comment.vo.CommentVo;
+import com.org.makgol.comment.vo.CommentRequestVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,27 +59,27 @@ public class BoardSuggestionDao {
     /**
      * suggestion 댓글 INSERT
      **/
-    public int insertComment(CommentVo commentVo) {
+    public int insertComment(CommentRequestVo commentRequestVo) {
         int result = -1;
-        result = boardSuggestionRepository.insertComment(commentVo);
+        result = boardSuggestionRepository.insertComment(commentRequestVo);
         return result;
     }
 
     /**
      * suggestion 댓글 SELECT
      **/
-    public List<CommentVo> selectCommentList(int board_id) {
-        List<CommentVo> CommentVos = null;
-        CommentVos = boardSuggestionRepository.selectCommentList(board_id);
-        return CommentVos.size() > 0 ? CommentVos : null;
+    public List<CommentResponseVo> selectCommentList(int board_id) {
+        List<CommentResponseVo> commentResponseVos = null;
+        commentResponseVos = boardSuggestionRepository.selectCommentList(board_id);
+        return commentResponseVos.size() > 0 ? commentResponseVos : null;
     }
 
     /**
      * suggestion 댓글 수정 폼 제출
      **/
-    public int updateComment(CommentVo commentVo) {
+    public int updateComment(CommentResponseVo commentResponseVo) {
         int result = -1;
-        result = boardSuggestionRepository.updateComment(commentVo);
+        result = boardSuggestionRepository.updateComment(commentResponseVo);
         return result;
     }
 
@@ -157,5 +157,28 @@ public class BoardSuggestionDao {
     public void updateBoardSympathy(Map<String, Integer> map) {
         boardSuggestionRepository.updateBoardSympathy(map);
     }
+
+    public int deleteHistoryBoard(List<Integer> idList){
+        int result = -1;
+        result = boardSuggestionRepository.deleteHistoryBoard(idList);
+        return result;
+    }
+
+    public int deleteHistoryComment(List<Integer> idList){
+        int result = -1;
+        result = boardSuggestionRepository.deleteHistoryComment(idList);
+        return result;
+    }
+
+    public int deleteHistoryLike(List<Integer> idList){
+        int result = -1;
+        result = boardSuggestionRepository.deleteHistoryLike(idList);
+        return result;
+    }
+
+    public void deleteLikes(List<Integer> boardidList){
+       boardSuggestionRepository.deleteLikes(boardidList);
+    }
+
 }
 

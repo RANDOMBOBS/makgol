@@ -1,6 +1,7 @@
 package com.org.makgol.boards.vo;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class BoardVo {
@@ -14,7 +15,9 @@ public class BoardVo {
     String category;
     int sympathy;
     String name;
+    String grade;
     String attachment;
+    MultipartFile file;
 
 
 }

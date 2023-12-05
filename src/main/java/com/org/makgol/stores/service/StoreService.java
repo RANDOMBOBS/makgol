@@ -25,7 +25,7 @@ public class StoreService {
 	
 	private final RestTemplate restTemplate;
 	private final HttpHeaders headers;
-	
+
 	public KakaoLocalResponseJSON callKakaoLocalAPI(KakaoLocalRequestVo searchRequestVo) {
 		String x = searchRequestVo.getX();
 		String y = searchRequestVo.getY();
@@ -48,10 +48,12 @@ public class StoreService {
 		headers.set("Authorization", "KakaoAK e2a97497252d13a304751d99a85ea67c");
 
 		HttpEntity<String> request = new HttpEntity<>(headers);
-		
-		
+
+
 		return restTemplate.exchange(uri.toString(), HttpMethod.GET, request, KakaoLocalResponseJSON.class).getBody();
 	}
+
+
 
 	public void getMenu(List<StoreRequestVo> storeRequestVoList) throws JsonMappingException, JsonProcessingException {
 

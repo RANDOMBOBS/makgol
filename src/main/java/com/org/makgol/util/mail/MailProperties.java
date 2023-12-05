@@ -2,33 +2,15 @@ package com.org.makgol.util.mail;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
+@Component
 @Data
-@Configuration
-@EnableConfigurationProperties
-@ConfigurationProperties("application.mail")
+@ConfigurationProperties(prefix = "spring.mail") // properties 파일의 접두사(prefix) 설정
 public class MailProperties {
-
-    // SMTP 서버
-    private String host;
-
-    // 계정
-    private String account;
-
-    // 비밀번호
-    private String password;
-
-    // 포트번호
     private int port;
-
-    // 메일연결자
-    private String supplier;
-
-    // 발신자 메일
-    private String fromMail;
-
-    // tls 설정
+    private String host;
+    private String account;
+    private String password;
     private String socketFactoryClass;
 }

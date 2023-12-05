@@ -2,13 +2,17 @@ package com.org.makgol.boards.controller;
 
 
 import com.org.makgol.boards.service.BoardNoticeService;
+import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
+import com.org.makgol.users.vo.UsersRequestVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +25,7 @@ public class BoardNoticeController {
 
 
     @GetMapping("/notice")
-    public String notice(){
+    public String notice(Model model){
         return "jsp/board/notice/notice";
     }
 
@@ -30,6 +34,8 @@ public class BoardNoticeController {
         String nextPage = "jsp/board/notice/notice_all_list";
         List<BoardVo> boardVo = boardNoticeService.notice();
         model.addAttribute("boardVo", boardVo);
+
+
         return nextPage;
     }
 
@@ -44,9 +50,13 @@ public class BoardNoticeController {
     }
 
     @GetMapping("/noticeCreateForm")
-    public String noticeCreateForm(@RequestParam("name") String name, Model model, HttpSession session) {
+    public String noticeCreateForm(Model model, HttpSession session) {
         String nextPage = "jsp/board/notice/notice_create_form";
-        model.addAttribute("name", name);
+        UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
+        int userId = loginedUsersRequestVo.getId();
+        String grade = loginedUsersRequestVo.getGrade();
+        model.addAttribute("user_id", userId);
+        model.addAttribute("grade", grade);
         return nextPage;
     }
 
@@ -111,5 +121,6 @@ public class BoardNoticeController {
         }
         return nextPage;
     }
+
 }
 

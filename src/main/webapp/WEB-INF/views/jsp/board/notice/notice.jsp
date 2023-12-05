@@ -7,16 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet"
-	type="text/css" />
-	<link rel="stylesheet"
-    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    	integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-    	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
-	crossorigin="anonymous" referrerpolicy="no-referrer">
+<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
+<link href="<c:url value='/resources/static/css/board.css' />" rel="stylesheet" type="text/css" />
 	
 </script>
 <meta charset="UTF-8">
@@ -26,9 +18,9 @@
 
     <jsp:include page="../../include/header.jsp"></jsp:include>
 
-	<section>
+	<section class="notice board">
 		<h3>공지사항</h3>
-		<form name="search_notice_form">
+		<form name="search_notice_form" class="notice_search">
 				<input type="text" name="searchWord" placeholder="검색할 게시판을 입력하세요.">
 				<input type="button" value="검색" onclick="searchNotice()">
 		</form>

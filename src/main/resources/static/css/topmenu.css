@@ -1,3 +1,6 @@
+
+/* Top5 메뉴 CSS */
+
 * {
 	margin: 0;
 	padding: 0;
@@ -14,6 +17,8 @@ ul, li {
 
 .topmenu_main_div {
 	margin: 30px 0px;
+	display:flex;
+	justify-content:center;
 }
 
 .topmenu_main_div span {
@@ -21,6 +26,8 @@ ul, li {
 	font-size:30px;
 	font-weight:bold;
 	display:block;
+	height:100px;
+	line-height:100px;
 }
 
 
@@ -28,7 +35,7 @@ ul, li {
 	display: flex;
 }
 
-.topmenu_list_ul li img {
+.topmenu_list_ul li .top_img {
 	width: 100%;
 	height: 300px;
 	object-fit: cover;
@@ -110,7 +117,7 @@ ul, li {
 	position:absolute;
 }
 
-.topmenu_list_ul li:hover img {
+.topmenu_list_ul li:hover .top_img {
 	transition: all 0.6s;
 	transform: scale(1.2);
 }
@@ -128,4 +135,18 @@ ul, li {
 	color: #fff;
 	z-index: 999;
 	font-size: 16px;
+}
+
+#top5image{
+    width:100px;
+    margin: 0 30px;
+}
+
+.top_1_5img{
+    z-index: 9999;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    right: 75%;
+    top:5%;
 }

@@ -41,13 +41,8 @@ public class Crawller {
 
 
     public HashMap<String, Object> new_crawller(List<StoreRequestVo> storeRequestVos) throws Exception {
-
-
-
     	// 결과를 저장할 HashMap 생성
         HashMap<String, Object> hashMap = new HashMap<>();
-
-        String currentDirectory = System.getProperty("user.dir");
 
         // 드라이버 경로 윈도우
         String driverPath = "src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
@@ -59,8 +54,10 @@ public class Crawller {
         //스레드를 종료하기위한 List
     	List<Thread> jobThreads = new ArrayList<>();
 
+        if(storeRequestVos.size() < thread_count){
+            thread_count = storeRequestVos.size();
+        }
         int storesSize = storeRequestVos.size() / thread_count;
-
 
             //storeRequestVos의 사이즈 많금스레드를 생성하겠다.
             for (int i = 1; i <= thread_count; i++) {
@@ -70,7 +67,6 @@ public class Crawller {
                 //JobThread jobThread = new JobThread(driverPath, storeRequestVos.get(i).getPlace_url(), storeRequestVos.get(i), hashMap, i);
                 jobThread.start();
                 jobThreads.add(jobThread);
-
 
             }
 
@@ -105,12 +101,13 @@ public class Crawller {
     	}
     	
     	@Override
-        public void run(){processCawller();}
+        public void run(){
+            processCawller();}
     	
     	
     	public void processCawller() {
             int index = storeSize*(thread_num-1);
-            for(; index<storeSize*thread_num; index++){
+            for(; index<=storeSize*thread_num; index++){
             Random r = new Random();
 
     		//chrome driver 경로 세팅
@@ -295,8 +292,8 @@ public class Crawller {
                 hashMap.put("store_info_" + index, storeRequestVo);
                 System.out.println("hashMap.size() --> : " + hashMap.size()/2);
 
-                driver.close();
                 try{Thread.sleep(500);}catch(Exception e){}
+                driver.close();
                 driver.quit();
                 try{Thread.sleep(500);}catch(Exception e){}
             }

@@ -1,6 +1,7 @@
 package com.org.makgol.boards.service;
 
 import com.org.makgol.boards.dao.BoardNoticeDao;
+import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,4 +57,6 @@ public class BoardNoticeService {
     public int deleteNotice(int b_id) {
         return boardNoticeDao.deleteNotice(b_id);
     }
+
+
 }

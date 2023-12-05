@@ -1,5 +1,6 @@
 package com.org.makgol.boards.repository;
 
+import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,5 +22,15 @@ public interface BoardNoticeRepository {
 
     int updateNotice(BoardVo boardVo);
 
+    void updateNoticeHit(int b_id);
+
     int deleteNotice(int b_id);
+
+    int selectLikeStatus (BoardLikeVo boardLikeVo);
+
+    int selectLikeCount (BoardLikeVo boardLikeVo);
+
+    int insertLikeCount (BoardLikeVo boardLikeVo);
+
+    int DeleteLikeCount (BoardLikeVo boardLikeVo);
 }

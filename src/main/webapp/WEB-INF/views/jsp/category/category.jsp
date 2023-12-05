@@ -2,30 +2,20 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
 <title>Insert title here</title>
-<link href="<c:url value='/resources/css/category.css' />"
+<link href="<c:url value='/resources/static/css/category.css' />"
 	rel="stylesheet" type="text/css" />
-	<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-	<link rel="stylesheet"
-    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    	crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
-
-
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="../../include/header.jsp"></jsp:include>
 
+<jsp:include page="../include/header.jsp"></jsp:include>
 	<section>
 		<div id="category_main_div">
 			<ul class="category_main_ul">
@@ -40,17 +30,20 @@
 		</div>
 		<div id="category_list_div"></div>
 	</section>
-	<jsp:include page="/resources/jsp/category.jsp"></jsp:include>
+	<jsp:include page="../../script/jsp/category.jsp"></jsp:include>
+
 	<script>
-	
+// 메세지 띄어줌
+var message = "${message}";
+if (message) {
+     alert(message);
+}
 	// 버튼 클릭시 색 변화
 		$("button").on("click", function() {
 			$("button").removeClass("active");
 			$(this).addClass("active");
 		});
-		
-	
-		
+
 		if("${category}" == "한식"){
 			korMenu();
 			$("button").removeClass("active");
@@ -80,6 +73,8 @@
 			$("button").removeClass("active");
 			$(".category_main_ul button").eq(0).addClass("active");
 		}
+
 	</script>
+
 </body>
 </html>

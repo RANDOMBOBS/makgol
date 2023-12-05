@@ -83,13 +83,15 @@ img {
 	height: 300px;
 	object-fit: cover;
 	border-radius: 7px;
-	filter: brightness(60%);
+	filter: brightness(50%);
 	position: absolute;
 }
 
 .menu_name {
 	color: #fff;
-	z-index: 999;
+	z-index: 997;
+	font-family: 'Gamja Flower', sans-serif;
+	font-size: 55px;
 }
 
 .menu_gogo {
@@ -97,6 +99,28 @@ img {
 	top: 50%;
 	opacity: 0;
 	color: #fff;
-	z-index: 999;
+	z-index: 997;
 	font-size: 16px;
+}
+
+.fileUpload {
+    position: absolute;
+    top:-40%;
+    z-index:998;
+}
+
+.fa-image{
+    color:white;
+}
+
+.form_button {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+	border: 0;
+	background-color: transparent;
+	cursor: pointer;
+	color: #cdcaca;
+	font-size: 20px;
+	font-family: "Noto Sans KR", sans-serif;
 }
