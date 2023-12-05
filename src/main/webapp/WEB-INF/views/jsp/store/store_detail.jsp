@@ -13,6 +13,8 @@
 </head>
 <body>
 <jsp:include page="../include/header.jsp"></jsp:include>
+<jsp:include page="./modal/review_image_list.jsp"></jsp:include>
+<jsp:include page="./modal/upload_review_image.jsp"></jsp:include>
 <article>
     <div class="item_area" id="photo">
         <div class="item_info_head">
@@ -95,7 +97,7 @@
                         <textarea spellcheck="false" id="text_review" class="content"></textarea>
                         <input id="submit_review" type="submit" value="작성"/>
                     </form>
-                    <div class="review_image_box">
+                    <div id="upload_image" class="review_image_box">
                         <img class="review_image" src="https://budongsancanada.com/Images/no_image.jpg">
                     </div>
                 </div>

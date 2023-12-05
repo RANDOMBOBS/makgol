@@ -11,6 +11,7 @@
 <jsp:include page="../backend/request-store-menu.jsp"></jsp:include>
 <jsp:include page="../backend/request-store-review.jsp"></jsp:include>
 <jsp:include page="./increase-likes.jsp"></jsp:include>
+<jsp:include page="./open-upload-modal.jsp"></jsp:include>
 <script>
     const pageInit = async () => {
         const {shopId, shopX, shopY, myX, myY, distance} = getUrlParam();
@@ -29,6 +30,7 @@
         displayReviewForm();
 
         $("#likes").click(() => increaseLikes(shopId));
+        $("#upload_image").click(() => openUploadModal());
     };
 
     pageInit();
