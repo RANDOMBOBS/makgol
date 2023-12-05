@@ -92,9 +92,12 @@
                         <span class="user_name">사용자</span>
                     </div>
                     <form class="review_content">
-                        <input type="text" class="content" />
-                        <input type="submit" value="제출"/>
+                        <textarea spellcheck="false" id="text_review" class="content"></textarea>
+                        <input id="submit_review" type="submit" value="작성"/>
                     </form>
+                    <div class="review_image_box">
+                        <img class="review_image" src="https://budongsancanada.com/Images/no_image.jpg">
+                    </div>
                 </div>
             </div>
         </div>

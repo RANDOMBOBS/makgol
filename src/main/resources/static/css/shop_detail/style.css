@@ -290,11 +290,10 @@ article #review .review_content .content {
     border: 1px solid #efefc8;
     bottom: 75px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 13px;
     color: #6b6b6b;
     border-radius: 5px;
+    padding: 5px;
 }
 
 article #review #review_list .review_item .review_etc {
@@ -336,13 +335,13 @@ article #review #review_list .review_item .review_etc .etc .button {
     color: red;
 }
 
-article #review #review_list .review_item .review_etc .review_image_box {
+article #review .review_image_box {
     display: flex;
     align-items: center;
 }
 
 
-article #review #review_list .review_item .review_etc .review_image {
+article #review img {
     border: 1px solid black;
     width: 80px;
     height: 80px;
@@ -350,12 +349,44 @@ article #review #review_list .review_item .review_etc .review_image {
 }
 
 article #review #review_form {
-    background-color: #fdf09b;
+    background-color: rgba(238, 238, 238, 0.34);
     height: 99px;
     display: flex;
 }
 
+article #review #review_form .review_content #text_review {
+    resize: none;
+    outline: none;
+    text-align: left;
+    padding: 5px;
+    font-size: 13px;
+    color: #6b6b6b;
+}
+
+article #review #review_form .review_content #submit_review {
+    width: 60px;
+    height: 80px;
+    outline: none;
+    background-color: #fdf97e;
+    margin-left: 5px;
+    border: 1px solid #efefc8;
+    border-radius: 5px;
+    font-weight: bolder;
+    color: #ffa400;
+    cursor: pointer;
+}
+
+article #review #review_form .review_content #submit_review:hover {
+    color: #fdf97e;
+    background-color: #ffa400;
+}
+
+article #review #review_form .review_image_box {
+    margin-left: 5px;
+}
+
 article #review .item_info_footer {
-    background-color: #fdf09b;
+    background-color: rgba(238, 238, 238, 0.34);
     border-radius: 0 0 20px 20px;
 }
+
