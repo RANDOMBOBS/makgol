@@ -24,7 +24,7 @@
     </insert>
 
     <select id="findUserEmail" parameterType="String">
-        SELECT email FROM user WHERE email = #{email}
+        SELECT email FROM users WHERE email = #{email}
     </select>
 
     <select id="duplicationUserEmail" resultType="String" parameterType="String">
@@ -57,21 +57,25 @@
     </select>
 
     <select id="selectMyPostList" resultMap="boardResult" parameterType="int">
-        SELECT * FROM boards WHERE user_id = #{user_id};
+        SELECT * FROM boards WHERE user_id = #{user_id}
+        ORDER BY date DESC;
     </select>
 
     <select id="selectMyCommentList" resultType="com.org.makgol.comment.vo.CommentResponseVo" parameterType="int">
         SELECT * FROM comments
         JOIN boards
         ON comments.board_id = boards.id
-        WHERE comments.user_id = #{user_id};
+        WHERE comments.user_id = #{user_id}
+        ORDER BY comments.date DESC;
     </select>
 
     <select id="selectMyLikePostList" resultType="com.org.makgol.boards.vo.BoardLikeVo" parameterType="int">
-        SELECT BL.id, BL.b_id, BL.user_id my_id, B.user_id, B.hit, B.title, B.category, B.sympathy, B.date  FROM board_likes BL
-        JOIN boards B
-        ON BL.b_id = B.id
-        WHERE BL.user_id = #{user_id};
+        SELECT BL.id, BL.b_id, BL.user_id my_id, B.user_id, B.hit, B.title, B.category, B.sympathy, B.date, U.name
+        FROM board_likes BL
+        JOIN boards B ON BL.b_id = B.id
+        JOIN users U ON B.user_id = U.id
+        WHERE BL.user_id = #{user_id}
+        ORDER BY B.date DESC;
     </select>
 
     <select id="updatePassword" parameterType="Map">

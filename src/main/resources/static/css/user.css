@@ -9,6 +9,7 @@ body {
   padding: 50px;
   width: 1500px;
   border: 1px solid #eee;
+  border-radius: 15px;
 }
 
 .my_page_title {
@@ -378,6 +379,7 @@ text-align: left;
   margin: 10px 0;
   text-align: left;
 }
+
 #my_history_page .user .user_info .total_history_list span {
   font-weight: bold;
 }
@@ -411,48 +413,57 @@ text-align: left;
   margin: 20px 60px;
 }
 
-#my_history_page #my_history table {
+#my_history_page #my_history .my_post_table {
   width: 100%;
 }
 
-#my_history_page #my_history table col:nth-child(1) {
-  width: 100px;
+#my_history_page #my_history .my_post_table col:nth-child(1) {
+  width: 60px;
 }
-#my_history_page #my_history table col:nth-child(3) {
+
+#my_history_page #my_history .my_post_table col:nth-child(3) {
   width: auto;
 }
-#my_history_page #my_history table col:nth-child(2) {
+
+#my_history_page #my_history .my_post_table col:nth-child(2) {
   width: 150px;
 }
-#my_history_page #my_history table col:nth-child(4) {
+
+#my_history_page #my_history .my_post_table col:nth-child(4) {
   width: 120px;
 }
-#my_history_page #my_history table col:nth-child(5),
-#my_history_page #my_history table col:nth-child(6) {
+
+#my_history_page #my_history .my_post_table col:nth-child(5) {
+  width: 100px;
+}
+
+#my_history_page #my_history .my_post_table col:nth-child(6),
+#my_history_page #my_history .my_post_table col:nth-child(7) {
   width: 70px;
 }
 
-#my_history_page #my_history table thead {
+#my_history_page #my_history .my_post_table thead {
   height: 50px;
   height: 50px;
   border: 2px solid #ffe286;
   background-color: #fdf97e;
 }
 
-#my_history_page #my_history table thead th {
+#my_history_page #my_history .my_post_table thead th {
   border: 2px solid #ffe286;
 }
 
-#my_history_page #my_history table tbody {
+#my_history_page #my_history .my_post_table tbody {
   border: 2px solid #ffe286;
   font-size: 0.9em;
 }
-#my_history_page #my_history table tbody tr {
+
+#my_history_page #my_history .my_post_table tbody tr {
   height: 50px;
   border-bottom: 1px solid #ffe286;
 }
 
-#my_history_page #my_history table tbody tr td:nth-child(3) a {
+#my_history_page #my_history .my_post_table tbody tr td:nth-child(3) a {
   padding: 0 20px;
   display: block;
   width: 100%;
@@ -461,17 +472,74 @@ text-align: left;
   text-align: left;
 }
 
-#my_history_page #my_history table tbody tr td:nth-child(3):hover {
+#my_history_page #my_history .my_post_table tbody tr td:nth-child(3):hover {
   font-weight: bold;
   text-decoration: underline;
 }
 
-#my_history_page #my_history .postDelete {
+#my_history_page #my_history button {
   position: absolute;
   right: 0;
   margin: 15px 0;
-  padding: 5px 10px;
-  border: 1px solid #000;
+  padding: 10px;
+  border: none;
   border-radius: 5px;
-  background: none;
+  background: #eee;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#my_history_page #my_history .my_comment_table {
+  width: 100%;
+}
+
+#my_history_page #my_history .my_comment_table col:nth-child(1) {
+  width: 60px;
+}
+
+#my_history_page #my_history .my_comment_table col:nth-child(2) {
+  width: auto;
+}
+
+#my_history_page #my_history .my_comment_table thead {
+  height: 50px;
+  height: 50px;
+  border: 2px solid #ffe286;
+  background-color: #fdf97e;
+}
+
+#my_history_page #my_history .my_comment_table thead th {
+  border: 2px solid #ffe286;
+}
+
+#my_history_page #my_history .my_comment_table tbody {
+  border: 2px solid #ffe286;
+  font-size: 0.9em;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr {
+  height: 50px;
+  border-bottom: 1px solid #ffe286;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a {
+  display: block;
+  padding: 10px 25px;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a:hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a p {
+  text-align: left;
+  font-size: 13px;
+  color: #666;
+  padding: 3px;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a .comment_content {
+  font-size: 17px;
+  color: #000;
 }

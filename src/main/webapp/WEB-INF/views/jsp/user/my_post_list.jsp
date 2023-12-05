@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="java.util.Date" %>
 
@@ -13,7 +12,7 @@
 
 <c:set var="today" value="<%= today %>"/>
 
-<table>
+<table class="my_post_table">
     <colgroup>
         <col />
         <col />
@@ -38,7 +37,19 @@
         <c:forEach var="item" items="${boardVos}">
           <tr>
             <td><input type="checkbox" class="eachCheckbox"/></td>
-            <td>${item.category}</td>
+
+              <c:choose>
+                  <c:when test="${item.category == 'suggestion'}">
+                      <td>건의사항</td>
+                  </c:when>
+                  <c:when test="${item.category == 'notice'}">
+                      <td>공지사항</td>
+                  </c:when>
+                  <c:otherwise>
+                      <td>하소연게시판</td>
+                  </c:otherwise>
+              </c:choose>
+
             <td><c:url value='/board/suggestion/detail' var='detail_url'>
                         <c:param name='b_id' value='${item.b_id}' />
                 </c:url> <a href="${detail_url}">${item.title}</a></td>
@@ -58,5 +69,5 @@
     </tbody>
 </table>
 
-    <button type="button" class="postDelete" onclick="deleteBoard()">삭제</button>
+    <button type="button" onclick="deleteBoard()">선택삭제</button>
 

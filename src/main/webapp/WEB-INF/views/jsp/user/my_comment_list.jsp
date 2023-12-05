@@ -1,36 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<table>
-  <thead>
+<table class="my_comment_table">
+    <colgroup>
+        <col />
+        <col />
+    </colgroup>
+    <thead>
     <tr>
-      <th>
-        <input type="checkbox" id="allMyCheckbox" onclick="allMyCheckbox()" />
-      </th>
-      <th>댓글</th>
+        <th>
+            <input type="checkbox" id="allMyCheckbox" onclick="allMyCheckbox()" />
+        </th>
+        <th>댓글</th>
     </tr>
-  </thead>
-  <tbody>
-
+</thead>
+<tbody>
    <c:forEach var="item" items="${commentVos}">
-    <tr>
-            <td><input type="checkbox" class="eachCheckbox"/></td>
-                  <input type="hidden" value="${item.id}" />
-      <td>
+   <tr>
+     <td><input type="checkbox" class="eachCheckbox"/></td>
+     <td>
         <c:url value='/board/suggestion/detail' var='detail_url'>
           <c:param name='b_id' value='${item.board_id}' />
         </c:url>
         <a href="${detail_url}">
-          <p class="commentContent">${item.content}</p>
-          <p class="commentDate">${item.date}</p>
-          <p class="boardTitle">${item.title}</p>
+          <p class="comment_content">${item.content}</p>
+          <p class="comment_date">${item.date}</p>
+          <p class="board_title">${item.title}</p>
         </a>
-      </td>
-    </tr>
+     </td>
+     <input type="hidden" value="${item.id}" />
+   </tr>
    </c:forEach>
-
   </tbody>
 </table>
 
-<button type="button" onclick="deleteComment()">삭제</button>
+<button type="button" onclick="deleteComment()">선택삭제</button>
 
