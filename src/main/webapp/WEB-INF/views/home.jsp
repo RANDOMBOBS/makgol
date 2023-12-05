@@ -40,33 +40,27 @@
                     <li class="today">오늘의메뉴</li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="korToday()">한식
-                        </button>
+                                onclick="korToday()">한식 </button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="westToday()">양식
-                        </button>
+                                onclick="westToday()">양식</button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="chiToday()">중식
-                        </button>
+                                onclick="chiToday()">중식</button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="snackToday()">분식
-                        </button>
+                                onclick="snackToday()">분식</button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="jpnToday()">일식
-                        </button>
+                                onclick="jpnToday()">일식</button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="cafeToday()">카페
-                        </button>
+                                onclick="cafeToday()">카페</button>
                     </li>
                 </ul>
             </div>
