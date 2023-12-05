@@ -125,11 +125,15 @@ public class UsersController {
 
 
     @GetMapping("/myPage")
-    public String myPage() { return "jsp/user/my_page"; }
+    public String myPage() {
+        return "jsp/user/my_page";
+    }
 
     @GetMapping("/modifyUser")
     public String modify_user() {
+
         return "jsp/user/modify_user";
+
     }
 
     @PostMapping("/modifyUserConfirm")

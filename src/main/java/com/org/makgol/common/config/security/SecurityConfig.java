@@ -37,9 +37,9 @@ public class SecurityConfig {
         //http.csrf().disable();
 
         http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                //.sessionManagement()
+                //.sessionCreationPolicy(SessionCreationPolicy.STATELESS) //세션 사용을 막는다.
+                //.and()
                 .csrf()
                 .disable() // csrf 설정 해제
                 .formLogin().disable() // 소셜로그인만 이용할 것이기 때문에 formLogin 해제
@@ -70,6 +70,8 @@ public class SecurityConfig {
                         , "/user/myPage"
                         , "/user/modifyUser"
                         , "/user/modifyUserConfirm"
+                        , "/user/modifyUserConfirm"
+                        , "/board/suggestion/**"
                 ).hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
                 //.antMatchers("/", "/user/join", "/user/login").permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 //.antMatchers("/api/account/logout").hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
