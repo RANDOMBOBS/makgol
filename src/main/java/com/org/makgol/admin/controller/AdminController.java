@@ -1,6 +1,7 @@
 package com.org.makgol.admin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
@@ -41,6 +42,23 @@ public class AdminController {
 	public int modifyGrade(@RequestBody UsersRequestVo userVo) {
 		int result = adminService.modGrade(userVo);
 		return result;
+	}
+
+
+	@RequestMapping(value = "/search", method = {RequestMethod.POST})
+	public String search(@RequestBody Map<String, String> map, Model model){
+		System.out.println("searchValue = " + map.get("searchValue"));
+		System.out.println("searchOption = " + map.get("searchOption"));
+
+
+		String nextPage = "jsp/admin/search_user_list";
+		List<UsersResponseVo> userVos = adminService.getSearchUser(map);
+		if(userVos != null){
+			model.addAttribute("userVos", userVos);
+			model.addAttribute("value", map.get("searchValue"));
+		}
+		return nextPage;
+
 	}
 
 }

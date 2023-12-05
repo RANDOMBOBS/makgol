@@ -27,7 +27,7 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 	<link rel="stylesheet"
-    	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    	href="https://  cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
@@ -265,24 +265,9 @@ jQ("#logout_link").on("click", function () {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
-        let hour = date.getHours();
+    let hour = date.getHours();
     let minute = date.getMinutes();
-    if (month > 0 && month < 10) {
-        month = "0" + month;
-    }
-    if (day > 0 && day < 10) {
-        day = "0" + day;
-    }
-    if (hour > 0 && hour < 10) {
-        hour = "0" + hour;
-    } else if (hour == 0) {
-        hour = "00";
-    }
-    if (minute > 0 && minute < 10) {
-        minute = "0" + minute;
-    } else if (minute == 0) {
-        minute = "00";
-    }
+
     let nowTime = hour + minute.toString();
     let nowHourMinute = (parseInt(nowTime) - 44).toString();
     if(nowHourMinute < 0){
@@ -313,6 +298,22 @@ jQ("#logout_link").on("click", function () {
         nowHourMinute = "00"+nowHourMinute;
     } else if(nowHourMinute<1000){
         nowHourMinute = "0"+nowHourMinute
+    }
+    if (month > 0 && month < 10) {
+        month = "0" + month;
+    }
+    if (day > 0 && day < 10) {
+        day = "0" + day;
+    }
+    if (hour > 0 && hour < 10) {
+        hour = "0" + hour;
+    } else if (hour == 0) {
+        hour = "00";
+    }
+    if (minute > 0 && minute < 10) {
+        minute = "0" + minute;
+    } else if (minute == 0) {
+        minute = "00";
     }
     let nowHour = nowHourMinute.substring(0, 2);
     let baseDate = year + month.toString() + day;
@@ -406,22 +407,22 @@ jQ("#logout_link").on("click", function () {
 
                 if(sky == "맑음"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sunny.jpeg)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-sun'></i>");
+                    jQ(".emoticon").html("<i class='fa-solid fa-sun' style='color:#ffa500'></i>");
                 } else if(sky =="구름많음"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/Christmas.png)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun' style='color:#00e5ff' ></i>")
                 }else if(sky =="흐림"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/blur.jpg)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud'  style='color:#6f6f6f'></i>")
                 }else if(sky =="비"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-showers-heavy'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-showers-heavy'  style='color:#074dbb'></i>")
                 }else if(sky =="눈"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow1.jpg)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-snowflake'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-snowflake'  style='color:#7fb1ff'></i>")
                 }else if(sky =="진눈깨비(눈+비)"){
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/top5.png)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'></i>")
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'  style='color:#8cb9ff'></i>")
                 }
 
             },

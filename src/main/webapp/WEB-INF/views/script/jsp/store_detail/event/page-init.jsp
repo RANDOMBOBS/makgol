@@ -1,25 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <jsp:include page="../util/get-url-param.jsp"></jsp:include>
 <jsp:include page="../ui/display-image.jsp"></jsp:include>
+<jsp:include page="../ui/link-head-office.jsp"></jsp:include>
 <jsp:include page="../ui/display-detail.jsp"></jsp:include>
+<jsp:include page="../ui/display-menu.jsp"></jsp:include>
 <jsp:include page="../ui/display-map.jsp"></jsp:include>
 <jsp:include page="../ui/display-review.jsp"></jsp:include>
+<jsp:include page="../backend/request-store-detail.jsp"></jsp:include>
+<jsp:include page="../backend/request-store-menu.jsp"></jsp:include>
+<jsp:include page="../backend/request-store-review.jsp"></jsp:include>
 <script>
-    const pageInit = () => {
-        const param = getUrlParam();
+    const pageInit = async () => {
+        const {shopId, shopX, shopY, myX, myY, distance} = getUrlParam();
+        const [detail, menus, reviews] = await Promise.all([
+            requestStoreDetail(shopId),
+            requestStoreMenu(shopId),
+            requestStoreReview()
+        ]);
 
-        const displayFunctions = [
-            displayImage,
-            displayDetail,
-            displayInitialMap,
-            displayReview,
-        ];
-
-        displayFunctions.forEach((func) => func(param));
+        displayImage(detail.photo);
+        linkHeadOffice(detail.site);
+        displayDetail(detail);
+        displayMenu(menus);
+        displayInitialMap({shopX, shopY, myX, myY, distance});
+        displayReview(reviews);
     };
 
     pageInit();

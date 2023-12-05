@@ -14,9 +14,9 @@
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
 
-     <div id="suggestion_board">
+     <div id="board_write">
         <form action="<c:url value='/board/suggestion/createConfirm' />"
-              method="post" name="create_board_form"  enctype="multipart/form-data">
+              method="post" name="create_board_form" class="write_board_form"  enctype="multipart/form-data">
         <p class="write_board">게시글 작성</p>
 
         <div class="column board_category">
@@ -117,9 +117,9 @@
         <br />
 
         <div class="buttons">
-          <input type="button" class="ok_board" value="작성" onclick="CreateBoardForm();" />
-          <input type="reset" class="cancel" value="초기화" />
-          <input type="button" class="board_list" value="글목록" />
+          <input type="button" class="ok_board" value="작성" onclick="createBoardForm();" />
+          <input type="reset" class="cancel" value="초기화" onclick="resetContents()"/>
+          <input type="button" class="board_list" value="글목록" onclick="returnToList()"/>
         </div>
       </form>
     </div>

@@ -6,6 +6,7 @@ import lombok.ToString;
 @ToString()
 @Data
 public class ResponseStoreListDto {
+    private int id;
     private String name;
     private int likes;
     private double longitude;

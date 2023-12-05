@@ -19,6 +19,18 @@
           AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
     </select>
 
+    <select id="findStoreDetailWithId" resultType="com.org.makgol.stores.dto.StoreDetailDto" parameterType="String">
+        SELECT name, likes, address, category, phone, photo, site
+        FROM mak_gol.stores
+        WHERE id = #{storeId}
+    </select>
+
+    <select id="findStoreMenuWithId" resultType="com.org.makgol.stores.dto.StoreMenuDto" parameterType="String">
+        SELECT menu, price
+        FROM mak_gol.menus
+        WHERE store_id = #{storeId}
+    </select>
+
     <insert id="saveCategoryMenu" parameterType="Map">
         INSERT INTO category_menu (store_id, category, menu_name, date) VALUES (#{store_id}, #{category}, #{menu_name}, now())
     </insert>

@@ -34,5 +34,5 @@ public class StoreResponseVo {
     //식당정보 업데이트 날짜
     private LocalDate update_date;
     //사진
-    private String    phto;
+    private String    photo;
 }

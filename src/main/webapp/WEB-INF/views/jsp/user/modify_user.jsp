@@ -9,62 +9,100 @@
   <meta charset="UTF-8">
   <title>막내야 골라봐 | 회원정보수정 (MODIFY_USER_INFO)</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>
+  <link href="<c:url value='/resources/static/css/user.css' />" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 
 <jsp:include page="../include/header.jsp"></jsp:include>
 
-<c:set var="emailInfo" value="${loginedUserVo.email.split('@')}"/>
-<c:set var="emailId" value="${emailInfo[0]}"/>
-<c:set var="emailDomain" value="${emailInfo[1]}"/>
-
-<div class="form-group email-form">
-  <label>회원정보 수정</label>
+ <div id="modify_user">
+      <h1 class="modify_user_title">회원정보 수정</h1>
   <form action="<c:url value='/user/modifyUserConfirm'><c:param name="oldFile" value="${loginedUserVo.photo_path}"/></c:url>"
-        method="post" name="modify_user_info" enctype="multipart/form-data">
-    <div class="input-group">
-      <input type="text" class="form-control" name="userEmail1" id="userEmail1" value="${emailId}" readonly disabled>
-      <select class="form-control" name="userEmail2" id="userEmail2" readonly disabled>
-        <option value="@naver.com" <c:if test="${emailDomain == 'naver.com'}">selected</c:if>>@naver.com</option>
-        <option value="@daum.net" <c:if test="${emailDomain == 'daum.net'}">selected</c:if>>@daum.net</option>
-        <option value="@gmail.com" <c:if test="${emailDomain == 'gmail.com'}">selected</c:if>>@gmail.com</option>
-        <option value="@hanmail.com" <c:if test="${emailDomain == 'hanmail.com'}">selected</c:if>>@hanmail.com</option>
-        <option value="@yahoo.co.kr" <c:if test="${emailDomain == 'yahoo.co.kr'}">selected</c:if>>@yahoo.co.kr</option>
-      </select>
-    </div>
-    <input placeholder="이름" id="name" name="name" value="${loginedUserVo.name}" readonly disabled><br />
-    <input type="password" placeholder="비밀번호" id="password" name="password"><br />
-    <input type="password" placeholder="비밀번호 확인" id="passwordCheck" name="passwordCheck">
-    <button type="button" id="passwordCheckBtn" name="passwordCheckBtn">비밀번호 확인</button><br />
-    <input placeholder="전화번호" id="phone" name="phone" value="${loginedUserVo.phone}"><br />
-    <input type="text" id="sample5_address" name="address" value="${loginedUserVo.address}"><br>
-    <input type="hidden" name="longitude" id="resultX" value="${loginedUserVo.longitude}" >
-    <input type="hidden" name="latitude" id="resultY" value="${loginedUserVo.latitude}">
-    <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
-    <div id="map" style="width:300px;height:300px;margin-top:10px;"></div>
+        method="post" name="modify_user_info" class="modify_user_form" enctype="multipart/form-data">
 
-    <input type="file" id="photoFile" name="photoFile">
-    <input type="hidden" name="id" value="${loginedUserVo.id}">
-    <button type="button" onclick="ModifyUserInfo()">회원정보수정</button>
+    <div class="profile_image">
+      <label for="photoFile">
+        <input type="file" id="photoFile" class="photo_file" name="photoFile" onchange="userimageURL(this)" />
+        <i class="fa-solid fa-image"></i>
+        <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진" class="preview" />
+      </label>
+    </div>
+    <br />
+
+    <div class="column email">
+      <p class="caution">* 이메일과 이름은 변경하실 수 없습니다.</p>
+      <span class="description">이메일</span>
+      <input type="text" class="form-control" name="email" id="email" value="${loginedUserVo.email}" readonly disabled />
+    </div>
+
+    <div class="column name">
+      <span class="description">이름</span>
+      <input placeholder="이름" id="name" name="name" value="${loginedUserVo.name}" readonly disabled />
+    </div>
+
+    <div class="column password">
+      <span class="description">새 비밀번호</span>
+      <input type="password" placeholder="비밀번호" id="password" name="password" />
+    </div>
+
+    <div class="column password_check">
+      <span class="description">비밀번호 확인</span>
+      <input type="password" placeholder="비밀번호 확인" id="passwordCheck" name="passwordCheck" />
+      <button type="button" id="passwordCheckBtn" name="passwordCheckBtn"> 확인 </button>
+    </div>
+
+    <div class="column phone">
+      <span class="description">전화번호</span>
+      <input placeholder="전화번호" id="phone" name="phone" value="${loginedUserVo.phone}" />
+    </div>
+
+    <div class="column address">
+      <span class="description">주소</span>
+      <input type="text" id="sample5_address" name="address" value="${loginedUserVo.address}" readonly/>
+
+      <input type="hidden" name="longitude" id="resultX" value="${loginedUserVo.longitude}" />
+      <input type="hidden" name="latitude" id="resultY" value="${loginedUserVo.latitude}" />
+      <input type="button" class="search" onclick="sample5_execDaumPostcode()" value="검색" />
+    </div>
+
+    <div id="map"></div>
+
+    <input type="hidden" name="id" value="${loginedUserVo.id}" />
+    <input type="hidden" name="grade" value="${loginedUserVo.grade}" />
+    <button type="button" class="mod button" onclick="ModifyUserInfo()"> 수정 </button>
+    <button type="button" class="cancel button" onclick="ModifyUserInfo()"> 취소 </button>
   </form>
 </div>
 
 <script>
+function userimageURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        jQ(input).next().next(".preview").attr("src", e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+
   let pwCheck = true;
  jQ("#passwordCheckBtn").on("click", function () {
    console.log("Button clicked");
    let pw = jQ("#password").val();
    let pw2 = jQ("#passwordCheck").val();
-   if (pw !== pw2) {
-     alert("비밀번호가 같지 않습니다.");
+   if(pw === ""){
+    alert("비밀번호를 입력해주세요");
    } else {
-     pwCheck = false;
-     alert("비밀번호가 일치합니다.");
+       if (pw !== pw2) {
+           alert("비밀번호가 같지 않습니다.");
+         } else {
+           pwCheck = false;
+           alert("비밀번호가 일치합니다.");
+         }
    }
  });
 
