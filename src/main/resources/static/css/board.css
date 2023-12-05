@@ -9,7 +9,6 @@ body {
   width: 1200px;
   border: 1px solid #eee;
   border-radius: 15px;
-
 }
 
 #board_list .board_list_title {
@@ -61,21 +60,21 @@ body {
   align-items: flex-end;
 }
 
-#board_list .board_list_contents .board_list h3{
+#board_list .board_list_contents .board_list h3 {
   width: 100%;
   text-align: left;
   margin-bottom: 30px;
   font-size: 20px;
 }
 
-#board_list .board_list_contents .board_list h4{
-width: 100%;
-text-align: center;
-margin: 100px auto;
-font-size: 23px;
+#board_list .board_list_contents .board_list h4 {
+  width: 100%;
+  text-align: center;
+  margin: 100px auto;
+  font-size: 23px;
 }
 
-#board_list .board_list_contents .board_list h3 span{
+#board_list .board_list_contents .board_list h3 span {
   font-size: 1.3em;
 }
 
@@ -83,45 +82,27 @@ font-size: 23px;
   width: 100%;
 }
 
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(1) {
+#board_list .board_list_contents .board_list table col:nth-child(1) {
   width: 100px;
 }
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(2) {
+
+#board_list .board_list_contents .board_list table col:nth-child(2)  {
   width: auto;
 }
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(3) {
+
+#board_list .board_list_contents .board_list table col:nth-child(3)  {
   width: 150px;
 }
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(4) {
+
+#board_list .board_list_contents .board_list table col:nth-child(4)  {
   width: 120px;
 }
 #board_list .board_list_contents .board_list table col:nth-child(5),
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(6) {
+#board_list .board_list_contents .board_list table col:nth-child(6) {
   width: 70px;
 }
 
 #board_list .board_list_contents .board_list table thead {
-  height: 50px;
   height: 50px;
   border: 2px solid #ffe286;
   background-color: #fdf97e;
@@ -141,13 +122,7 @@ col:nth-child(6) {
   border-bottom: 1px solid #ffe286;
 }
 
-
-#board_list
-.board_list_contents
-.board_list
-table
-tr
-td:nth-child(2) a{
+#board_list .board_list_contents .board_list table tr td:nth-child(2) a {
   padding: 0 20px;
   display: block;
   width: 100%;
@@ -156,12 +131,7 @@ td:nth-child(2) a{
   text-align: left;
 }
 
-#board_list
-.board_list_contents
-.board_list
-table
-tr
-td:nth-child(2):hover {
+#board_list .board_list_contents .board_list table tr td:nth-child(2):hover {
   font-weight: bold;
   text-decoration: underline;
 }
@@ -169,9 +139,9 @@ td:nth-child(2):hover {
 #board_list .board_list_contents .board_list > a {
   display: block;
   border-radius: 5px;
-  width: 90px;
+  padding: 5px 10px;
   height: 35px;
-  line-height: 35px;
+  line-height: 25px;
   margin: 20px 0;
   border: none;
   font-size: 14px;
@@ -180,15 +150,13 @@ td:nth-child(2):hover {
   cursor: pointer;
 }
 
-
 #board_write {
   background-color: #fff;
   margin: 50px auto;
   padding: 50px;
   width: 1000px;
   border: 1px solid #eee;
-  border-radius: 15px
-
+  border-radius: 15px;
 }
 
 #board_write .write_board {
@@ -354,7 +322,6 @@ td:nth-child(2):hover {
   width: 80px;
 }
 
-
 #board_detail {
   background-color: #fff;
   margin: 50px auto;
@@ -378,7 +345,9 @@ td:nth-child(2):hover {
 
 #board_detail .board_detail_top .board_detail_button {
   display: flex;
+  justify-content: space-between;
   align-items: flex-end;
+  width: 210px;
   margin-bottom: 10px;
 }
 
@@ -391,7 +360,6 @@ td:nth-child(2):hover {
   border-radius: 5px;
   font-weight: bold;
   font-size: 14px;
-  margin: 0 5px;
 }
 
 #board_detail .board_detail_table {
@@ -437,9 +405,7 @@ td:nth-child(2):hover {
   border: 2px solid #000;
   border-radius: 10px;
   font-size: 25px;
-  width: 100px;
-  height: 60px;
-  line-height: 55px;
+  padding: 5px 20px;
   cursor: pointer;
 }
 
@@ -460,7 +426,7 @@ td:nth-child(2):hover {
   display: flex;
 }
 
-#board_detail .create_comment_form textarea {
+#board_detail .create_comment_form .create_comment_area textarea {
   font-family: sans-serif;
   margin-right: 5px;
   resize: none;
@@ -478,7 +444,6 @@ td:nth-child(2):hover {
   background-color: #eee;
   border: 1px solid #000;
 }
-
 
 #board_detail .boardCommentList {
   border-top: 3px solid #000;

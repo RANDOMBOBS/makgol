@@ -4,6 +4,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <table>
+    <colgroup>
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+      </colgroup>
   <thead>
     <tr>
       <th>글번호</th>
