@@ -7,7 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 <link href="<c:url value='/resources/static/css/board.css' />" rel="stylesheet" type="text/css" />
 	
 </script>
@@ -16,15 +15,15 @@
 </head>
 <body>
     <jsp:include page="../../include/header.jsp"></jsp:include>
-	<section id="notice_board">
-		<h1 class="notice_board_title">공지사항</h1>
-		<div class="notice_board_contents">
+	<section id="board_list">
+		<h1 class="board_list_title">공지사항</h1>
+		<div class="board_list_contents">
 		    <form name="search_notice_form" class="notice_search">
-				<input type="text" name="searchWord" placeholder="검색할 게시판을 입력하세요.">
+				<input type="text" name="searchWord" autocomplete='off' placeholder="검색할 게시판을 입력하세요.">
 				<button type="button" onclick="searchNotice()"><i class="fa-solid fa-magnifying-glass"></i></button>
 		    </form>
 		    <!-- div .notice_list 안에 ajax 담겨짐 -->
-		    <div class="notice_list"></div>
+		    <div class="board_list"></div>
 		</div>
 	</section>
 
@@ -38,7 +37,7 @@
 				type : "GET",
 				dataType : "html",
 				success : function(rdata) {
-					jQuery(".notice_list").html(rdata);
+					jQuery(".board_list").html(rdata);
 				},
 				error : function(error) {
 					alert("오류");
