@@ -213,6 +213,7 @@ public class BoardSuggestionController {
 		List<BoardVo> boardVos = boardService.searchBoard(searchOption, searchWord);
 		if (boardVos != null) {
 			model.addAttribute("boardVos", boardVos);
+			model.addAttribute("value", searchWord);
 		}
 		return nextPage;
 	}

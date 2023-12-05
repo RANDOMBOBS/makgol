@@ -68,9 +68,9 @@ request.setCharacterEncoding("utf-8");
 		</c:url>
 
 		<c:url value="/board/suggestion/delete" var="delete_url">
-    			<c:param name="b_id" value="${boardVo.id}" />
-    			<c:param name="images" value="${boardVo.images}" />
-    		</c:url>
+    		<c:param name="b_id" value="${boardVo.id}" />
+    		<c:param name="images" value="${boardVo.images}" />
+		</c:url>
 
 		<c:if test="${boardVo.user_id == loginedUserVo.getId()}">
 			<a href="${modify_url}">수정</a>

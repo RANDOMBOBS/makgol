@@ -8,11 +8,10 @@
 	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
 <c:choose>
 <c:when test="${not empty boardVos}">
-<h3>검색하신 글 목록입니다.</h3>
-<table>
+	<h3>' <span>${value}</span> '에 대한 검색결과 입니다.</h3>
+	<table>
 	<thead>
 		<tr>
 			<th>글번호</th>
@@ -42,11 +41,10 @@
 
 
 <c:otherwise>
-<h3>검색된 정보가 없습니다.  ${boardVos}</h3>
+<h4>검색된 정보가 없습니다.</h4>
 </c:otherwise>
 </c:choose>
-<a href="#javascript" onclick="allBoardList()">전체목록보기</a><br>
+<a href="#" onclick="allBoardList()">전체목록보기</a><br>
 
 
 
-	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>

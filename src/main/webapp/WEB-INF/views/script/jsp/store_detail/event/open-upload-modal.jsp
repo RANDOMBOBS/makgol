@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="../modal/upload_review_image/upload.jsp"></jsp:include>
 <script>
     const openUploadModal = () => {
         $(".modal_cover").css({display: "block"});

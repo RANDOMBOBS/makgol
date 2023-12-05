@@ -19,4 +19,15 @@
         where id = #{id}
     </update>
 
+    <select id="selectSearchUserList" resultType="com.org.makgol.users.vo.UsersResponseVo" parameterType="hashmap">
+        SELECT * FROM users WHERE
+        <choose>
+            <when test="searchOption == 'userRole'">
+                grade = #{searchValue}
+            </when>
+            <otherwise>
+                name = #{searchValue}
+            </otherwise>
+        </choose>
+    </select>
 </mapper>

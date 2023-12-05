@@ -11,6 +11,7 @@ public class BoardLikeVo {
     int user_id;
     int hit;
     String title;
+    String name;
     String category;
     int sympathy;
     String date;

@@ -1,6 +1,6 @@
 package com.org.makgol.boards.service;
 
-import com.org.makgol.boards.dao.BoardSuggestionDao;
+import com.org.makgol.boards.repository.BoardSuggestionRepository;
 import com.org.makgol.boards.vo.BoardCreateRequestVo;
 import com.org.makgol.boards.vo.BoardDetailResponseVo;
 import com.org.makgol.boards.vo.BoardVo;
@@ -9,30 +9,28 @@ import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
-import org.openqa.selenium.devtools.v85.layertree.model.StickyPositionConstraint;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class BoardSuggestionService {
 
     private final FileUpload fileUpload;
+    private final BoardSuggestionRepository boardSuggestionRepository;
 
-    private final BoardSuggestionDao boardDao;
-    private BoardSuggestionDao boardService;
 
     /**
      * suggestion 게시판 가져오기
      **/
     public List<BoardVo> getSuggestionBoard() {
-        return boardDao.selectAllSuggestionBoard();
+        List<BoardVo> boardVos = null;
+        boardVos = boardSuggestionRepository.selectAllSuggestionBoard();
+        return boardVos.size() > 0 ? boardVos : null;
     }
 
     /**
@@ -40,6 +38,7 @@ public class BoardSuggestionService {
      **/
     public int createBoardConfirm(BoardCreateRequestVo boardCreateRequestVo) {
         List<MultipartFile> files = new ArrayList<MultipartFile>();
+        int result = -1;
 
         if (boardCreateRequestVo.getFile1() != null && !boardCreateRequestVo.getFile1().isEmpty()) {
             files.add(boardCreateRequestVo.getFile1());
@@ -59,10 +58,21 @@ public class BoardSuggestionService {
 
         // if(파일이 1개이상일때), else(파일이 0개일때)
         if (files.size() > 0) {
-            List<FileInfo> fileList = fileUpload.fileListUpload(files);
-            return boardDao.insertSuggestionBoard(boardCreateRequestVo, fileList);
+            try {
+                List<FileInfo> fileList = fileUpload.fileListUpload(files);
+                int boardImageListResult = -1;
+                boardSuggestionRepository.insertSuggestionBoard(boardCreateRequestVo);
+                int board_id = boardCreateRequestVo.getId();
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", board_id);
+                map.put("fileList", fileList);
+                boardSuggestionRepository.insertSuggestionBoardImages(map);
+                return 1;
+            } catch (Exception e) {
+                throw e;
+            }
         } else {
-            return boardDao.insertSuggestionBoard(boardCreateRequestVo);
+            return boardSuggestionRepository.insertSuggestionBoard(boardCreateRequestVo);
         }
     }
 
@@ -71,15 +81,22 @@ public class BoardSuggestionService {
      * suggestion 글 상세보기
      **/
     public BoardDetailResponseVo readSuggestionBoard(int id) {
-        List<BoardDetailResponseVo> boardVos = boardDao.showDetailSuggestionBoard(id);
-        List<String> images = new ArrayList<String>();
-        if(boardVos.get(0).getBoard_photo_path() != null){
-            for (int i = 0; i < boardVos.size(); i++) {
-                images.add(boardVos.get(i).getBoard_photo_path());
+        List<BoardDetailResponseVo> boardVos = null;
+        BoardDetailResponseVo boardVo = null;
+        boardVos = boardSuggestionRepository.showDetailImageBoard(id);
+        if(boardVos.size() == 0){
+            boardVos = boardSuggestionRepository.showDetailBoard(id);
+            boardVo = boardVos.get(0);
+        } else {
+            List<String> images = new ArrayList<String>();
+            if (boardVos.get(0).getBoard_photo_path() != null) {
+                for (int i = 0; i < boardVos.size(); i++) {
+                    images.add(boardVos.get(i).getBoard_photo_path());
+                }
             }
+            boardVo = boardVos.get(0);
+            boardVo.setImages(images);
         }
-        BoardDetailResponseVo boardVo = boardVos.get(0);
-        boardVo.setImages(images);
         return boardVo;
     }
 
@@ -87,64 +104,82 @@ public class BoardSuggestionService {
      * suggestion 조회수
      **/
     public int addHit(int id) {
-        return boardDao.updateHit(id);
-    }
+        int result = -1;
+        result = boardSuggestionRepository.updateHit(id);
+        return result;    }
 
     /**
      * suggestion 댓글 INSERT
      **/
     public int addComment(CommentRequestVo commentRequestVo) {
-
-        return boardDao.insertComment(commentRequestVo);
+        int result = -1;
+        result = boardSuggestionRepository.insertComment(commentRequestVo);
+        return result;
     }
 
     /**
      * suggestion 댓글 SELECT
      **/
     public List<CommentResponseVo> getCommentList(int board_id) {
-        return boardDao.selectCommentList(board_id);
+        List<CommentResponseVo> commentResponseVos = null;
+        commentResponseVos = boardSuggestionRepository.selectCommentList(board_id);
+        return commentResponseVos.size() > 0 ? commentResponseVos : null;
     }
 
     /**
      * suggestion 댓글 수정 폼 제출
      **/
     public int modifyCommentConfirm(CommentResponseVo commentResponseVo) {
-        return boardDao.updateComment(commentResponseVo);
+        int result = -1;
+        result = boardSuggestionRepository.updateComment(commentResponseVo);
+        return result;
     }
 
     /**
      * suggestion 댓글 DELETE
      **/
     public int delComment(int id) {
-        return boardDao.deleteComment(id);
+        int result = -1;
+        result = boardSuggestionRepository.deleteComment(id);
+        return result;
     }
 
     /**
      * suggestion 글 수정하러가기 버튼
      **/
     public BoardVo modifyBoard(int b_id, String name) {
-        List<BoardVo> boardVos = boardDao.selectBoard(b_id);
+        List<BoardVo> boardVos = null;
+        BoardVo boardVo = null;
         List<String> images = new ArrayList<String>();
-        if (boardVos.get(0).getPhoto_path() != null){
+        boardVos = boardSuggestionRepository.selectImageBoard(b_id);
+        if (boardVos.size() == 0) {
+            boardVos = boardSuggestionRepository.selectBoard(b_id);
+            boardVo = boardVos.get(0);
+        } else{
             for (int i = 0; i < boardVos.size(); i++) {
                 images.add(boardVos.get(i).getPhoto_path());
             }
+            boardVo = boardVos.get(0);
+            boardVo.setImages(images);
+            boardVo.setName(name);
         }
-        BoardVo boardVo = boardVos.get(0);
-        boardVo.setImages(images);
-        boardVo.setName(name);
         return boardVo;
     }
+
+
 
     /**
      * suggestion 글 수정 폼 제출
      **/
+    @Transactional(rollbackFor = Exception.class)
     public int modifyBoardConfirm(BoardCreateRequestVo boardCreateRequestVo, String oldImages) {
-        List<MultipartFile> files = new ArrayList<MultipartFile>();
-        List<String> existingFile = new ArrayList<String>();
-        List<FileInfo> existingFileInfo = new ArrayList<FileInfo>();
+        List<MultipartFile> files = new ArrayList<MultipartFile>(); // 새로 추가된 파일을 담을 변수
+        List<String> existingFile = new ArrayList<String>();    // 기존에 있던 파일을 담을 변수
+        List<FileInfo> existingFileInfo = new ArrayList<FileInfo>(); // 기존의 파일 정보를 담을 변수
         int result = -1;
 
+
+        // 기존 파일이 있다면 배열에 추가함
         if (boardCreateRequestVo.getOldImage1() != null && !boardCreateRequestVo.getOldImage1().isEmpty()) {
             existingFile.add(boardCreateRequestVo.getOldImage1());
         }
@@ -162,6 +197,7 @@ public class BoardSuggestionService {
         }
 
 
+        // 새로운 이미지가 있다면 파일을, 없다면 null값을 배열에 추가함
         if (boardCreateRequestVo.getFile1() != null && !boardCreateRequestVo.getFile1().isEmpty()) {
             files.add(boardCreateRequestVo.getFile1());
         } else {
@@ -187,12 +223,16 @@ public class BoardSuggestionService {
         } files.add(null);
 
 
+        // 만약 기존 파일이 있다면 파일정보를 가져오기
         if(existingFile.size() >0 ) {
-            existingFileInfo = boardDao.selectExistingFile(existingFile);
+            existingFileInfo = boardSuggestionRepository.selectExistingFile(existingFile);
         }
 
-
+        // 새로운 파일의 정보를 가져오기
         List<FileInfo> fileList = fileUpload.editFileListUpload(files);
+
+        // fileList(새로운파일정보배열) 0번부터 접근하여 null값이라면 existingFileInfo(기존파일정보배열) i번값을 넣기
+        // [ null, 새파일1, null, 새파일2, null ] ------> [ 기존파일1, 새파일1, null, 새파일2, null ]
         for(int i=0 ; i<existingFileInfo.size(); i++){
             for(int j=0; j<fileList.size(); j++){
                 if(fileList.get(j) == null){
@@ -202,61 +242,45 @@ public class BoardSuggestionService {
             }
         }
 
-
+        // fileList 역순으로 접근하여 null값이라면 그 값 삭제
+        // [ 기존파일1, 새파일1, 기존파일2, 새파일2, null ] ------> [ 기존파일1, 새파일1, 새파일2 ]
         for (int i = fileList.size()-1; i >= 0; i--) {
             if (fileList.get(i) == null) {
                 fileList.remove(i);
             }
         }
 
-
-
-        boolean images = false;
-        for (int i = 0; i < fileList.size(); i++ ){
-            if(fileList.get(i) != null){
-                images = true;
+        // if(파일이 있을때), else(파일이 없을때) DB UPDATE
+        if (fileList.size() > 0) {
+            try {
+                int board_id = boardCreateRequestVo.getId();
+                boardSuggestionRepository.updateBoard(boardCreateRequestVo);
+                boardSuggestionRepository.deleteBoardImage(board_id);
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", board_id);
+                map.put("fileList", fileList);
+                boardSuggestionRepository.insertSuggestionBoardImages(map);
+                result = 1;
+            } catch (Exception e) {
+                throw e;
+            }
+        } else {
+            try {
+                int board_id = boardCreateRequestVo.getId();
+                boardSuggestionRepository.updateBoard(boardCreateRequestVo);
+                boardSuggestionRepository.deleteBoardImage(board_id);
+                result = 1;
+            }catch (Exception e){
+                throw e;
             }
         }
 
-        
-        // if(파일이 있을때), else(파일이 없을때)
-        if (images) {
-            result = boardDao.updateSuggestionBoard(boardCreateRequestVo, fileList);
-
-        } else {
-            result = boardDao.updateSuggestionBoard(boardCreateRequestVo);
-        }
-
-
+        // 쿼리문 실행이 성공했다면
         if (result > 0) {
-            String currentDirectory = System.getProperty("user.dir");
-            String[] oldImageList = null;
-            List<String> oldImageNames = new ArrayList<String>();
-            oldImages = oldImages.substring(1, oldImages.length() - 1);
-            oldImages = oldImages.replace(" ","");
-            oldImageList = oldImages.split(",");
-
-            for(int i=0; i<existingFileInfo.size(); i++){
-                for (int j=0; j<oldImageList.length; j++){
-                    if(oldImageList[j].equals(existingFileInfo.get(i).getPhotoPath())){
-                        oldImageList[j]= "";
-                    }
+            if(oldImages.length() > 0){
+                FileUpload.modifyFileList(oldImages,existingFileInfo);
                 }
             }
-
-            for (int i = 0; i < oldImageList.length; i++) {
-                String oldImage = oldImageList[i];
-                String oldImageName = oldImage.substring(oldImage.lastIndexOf("/") + 1, oldImage.length());
-                oldImageNames.add(oldImageName);
-            }
-
-            for (int i = 0; i < oldImageNames.size(); i++) {
-                String image = oldImageNames.get(i);
-                String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
-                File file = new File(deleteFile);
-                file.delete();
-            }
-        }
         return result;
     }
 
@@ -264,82 +288,68 @@ public class BoardSuggestionService {
      * suggestion 글 DELETE
      **/
     public int deleteBoard(int b_id, String images) {
-        int result = boardDao.deleteBoard(b_id);
-
+        int result = -1;
+        result = boardSuggestionRepository.deleteBoard(b_id);
         if (result > 0) {
-            String currentDirectory = System.getProperty("user.dir");
-            String[] imageList = null;
-            List<String> imageNames = new ArrayList<String>();
-            if(images != null) {
-                images = images.substring(1, images.length() - 1);
-                imageList = images.split(",");
-                for (int i = 0; i < imageList.length; i++) {
-                    String image = imageList[i];
-                    String imageName = image.substring(image.lastIndexOf("/") + 1, image.length());
-                    imageNames.add(imageName);
-                }
-                for (int i = 0; i < imageNames.size(); i++) {
-                    String image = imageNames.get(i);
-                    String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
-                    File file = new File(deleteFile);
-                    file.delete();
-                }
+            if(images.length() >0) {
+                FileUpload.deleteFileList(images);
             }
         }
         return result;
     }
 
+
     /**
      * suggestion 글 검색
      **/
     public List<BoardVo> searchBoard(String searchOption, String searchWord) {
-        return boardDao.selectSearchBoard(searchOption, searchWord);
+        List<BoardVo> boardVos = null;
+        Map<String, String> map = new HashMap<>();
+        map.put("searchOption", searchOption);
+        map.put("searchWord", searchWord);
+        boardVos = boardSuggestionRepository.selectSearchBoard(map);
+        return boardVos.size() > 0 ? boardVos : null;
     }
 
     public int userLikeStatus(BoardVo boardVo) {
-        return boardDao.selectUserLikeStatus(boardVo);
+        int status = boardSuggestionRepository.selectUserLikeStatus(boardVo);
+        return status;
     }
 
     public int addLikeBoard(BoardVo boardVo) {
-        return boardDao.insertBoardLike(boardVo);
+        int result = -1;
+        result = boardSuggestionRepository.insertBoardLike(boardVo);
+        return result;
     }
 
     public int removeLikeBoard(BoardVo boardVo) {
-        return boardDao.deleteBoardLike(boardVo);
-
+        int result = -1;
+        result = boardSuggestionRepository.deleteBoardLike(boardVo);
+        return result;
     }
 
     public int countLike(int b_id) {
-        return boardDao.selectCountLike(b_id);
+        int totalLike = boardSuggestionRepository.selectLikeCount(b_id);
+        return totalLike;
     }
 
     public void addBoardSympathy(Map<String, Integer> map) {
-        boardDao.updateBoardSympathy(map);
+        boardSuggestionRepository.updateBoardSympathy(map);
     }
 
     public int deleteMyBoard(String ids){
         String[] id = ids.split(",");
         List<Integer> idList = new ArrayList<>();
         List<String> imageList = new ArrayList<>();
+        int result = -1;
+
         for(String item : id) {
             idList.add(Integer.parseInt(item));
         }
-        imageList = boardDao.selectBoardImages(idList);
-        int result =  boardDao.deleteHistoryBoard(idList);
+        imageList = boardSuggestionRepository.selectBoardImages(idList);
+        result = boardSuggestionRepository.deleteHistoryBoard(idList);
         if(result>0){
-            String currentDirectory = System.getProperty("user.dir");
-            String imageName = null;
-            List<String> imageNames = new ArrayList<>();
-            for(String image : imageList){
-                imageName = image.substring(image.lastIndexOf("/") + 1, image.length());
-                imageNames.add(imageName);
-            }
-            for(int i= 0; i<imageNames.size(); i++) {
-                String image = imageNames.get(i);
-                String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
-                File file = new File(deleteFile);
-                file.delete();
-            }
+         FileUpload.deleteFileList(imageList.toString());
         }
         return result;
     }
@@ -348,10 +358,11 @@ public class BoardSuggestionService {
     public int deleteMyComment(String comids){
         String id[] = comids.split(",");
         List<Integer> idList = new ArrayList<>();
+        int result = -1;
         for(String item : id) {
             idList.add(Integer.parseInt(item));
         }
-        int result =  boardDao.deleteHistoryComment(idList);
+        result = boardSuggestionRepository.deleteHistoryComment(idList);
         return result;
     }
 
@@ -360,16 +371,16 @@ public class BoardSuggestionService {
         String[] boardid = boardids.split(",");
         List<Integer> idList = new ArrayList<>();
         List<Integer> boardidList = new ArrayList<>();
+        int result = -1;
         for(String item : id) {
             idList.add(Integer.parseInt(item));
         }
-        int result =  boardDao.deleteHistoryLike(idList);
-
+        result = boardSuggestionRepository.deleteHistoryLike(idList);
         if(result>0){
             for(String item : boardid) {
                 boardidList.add(Integer.parseInt(item));
             }
-            boardDao.deleteLikes(boardidList);
+            boardSuggestionRepository.deleteLikes(boardidList);
         }
         return result;
     }

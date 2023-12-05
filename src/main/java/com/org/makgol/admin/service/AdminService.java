@@ -1,6 +1,7 @@
 package com.org.makgol.admin.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
@@ -21,5 +22,9 @@ public class AdminService {
 
 	public int modGrade(UsersRequestVo userVo) {
 		return adminDao.UpdateGrade(userVo);
+	}
+
+	public List<UsersResponseVo> getSearchUser(Map<String, String> map){
+		return adminDao.selectSearchUserList(map);
 	}
 }
