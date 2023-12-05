@@ -15,17 +15,17 @@
 <title>막내야 골라봐 | 공지사항 (NOTICE)</title>
 </head>
 <body>
-
     <jsp:include page="../../include/header.jsp"></jsp:include>
-
-	<section class="notice board">
-		<h3>공지사항</h3>
-		<form name="search_notice_form" class="notice_search">
+	<section id="notice_board">
+		<h1 class="notice_board_title">공지사항</h1>
+		<div class="notice_board_contents">
+		    <form name="search_notice_form" class="notice_search">
 				<input type="text" name="searchWord" placeholder="검색할 게시판을 입력하세요.">
-				<input type="button" value="검색" onclick="searchNotice()">
-		</form>
-		<!-- div .notice_list 안에 ajax 담겨짐 -->
-		<div class="notice_list"></div>
+				<button type="button" onclick="searchNotice()"><i class="fa-solid fa-magnifying-glass"></i></button>
+		    </form>
+		    <!-- div .notice_list 안에 ajax 담겨짐 -->
+		    <div class="notice_list"></div>
+		</div>
 	</section>
 
 	<jsp:include page="../../../script/jsp/notice.jsp"></jsp:include>
