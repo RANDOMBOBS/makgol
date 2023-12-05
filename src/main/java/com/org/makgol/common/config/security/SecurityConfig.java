@@ -59,6 +59,7 @@ public class SecurityConfig {
                         , "/resources/static/css/**"        // css
                         , "/resources/static/image/**"      // image
                         , "/resources/static/js/modal/**"   // modal js
+                        , "/resources/static/js/csv/**"   // modal js
                         , "/views/**"
                         , "/user/blackList"
                         , "/main/todayMenuList"
@@ -69,7 +70,6 @@ public class SecurityConfig {
                         "/api/account/logout"
                         , "/user/myPage"
                         , "/user/modifyUser"
-                        , "/user/modifyUserConfirm"
                         , "/user/modifyUserConfirm"
                         , "/board/suggestion/**"
                 ).hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
