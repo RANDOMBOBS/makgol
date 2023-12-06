@@ -17,7 +17,6 @@
 
 <jsp:include page="../include/header.jsp"></jsp:include>
     <section class="section">
-    <div class="categoryMain_clip"> <img src="<c:url value='/resources/static/image/default/clip.png' />" alt="클립"></div>
                     <div class="categoryMenuPan">
                         <div class="categoryMenuPage">
                             <div class="categoryMain_img"> <img src="<c:url value='/resources/static/image/default/Menu.png' />" alt="메뉴"></div>

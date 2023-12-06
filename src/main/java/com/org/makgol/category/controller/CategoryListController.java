@@ -3,9 +3,6 @@ package com.org.makgol.category.controller;
 import java.util.List;
 
 import com.org.makgol.category.vo.CategoryRequestVo;
-import com.org.makgol.util.file.FileInfo;
-import com.org.makgol.util.file.FileUpload;
-import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +11,6 @@ import com.org.makgol.category.service.CategoryListService;
 import com.org.makgol.category.vo.CategoryListVo;
 
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -24,9 +20,6 @@ public class CategoryListController {
 
 	@Autowired
 	CategoryListService categoryListService;
-
-	@Autowired
-	FileUpload fileUp;
 
 	@GetMapping("/rouletteResult")
 	public String rouletteResult(@RequestParam("category") String category, Model model) {
