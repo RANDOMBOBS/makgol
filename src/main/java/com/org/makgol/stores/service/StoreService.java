@@ -125,11 +125,8 @@ public class StoreService {
         List<FileInfo> fileInfoList = fileUpload.fileListUpload(createReviewDto.getReviewImages());
         try {
             storesRepository.createReview(createReviewDto);
-            System.out.println("createReviewDto = " + createReviewDto.getId());
             fileInfoList.forEach((fileInfo -> {
-                System.out.println("fileInfo = " + fileInfo);
                 UploadReviewImageDto uploadReviewImageDto = new UploadReviewImageDto(createReviewDto.getId(), fileInfo.getPhotoName(), fileInfo.getPhotoPath());
-                System.out.println("uploadReviewImageDto = " + uploadReviewImageDto);
                 storesRepository.uploadReviewImage(uploadReviewImageDto);
             }));
         } catch (Exception e) {
