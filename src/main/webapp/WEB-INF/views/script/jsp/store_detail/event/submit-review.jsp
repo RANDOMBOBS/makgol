@@ -21,6 +21,9 @@
         const {axios} = window;
         const {data} = await axios.post(url, formData, {headers: {'Content-Type': 'multipart/form-data'}})
 
-        console.log(data);
+        if (data.success) {
+            alert("리뷰를 작성하였습니다.");
+            location.reload();
+        }
     }
 </script>
