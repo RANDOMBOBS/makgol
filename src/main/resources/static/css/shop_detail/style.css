@@ -348,12 +348,18 @@ article #review img {
     cursor: pointer;
 }
 
+article #review #upload_image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 12px;
+}
+
 article #review #upload_image > img {
     width: 85px;
     height: 60px;
     cursor: pointer;
     border: 2px solid gainsboro;
-    margin-left: 6px;
     border-radius: 5px;
 }
 
@@ -388,10 +394,6 @@ article #review #review_form .review_content #submit_review {
 article #review #review_form .review_content #submit_review:hover {
     color: #fdf97e;
     background-color: #ffa400;
-}
-
-article #review #review_form .review_image_box {
-    margin-left: 5px;
 }
 
 article #review .item_info_footer {
