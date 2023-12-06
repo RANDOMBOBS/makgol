@@ -4,7 +4,7 @@
 <jsp:include page="./display-review-etc.jsp"></jsp:include>
 <script>
     const displayReview = (reviews) => {
-        const reviewListEle = document.querySelector("#review_list");
+        const reviewListEle = $("#review_list");
 
         if (!reviews.length) {
             const h3Ele = document.createElement("h3");
@@ -18,7 +18,7 @@
             reviewListEle.style.alignItems = "center";
             reviewListEle.appendChild(h3Ele);
         } else {
-            const reviewListEle = $("#review_list");
+
 
             reviews.forEach((item) => {
                 const liEle = $("<li>").addClass("review_item");
