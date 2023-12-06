@@ -12,6 +12,8 @@ import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersResponseVo;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.kakaoMap.KakaoMap;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +42,7 @@ public class StoreService {
     private final UsersRepository usersRepository;
     private final KakaoMap kakaoMapSearch;
     private final StoresDao storesDao;
+    private final FileUpload fileUpload;
 
     public List<ResponseStoreListDto> findStoreListData(RequestStoreListDto requestStoreListDto) {
         List<ResponseStoreListDto> result = null;
@@ -60,7 +63,7 @@ public class StoreService {
 
     public String findStoreIdWithPlaceName(String name) {
         String id = "";
-        try{
+        try {
             id = storesRepository.findStoreIdWithPlaceName(name);
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,9 +93,9 @@ public class StoreService {
 
     public List<StoreReviewDto> findStoreReviewWithId(int storeId) {
         List<StoreReviewDto> result = null;
-        try{
+        try {
             result = storesRepository.findStoreReviewWithId(storeId);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
@@ -100,9 +103,9 @@ public class StoreService {
 
     public List<String> findStoreReviewImageWithId(int reviewId) {
         List<String> result = null;
-        try{
+        try {
             result = storesRepository.findStoreReviewImageWithId(reviewId);
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
@@ -116,6 +119,22 @@ public class StoreService {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void createReview(CreateReviewDto createReviewDto) {
+        List<FileInfo> fileInfoList = fileUpload.fileListUpload(createReviewDto.getReviewImages());
+        try {
+            storesRepository.createReview(createReviewDto);
+            System.out.println("createReviewDto = " + createReviewDto.getId());
+            fileInfoList.forEach((fileInfo -> {
+                System.out.println("fileInfo = " + fileInfo);
+                UploadReviewImageDto uploadReviewImageDto = new UploadReviewImageDto(createReviewDto.getId(), fileInfo.getPhotoName(), fileInfo.getPhotoPath());
+                System.out.println("uploadReviewImageDto = " + uploadReviewImageDto);
+                storesRepository.uploadReviewImage(uploadReviewImageDto);
+            }));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public KakaoLocalResponseJSON callKakaoLocalAPI(KakaoLocalRequestVo searchRequestVo) {
@@ -199,7 +218,7 @@ public class StoreService {
     }
 
 
-    public boolean saveStoresProcess(String email){
+    public boolean saveStoresProcess(String email) {
         log.info("saveStoresProcess");
         UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
         List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);

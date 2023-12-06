@@ -13,13 +13,26 @@ public interface StoresRepository {
     StoreResponseVo findByIdPlaceUrl(String place_url);
 
     List<ResponseStoreListDto> findStoreList(Map<String, String> map);
+
     String findStoreIdWithPlaceName(String placeName);
+
     StoreDetailDto findStoreDetailWithId(String storeId);
+
     List<StoreMenuDto> findStoreMenuWithId(String storeId);
+
     List<StoreReviewDto> findStoreReviewWithId(int storeId);
+
     List<String> findStoreReviewImageWithId(int reviewId);
+
     List<UserInfoDto> findUserInfo(int userId);
+
+    void createReview(CreateReviewDto createReviewDto);
+
+    void uploadReviewImage(UploadReviewImageDto uploadReviewImageDto);
+
     void saveCategoryMenu(Map<String, Object> map);
+
     void saveMenus(Map<String, Object> map);
+
     void saveStores(StoreRequestVo storeRequestVo);
 }

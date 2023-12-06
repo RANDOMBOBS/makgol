@@ -49,16 +49,33 @@
         WHERE id = #{userId}
     </select>
 
+    <insert id="createReview" parameterType="com.org.makgol.stores.dto.CreateReviewDto" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT
+        INTO mak_gol.reviews (user_id, store_id, content, date)
+        VALUES (#{userId}, #{storeId}, #{review}, now())
+    </insert>
+
+    <insert id="uploadReviewImage" parameterType="com.org.makgol.stores.dto.UploadReviewImageDto">
+        INSERT
+        INTO mak_gol.review_images (review_id, photo, photo_path, date)
+        VALUES (#{reviewId}, #{photoName}, #{photoPath}, now())
+    </insert>
+
     <insert id="saveCategoryMenu" parameterType="Map">
-        INSERT INTO category_menu (store_id, category, menu_name, date) VALUES (#{store_id}, #{category}, #{menu_name}, now())
+        INSERT INTO category_menu (store_id, category, menu_name, date)
+        VALUES (#{store_id}, #{category}, #{menu_name}, now())
     </insert>
 
     <insert id="saveMenus" parameterType="Map">
-        INSERT INTO Menus (store_id, menu, price, date) VALUES (#{store_id}, #{menu}, #{price}, now())
+        INSERT INTO Menus (store_id, menu, price, date)
+        VALUES (#{store_id}, #{menu}, #{price}, now())
     </insert>
 
     <insert id="saveStores" parameterType="com.org.makgol.stores.vo.StoreRequestVo">
-        INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date, photo)
-        VALUES (#{name}, #{likes}, #{longitude}, #{latitude}, #{address}, #{load_address}, #{category}, #{opening_hours}, #{phone}, #{site}, #{menu_update}, #{place_url}, #{update_date}, #{photo})
+        INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone,
+                            site, menu_update, place_url, update_date, photo)
+        VALUES (#{name}, #{likes}, #{longitude}, #{latitude}, #{address}, #{load_address}, #{category},
+                #{opening_hours}, #{phone}, #{site}, #{menu_update}, #{place_url}, #{update_date}, #{photo})
     </insert>
 </mapper>

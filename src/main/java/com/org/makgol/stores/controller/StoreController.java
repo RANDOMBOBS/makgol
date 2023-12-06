@@ -8,14 +8,16 @@ import com.org.makgol.stores.vo.KakaoLocalRequestVo;
 import com.org.makgol.stores.vo.KakaoLocalResponseVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -71,7 +73,7 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value="/detail_data/store_id/{store_id}")
+    @GetMapping(value = "/detail_data/store_id/{store_id}")
     @ResponseBody
     public ResponseEntity<?> findStoreDetailData(@PathVariable String store_id) {
         StoreDetailDto storeDetailDtos = storeService.findStoreDetailWithId(store_id);
@@ -80,7 +82,7 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(value= "/menu_data/store_id/{store_id}")
+    @GetMapping(value = "/menu_data/store_id/{store_id}")
     @ResponseBody
     public ResponseEntity<?> findStoreMenuData(@PathVariable String store_id) {
         List<StoreMenuDto> storeMenuDtos = storeService.findStoreMenuWithId(store_id);
@@ -124,6 +126,17 @@ public class StoreController {
 
         KakaoLocalResponseVo<List<ResponseStoreReviewDto>> response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 리뷰를 가져옵니다.", responseStoreReviewDtos);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/review")
+    public ResponseEntity<?> createReview(@ModelAttribute CreateReviewDto createReviewDto) {
+        // 이미지 업로드를 안한 경우 빈 리스트로 초기화
+        if (createReviewDto.getReviewImages() == null) {
+            createReviewDto.setReviewImages(new ArrayList<>());
+        }
+
+        storeService.createReview(createReviewDto);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     @GetMapping(value = "/kakao-local-api")
