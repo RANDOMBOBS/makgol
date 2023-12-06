@@ -136,7 +136,9 @@ public class StoreController {
         }
 
         storeService.createReview(createReviewDto);
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+
+        KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 리뷰를 가져옵니다.", null);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(value = "/kakao-local-api")
