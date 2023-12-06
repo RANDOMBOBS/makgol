@@ -98,9 +98,9 @@
         </c:when>
 
         <c:otherwise>
+            <input type="hidden" name="board_id" value="${boardVo.id}"/>
             <input type="text" name="nickname" placeholder="닉네임" disabled/>
             <textarea name="contents" placeholder="로그인 후 댓글 작성이 가능합니다." disabled></textarea>
-            <input type="hidden" name="board_id" value="${boardVo.id}"/>
         </c:otherwise>
     </c:choose>
 </form>
@@ -115,6 +115,8 @@
     if (user_id) {
         userLikeStatus(b_id, user_id);
     }
+
+
     comList();
 
 

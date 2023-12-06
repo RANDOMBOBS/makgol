@@ -26,5 +26,7 @@ public interface UsersRepository {
     List<BoardVo> selectMyPostList(int user_id);
     List<CommentResponseVo> selectMyCommentList(int user_id);
     List<BoardLikeVo> selectMyLikePostList(int user_id);
-
+    int countingPosts(int user_id);
+    int countingComments(int user_id);
+    int countingLikes(int user_id);
 }

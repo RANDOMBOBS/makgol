@@ -25,7 +25,7 @@
                 <span class="role">${loginedUserVo.grade}</span>
             </div>
             <p class="total_history_list">
-                작성글 <span>10</span>개 | 작성댓글 <span>20</span>개 | 공감한 글 <span>3</span>개
+                작성글 <span class="posts"></span>개 | 작성댓글 <span class="comments"></span>개 | 공감한 글 <span class="likes"></span>개
             </p>
         </div>
     </div>
@@ -59,8 +59,9 @@
             myLikePost();
             break;
     }
-
-
+    countingPosts();
+    countingComments();
+    countingLikes();
 </script>
 </body>
 </html>

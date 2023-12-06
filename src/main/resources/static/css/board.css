@@ -345,7 +345,7 @@ body {
 
 #board_detail .board_detail_top .board_detail_button {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-end;
   width: 210px;
   margin-bottom: 10px;
@@ -360,6 +360,7 @@ body {
   border-radius: 5px;
   font-weight: bold;
   font-size: 14px;
+  margin: 0 5px;
 }
 
 #board_detail .board_detail_table {
@@ -426,7 +427,7 @@ body {
   display: flex;
 }
 
-#board_detail .create_comment_form .create_comment_area textarea {
+#board_detail .create_comment_form textarea {
   font-family: sans-serif;
   margin-right: 5px;
   resize: none;

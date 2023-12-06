@@ -43,7 +43,7 @@
 </table>
 </c:when>
 <c:otherwise>
-<h4>검색된 정보가 없습니다.</h4>
+<h3>검색된 정보가 없습니다.</h3>
 </c:otherwise>
 </c:choose>
 <a href="#" onclick="userList()">전체회원보기</a><br>
