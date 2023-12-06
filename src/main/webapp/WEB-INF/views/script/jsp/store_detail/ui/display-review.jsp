@@ -5,7 +5,6 @@
 <script>
     const displayReview = (reviews) => {
         const reviewListEle = $("#review_list");
-        console.log(reviews);
 
         if (!reviews.length) {
             const h3Ele = $("<h3>");

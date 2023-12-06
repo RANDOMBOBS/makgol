@@ -35,6 +35,7 @@
         SELECT rv.id, rv.user_id, rv.content, rv.date
         FROM mak_gol.reviews AS rv
         WHERE store_id = #{storeId}
+        ORDER BY rv.date DESC
     </select>
 
     <select id="findStoreReviewImageWithId" resultType="String" parameterType="Integer">
