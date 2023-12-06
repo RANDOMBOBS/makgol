@@ -110,7 +110,7 @@ Project Timeline
 
 ### Language
 
-- JAVA
+- JAVA, javascript
 
 
 ### Database
