@@ -4,22 +4,21 @@
 <jsp:include page="./display-review-etc.jsp"></jsp:include>
 <script>
     const displayReview = (reviews) => {
-        const reviewBodyEle = document.querySelector("#review .item_info_body");
+        const reviewListEle = $("#review_list");
 
         if (!reviews.length) {
-            const h3Ele = document.createElement("h3");
-            h3Ele.style.color = "#99958b";
-            h3Ele.innerText = "아직 리뷰가 없습니다.";
+            const h3Ele = $("<h3>");
+            h3Ele.css({color: "#99958b"}).text("아직 리뷰가 없습니다.");
 
-            reviewBodyEle.style.background = "#cfcbc2";
-            reviewBodyEle.style.display = "flex";
-            reviewBodyEle.style.flexDirection = "column";
-            reviewBodyEle.style.justifyContent = "center";
-            reviewBodyEle.style.alignItems = "center";
-            reviewBodyEle.appendChild(h3Ele);
+            reviewListEle.css({
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center"
+            })
+
+            reviewListEle.append(h3Ele)
         } else {
-            const reviewListEle = $("#review_list");
-
             reviews.forEach((item) => {
                 const liEle = $("<li>").addClass("review_item");
 
