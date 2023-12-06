@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Mapper
 public interface CategoryRepository {
 
-
-
     int updateUploadImage(CategoryRequestVo categoryRequestVo);
 }
+

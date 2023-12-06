@@ -1,22 +1,368 @@
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-  }
+body {
+  background-color: #fffdd3;
+}
 
- .board {
-    margin: 0 auto;
- }
+#board_list {
+  background-color: #fff;
+  margin: 50px auto;
+  padding: 50px;
+  width: 1200px;
+  border: 1px solid #eee;
+  border-radius: 15px;
+
+}
+
+#board_list .board_list_title {
+  text-align: left;
+  text-indent: 0.5em;
+  padding: 15px 0;
+  margin: 0 30px;
+  border-bottom: 3px solid #000;
+}
+
+#board_list .board_list_contents {
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#board_list .board_list_contents form {
+  width: 340px;
+  margin: 20px 25px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+#board_list .board_list_contents .notice_search {
+  width: 250px;
+  margin: 20px 25px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+#board_list .board_list_contents form select {
+  border: none;
+  font-weight: bold;
+  height: 30px;
+}
+
+#board_list .board_list_contents form input {
+  height: 30px;
+  border: none;
+  width: 200px;
+  text-align:left;
+  padding-left : 15px;
+}
+
+#board_list .board_list_contents form input:focus {
+    outline:none;
+}
+
+#board_list .board_list_contents form button {
+  height: 30px;
+  width: 30px;
+  border: none;
+  background: none;
+}
+
+#board_list .board_list_contents .board_list {
+  width: 95%;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#board_list .board_list_contents .board_list h3{
+  width: 100%;
+  text-align: left;
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+#board_list .board_list_contents .board_list h4{
+width: 100%;
+text-align: center;
+margin: 100px auto;
+font-size: 23px;
+}
+
+#board_list .board_list_contents .board_list h3 span{
+  font-size: 1.3em;
+}
+
+#board_list .board_list_contents .board_list table {
+  width: 100%;
+}
+
+#board_list
+.board_list_contents
+.board_list
+table
+col:nth-child(1) {
+  width: 100px;
+}
+#board_list
+.board_list_contents
+.board_list
+table
+col:nth-child(2) {
+  width: auto;
+}
+#board_list
+.board_list_contents
+.board_list
+table
+col:nth-child(3) {
+  width: 150px;
+}
+#board_list
+.board_list_contents
+.board_list
+table
+col:nth-child(4) {
+  width: 120px;
+}
+#board_list .board_list_contents .board_list table col:nth-child(5),
+#board_list
+.board_list_contents
+.board_list
+table
+col:nth-child(6) {
+  width: 70px;
+}
+
+#board_list .board_list_contents .board_list table thead {
+  height: 50px;
+  height: 50px;
+  border: 2px solid #ffe286;
+  background-color: #fdf97e;
+}
+
+#board_list .board_list_contents .board_list table thead th {
+  border: 2px solid #ffe286;
+}
+
+#board_list .board_list_contents .board_list table tbody {
+  border: 2px solid #ffe286;
+  font-size: 0.9em;
+}
+
+#board_list .board_list_contents .board_list table tbody tr {
+  height: 50px;
+  border-bottom: 1px solid #ffe286;
+}
 
 
- .contents{
-    width:500px;
-    height:350px;
- }
+#board_list
+.board_list_contents
+.board_list
+table
+tr
+td:nth-child(2) a{
+  padding: 0 20px;
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: left;
+}
 
- .notice_detail_ul{
-    display:inline-block;
- }
- .title{
-    width:100px;
- }
+#board_list
+.board_list_contents
+.board_list
+table
+tr
+td:nth-child(2):hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#board_list .board_list_contents .board_list > a {
+  display: block;
+  border-radius: 5px;
+  width: 90px;
+  height: 35px;
+  line-height: 35px;
+  margin: 20px 0;
+  border: none;
+  font-size: 14px;
+  background: #eee;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+#board_write {
+  background-color: #fff;
+  margin: 50px auto;
+  padding: 50px;
+  width: 1000px;
+  border: 1px solid #eee;
+  border-radius: 15px
+
+}
+
+#board_write .write_board {
+  text-align: left;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px 0;
+  border-bottom: 2px solid #aaa;
+}
+
+#board_write .write_board_form {
+  position: relative;
+}
+
+#board_write .write_board_form .column {
+  margin: 13px 0;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  height: 40px;
+}
+
+#board_write .write_board_form .column span.description {
+  display: inline-block;
+  width: 130px;
+  text-align: left;
+  font-weight: bold;
+}
+
+#board_write .write_board_form .column select {
+  width: 200px;
+  height: 30px;
+}
+
+#board_write .write_board_form .column select option {
+  height: 30px;
+}
+
+#board_write .write_board_form .column select option:first-child {
+  display: none;
+}
+
+#board_write .write_board_form .column .name {
+  text-align: left;
+}
+
+#board_write .write_board_form .column .title {
+  text-align: left;
+  text-indent: 1em;
+  width: 650px;
+  height: 30px;
+}
+
+#board_write .write_board_form .column .name {
+  width: 200px;
+  height: 30px;
+  text-indent: 1em;
+}
+
+#board_write .write_board_form .board_contents {
+  height: 500px;
+  align-items: flex-start;
+  margin: 13px 0;
+}
+
+#board_write .write_board_form .column textarea {
+  text-align: left;
+  padding: 10px;
+  font-family: sans-serif;
+  resize: none;
+  width: 650px;
+  height: 500px;
+}
+
+#board_write .write_board_form .image_info {
+  text-align: left;
+  color: #a3a3a3;
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+#board_write .write_board_form .image_box {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+#board_write .write_board_form .image_box .image {
+  position: relative;
+}
+
+#board_write .write_board_form .image_box .image .delete_image {
+  display: none;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+}
+
+#board_write .write_board_form .image_box .delete_image i {
+  border: 1px solid #333;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+#board_write .write_board_form .image_box label input {
+  display: none;
+}
+
+#board_write .write_board_form .image_box label .no_image {
+  width: 150px;
+  height: 200px;
+  cursor: pointer;
+  position: relative;
+}
+
+#board_write .write_board_form .image_box label .no_image i {
+  color: #aaa;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #ddd;
+  display: block;
+  font-size: 50px;
+  text-align: center;
+  line-height: 200px;
+  width: 150px;
+  height: 200px;
+}
+
+#board_write .write_board_form .image_box label .no_image img {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+}
+
+#board_write .write_board_form .buttons input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 100px;
+  margin: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#board_write .write_board_form .buttons input.ok_board {
+  background-color: #000;
+  color: #fff;
+  border: none;
+}
+
+#board_write .write_board_form .buttons input.board_list {
+  position: absolute;
+  right: 0;
+  width: 80px;
+}

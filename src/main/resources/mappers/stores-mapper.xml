@@ -3,10 +3,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.org.makgol.stores.repository.StoresReposiory">
+<mapper namespace="com.org.makgol.stores.repository.StoresRepository">
 
     <select id="findByIdPlaceUrl" resultType="com.org.makgol.stores.vo.StoreResponseVo" parameterType="String">
-        SELECT * FROM stores WHERE place_url = #{place_url}
+        SELECT *
+        FROM stores
+        WHERE place_url = #{place_url}
     </select>
 
+    <select id="findStoreList" resultType="com.org.makgol.stores.dto.ResponseStoreListDto"
+            parameterType="hashmap">
+        SELECT *
+        FROM mak_gol.stores
+        WHERE category = #{category}
+          AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
+    </select>
+
+    <select id="findStoreDetailWithId" resultType="com.org.makgol.stores.dto.StoreDetailDto" parameterType="String">
+        SELECT name, likes, address, category, phone, photo, site
+        FROM mak_gol.stores
+        WHERE id = #{storeId}
+    </select>
+
+    <select id="findStoreMenuWithId" resultType="com.org.makgol.stores.dto.StoreMenuDto" parameterType="String">
+        SELECT menu, price
+        FROM mak_gol.menus
+        WHERE store_id = #{storeId}
+    </select>
+
+    <insert id="saveCategoryMenu" parameterType="Map">
+        INSERT INTO category_menu (store_id, category, menu_name, date) VALUES (#{store_id}, #{category}, #{menu_name}, now())
+    </insert>
+
+    <insert id="saveMenus" parameterType="Map">
+        INSERT INTO Menus (store_id, menu, price, date) VALUES (#{store_id}, #{menu}, #{price}, now())
+    </insert>
+
+    <insert id="saveStores" parameterType="com.org.makgol.stores.vo.StoreRequestVo">
+        INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone, site, menu_update, place_url, update_date, photo)
+        VALUES (#{name}, #{likes}, #{longitude}, #{latitude}, #{address}, #{load_address}, #{category}, #{opening_hours}, #{phone}, #{site}, #{menu_update}, #{place_url}, #{update_date}, #{photo})
+    </insert>
 </mapper>

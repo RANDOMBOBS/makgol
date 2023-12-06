@@ -11,5 +11,4 @@
         WHERE menu_name = #{menu_name} AND id
     </update>
 
-
 </mapper>

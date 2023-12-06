@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.org.makgol.users.vo.UsersRequestVo" %>
+<%@page import="com.org.makgol.users.vo.UsersResponseVo" %>
+
 
 <link rel="stylesheet"
     	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -14,15 +15,18 @@
   	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <%
-    UsersRequestVo loginedUsersRequestVo = (UsersRequestVo) session.getAttribute("loginedUsersRequestVo");
-    UsersRequestVo blackList = (UsersRequestVo) session.getAttribute("blackList");
+    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+    UsersResponseVo blackList = (UsersResponseVo) session.getAttribute("blackList");
 %>
-
 
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
 
 
 <jsp:include page="./modal.jsp"></jsp:include>
+
+
+<c:set var="address" value="${loginedUserVo.address.split(' ')}"/>
+<c:set var="weatherAddress" value="${address[0]} ${address[1]}"/>
 
 <header id="header">
     <div class="all_category">
@@ -103,6 +107,33 @@
     </div>
     <p class="img"></p>
     <div class="userTab">
+        <c:choose>
+       <c:when test="${loginedUserVo != null}">
+         <div class="welcome">
+            <div class="weather_info">
+                <span class="address"><i class="fa-solid fa-location-dot"></i> ${weatherAddress}</span>
+                <span class="temp"></span>
+                <span class="sky"></span>
+                <span class="emoticon"></span>
+            </div>
+            <div class="user_info">
+                <span>${loginedUserVo.name}</span>
+                <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진"/>
+            </div>
+         </div>
+       </c:when>
+        <c:otherwise>
+            <div class="welcome">
+                <div class="weather_info">
+                    <span class="address"><i class="fa-solid fa-location-dot"></i> 서울특별시 강남구</span>
+                    <span class="temp"></span>
+                    <span class="sky"></span>
+                    <span class="emoticon"></span>
+
+                </div>
+            </div>
+        </c:otherwise>
+        </c:choose>
         <ul class="depth1">
             <li>
                 <a href="#">COMMUNITY</a>
@@ -115,8 +146,8 @@
             </li>
 
             <c:choose>
-                <c:when test="${loginedUsersRequestVo != null}">
-                    <c:if test="${loginedUsersRequestVo.getGrade() == '관리자'}">
+                <c:when test="${loginedUserVo != null}">
+                    <c:if test="${loginedUserVo.getGrade() == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
                     <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
@@ -135,9 +166,9 @@
 <script>
     $.noConflict();
     var jQ = jQuery;
+    var currentURL = window.location.href;
 
 jQ("#logout_link").on("click", function () {
-        var currentURL = window.location.href;
         jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
     });
 
@@ -145,15 +176,14 @@ jQ("#logout_link").on("click", function () {
     let black = "${blackList}";
     if (black) {
         alert("접근이 제한된 사용자입니다.")
-
         jQ.ajax({
-            url: "/user/logout",
+            url: "/user/blackList",
             type: "GET",
             success: function (rdata) {
-                console.log("세션 초기화 성공")
+                console.log("성공")
             },
             error: function (error) {
-                console.log("세션 초기화 실패")
+                console.log("실패")
             }
         });
     }
@@ -199,4 +229,196 @@ jQ("#logout_link").on("click", function () {
         loginModalEle.style.display = "block";
     });
 
+</script>
+<script>
+    function getWeather(){
+    let coordinate = [];
+    let valueX = "";
+    let valueY = "";
+        let sky = "";
+        let rainSnow = "";
+
+
+    <c:if test="${not empty loginedUserVo}">
+    coordinate = JSON.parse('${loginedUserVo.coordinate}');
+    valueX = coordinate[0];
+    valueY = coordinate[1];
+    </c:if>
+
+    <c:if test="${empty loginedUserVo}">
+    valueX = 61;
+    valueY = 126;
+    </c:if>
+
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+
+    let nowTime = hour + minute.toString();
+    let nowHourMinute = (parseInt(nowTime) - 44).toString();
+    if(nowHourMinute < 0){
+        nowHourMinute = "23"+nowHourMinute;
+        day = day-1;
+        if(day <1){
+            month = month-1;
+            switch (month){
+                case 2:
+                    day = 28;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    day = 30;
+                    break;
+                default :
+                    day = 31;
+                    break;
+            }
+            if(month<1){
+                year = year -1;
+                month = 12;
+            }
+        }
+    } else if(nowHourMinute < 100){
+        nowHourMinute = "00"+nowHourMinute;
+    } else if(nowHourMinute<1000){
+        nowHourMinute = "0"+nowHourMinute
+    }
+    if (month > 0 && month < 10) {
+        month = "0" + month;
+    }
+    if (day > 0 && day < 10) {
+        day = "0" + day;
+    }
+    if (hour > 0 && hour < 10) {
+        hour = "0" + hour;
+    } else if (hour == 0) {
+        hour = "00";
+    }
+    if (minute > 0 && minute < 10) {
+        minute = "0" + minute;
+    } else if (minute == 0) {
+        minute = "00";
+    }
+    let nowHour = nowHourMinute.substring(0, 2);
+    let baseDate = year + month.toString() + day;
+    let baseTime = nowHour + "30";
+    console.log("date"+date)
+    console.log("year"+year)
+    console.log("month"+month)
+    console.log("day"+day)
+    console.log("hour"+hour)
+    console.log("minute"+minute)
+    console.log("nowTime"+nowTime)
+    console.log("nowHourMinute"+nowHourMinute)
+    console.log("nowHour"+nowHour)
+    console.log("baseDate"+baseDate)
+    console.log("baseTime"+baseTime)
+    console.log(valueX);
+    console.log(valueY);
+        $.ajax({
+            method: "GET",
+            url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst",
+            data: {
+                serviceKey:
+                    "vKlgMc+1x/SWkkhtWG5Zxi8kOiLSZmhXjwE3eqvf8ItyyUqUaUtqFrHz1vVnObXn6jP+S2ML37kV49u/BtFXGw==",
+                pageNo: "1",
+                numOfRows: "60",
+                dataType: "JSON",
+                base_date: baseDate,
+                base_time: baseTime,
+                nx: valueX,
+                ny: valueY,
+            },
+            success: function (data) {
+                console.log(data)
+                let weatherDatas = data.response.body.items.item
+                console.log(weatherDatas);
+                let temp = weatherDatas.filter((item, index) => item.category ==="T1H");
+                let T1H = temp[0].fcstValue;
+                console.log("기온은?"+T1H);
+                let precipitation = weatherDatas.filter((item, index) => item.category === "RN1" )
+                let RN1 = precipitation[0].fcstValue;
+                console.log("강수량은?"+RN1);
+                let skyCondition = weatherDatas.filter((item, index)=> item.category === "SKY")
+                let SKY = skyCondition[0].fcstValue;
+                console.log("하늘상태는?"+SKY);
+                switch (SKY){
+                    case "1" :
+                        sky = "맑음";
+                        break;
+                    case "3" :
+                        sky = "구름많음"
+                        break;
+                    case "4" :
+                        sky = "흐림"
+                        break;
+                    default :
+                        sky = ""
+                        break;
+                }
+                console.log("하늘 상태 한글로?"+sky);
+                let PTY = data.response.body.items.item[6].fcstValue;
+                console.log("눈이오나요 비가오나요?"+PTY);
+                switch (PTY){
+                    case "1" :
+                    case "5" :
+                        rainSnow = "비"
+                        break;
+                    case "2" :
+                    case "6" :
+                        rainSnow = "진눈깨비(눈+비)"
+                        break;
+                    case "3" :
+                        rainSnow = "눈"
+                        break;
+                    default :
+                        rainSnow = ""
+                        break;
+                }
+
+                if(rainSnow != ""){
+                    sky = rainSnow;
+                }
+                console.log("뭐가 오나요?"+rainSnow)
+                console.log("하늘 상태 한글로?"+sky);
+
+                jQ(".temp").text(T1H+"℃, ");
+                if(RN1 != "강수없음"){
+                    jQ(".sky").text(sky+" "+RN1);
+                } else{
+                    jQ(".sky").text(sky);
+                }
+
+                if(sky == "맑음"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sunny.jpeg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-sun' style='color:#ffa500'></i>");
+                } else if(sky =="구름많음"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/Christmas.png)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun' style='color:#00e5ff' ></i>")
+                }else if(sky =="흐림"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/blur.jpg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud'  style='color:#6f6f6f'></i>")
+                }else if(sky =="비"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-showers-heavy'  style='color:#074dbb'></i>")
+                }else if(sky =="눈"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow1.jpg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-snowflake'  style='color:#7fb1ff'></i>")
+                }else if(sky =="진눈깨비(눈+비)"){
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/top5.png)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'  style='color:#8cb9ff'></i>")
+                }
+
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr, status, error);
+            },
+        });
+    }
+getWeather();
 </script>

@@ -167,6 +167,9 @@
                 const email = jQuery("#userEmail1").val();
                 const name = jQuery("#name").val();
                 const phone = jQuery("#phone").val();
+
+                console.log(jQuery("#photo"))
+
                 const photo = jQuery("#photo")[0].files[0];
                 const address = jQuery("#sample5_address").val();
                 const latitude = jQuery("#latitude").val();
@@ -309,6 +312,7 @@
                     <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
                     <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
 
+                    <input type="file" id="photo" name="photo">
                     <input type="file" id="photo" name="photo">
                     <button type="button" id="joinButton">가입</button>
                 </div>

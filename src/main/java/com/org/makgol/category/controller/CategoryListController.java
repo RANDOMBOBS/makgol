@@ -25,9 +25,6 @@ public class CategoryListController {
 	@Autowired
 	CategoryListService categoryListService;
 
-	@Autowired
-	FileUpload fileUp;
-
 	@GetMapping("/rouletteResult")
 	public String rouletteResult(@RequestParam("category") String category, Model model) {
 		String nextPage = "jsp/category/category";
@@ -105,3 +102,4 @@ public class CategoryListController {
 		return "redirect:/category/categoryMain";
     }
 }
+

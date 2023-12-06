@@ -61,3 +61,4 @@ public class CategoryListService {
 			return categoryDao.updateCateFile(categoryRequestVo);
 	}
 }
+

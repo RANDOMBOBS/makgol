@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 <script>
@@ -15,13 +11,13 @@
 			success : function(rdata) {   //category_list 데이터 값을 가져와 성공하면
 				jQ("#category_list_div").html(rdata);   // class="category_list_div" 인 곳에 가져온 데이터를 넣는다.
 			},
-			error : function(error) {  			// 실패하면 오류 
-				alert('오류');			
+			error : function(error) {  			// 실패하면 오류
+				alert('오류');
 			}
 		});
 	}
-	
-	// 한식 클릭시 한식관련 메뉴 
+
+	// 한식 클릭시 한식관련 메뉴
 	function korMenu(){
 		jQ.ajax({
 			url: "/category/categoryKor",
@@ -35,8 +31,8 @@
 			}
 		});
 	}
-	
-	// 양식 클릭시 양식관련 메뉴 
+
+	// 양식 클릭시 양식관련 메뉴
 	function westMenu(){
 		jQ.ajax({
 			url: "/category/categoryWest",
@@ -50,8 +46,8 @@
 			}
 		});
 	}
-	
-	// 중식 클릭시 중식관련 메뉴 
+
+	// 중식 클릭시 중식관련 메뉴
 	function chiMenu(){
 		jQ.ajax({
 			url: "/category/categoryChi",
@@ -65,8 +61,8 @@
 			}
 		});
 	}
-	
-	// 분식 클릭시 분식관련 메뉴 
+
+	// 분식 클릭시 분식관련 메뉴
 	function snackMenu(){
 		jQ.ajax({
 			url: "/category/categorySnack",
@@ -80,8 +76,8 @@
 			}
 		});
 	}
-	
-	// 일식 클릭시 일식관련 메뉴 
+
+	// 일식 클릭시 일식관련 메뉴
 	function jpnMenu(){
 		jQ.ajax({
 			url: "/category/categoryJpn",
@@ -95,8 +91,8 @@
 			}
 		});
 	}
-	
-	// 카페 클릭시 카페관련 메뉴 
+
+	// 카페 클릭시 카페관련 메뉴
 	function cafeMenu(){
 		jQ.ajax({
 			url: "/category/categoryCafe",

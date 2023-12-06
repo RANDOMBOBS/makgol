@@ -15,4 +15,5 @@ public class CategoryListVo {
     String photoPath;
     MultipartFile photoFile;
 
+
 }

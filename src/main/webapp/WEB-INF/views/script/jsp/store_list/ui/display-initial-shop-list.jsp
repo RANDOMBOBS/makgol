@@ -1,22 +1,28 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <jsp:include page="../util/create-url-for-detail-page.jsp"></jsp:include>
+<jsp:include page="./display-selected-shop.jsp"></jsp:include>
+<jsp:include page="./remove-selected-shop.jsp"></jsp:include>
+<jsp:include page="../event/mouse.jsp"></jsp:include>
 <script>
     const displayInitialShopList = ({shops, keyword}) => {
         const searchKeywordEle = $("#search_keyword");
         searchKeywordEle.text(keyword);
+        const shopInfoListEle = $(".shop_info_list");
 
         shops.forEach((shop) => {
-            const shopInfoListEle = $(".shop_info_list");
-
             const shopInfoItemEle = $("<div>").addClass("shop_info_item");
 
+            const topItemEle = $("<div>").addClass("top_item");
             const placeNameEle = $("<a>")
                 .attr("id", "place_name")
                 .text(shop.place_name)
+
+            shop.place_name.length >= 14 && placeNameEle.text(shop.place_name.substring(0, 14) + "...");
+
+            const likeItemEle = $("<p>").attr("id", "likes").text("♥" + shop.likes)
+
+            const topItemComposition = [placeNameEle, likeItemEle];
+            topItemComposition.forEach((composition) => topItemEle.append(composition));
 
             const middleItemEle = $("<div>").addClass("middle_item");
 
@@ -46,13 +52,15 @@
                 underItemEle.append(composition),
             );
 
-            const shopInfoComposition = [placeNameEle, middleItemEle, underItemEle];
+            const shopInfoComposition = [topItemEle, middleItemEle, underItemEle];
 
             shopInfoComposition.forEach((composition) =>
                 shopInfoItemEle.append(composition),
             );
 
             shopInfoListEle.append(shopInfoItemEle);
+
+            mouse(shop, shopInfoItemEle);
         });
     }
 </script>

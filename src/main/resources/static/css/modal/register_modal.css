@@ -1,3 +1,4 @@
+
 .register_modal {
     display: none;
     position: absolute;
@@ -9,40 +10,65 @@
     background-color: white;
     border-radius: 20px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }
 
-.register_modal .modal_body .register_wrapper #register_form {
-    position: absolute;
-    top: 65%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.register_modal .modal_body .register_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 70%;
+    height: 800px;
 }
 
-.register_modal .modal_body .register_wrapper #register_form td {
+.register_modal .modal_body .register_wrapper #register_form table {
+    position: relative;
+    bottom: 10px;
+
+}
+
+.register_modal .modal_body .register_wrapper #register_form tr {
+    height: 70px;
+}
+
+.register_modal .modal_body .register_wrapper #register_form .input_box {
     box-sizing: border-box;
     display: flex;
     width: 500px;
     height: 50px;
     background: #fdf97e;
-    margin-bottom: 16px;
     border-radius: 8px;
     border: 2px solid #ffe286;
 }
 
+.input_error {
+    visibility: hidden;
+    display: flex;
+    font-size: 12px;
+    color: red;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
 .register_modal .modal_body .register_wrapper #register_form .user_image_select {
-    position: absolute;
-    top: -21%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    top: 67px;
+    display: flex;
+    height: 230px;
+    justify-content: center;
+    align-items: center;
 }
 
 .register_modal .modal_body .register_wrapper #register_form .user_image_select #photo_label {
     display: block;
-    width: 170px;
-    height: 198px;
-    border: 3px solid #f1ec10;
-    border-radius: 5px;
-    background: url("../../image/user_default.jpeg") no-repeat 0 center/175px 191px;
+    width: 200px;
+    height: 200px;
+    border-radius: 200px;
+    border: 3px solid #2c2b26;
+    background: url("../../image/default/user_default.jpeg") no-repeat 0 center/175px 175px;
+    background-position: center;
 }
 
 .register_modal .modal_body .register_wrapper #register_form td .key {
@@ -73,9 +99,9 @@
 }
 
 .register_modal .modal_body .register_wrapper #register_form td #check_auth {
-    display: none;
+    /*display: none;*/
     position: absolute;
-    top: 97.5px;
+    top: 165px;
     left: 108%;
     transform: translate(-50%, -50%);
     background-color: #ffedc7;
@@ -118,7 +144,7 @@
     border-radius: 8px;
     border: none;
     outline: none;
-    margin-top: 10px;
+    margin-bottom: 75px;
 }
 
 .register_modal
