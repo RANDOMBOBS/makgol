@@ -110,7 +110,7 @@ public class BoardSuggestionController {
 	 */
 	@ResponseBody
 	@PostMapping("/commentCreate")
-	public int createComment(@RequestBody CommentRequestVo commentRequestVo) {
+	public int commentCreate(@RequestBody CommentRequestVo commentRequestVo) {
 		int result = boardService.addComment(commentRequestVo);
 		return result;
 	}

@@ -1,6 +1,4 @@
 @charset "UTF-8";
-
-
 body {
   background-color: #fffdd3;
 }
@@ -11,14 +9,15 @@ body {
   padding: 50px;
   width: 1500px;
   border: 1px solid #eee;
+  border-radius: 15px;
 }
 
 .my_page_title {
-      text-align: left;
-      text-indent: 0.5em;
-      padding: 15px 0;
-      margin: 0 30px;
-      border-bottom: 3px solid #000;
+  text-align: left;
+  text-indent: 0.5em;
+  padding: 15px 0;
+  margin: 0 30px;
+  border-bottom: 3px solid #000;
 }
 
 #my_page .my_page_content {
@@ -164,7 +163,6 @@ body {
   height: 150px;
 }
 
-
 #modify_user {
   background-color: #fff;
   margin: 50px auto;
@@ -265,7 +263,6 @@ body {
   color: #666;
 }
 
-
 #modify_user .modify_user_form .email input,
 #modify_user .modify_user_form .name input {
   color: #555;
@@ -292,8 +289,7 @@ body {
 
 #modify_user .modify_user_form .address {
   position: relative;
-  padding-right: 55px
-
+  padding-right: 55px;
 }
 
 #modify_user .modify_user_form .address .search {
@@ -329,4 +325,221 @@ body {
 #modify_user .modify_user_form .cancel {
   border: 2px solid #ffe16f;
   background: none;
+}
+
+#my_history_page {
+  background-color: #fff;
+  margin: 50px auto;
+  padding: 50px;
+  width: 1200px;
+  border: 1px solid #eee;
+  border-radius: 15px;
+}
+
+.my_history_title {
+  text-align: left;
+  text-indent: 0.5em;
+  padding: 15px 0;
+  margin: 0 30px;
+  border-bottom: 3px solid #000;
+}
+
+#my_history_page .user {
+  display: flex;
+  align-items: center;
+  margin: 30px 50px;
+}
+
+#my_history_page .user .photo img {
+  width: 70px;
+  margin: 0 10px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+
+#my_history_page .user .user_info {
+  margin: 0 20px;
+}
+
+#my_history_page .user .user_info .user_name_role{
+text-align: left;
+}
+
+#my_history_page .user .user_info .user_name_role .name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#my_history_page .user .user_info .user_name_role .role {
+  font-size: 14px;
+}
+
+#my_history_page .user .user_info .total_history_list {
+  margin: 10px 0;
+  text-align: left;
+}
+
+#my_history_page .user .user_info .total_history_list span {
+  font-weight: bold;
+}
+
+#my_history_page .my_history_list {
+  margin: 20px 50px;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #ddd;
+}
+
+#my_history_page .my_history_list li {
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+#my_history_page .my_history_list li:hover {
+  font-weight: bold;
+  color: #666;
+  text-decoration: underline;
+}
+
+#my_history_page .my_history_list li.on {
+  color: #ffa500;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#my_history_page #my_history {
+  position: relative;
+  margin: 20px 60px;
+}
+
+#my_history_page #my_history .my_post_table {
+  width: 100%;
+}
+
+#my_history_page #my_history .my_post_table col:nth-child(1) {
+  width: 60px;
+}
+
+#my_history_page #my_history .my_post_table col:nth-child(3) {
+  width: auto;
+}
+
+#my_history_page #my_history .my_post_table col:nth-child(2) {
+  width: 150px;
+}
+
+#my_history_page #my_history .my_post_table col:nth-child(4) {
+  width: 120px;
+}
+
+#my_history_page #my_history .my_post_table col:nth-child(5) {
+  width: 100px;
+}
+
+#my_history_page #my_history .my_post_table col:nth-child(6),
+#my_history_page #my_history .my_post_table col:nth-child(7) {
+  width: 70px;
+}
+
+#my_history_page #my_history .my_post_table thead {
+  height: 50px;
+  height: 50px;
+  border: 2px solid #ffe286;
+  background-color: #fdf97e;
+}
+
+#my_history_page #my_history .my_post_table thead th {
+  border: 2px solid #ffe286;
+}
+
+#my_history_page #my_history .my_post_table tbody {
+  border: 2px solid #ffe286;
+  font-size: 0.9em;
+}
+
+#my_history_page #my_history .my_post_table tbody tr {
+  height: 50px;
+  border-bottom: 1px solid #ffe286;
+}
+
+#my_history_page #my_history .my_post_table tbody tr td:nth-child(3) a {
+  padding: 0 20px;
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: left;
+}
+
+#my_history_page #my_history .my_post_table tbody tr td:nth-child(3):hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#my_history_page #my_history button {
+  position: absolute;
+  right: 0;
+  margin: 15px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #eee;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#my_history_page #my_history .my_comment_table {
+  width: 100%;
+}
+
+#my_history_page #my_history .my_comment_table col:nth-child(1) {
+  width: 60px;
+}
+
+#my_history_page #my_history .my_comment_table col:nth-child(2) {
+  width: auto;
+}
+
+#my_history_page #my_history .my_comment_table thead {
+  height: 50px;
+  height: 50px;
+  border: 2px solid #ffe286;
+  background-color: #fdf97e;
+}
+
+#my_history_page #my_history .my_comment_table thead th {
+  border: 2px solid #ffe286;
+}
+
+#my_history_page #my_history .my_comment_table tbody {
+  border: 2px solid #ffe286;
+  font-size: 0.9em;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr {
+  height: 50px;
+  border-bottom: 1px solid #ffe286;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a {
+  display: block;
+  padding: 10px 25px;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a:hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a p {
+  text-align: left;
+  font-size: 13px;
+  color: #666;
+  padding: 3px;
+}
+
+#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a .comment_content {
+  font-size: 17px;
+  color: #000;
 }

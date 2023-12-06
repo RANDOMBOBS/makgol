@@ -1,5 +1,6 @@
 package com.org.makgol.users.controller;
 
+import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
@@ -176,7 +177,7 @@ public class UsersController {
     @RequestMapping(value = "/myLikePost/{user_id}", method = { RequestMethod.GET, RequestMethod.POST })
     public String myLikePost(@PathVariable("user_id") int user_id, Model model){
         String nextPage = "jsp/user/my_like_post_list";
-        List<BoardVo> boardVos = userService.getMyLikePost(user_id);
+        List<BoardLikeVo> boardVos = userService.getMyLikePost(user_id);
         model.addAttribute("boardVos", boardVos);
         return nextPage;
     }

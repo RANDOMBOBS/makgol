@@ -5,6 +5,7 @@ import com.org.makgol.users.vo.UsersResponseVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface AdminRepository {
@@ -12,4 +13,5 @@ public interface AdminRepository {
 
     int UpdateGrade(UsersRequestVo usersRequestVo);
 
+    List<UsersResponseVo> selectSearchUserList(Map<String, String> map);
 }

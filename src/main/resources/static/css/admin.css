@@ -9,6 +9,7 @@ body {
   padding: 50px;
   width: 1500px;
   border: 1px solid #eee;
+  border-radius: 15px
 }
 
 .management_page_title {
@@ -23,18 +24,23 @@ body {
   margin: 30px;
 }
 
-#user_management .user_list .change_role {
+#user_management .user_list .user_related {
+  display: flex;
+  justify-content: space-between;
+}
+
+#user_management .user_list .user_related .change_role {
   display: flex;
   align-items: center;
   text-align: left;
   font-weight: bold;
   font-size: 20px;
 }
-#user_management .user_list .change_role span {
+#user_management .user_list .user_related .change_role span {
   padding: 0 15px;
 }
 
-#user_management .user_list .change_role select {
+#user_management .user_list .user_related .change_role select {
   height: 28px;
   width: 200px;
   font-size: 18px;
@@ -42,7 +48,7 @@ body {
   border: 1px solid;
 }
 
-#user_management .user_list .change_role button {
+#user_management .user_list .user_related .change_role button {
   margin: 0 20px;
   border-radius: 5px;
   border: 2px solid #ffa500;
@@ -52,6 +58,49 @@ body {
   height: 40px;
   font-weight: bold;
   font-size: 18px;
+}
+
+#user_management .user_list .user_related .search_box {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#user_management .user_list .user_related .search_box .search {
+    width: 340px;
+     margin: 0 20px;
+     border: 1px solid #000;
+     border-radius: 5px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}
+
+#user_management .user_list .user_related .search_box .search .searchValue {
+ display : none;
+}
+
+#user_management .user_list .user_related .search_box .search .searchValue.on {
+ display : block;
+}
+
+#user_management .user_list .user_related .search_box .search > select {
+  border: none;
+  font-weight: bold;
+  height: 30px;
+}
+
+#user_management .user_list .user_related .search_box .search .searchValue {
+  height: 30px;
+  border: none;
+  width: 200px;
+}
+
+#user_management .user_list .user_related .search_box .search button {
+  height: 30px;
+  width: 30px;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 #user_management .user_list .all_user_list {

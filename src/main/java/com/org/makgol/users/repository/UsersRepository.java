@@ -1,5 +1,6 @@
 package com.org.makgol.users.repository;
 
+import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
@@ -25,6 +26,7 @@ public interface UsersRepository {
     List<StoreResponseVo> selectMyStoreList(int user_id);
     List<BoardVo> selectMyPostList(int user_id);
     List<CommentResponseVo> selectMyCommentList(int user_id);
-    List<BoardVo> selectMyLikePostList(int user_id);
     Users findByEmail(String email);
+    List<BoardLikeVo> selectMyLikePostList(int user_id);
+
 }

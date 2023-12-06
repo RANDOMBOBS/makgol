@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
@@ -66,8 +67,8 @@ public class UserDao {
 		return commentVos;
 	}
 
-	public List<BoardVo> selectMyLikePostList(int user_id){
-		List<BoardVo> boardVos = null;
+	public List<BoardLikeVo> selectMyLikePostList(int user_id){
+		List<BoardLikeVo> boardVos = null;
 		boardVos = usersRepository.selectMyLikePostList(user_id);
 		return boardVos;
 	}

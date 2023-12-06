@@ -24,7 +24,7 @@
 <section>
 
     <article id="article1">
-        <p class="selectedCategory">오늘의 점심 메뉴는 ? </p>
+        <p class="selectedCategory">오늘의 점심 메뉴는?</p>
         <p class="roulette_pin"></p>
         <button id="spin">시작!</button>
         <div class="roulette_position">
@@ -39,33 +39,27 @@
                     <li class="today">오늘의메뉴</li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="korToday()">한식
-                        </button>
+                                onclick="korToday()">한식 </button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="westToday()">양식
-                        </button>
+                                onclick="westToday()">양식</button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="chiToday()">중식
-                        </button>
+                                onclick="chiToday()">중식</button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="snackToday()">분식
-                        </button>
+                                onclick="snackToday()">분식</button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="jpnToday()">일식
-                        </button>
+                                onclick="jpnToday()">일식</button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="cafeToday()">카페
-                        </button>
+                                onclick="cafeToday()">카페</button>
                     </li>
                 </ul>
             </div>

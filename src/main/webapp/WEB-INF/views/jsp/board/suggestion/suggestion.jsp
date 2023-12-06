@@ -14,27 +14,26 @@
 </head>
 
 <body>
-
 	<jsp:include page="../../include/header.jsp"></jsp:include>
-	<div id="suggestion_board">
-		<h1 class="suggestion_board_title">건의게시판</h1>
-		<div class="suggestion_board_contents">
-			<form name="search_board_form">
-				<select name="search">
-					<option value="titleContents">제목+내용</option>
-					<option value="title">제목</option>
-					<option value="contents">내용</option>
-					<option value="name">작성자</option>
-				</select>
-				<input type="text" name="searchWord" placeholder="검색어를 입력해주세요" />
+	<div id="board_list">
+      <h1 class="board_list_title">건의게시판</h1>
+      <div class="board_list_contents">
+        <form name="search_board_form">
+          <select name="search">
+            <option value="titleContents">제목+내용</option>
+            <option value="title">제목</option>
+            <option value="contents">내용</option>
+            <option value="name">작성자</option>
+          </select>
+          <input type="text" name="searchWord" placeholder="검색어를 입력해주세요" />
 
-				<button type="button" onclick="searchBoard()">
-					<i class="fa-solid fa-magnifying-glass"></i>
-				</button>
-			</form>
-			<div class="board_list"></div>
-		</div>
-	</div>
+          <button type="button" onclick="searchBoard()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+        <div class="board_list"></div>
+      </div>
+    </div>
 
 	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>
 
