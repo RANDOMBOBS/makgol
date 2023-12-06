@@ -1,4 +1,4 @@
-![배너](https://user-images.githubusercontent.com/90380269/181918617-1668bd04-8beb-4f60-91a0-d5e5c3d2dbb8.png)
+![배너]()
 Project Timeline
 `2022-06-24` ~  `2022-08-01` (6주)
 <br>
