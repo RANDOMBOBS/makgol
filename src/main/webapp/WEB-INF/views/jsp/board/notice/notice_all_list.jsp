@@ -3,6 +3,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.util.Date" %>
+
+<%
+   Date currentDate = new Date();
+   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+   String today = dateFormat.format(currentDate);
+%>
+
+<c:set var="today" value="<%= today %>"/>
 
 <table>
     <colgroup>
@@ -34,7 +45,16 @@
           <a href="${detail_url}">${item.title}</a>
         </td>
         <td>${item.grade}</td>
-        <td>${item.date}</td>
+
+        <c:choose>
+          <c:when test="${fn:contains(item.date, today)}">
+              <td>${item.date.substring(11,16)}</td>
+          </c:when>
+             <c:otherwise>
+                <td>${item.date.substring(0,10)}</td>
+             </c:otherwise>
+        </c:choose>
+
         <td>${item.hit}</td>
         <td>${item.sympathy}</td>
       </tr>
@@ -42,7 +62,7 @@
   </tbody>
 </table>
 
-<!-- 글쓰기 버튼 클릭시 페이지 이동 -->
+<!-- 괸리자로 로그인시 글쓰기 버튼 보여지며 누르면 페이지 이동 -->
     <%
 	    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
 	    if (loginedUserVo != null) {
