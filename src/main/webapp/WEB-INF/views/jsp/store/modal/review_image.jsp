@@ -3,18 +3,29 @@
 <html>
 <head>
     <link href="<c:url value='/resources/static/css/modal/index.css'/>" rel="stylesheet" type="text/css"/>
+    <link href="<c:url value='/resources/static/css/shop_detail/modal/list_review_image.css' />" rel="stylesheet"
+          type="text/css"/>
     <link href="<c:url value='/resources/static/css/shop_detail/modal/upload_review_image.css'/>" rel="stylesheet"
           type="text/css"/>
 </head>
 <body>
 <div class="modal_cover">
+    <div class="list_modal">
+        <div class="modal_head">
+            <h1>List Review Image</h1>
+            <button class="close_button">X</button>
+        </div>
+        <div class="review_image_list">
+            asdsad
+        </div>
+    </div>
     <div class="upload_modal">
         <div class="modal_head">
             <h1>Upload Review Image</h1>
             <button class="close_button">X</button>
         </div>
         <div class="image_info">이미지는 최대 5장까지 첨부가능합니다.</div>
-        <div class="review_image_list">
+        <div class="upload_image_list">
             <div class="image">
                 <label for="file1">
                     <input type="file" name="file1" id="file1" onchange="imageURL(this)"/>

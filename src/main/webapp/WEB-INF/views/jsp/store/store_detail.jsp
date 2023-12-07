@@ -13,8 +13,7 @@
 </head>
 <body>
 <jsp:include page="../include/header.jsp"></jsp:include>
-<jsp:include page="./modal/review_image_list.jsp"></jsp:include>
-<jsp:include page="./modal/upload_review_image.jsp"></jsp:include>
+<jsp:include page="./modal/review_image.jsp"></jsp:include>
 <article>
     <div class="item_area" id="photo">
         <div class="item_info_head">
