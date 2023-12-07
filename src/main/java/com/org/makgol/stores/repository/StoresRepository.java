@@ -24,7 +24,7 @@ public interface StoresRepository {
 
     List<String> findStoreReviewImageWithId(int reviewId);
 
-    List<UserInfoDto> findUserInfo(int userId);
+    List<UserInfoDto> findUserInfoWithId(int userId);
 
     void createReview(CreateReviewDto createReviewDto);
 

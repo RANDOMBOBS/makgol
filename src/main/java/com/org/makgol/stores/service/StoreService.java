@@ -111,10 +111,10 @@ public class StoreService {
         return result;
     }
 
-    public List<UserInfoDto> findUserInfo(int userId) {
+    public List<UserInfoDto> findUserInfoWithId(int userId) {
         List<UserInfoDto> result = null;
         try {
-            result = storesRepository.findUserInfo(userId);
+            result = storesRepository.findUserInfoWithId(userId);
         } catch (Exception e) {
             e.printStackTrace();
         }
