@@ -71,7 +71,7 @@ public class StoreService {
         return id;
     }
 
-    public StoreDetailDto findStoreDetailWithId(String storeId) {
+    public StoreDetailDto findStoreDetailWithId(int storeId) {
         StoreDetailDto result = null;
         try {
             result = storesRepository.findStoreDetailWithId(storeId);
@@ -81,7 +81,7 @@ public class StoreService {
         return result;
     }
 
-    public List<StoreMenuDto> findStoreMenuWithId(String storeId) {
+    public List<StoreMenuDto> findStoreMenuWithId(int storeId) {
         List<StoreMenuDto> result = null;
         try {
             result = storesRepository.findStoreMenuWithId(storeId);

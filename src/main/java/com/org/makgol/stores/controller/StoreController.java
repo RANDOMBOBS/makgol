@@ -75,7 +75,7 @@ public class StoreController {
 
     @GetMapping(value = "/detail_data/store_id/{store_id}")
     @ResponseBody
-    public ResponseEntity<?> findStoreDetailData(@PathVariable String store_id) {
+    public ResponseEntity<?> findStoreDetailData(@PathVariable int store_id) {
         StoreDetailDto storeDetailDtos = storeService.findStoreDetailWithId(store_id);
 
         KakaoLocalResponseVo<StoreDetailDto> response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 세부정보를 가져옵니다.", storeDetailDtos);
@@ -84,7 +84,7 @@ public class StoreController {
 
     @GetMapping(value = "/menu_data/store_id/{store_id}")
     @ResponseBody
-    public ResponseEntity<?> findStoreMenuData(@PathVariable String store_id) {
+    public ResponseEntity<?> findStoreMenuData(@PathVariable int store_id) {
         List<StoreMenuDto> storeMenuDtos = storeService.findStoreMenuWithId(store_id);
 
         KakaoLocalResponseVo<List<StoreMenuDto>> response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 메뉴를 가져옵니다.", storeMenuDtos);
@@ -139,6 +139,11 @@ public class StoreController {
 
         KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 리뷰를 가져옵니다.", null);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/review_image/review_id/{review_id}")
+    public ResponseEntity<?> findReviewImage(@PathVariable int review_id) {
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     @GetMapping(value = "/kakao-local-api")

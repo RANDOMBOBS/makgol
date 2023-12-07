@@ -16,9 +16,9 @@ public interface StoresRepository {
 
     String findStoreIdWithPlaceName(String placeName);
 
-    StoreDetailDto findStoreDetailWithId(String storeId);
+    StoreDetailDto findStoreDetailWithId(int storeId);
 
-    List<StoreMenuDto> findStoreMenuWithId(String storeId);
+    List<StoreMenuDto> findStoreMenuWithId(int storeId);
 
     List<StoreReviewDto> findStoreReviewWithId(int storeId);
 

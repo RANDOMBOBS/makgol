@@ -19,13 +19,13 @@
           AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
     </select>
 
-    <select id="findStoreDetailWithId" resultType="com.org.makgol.stores.dto.StoreDetailDto" parameterType="String">
+    <select id="findStoreDetailWithId" resultType="com.org.makgol.stores.dto.StoreDetailDto" parameterType="Integer">
         SELECT name, likes, address, category, phone, photo, site
         FROM mak_gol.stores
         WHERE id = #{storeId}
     </select>
 
-    <select id="findStoreMenuWithId" resultType="com.org.makgol.stores.dto.StoreMenuDto" parameterType="String">
+    <select id="findStoreMenuWithId" resultType="com.org.makgol.stores.dto.StoreMenuDto" parameterType="Integer">
         SELECT menu, price
         FROM mak_gol.menus
         WHERE store_id = #{storeId}
