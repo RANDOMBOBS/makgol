@@ -106,7 +106,7 @@ public class StoreController {
 
         List<UserInfoDto> userInfoDtos = storeReviewDtos
                 .stream()
-                .map((review) -> storeService.findUserInfo(review.getUser_id()))
+                .map((review) -> storeService.findUserInfoWithId(review.getUser_id()))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
 
@@ -142,8 +142,11 @@ public class StoreController {
     }
 
     @GetMapping(value = "/review_image/review_id/{review_id}")
-    public ResponseEntity<?> findReviewImage(@PathVariable int review_id) {
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+    public ResponseEntity<?> findStoreReviewImageWithId(@PathVariable int review_id) {
+        List<String> reviewImages = storeService.findStoreReviewImageWithId(review_id);
+
+        KakaoLocalResponseVo<List<String>> response = new KakaoLocalResponseVo<>(true, "리뷰 이미지를 가져옵니다.", reviewImages);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(value = "/kakao-local-api")
