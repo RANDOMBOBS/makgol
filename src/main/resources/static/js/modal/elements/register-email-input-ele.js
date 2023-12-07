@@ -1,1 +1,0 @@
-exports.registerEmailInputEle = document.querySelector("#register_email");
