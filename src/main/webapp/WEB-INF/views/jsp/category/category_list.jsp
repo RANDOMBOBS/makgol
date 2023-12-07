@@ -6,7 +6,6 @@ pageEncoding="UTF-8"%>
 
 <%
    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
-   System.out.println("loginedUserVo: " + loginedUserVo);
 %>
 <ul class="category_list_ul">
   <c:forEach var="item" items="${categoryVo}" begin="0" end="${fn:length(categoryVo) - 1}">

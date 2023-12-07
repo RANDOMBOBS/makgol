@@ -9,8 +9,6 @@ import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
-import com.org.makgol.category.dao.CategoryListDao;
 import com.org.makgol.category.vo.CategoryListVo;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,34 +16,33 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class CategoryListService {
 
-
-
-	private final CategoryListDao categoryDao;
-
 	private final FileUpload fileUpload;
 
 	private final CategoryRepository categoryRepository;
 
+	public List<CategoryListVo> selectCategory(String where) {
+		return categoryRepository.selectCategory(where);
+	}
 	public List<CategoryListVo> categoryList() {
-		return categoryDao.selectCategory();
+		return selectCategory("");
 	}
 	public List<CategoryListVo> categoryKor() {
-		return categoryDao.selectCategoryKor();
+		return selectCategory("WHERE category='한식'");
 	}
 	public List<CategoryListVo> categoryWest() {
-		return categoryDao.selectCategoryWest();
+		return selectCategory("WHERE category='양식'");
 	}
 	public List<CategoryListVo> categoryChi() {
-		return categoryDao.selectCategoryChi();
+		return selectCategory("WHERE category='중식'");
 	}
 	public List<CategoryListVo> categorySnack() {
-		return categoryDao.selectCategorySnack();
+		return selectCategory("WHERE category='분식'");
 	}
 	public List<CategoryListVo> categoryJpn() {
-		return categoryDao.selectCategoryJpn();
+		return selectCategory("WHERE category='일식'");
 	}
 	public List<CategoryListVo> categoryCafe() {
-		return categoryDao.selectCategoryCafe();
+		return selectCategory("WHERE category='카페'");
 	}
 
 	public int updateCateFile (CategoryRequestVo categoryRequestVo) {
@@ -58,7 +55,9 @@ public class CategoryListService {
 			categoryRequestVo.setPhotoPath("/resources/static/image/김치찌개.jpg");
 			categoryRequestVo.setPhoto("김치찌개.jpg");
 		}
-			return categoryDao.updateCateFile(categoryRequestVo);
+		int result = -1;
+		result = categoryRepository.updateUploadImage(categoryRequestVo);
+		return result;
 	}
 }
 

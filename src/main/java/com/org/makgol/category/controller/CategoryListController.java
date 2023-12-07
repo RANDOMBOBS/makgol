@@ -49,20 +49,27 @@ public class CategoryListController {
 	@RequestMapping(value = "/{categoryType}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categoryMenu(Model model ,@PathVariable String categoryType) {
 		List<CategoryListVo> categoryVo;
-		if ("kor".equals(categoryType)){
-			categoryVo = categoryListService.categoryKor(); // 한식
-		} else if ("west".equals(categoryType)) {
-			categoryVo = categoryListService.categoryWest(); // 양식
-		} else if ("chi".equals(categoryType)) {
-			categoryVo = categoryListService.categoryChi(); // 중식
-		} else if ("snack".equals(categoryType)) {
-			categoryVo = categoryListService.categorySnack(); // 분식
-		} else if ("jpn".equals(categoryType)) {
-			categoryVo = categoryListService.categoryJpn(); // 일식
-		} else if ("cafe".equals(categoryType)) {
-			categoryVo = categoryListService.categoryCafe(); // 카페
-		} else {
-			return "error";
+		switch (categoryType) {
+			case "kor":
+				categoryVo = categoryListService.categoryKor(); // 한식
+				break;
+			case "west":
+				categoryVo = categoryListService.categoryWest(); // 양식
+				break;
+			case "chi":
+				categoryVo = categoryListService.categoryChi(); // 중식
+				break;
+			case "snack":
+				categoryVo = categoryListService.categorySnack(); // 분식
+				break;
+			case "jpn":
+				categoryVo = categoryListService.categoryJpn(); // 일식
+				break;
+			case "cafe":
+				categoryVo = categoryListService.categoryCafe(); // 카페
+				break;
+			default:
+				return "error";
 		}
 		model.addAttribute("categoryVo", categoryVo);
 		return "jsp/category/category_list";

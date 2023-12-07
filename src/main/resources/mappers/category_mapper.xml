@@ -4,6 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.org.makgol.category.repository.CategoryRepository">
+    <resultMap id="categoryResultMap" type="com.org.makgol.category.vo.CategoryListVo">
+        <id property="id" column="id" />
+        <result property="store_id" column="store_id" />
+        <result property="menu_name" column="menu_name" />
+        <result property="category" column="category" />
+        <result property="date" column="date" />
+        <result property="photo" column="photo" />
+        <result property="photoPath" column="photoPath" />
+    </resultMap>
+
+    <select id="selectCategory" resultMap="categoryResultMap" parameterType="com.org.makgol.category.vo.CategoryListVo">
+        SELECT DISTINCT menu_name,photo,photoPath FROM category_menu ${where}
+    </select>
 
     <update id="updateUploadImage" parameterType="com.org.makgol.category.vo.CategoryRequestVo">
         UPDATE category_menu
