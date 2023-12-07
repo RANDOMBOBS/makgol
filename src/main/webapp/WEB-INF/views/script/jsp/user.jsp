@@ -3,11 +3,10 @@
 
 <script>
     let user_id = ${loginedUserVo.id}
-
   function myPostList() {
-   jQ(".myPosts").addClass("on");
-   jQ(".myComments").removeClass("on");
-   jQ(".myLikePosts").removeClass("on");
+    jQ(".myPosts").addClass("on");
+    jQ(".myComments").removeClass("on");
+    jQ(".myLikePosts").removeClass("on");
     jQ.ajax({
       url: "/user/myPostList/" + user_id,
       type: "GET",
@@ -26,14 +25,16 @@
       let checkboxes = jQuery("tbody input[type=checkbox]:checked");
       let ids = "";
       checkboxes.each(function (index) {
-        ids += jQuery(this).closest("td").next().val() + ",";
+        ids += jQuery(this).closest("td").attr("data-id") + ",";
       });
+      console.log("아이디는?"+ids);
       jQ.ajax({
         url: "/board/suggestion/deleteMyBoard/" + ids,
         type: "POST",
         success: function (rdata) {
           alert("선택한 글이 삭제되었습니다.");
           myPostList();
+          countingPosts();
         },
         error: function (error) {
           alert("deleteBoard 오류");
@@ -43,9 +44,9 @@
   }
 
   function myCommentList() {
-   jQ(".myComments").addClass("on");
-   jQ(".myPosts").removeClass("on");
-   jQ(".myLikePosts").removeClass("on");
+    jQ(".myComments").addClass("on");
+    jQ(".myPosts").removeClass("on");
+    jQ(".myLikePosts").removeClass("on");
     jQ.ajax({
       url: "/user/myCommentList/" + user_id,
       type: "GET",
@@ -64,14 +65,16 @@
       let checkboxes = jQuery("tbody input[type=checkbox]:checked");
       let comids = "";
       checkboxes.each(function (index) {
-        comids += jQuery(this).closest("td").next().val() + ",";
+        comids += jQuery(this).closest("td").attr("data-id") + ",";
       });
+      console.log("댓글번호?"+comids)
       jQ.ajax({
         url: "/board/suggestion/deleteMyComment/" + comids,
         type: "POST",
         success: function (rdata) {
           alert("선택한 댓글이 삭제되었습니다.");
           myCommentList();
+          countingComments();
         },
         error: function (error) {
           alert("deleteComment 오류");
@@ -81,9 +84,9 @@
   }
 
   function myLikePost() {
-  jQ(".myLikePosts").addClass("on");
-  jQ(".myPosts").removeClass("on");
-  jQ(".myComments").removeClass("on");
+    jQ(".myLikePosts").addClass("on");
+    jQ(".myPosts").removeClass("on");
+    jQ(".myComments").removeClass("on");
     jQ.ajax({
       url: "/user/myLikePost/" + user_id,
       type: "GET",
@@ -103,12 +106,13 @@
       let likeids = "";
       let boardids = "";
       checkboxes.each(function (index) {
-        likeids += jQuery(this).closest("td").next().val() + ",";
-        boardids += jQuery(this).closest("td").next().next().val() + ",";
+        likeids += jQuery(this).closest("td").attr("data-like_id") + ",";
+        boardids += jQuery(this).closest("td").attr("data-board_id") + ",";
       });
+      console.log("공감번호?"+likeids+" 게시글번호?"+boardids);
       let data = { likeids: likeids, boardids: boardids };
       jQ.ajax({
-        url: "/board/suggestion/deleteMyLike/",
+        url: "/board/suggestion/deleteMyLike",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(data),
@@ -116,6 +120,7 @@
         success: function (rdata) {
           alert("선택한 글의 공감이 취소되었습니다.");
           myLikePost();
+          countingLikes();
         },
         error: function (error) {
           alert("deleteLike 오류");
@@ -142,4 +147,48 @@
     });
     jQ("#allMyCheckbox").prop("checked", myCheck);
   });
+
+  function countingPosts() {
+    jQ.ajax({
+      url: "/user/countingPosts/" + user_id,
+      type: "GET",
+      dataType: "json",
+      success: function (rdata) {
+        jQ(".posts").text(rdata);
+      },
+      error: function (error) {
+        alert("countingPosts 오류");
+      },
+    });
+  }
+
+  function countingComments() {
+    jQ.ajax({
+      url: "/user/countingComments/" + user_id,
+      type: "GET",
+      dataType: "json",
+      success: function (rdata) {
+        jQ(".comments").text(rdata);
+      },
+      error: function (error) {
+        alert("countingComments 오류");
+      },
+    });
+  }
+
+  function countingLikes() {
+    jQ.ajax({
+      url: "/user/countingLikes/" + user_id,
+      type: "GET",
+      dataType: "json",
+      success: function (rdata) {
+        jQ(".likes").text(rdata);
+      },
+      error: function (error) {
+        alert("countingLikes 오류");
+      },
+    });
+  }
+
+
 </script>

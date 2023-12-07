@@ -9,7 +9,6 @@ body {
   width: 1200px;
   border: 1px solid #eee;
   border-radius: 15px;
-
 }
 
 #board_list .board_list_title {
@@ -74,21 +73,21 @@ body {
   align-items: flex-end;
 }
 
-#board_list .board_list_contents .board_list h3{
+#board_list .board_list_contents .board_list h3 {
   width: 100%;
   text-align: left;
   margin-bottom: 30px;
   font-size: 20px;
 }
 
-#board_list .board_list_contents .board_list h4{
-width: 100%;
-text-align: center;
-margin: 100px auto;
-font-size: 23px;
+#board_list .board_list_contents .board_list h4 {
+  width: 100%;
+  text-align: center;
+  margin: 100px auto;
+  font-size: 23px;
 }
 
-#board_list .board_list_contents .board_list h3 span{
+#board_list .board_list_contents .board_list h3 span {
   font-size: 1.3em;
 }
 
@@ -96,45 +95,27 @@ font-size: 23px;
   width: 100%;
 }
 
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(1) {
+#board_list .board_list_contents .board_list table col:nth-child(1) {
   width: 100px;
 }
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(2) {
+
+#board_list .board_list_contents .board_list table col:nth-child(2)  {
   width: auto;
 }
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(3) {
+
+#board_list .board_list_contents .board_list table col:nth-child(3)  {
   width: 150px;
 }
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(4) {
+
+#board_list .board_list_contents .board_list table col:nth-child(4)  {
   width: 120px;
 }
 #board_list .board_list_contents .board_list table col:nth-child(5),
-#board_list
-.board_list_contents
-.board_list
-table
-col:nth-child(6) {
+#board_list .board_list_contents .board_list table col:nth-child(6) {
   width: 70px;
 }
 
 #board_list .board_list_contents .board_list table thead {
-  height: 50px;
   height: 50px;
   border: 2px solid #ffe286;
   background-color: #fdf97e;
@@ -154,13 +135,7 @@ col:nth-child(6) {
   border-bottom: 1px solid #ffe286;
 }
 
-
-#board_list
-.board_list_contents
-.board_list
-table
-tr
-td:nth-child(2) a{
+#board_list .board_list_contents .board_list table tr td:nth-child(2) a {
   padding: 0 20px;
   display: block;
   width: 100%;
@@ -169,12 +144,7 @@ td:nth-child(2) a{
   text-align: left;
 }
 
-#board_list
-.board_list_contents
-.board_list
-table
-tr
-td:nth-child(2):hover {
+#board_list .board_list_contents .board_list table tr td:nth-child(2):hover {
   font-weight: bold;
   text-decoration: underline;
 }
@@ -182,9 +152,9 @@ td:nth-child(2):hover {
 #board_list .board_list_contents .board_list > a {
   display: block;
   border-radius: 5px;
-  width: 90px;
+  padding: 5px 10px;
   height: 35px;
-  line-height: 35px;
+  line-height: 25px;
   margin: 20px 0;
   border: none;
   font-size: 14px;
@@ -193,15 +163,13 @@ td:nth-child(2):hover {
   cursor: pointer;
 }
 
-
 #board_write {
   background-color: #fff;
   margin: 50px auto;
   padding: 50px;
   width: 1000px;
   border: 1px solid #eee;
-  border-radius: 15px
-
+  border-radius: 15px;
 }
 
 #board_write .write_board {
@@ -365,4 +333,227 @@ td:nth-child(2):hover {
   position: absolute;
   right: 0;
   width: 80px;
+
+#board_detail {
+  background-color: #fff;
+  margin: 50px auto;
+  padding: 50px;
+  width: 1200px;
+  border: 1px solid #eee;
+  border-radius: 15px;
 }
+
+#board_detail .board_detail_top {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 30px;
+}
+
+#board_detail .board_detail_top .board_detail_title {
+  text-align: left;
+  text-indent: 0.5em;
+  padding: 15px 0;
+}
+
+#board_detail .board_detail_top .board_detail_button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 210px;
+  margin-bottom: 10px;
+}
+
+#board_detail .board_detail_top .board_detail_button a {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  width: 65px;
+  background-color: #eee;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0 5px;
+}
+
+#board_detail .board_detail_table {
+  margin: 0 auto;
+  width: 95%;
+  border-top: 3px solid #000;
+}
+
+#board_detail .board_detail_table .text td:nth-child(1) {
+  background-color: #fdf97e;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#board_detail .board_detail_table .text td:nth-child(2) {
+  text-align: left;
+  padding: 10px 20px;
+  border-bottom: 2px solid #ffe286;
+}
+
+#board_detail .board_detail_table .content td {
+  text-align: left;
+  padding: 50px;
+}
+
+#board_detail .board_detail_table .image td img {
+  max-width: 1000px;
+  max-height: 800px;
+  margin: 30px;
+}
+
+#board_detail .board_like {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 50px;
+  margin: 30px auto;
+  border-bottom: 2px solid #eee;
+}
+
+#board_detail .board_like label {
+  display: block;
+  border: 2px solid #000;
+  border-radius: 10px;
+  font-size: 25px;
+  padding: 5px 20px;
+  cursor: pointer;
+}
+
+#board_detail .create_comment_form {
+  text-align: left;
+  padding: 20px;
+}
+
+#board_detail .create_comment_form input {
+  width: 200px;
+  height: 30px;
+  text-align: left;
+  padding: 0 20px;
+  margin: 5px 0;
+}
+
+#board_detail .create_comment_form .create_comment_area {
+  display: flex;
+}
+
+#board_detail .create_comment_form textarea {
+  font-family: sans-serif;
+  margin-right: 5px;
+  resize: none;
+  width: 100%;
+  height: 120px;
+  text-align: left;
+  padding: 20px;
+}
+
+#board_detail .create_comment_form .create_comment_area button {
+  width: 100px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #eee;
+  border: 1px solid #000;
+}
+
+#board_detail .boardCommentList {
+  border-top: 3px solid #000;
+  margin-top: 30px;
+  padding: 10px 0;
+}
+
+#board_detail .boardCommentList .one_comment {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+#board_detail .boardCommentList .one_comment ul {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+#board_detail .boardCommentList .one_comment ul .button {
+  position: relative;
+  right: 0;
+}
+
+#board_detail .boardCommentList .one_comment ul .photo img {
+  width: 35px;
+  height: 35px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+#board_detail .boardCommentList .one_comment ul .nickname {
+  text-align: left;
+  font-weight: bold;
+}
+
+#board_detail .boardCommentList .one_comment ul .date {
+  text-align: right;
+  margin: 0 20px;
+}
+
+#board_detail .boardCommentList .one_comment ul .button {
+  position: absolute;
+  right: 0;
+}
+
+#board_detail .boardCommentList .one_comment ul .button input {
+  font-weight: bold;
+  width: 40px;
+  color: #555;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+#board_detail .boardCommentList .one_comment ul .button input:hover {
+  text-decoration: underline;
+  color: #000;
+}
+
+#board_detail .boardCommentList .one_comment .content {
+  text-align: left;
+  margin-left: 45px;
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+#board_detail .boardCommentList .one_comment .mod_cancle form {
+  text-align: left;
+  padding: 20px;
+}
+
+#board_detail .boardCommentList .one_comment .mod_cancle form .nickname {
+  width: 200px;
+  height: 30px;
+  text-align: left;
+  padding: 0 20px;
+  margin: 5px 0;
+}
+
+#board_detail .boardCommentList .one_comment .mod_cancle form textarea {
+  font-family: sans-serif;
+  margin-right: 5px;
+  resize: none;
+  width: 100%;
+  height: 120px;
+  text-align: left;
+  padding: 20px;
+}
+
+#board_detail .boardCommentList .one_comment .mod_cancle form .buttons {
+  text-align: right;
+}
+
+#board_detail .boardCommentList .one_comment .mod_cancle form .buttons input {
+  width: 50px;
+  height: 30px;
+  font-size: 12px;
+}
+

@@ -73,7 +73,7 @@
     <input type="hidden" name="id" value="${loginedUserVo.id}" />
     <input type="hidden" name="grade" value="${loginedUserVo.grade}" />
     <button type="button" class="mod button" onclick="ModifyUserInfo()"> 수정 </button>
-    <button type="button" class="cancel button" onclick="ModifyUserInfo()"> 취소 </button>
+    <button type="button" class="cancel button" onclick="ModifyUserCancle()"> 취소 </button>
   </form>
 </div>
 
@@ -165,29 +165,36 @@ function userimageURL(input) {
       }).open();
     }
 
-
-    function ModifyUserInfo() {
-    let form = document.modify_user_info;
-      if (form.password.value === "") {
-        alert("비밀번호를 입력해주세요");
-        form.password.focus();
-      } else if (form.passwordCheck.value === "") {
-        alert("비밀번호 확인을 입력해주세요");
-        form.passwordCheck.focus();
-      } else if (pwCheck) {
-        alert("비밀번호 확인 버튼을 눌러주세요");
-      } else if (form.phone.value === "") {
-        alert("전화번호를 입력해주세요");
-        form.phone.focus();
-      } else if (form.phone.value === "") {
-        alert("전화번호를 입력해주세요");
-        form.phone.focus();
-      } else {
-        if (window.confirm("정보를 수정하시겠습니까?")) {
-          form.submit();
+  function ModifyUserInfo() {
+      let form = document.modify_user_info;
+        if (form.password.value === "") {
+          alert("비밀번호를 입력해주세요");
+          form.password.focus();
+        } else if (form.passwordCheck.value === "") {
+          alert("비밀번호 확인을 입력해주세요");
+          form.passwordCheck.focus();
+        } else if (pwCheck) {
+          alert("비밀번호 확인 버튼을 눌러주세요");
+        } else if (form.phone.value === "") {
+          alert("전화번호를 입력해주세요");
+          form.phone.focus();
+        } else if (form.phone.value === "") {
+          alert("전화번호를 입력해주세요");
+          form.phone.focus();
+        } else {
+          if (window.confirm("정보를 수정하시겠습니까?")) {
+            form.submit();
+          }
         }
       }
+
+
+    function ModifyUserCancle(){
+       window.location.href = "http://localhost:8090/user/myPage"
     }
+
+
+
 
 </script>
 </body>

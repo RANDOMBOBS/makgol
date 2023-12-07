@@ -62,4 +62,5 @@ public interface BoardSuggestionRepository {
     int deleteHistoryLike(List<Integer> idList);
     void deleteLikes(List<Integer> boardidList);
 
+
 }

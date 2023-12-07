@@ -17,7 +17,7 @@
 <tbody>
    <c:forEach var="item" items="${commentVos}">
    <tr>
-     <td><input type="checkbox" class="eachCheckbox"/></td>
+     <td data-id="${item.id}"><input type="checkbox" class="eachCheckbox"/></td>
      <td>
         <c:url value='/board/suggestion/detail' var='detail_url'>
           <c:param name='b_id' value='${item.board_id}' />
@@ -28,7 +28,6 @@
           <p class="board_title">${item.title}</p>
         </a>
      </td>
-     <input type="hidden" value="${item.id}" />
    </tr>
    </c:forEach>
   </tbody>
