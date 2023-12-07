@@ -34,8 +34,6 @@ public class BoardNoticeController {
         String nextPage = "jsp/board/notice/notice_all_list";
         List<BoardVo> boardVo = boardNoticeService.notice();
         model.addAttribute("boardVo", boardVo);
-
-
         return nextPage;
     }
 
@@ -46,6 +44,7 @@ public class BoardNoticeController {
         String searchWord = (String) map.get("searchWord");
         List<BoardVo> boardVo = boardNoticeService.searchNotice(searchWord);
         model.addAttribute("boardVo", boardVo);
+        model.addAttribute("searchWord",searchWord);
         return nextPage;
     }
 
@@ -121,6 +120,5 @@ public class BoardNoticeController {
         }
         return nextPage;
     }
-
 }
 

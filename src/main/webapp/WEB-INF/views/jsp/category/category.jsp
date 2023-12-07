@@ -23,12 +23,12 @@
        <div id="category_main_div">
           <ul class="category_main_ul">
              <li><button type="button" class="active" onclick="menuList()">전체보기</button></li>
-             <li><button type="button" onclick="korMenu()">한식</button></li>
-             <li><button type="button" onclick="westMenu()">양식</button></li>
-             <li><button type="button" onclick="chiMenu()">중식</button></li>
-             <li><button type="button" onclick="snackMenu()">분식</button></li>
-             <li><button type="button" onclick="jpnMenu()">일식</button></li>
-             <li><button type="button" onclick="cafeMenu()">카페</button></li>
+             <li><button type="button" onclick="categoryMenu('kor')">한식</button></li>
+             <li><button type="button" onclick="categoryMenu('west')">양식</button></li>
+             <li><button type="button" onclick="categoryMenu('chi')">중식</button></li>
+             <li><button type="button" onclick="categoryMenu('snack')">분식</button></li>
+             <li><button type="button" onclick="categoryMenu('jpn')">일식</button></li>
+             <li><button type="button" onclick="categoryMenu('cafe')">카페</button></li>
           </ul>
        </div>
        <div id="category_list_div"></div>
