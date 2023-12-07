@@ -9,9 +9,9 @@ import java.util.List;
 @Mapper
 public interface CategoryRepository {
 
+    List<CategoryListVo> selectCategory(String where);
     int updateUploadImage(CategoryRequestVo categoryRequestVo);
 
 
-    List<CategoryListVo> selectCategory(String where);
 }
 

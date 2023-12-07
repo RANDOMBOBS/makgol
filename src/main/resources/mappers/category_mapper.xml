@@ -9,7 +9,6 @@
         <result property="store_id" column="store_id" />
         <result property="menu_name" column="menu_name" />
         <result property="category" column="category" />
-        <result property="date" column="date" />
         <result property="photo" column="photo" />
         <result property="photoPath" column="photoPath" />
     </resultMap>

@@ -10,10 +10,7 @@ public class CategoryListVo {
     int store_id;
     String menu_name;
     String category;
-    String date;
     String photo;
     String photoPath;
-    MultipartFile photoFile;
-
 
 }
