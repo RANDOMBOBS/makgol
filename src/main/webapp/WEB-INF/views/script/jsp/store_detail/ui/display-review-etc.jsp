@@ -24,8 +24,12 @@
         const modifyButtonEle = $("<button>").addClass("button modify_button");
         const deleteButtonEle = $("<button>").addClass("button delete_button");
 
-        modifyButtonEle.click(()=>{alert("수정")});
-        deleteButtonEle.click(()=>{alert("삭제")});
+        modifyButtonEle.click(() => {
+            alert("수정")
+        });
+        deleteButtonEle.click(() => {
+            alert("삭제")
+        });
 
         modifyButtonEle.append(modifyIconEle);
         deleteButtonEle.append(deleteIconEle);
@@ -40,7 +44,7 @@
 
         if (reviewImages.length >= 1) {
             const reviewImageEle = $("<img>").addClass("review_image");
-            reviewImageEle.attr({src:"http://localhost:8090" + reviewImages[0]});
+            reviewImageEle.attr({src: "http://localhost:8090" + reviewImages[0]}).val(item.id);
             reviewImageBoxEle.append(reviewImageEle);
             reviewEtcEle.append(reviewImageBoxEle);
         }
