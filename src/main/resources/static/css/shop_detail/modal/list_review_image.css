@@ -1,0 +1,53 @@
+.list_modal {
+    display: none;
+    opacity: 1;
+    width: 1300px;
+    height: 750px;
+    background: #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    flex-direction: column;
+}
+
+.list_modal .list_modal_body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.list_modal .list_modal_body .button_area {
+    width: 350px;
+}
+
+.list_modal .list_modal_body button {
+    width: 150px;
+    height: 150px;
+    border: none;
+    background-color: #fdf97e;
+    color: darkorange;
+    border-radius: 150px;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.list_modal .list_modal_body .review_image_list {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.list_modal .list_modal_body .review_image_list .expend_image {
+    /*width: 800px;*/
+    /*height: 600px;*/
+    /*border: 1px solid black;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}

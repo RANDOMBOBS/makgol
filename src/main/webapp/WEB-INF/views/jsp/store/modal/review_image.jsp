@@ -15,8 +15,14 @@
             <h1>List Review Image</h1>
             <button class="close_button">X</button>
         </div>
-        <div class="review_image_list">
-            asdsad
+        <div class="list_modal_body">
+            <%--            <div class="button_area">--%>
+            <%--                <button><i class="fa-solid fa-angle-left"></i></button>--%>
+            <%--            </div>--%>
+            <div class="review_image_list"></div>
+            <%--            <div class="button_area">--%>
+            <%--                <button><i class="fa-solid fa-angle-right"></i></button>--%>
+            <%--            </div>--%>
         </div>
     </div>
     <div class="upload_modal">

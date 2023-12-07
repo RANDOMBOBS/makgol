@@ -4,6 +4,7 @@
     const openUploadModal = () => {
         $(".modal_cover").css({display: "block"});
         $(".upload_modal").css({display: "flex"});
+        $(".list_modal").css({display: "none"});
 
         upload();
 
