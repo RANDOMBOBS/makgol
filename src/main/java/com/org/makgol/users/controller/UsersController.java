@@ -182,6 +182,25 @@ public class UsersController {
         return nextPage;
     }
 
+
+    @ResponseBody
+    @GetMapping("/countingPosts/{user_id}")
+    public int countingPosts(@PathVariable("user_id") int user_id){
+       return userService.countingPosts(user_id);
+    }
+
+    @ResponseBody
+    @GetMapping("/countingComments/{user_id}")
+    public int countingComments(@PathVariable("user_id") int user_id){
+        return userService.countingComments(user_id);
+    }
+
+    @ResponseBody
+    @GetMapping("/countingLikes/{user_id}")
+    public int countingLikes(@PathVariable("user_id") int user_id){
+        int a = userService.countingLikes(user_id);
+        return a;
+    }
 }
 
 

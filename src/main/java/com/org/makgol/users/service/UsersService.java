@@ -225,6 +225,16 @@ public class UsersService implements LogoutHandler {
         return userDao.selectMyLikePostList(user_id);
     }
 
+    public int countingPosts(int user_id){
+        return usersRepository.countingPosts(user_id);
+    }
+    public int countingComments(int user_id){
+        return usersRepository.countingComments(user_id);
+    }
+    public int countingLikes(int user_id){
+        return usersRepository.countingLikes(user_id);
+    }
+
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 

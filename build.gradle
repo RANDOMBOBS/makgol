@@ -1,13 +1,32 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '2.7.8'
-    id 'io.spring.dependency-management' version '1.1.3'
+	id 'java'
+	id 'org.springframework.boot' version '2.7.18-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
-group = 'com.org'
 version = '0.0.1-SNAPSHOT'
 
 java {
+	sourceCompatibility = '11'
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('bootBuildImage') {
+	builder = 'paketobuildpacks/builder-jammy-base:latest'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
     sourceCompatibility = '11'
 }
 
@@ -22,6 +41,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.28'
     // 스프링 부트 웹 애플리케이션을 시작하기 위한 의존성
     implementation 'org.springframework.boot:spring-boot-starter-web'
 

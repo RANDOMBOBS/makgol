@@ -9,9 +9,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication
 public class MakgolApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(MakgolApplication.class, args);
     }
+
 
 }
 // yi

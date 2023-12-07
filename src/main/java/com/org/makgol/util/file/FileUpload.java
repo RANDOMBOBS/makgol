@@ -75,8 +75,8 @@ public class FileUpload {
 
         FileInfo fileInfo = new FileInfo();
 
-
             String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
+
             long size = file.getSize(); //파일 사이즈
 
             System.out.println("파일명 : "  + fileRealName);
@@ -119,15 +119,19 @@ public class FileUpload {
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
                 fileInfo.setPhotoPath(filePathMatcher+uniqueName+fileExtension);
-                fileInfo.setPhotoName(fileRealName);
+                fileInfo.setPhotoName(uniqueName + fileExtension);
+
+                byte[] fileData = file.getBytes();  // 파일의 바이트 데이터를 얻음
+                // 여기에서 fileData를 사용하여 필요한 처리 수행
 
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+        System.out.println(filePathMatcher+uniqueName+fileExtension);
         return fileInfo;
+
     }
 
     public List<FileInfo> editFileListUpload(List<MultipartFile> fileList) {

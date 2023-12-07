@@ -30,4 +30,7 @@ public interface UsersRepository {
     List<BoardLikeVo> selectMyLikePostList(int user_id);
     Users save(Users user);
     Users findById(int id);
+    int countingPosts(int user_id);
+    int countingComments(int user_id);
+    int countingLikes(int user_id);
 }

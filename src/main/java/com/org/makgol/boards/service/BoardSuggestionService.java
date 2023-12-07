@@ -366,7 +366,9 @@ public class BoardSuggestionService {
         return result;
     }
 
-    public int deleteMyLike(String likeids, String boardids){
+    public int deleteMyLike(Map<String, String> data){
+        String boardids = data.get("boardids");
+        String likeids = data.get("likeids");
         String[] id = likeids.split(",");
         String[] boardid = boardids.split(",");
         List<Integer> idList = new ArrayList<>();
@@ -384,5 +386,6 @@ public class BoardSuggestionService {
         }
         return result;
     }
+
 
 }

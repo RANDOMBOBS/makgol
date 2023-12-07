@@ -92,7 +92,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     } else if (form.content.value == "") {
       alert("수정할 댓글을 입력해주세요");
       form.content.focus();
-    } else if (window.confirm("수정하시겠습니까?")) {
+    } else if (window.confirm("댓글을 수정하시겠습니까?")) {
       let nickname = form.nickname.value;
       let content = form.content.value;
       let id = form.id.value;
@@ -286,4 +286,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   function returnToList() {
     window.location.href = "http://localhost:8090/board/suggestion";
   }
+
+
+
 </script>

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 body {
   background-color: #fffdd3;
 }
@@ -321,6 +320,7 @@ body {
   height: 40px;
   font-size: 16px;
   font-weight: bold;
+  cursor: pointer;
 }
 #modify_user .modify_user_form .cancel {
   border: 2px solid #ffe16f;
@@ -362,8 +362,8 @@ body {
   margin: 0 20px;
 }
 
-#my_history_page .user .user_info .user_name_role{
-text-align: left;
+#my_history_page .user .user_info .user_name_role {
+  text-align: left;
 }
 
 #my_history_page .user .user_info .user_name_role .name {
@@ -527,7 +527,13 @@ text-align: left;
   padding: 10px 25px;
 }
 
-#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a:hover {
+#my_history_page
+  #my_history
+  .my_comment_table
+  tbody
+  tr
+  td:nth-child(2)
+  a:hover {
   font-weight: bold;
   text-decoration: underline;
 }
@@ -539,7 +545,255 @@ text-align: left;
   padding: 3px;
 }
 
-#my_history_page #my_history .my_comment_table tbody tr td:nth-child(2) a .comment_content {
+#my_history_page
+  #my_history
+  .my_comment_table
+  tbody
+  tr
+  td:nth-child(2)
+  a
+  .comment_content {
   font-size: 17px;
   color: #000;
+}
+
+#my_store_page {
+  display: flex;
+  margin: 50px auto;
+  padding: 30px;
+  width: 1200px;
+  border: 1px solid #eee;
+  border-radius: 15px;
+  background: #fff;
+}
+
+#my_store_page .chatting {
+  width: 500px;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-right: none;
+}
+
+#my_store_page .chatting .chatting_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fdf97e;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px 30px;
+}
+
+#my_store_page .chatting .friends .friend {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 30px 20px;
+  background-color: #f9f9f9;
+  border-bottom: 2px solid #eee;
+}
+
+#my_store_page .chatting .friends .friend img {
+  width: 50px;
+  height: 50px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  margin-right: 20px;
+}
+
+#my_store_page .chatting .friends .friend div .title {
+  font-weight: bold;
+  text-align: left;
+  font-size: 20px;
+}
+
+#my_store_page .chatting .friends .friend div .content {
+  font-size: 13px;
+  text-align: left;
+  padding: 5px 0;
+}
+
+#my_store_page .chatting .friends .friend .status {
+  position: absolute;
+  right: 0;
+  padding: 20px;
+}
+
+#my_store_page .my_store {
+  position: relative;
+  background-color: #f9f9f9;
+  width: 900px;
+  border: 2px solid #ddd;
+  border-left: none;
+}
+
+#my_store_page .my_store .my_store_title_box .my_store_title {
+  font-weight: bold;
+  font-size: 30px;
+  position: relative;
+  padding: 30px 0;
+}
+
+#my_store_page .my_store .my_store_title_box .my_store_title .fa-chevron-left {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+}
+
+#my_store_page .my_store .my_store_title_box .my_store_title .fa-bars {
+  position: absolute;
+  right: 5%;
+}
+
+#my_store_page .my_store hr {
+  border: 1px solid #eee;
+}
+
+#my_store_page .my_store .stores {
+  position: relative;
+  overflow-y: scroll;
+  height: 600px;
+  padding: 0 30px;
+}
+
+#my_store_page .my_store .stores::-webkit-scrollbar {
+    width:15px;
+}
+
+#my_store_page .my_store .stores::-webkit-scrollbar-thumb {
+     background-color: #999;
+     height: 50px;
+     border-radius: 10px;
+}
+
+#my_store_page .my_store .stores::-webkit-scrollbar-track{
+    background-color: #f9f9f9;
+}
+
+#my_store_page .my_store .stores .request {
+  height: 100px;
+}
+
+#my_store_page .my_store .stores .request .my_message {
+  display: block;
+  position: absolute;
+  right: 26%;
+  font-size: 18px;
+  width: 350px;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: #fef01b;
+  margin: 50px 0;
+}
+
+#my_store_page .my_store .stores .request .my_message::after {
+  content: "";
+  position: absolute;
+  top: 20%;
+  left: 100%;
+  width: 0px;
+  height: 0px;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid transparent;
+  border-left: 30px solid #fef01b;
+  border-right: 10px solid transparent;
+}
+
+#my_store_page .my_store .stores .request img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #ddd;
+  position: absolute;
+  right: 0;
+  margin: 30px;
+}
+
+#my_store_page .my_store .stores .one_store {
+  display: flex;
+  align-items: center;
+  margin: 60px 0;
+}
+
+#my_store_page .my_store .stores .one_store:nth-child(1) {
+  margin-top: 0;
+}
+
+#my_store_page .my_store .stores .one_store img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 3px solid #ddd;
+}
+
+#my_store_page .my_store .stores .one_store .store_info .name {
+  font-size: 25px;
+  font-weight: bold;
+  margin: 10px 30px;
+  text-align: left;
+}
+
+#my_store_page .my_store .stores .one_store .store_info ul {
+  background-color: #fff;
+  width: auto;
+  border-radius: 15px;
+  margin: 0 40px;
+  padding: 10px 25px;
+  position: relative;
+}
+
+#my_store_page .my_store .stores .one_store .store_info ul::before {
+  content: "";
+  position: absolute;
+  top: 20%;
+  right: 100%;
+  width: 0px;
+  height: 0px;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 30px solid #fff;
+}
+
+#my_store_page .my_store .stores .one_store .store_info ul li {
+  text-align: left;
+  padding: 3px 0;
+  font-size: 18px;
+}
+
+#my_store_page .my_store .stores .one_store .store_info ul li.phone {
+  font-size: 16px;
+}
+
+#my_store_page .my_store .stores .one_store .store_info ul li:last-child p {
+  text-align: right;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#my_store_page
+  .my_store
+  .stores
+  .one_store
+  .store_info
+  ul
+  li:last-child
+  p:hover
+  a,
+#my_store_page
+  .my_store
+  .stores
+  .one_store
+  .store_info
+  ul
+  li:last-child
+  p:hover
+  i {
+  color: #ffa500;
+  text-decoration: underline;
 }

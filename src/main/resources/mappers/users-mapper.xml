@@ -86,4 +86,15 @@
         SELECT * FROM users WHERE email = #{email}
     </select>
 
+    <select id="countingPosts" resultType="int" parameterType="int">
+        SELECT COUNT(*) FROM boards WHERE user_id=#{user_id}
+    </select>
+
+    <select id="countingComments" resultType="int" parameterType="int">
+        SELECT COUNT(*) FROM comments WHERE user_id=#{user_id}
+    </select>
+
+    <select id="countingLikes" resultType="int" parameterType="int">
+        SELECT COUNT(*) FROM board_likes WHERE user_id=#{user_id}
+    </select>
 </mapper>
