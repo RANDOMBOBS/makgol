@@ -1,11 +1,17 @@
 package com.org.makgol.users.vo;
 
-import lombok.Data;
-import lombok.ToString;
+import com.org.makgol.common.oauth2.entity.SocialAuth;
+import com.org.makgol.common.oauth2.entity.type.AuthProvider;
+import lombok.*;
 
 import java.util.List;
+import java.util.Map;
+
 @Data
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Users {
     // ID
     int id;
@@ -38,4 +44,13 @@ public class Users {
     String date;
 
     String address;
+
+    private SocialAuth socialAuth;
+
+    public void updateSocialAuth(String name, String imageUrl, Map<String, Object> attributes) {
+        if (this.socialAuth == null) {
+            this.socialAuth = new SocialAuth();
+        }
+        this.socialAuth.update(name, imageUrl, attributes);
+    }
 }

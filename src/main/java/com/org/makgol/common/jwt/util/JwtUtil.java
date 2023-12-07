@@ -51,7 +51,7 @@ public class JwtUtil {
 
     @Value("${jwt.secret.key}")
     private String secretKey;
-    private Key key;
+    public static Key key;
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
     // bean으로 등록 되면서 딱 한번 실행이 됩니다.
@@ -277,7 +277,7 @@ public class JwtUtil {
                 .path("/")
                 .sameSite("Lax")            //sameSite 모르면 검색!! 중요함!!! 돼지꼬리 떙떙!!
                 .httpOnly(true)
-                .secure(false)
+                .secure(false)  //https
                 .maxAge(2 * 60 * 60)
                 .build()
                 : ResponseCookie.from(JwtUtil.REFRESH_TOKEN, token)

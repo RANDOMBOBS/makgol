@@ -28,5 +28,6 @@ public interface UsersRepository {
     List<CommentResponseVo> selectMyCommentList(int user_id);
     Users findByEmail(String email);
     List<BoardLikeVo> selectMyLikePostList(int user_id);
-
+    Users save(Users user);
+    Users findById(int id);
 }

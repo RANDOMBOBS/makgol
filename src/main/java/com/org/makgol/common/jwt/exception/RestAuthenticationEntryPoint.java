@@ -23,7 +23,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     ) throws IOException {
 
         String exception = (String)request.getAttribute("exception");
-        log.info("(String)request.getAttribute(\"exception\") --> : {}", exception);
+        log.info("(String)request.getAttribute(exception) --> : {}", exception);
 
         if(exception == null) {
             setResponse(response, ErrorCode.FAILED_MESSAGE);
