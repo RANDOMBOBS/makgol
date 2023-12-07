@@ -22,10 +22,13 @@
             reviews.forEach((item) => {
                 const liEle = $("<li>").addClass("review_item");
 
+                const idStorageEle = $("<input disabled style='display: none'>").val(item.id);
+
                 const reviewProfileEle = displayReviewProfile(item);
                 const reviewContentEle = displayReviewContent(item);
                 const reviewEtcEle = displayReviewEtc(item);
 
+                liEle.append(idStorageEle)
                 liEle.append(reviewProfileEle);
                 liEle.append(reviewContentEle);
                 liEle.append(reviewEtcEle);
