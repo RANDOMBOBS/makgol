@@ -32,6 +32,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
+        log.info("OAuth2User.toString() --> : {}", oAuth2User.toString());
         try {
             return processOAuth2User(oAuth2UserRequest, oAuth2User);
         } catch (AuthenticationException e) {
@@ -43,8 +44,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     // OAuth2 사용자 처리
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
+        log.info("oAuth2UserRequest.getClientRegistration().getRegistrationId() --> : {}", oAuth2UserRequest.getClientRegistration().getRegistrationId());
+        String getRegistrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
         OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(
-                oAuth2UserRequest.getClientRegistration().getRegistrationId(),
+                getRegistrationId,
                 oAuth2User.getAttributes()
         );
 
@@ -52,10 +55,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (StringUtils.isBlank(oAuth2UserInfo.getEmail()))
             throw new OAuth2AuthenticationProcessingException("empty email");
 
+        log.info("oAuth2UserInfo.getEmail() --> : {}", oAuth2UserInfo.getEmail());
         // 이메일을 기준으로 사용자 조회
         Optional<Users> userOptional = usersRepoUtil.findFirstByEmailOrderByIdAsc(oAuth2UserInfo.getEmail());
-
-
 
         Users user;
         if (userOptional.isPresent()) {
@@ -103,6 +105,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .latitude(37.4924272855457000000000)
                 .address("서울 강남구 강남대로 328")
                 .build());
+
+        log.info("oAuth2UserInfo.getEmail() --> : {}", oAuth2UserInfo.getEmail());
+        log.info("oAuth2UserInfo.getName() --> : {}", oAuth2UserInfo.getName());
+        log.info("oAuth2UserInfo.getImageUrl --> : {}", oAuth2UserInfo.getImageUrl());
 
         usersRepoUtil.saveSocial(SocialAuth.builder()
                         .user_id(user.getId())
