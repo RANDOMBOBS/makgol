@@ -42,7 +42,10 @@ public class UsersResponseVo {
 
     String address;
 
-    List<Integer> coordinate;
+    String weatherAddr;
+
+    int valueX;
+    int valueY;
 
     public void modifyMapper(UsersRequestVo usersRequestVo){
         this.id = usersRequestVo.getId();
