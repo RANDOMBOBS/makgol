@@ -4,6 +4,7 @@ import com.org.makgol.common.config.security.user.UserDetailsServiceImpl;
 import com.org.makgol.common.jwt.repository.RefreshTokenRepository;
 import com.org.makgol.common.jwt.vo.TokenResponseVo;
 import com.org.makgol.common.jwt.vo.TokenVo;
+import com.org.makgol.common.oauth2.security.UserPrincipal;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -91,6 +92,7 @@ public class JwtUtil {
     public TokenVo createAllToken(String email) {
         return new TokenVo(createToken(email, "Access"), createToken(email, "Refresh"));
     }
+
 
     public TokenVo createSettingToken(String email) {
 

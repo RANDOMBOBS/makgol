@@ -1,5 +1,6 @@
 package com.org.makgol.common.oauth2.infra;
 
+import com.org.makgol.common.oauth2.entity.SocialAuth;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.Users;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,10 @@ public class UsersRepoUtil {
     }
 
     public Users save(Users user){
-        return usersRepository.save(user);
+        if(usersRepository.save(user))
+            return usersRepository.findByEmail(user.getEmail());
+
+        return null;
     }
 
     public Optional<Users> findById(long id) {
@@ -29,5 +33,9 @@ public class UsersRepoUtil {
             return Optional.ofNullable(user);
         }
         return null;
+    }
+
+    public void saveSocial(SocialAuth social) {
+        usersRepository.saveSocial(social);
     }
 }

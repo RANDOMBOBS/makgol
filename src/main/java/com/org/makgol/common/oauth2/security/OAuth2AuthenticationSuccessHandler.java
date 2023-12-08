@@ -1,10 +1,13 @@
 package com.org.makgol.common.oauth2.security;
 
 import com.org.makgol.common.config.security.AppProperties;
+import com.org.makgol.common.jwt.util.JwtUtil;
+import com.org.makgol.common.jwt.vo.TokenVo;
 import com.org.makgol.common.oauth2.exception.BadRequestException;
 import com.org.makgol.common.oauth2.util.CookieUtils;
 import com.org.makgol.common.oauth2.util.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -19,11 +22,12 @@ import java.util.Optional;
 
 import static com.org.makgol.common.oauth2.security.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    private final JwtUtil       jwtUtil;
     private final TokenProvider tokenProvider;
 
     private final AppProperties appProperties;
@@ -47,15 +51,29 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME).map(Cookie::getValue);
 
+        log.info("redirectUri.toString() --> : {}", redirectUri.toString());
+
         // 리다이렉트 URI가 존재하면서 인가된 URI가 아닌 경우 예외 발생
         if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get()))
             throw new BadRequestException("unauthorized Redirect URI");
 
         String targetUri = redirectUri.orElse(getDefaultTargetUrl());
-        String token = tokenProvider.creatToken(authentication);
+
+        //String token = tokenProvider.creatToken(authentication);
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        log.info("userPrincipal.getEmail() --> {}", userPrincipal.getEmail());
+        String email = userPrincipal.getEmail();
+
+        // 1. 기존에 있던 리프레쉬 토큰을 취소 시킨다.
+        jwtUtil.saveTokenUpdate(email, JwtUtil.REVOKED);
+        // 2. 리프레쉬를 만들고 date 값을 가져와 access 토큰에 주입 시켜 연관관계를 형성 시킨다.
+        TokenVo token = jwtUtil.createSettingToken(email);
+        // 3. 악세스 토큰을 쿠키에 담아 클라이언트에게 전송 시킨다.
+        jwtUtil.setTokenInCookie(response, token.getAccessToken(), "Access");
+
         return UriComponentsBuilder.fromUriString(targetUri)
-                .queryParam("error", "")
-                .queryParam("token", token)
+                //.queryParam("error", "")
+                //.queryParam("token", token.getAccessToken())
                 .build().toUriString();
     }
 

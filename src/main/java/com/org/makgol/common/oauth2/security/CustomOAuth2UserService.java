@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -73,21 +74,48 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
 
+    @Transactional
     // 사용자 등록
     private Users registerUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
-        return usersRepoUtil.save(Users.builder()
+//        return usersRepoUtil.save(Users.builder()
+//                .email(oAuth2UserInfo.getEmail())
+//                .name(oAuth2UserInfo.getName())
+//                .socialAuth(SocialAuth.builder()
+//                        .providerId(oAuth2UserInfo.getId())
+//                        .provider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
+//                        .email(oAuth2UserInfo.getEmail())
+//                        .name(oAuth2UserInfo.getName())
+//                        .imageUrl(oAuth2UserInfo.getImageUrl())
+//                        .attributes(oAuth2UserInfo.getAttributes().toString())
+//                        .ip("127.0.0.1")
+//                        .build())
+//                .build());
+
+        Users user = usersRepoUtil.save(Users.builder()
                 .email(oAuth2UserInfo.getEmail())
                 .name(oAuth2UserInfo.getName())
-                .socialAuth(SocialAuth.builder()
-                        .providerId(oAuth2UserInfo.getId())
+                .photo_path(oAuth2UserInfo.getImageUrl())
+                .grade("정회원")
+                .photo("KAKAO")
+                .phone("KAKAO")
+                .password("KAKAO")
+                .longitude(127.0309212341660000000000)
+                .latitude(37.4924272855457000000000)
+                .address("서울 강남구 강남대로 328")
+                .build());
+
+        usersRepoUtil.saveSocial(SocialAuth.builder()
+                        .user_id(user.getId())
+                        .provider_id(oAuth2UserInfo.getId())
                         .provider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
                         .email(oAuth2UserInfo.getEmail())
                         .name(oAuth2UserInfo.getName())
-                        .imageUrl(oAuth2UserInfo.getImageUrl())
+                        .image_url(oAuth2UserInfo.getImageUrl())
                         .attributes(oAuth2UserInfo.getAttributes().toString())
                         .ip("127.0.0.1")
-                        .build())
                 .build());
+
+        return user;
     }
 
     // 사용자 정보 업데이트

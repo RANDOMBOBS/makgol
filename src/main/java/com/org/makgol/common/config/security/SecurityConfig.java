@@ -63,12 +63,13 @@ public class SecurityConfig {
                         , "/resources/static/css/**"        // css
                         , "/resources/static/image/**"      // image
                         , "/resources/static/js/modal/**"   // modal js
-                        , "/resources/static/js/csv/**"   // modal js
+                        , "/resources/static/js/csv/**"
                         , "/views/**"
                         , "/user/blackList"
                         , "/main/todayMenuList"
                         , "/main/topMenuList"
                         , "/auth/token", "/oauth2/**"
+                        , "/board/suggestion/**"
                 )
                 .permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 .antMatchers(
@@ -76,7 +77,7 @@ public class SecurityConfig {
                         , "/user/myPage"
                         , "/user/modifyUser"
                         , "/user/modifyUserConfirm"
-                        , "/board/suggestion/**"
+
                 ).hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
                 //.antMatchers("/", "/user/join", "/user/login").permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 //.antMatchers("/api/account/logout").hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
@@ -90,7 +91,8 @@ public class SecurityConfig {
                 .redirectionEndpoint()
                 .baseUri("/*/oauth2/code/*") // 소셜 인증 후 Redirect Url
                 .and()
-                .userInfoEndpoint().userService(customOAuth2UserService) // 소셜의 회원 정보를 받아와 가공처리
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService) // 소셜의 회원 정보를 받아와 가공처리
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler) // 인증 성공 시 Handler
                 .failureHandler(oAuth2AuthenticationFailureHandler); // 인증 실패 시 Handler

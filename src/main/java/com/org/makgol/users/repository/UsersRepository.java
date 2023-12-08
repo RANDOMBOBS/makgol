@@ -3,6 +3,7 @@ package com.org.makgol.users.repository;
 import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
+import com.org.makgol.common.oauth2.entity.SocialAuth;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.vo.Users;
 import com.org.makgol.users.vo.UsersRequestVo;
@@ -14,8 +15,9 @@ import java.util.Map;
 
 @Mapper
 public interface UsersRepository {
-
     Boolean saveUser(UsersRequestVo usersRequestVo);
+    Boolean save(Users user);
+    void saveSocial(SocialAuth social);
     Boolean findUserEmail(String email);
     Boolean updatePassword(Map<String, String> map);
     String duplicationUserEmail(String email);
@@ -28,7 +30,6 @@ public interface UsersRepository {
     List<CommentResponseVo> selectMyCommentList(int user_id);
     Users findByEmail(String email);
     List<BoardLikeVo> selectMyLikePostList(int user_id);
-    Users save(Users user);
     Users findById(int id);
     int countingPosts(int user_id);
     int countingComments(int user_id);

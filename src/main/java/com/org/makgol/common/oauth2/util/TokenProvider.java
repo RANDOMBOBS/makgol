@@ -7,6 +7,7 @@ import com.org.makgol.common.oauth2.security.UserPrincipal;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
+@Slf4j
 @AllArgsConstructor
 @Service
 public class TokenProvider {
@@ -27,6 +29,8 @@ public class TokenProvider {
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationTime());
+
+        log.info("userPrincipal.getUsername() --> : {}", userPrincipal.getUsername());
 
         return Jwts.builder()
             .setSubject(userPrincipal.getUsername())

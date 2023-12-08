@@ -110,7 +110,15 @@ public class UsersController {
     @GetMapping("/logout")
     public String logout(HttpSession session, @RequestParam("link") String link){
         session.invalidate();
-        if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")||link.contains("/user/loginConfirm")){
+        if(link.contains("/admin/userManagement")||
+                link.contains("/suggestion/create")||
+                link.contains("/suggestion/modify")||
+                link.contains("/user/modifyUser")||
+                link.contains("/user/myHistory")||
+                link.contains("/user/myPage")||
+                link.contains("/user/myStoreList")||
+                link.contains("/user/loginConfirm"))
+        {
             return "home";
         }else {
             return "redirect:" + link;
