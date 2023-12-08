@@ -29,6 +29,7 @@ ul, li {
 	line-height: 40px;
 	width: 700px;
 	padding-right: 20px;
+	background-color:white;
 }
 
 .todaymenu_list {
@@ -97,6 +98,7 @@ ul, li {
 	width: 1200px;
 	border: 12px solid #ffa500;
 	border-radius: 0 10px 10px 10px;
+	background-color: white;
 }
 
 .todaymenu_list_ul {

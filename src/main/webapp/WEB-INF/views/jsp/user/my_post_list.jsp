@@ -36,7 +36,7 @@
     <tbody>
         <c:forEach var="item" items="${boardVos}">
           <tr>
-            <td><input type="checkbox" class="eachCheckbox"/></td>
+            <td data-id="${item.b_id}"><input type="checkbox" class="eachCheckbox"/></td>
 
               <c:choose>
                   <c:when test="${item.category == 'suggestion'}">
@@ -63,7 +63,6 @@
             </c:choose>
             <td>${item.hit}</td>
             <td>${item.sympathy}</td>
-            <input type="hidden" value="${item.b_id}">
           </tr>
         </c:forEach>
     </tbody>

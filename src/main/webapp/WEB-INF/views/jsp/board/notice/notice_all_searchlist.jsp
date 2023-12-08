@@ -1,9 +1,21 @@
+<%@page import="com.org.makgol.users.vo.UsersResponseVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.util.Date" %>
 
-<h3>검색하신 글 목록입니다.</h3>
+<%
+   Date currentDate = new Date();
+   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+   String today = dateFormat.format(currentDate);
+%>
+
+<c:set var="today" value="<%= today %>"/>
+
+<h3>"${searchWord}"(으)로 검색하신 글 목록입니다.</h3>
 
 <table>
 	<thead>
@@ -29,7 +41,14 @@
 				<!-- 공지사항 게시판 작성자 (관리자) -->
 				<td>${item.name}</td>
 				<!-- 공지사항 게시판 날짜 -->
-				<td>${item.date}</td>
+				<c:choose>
+                          <c:when test="${fn:contains(item.date, today)}">
+                              <td>${item.date.substring(11,16)}</td>
+                          </c:when>
+                             <c:otherwise>
+                                <td>${item.date.substring(0,10)}</td>
+                             </c:otherwise>
+                        </c:choose>
 				<!-- 공지사항 게시판 조회수 -->
 				<td>${item.hit}</td>
 				<!-- 공지사항 게시판 좋아요수 -->
@@ -39,8 +58,14 @@
 	</tbody>
 </table>
 <!-- 글쓰기 버튼 클릭시 페이지 이동 -->
-<c:url value='jsp/board/notice/noticeCreateForm' var='notice_create_url'>
-	<c:param name='name' value='${item.name}' />
-</c:url>
-<a href="${notice_create_url}">글쓰기</a>
+    <%
+	    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+	    if (loginedUserVo != null) {
+	%>
+	    <c:if test="${loginedUserVo.grade == '관리자'}">
+	        <a href="<c:url value='/board/noticeCreateForm'/>"><i class="fa-regular fa-pen-to-square"></i> 글쓰기</a><br>
+	    </c:if>
+	<%
+	    }
+	%>
 <a href="#javascript" onclick="noticeAllList()"> 전체게시글목록 </a>

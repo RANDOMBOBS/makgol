@@ -25,8 +25,7 @@
             <option value="contents">내용</option>
             <option value="name">작성자</option>
           </select>
-          <input type="text" name="searchWord" placeholder="검색어를 입력해주세요" />
-
+          <input type="text" name="searchWord" autocomplete='off' placeholder="검색어를 입력해주세요" />
           <button type="button" onclick="searchBoard()">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>

@@ -42,18 +42,19 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   function createCommentForm() {
     let form = document.create_comment_form;
 
-    if (form.nickname.value == "") {
+    if (form.nickname.value === "") {
       alert("닉네임을 입력해주세요.");
       form.nickname.focus();
-    } else if (form.content.value == "") {
+    } else if (jQ("textarea").val() == "") {
       alert("댓글을 입력해주세요");
       form.content.focus();
     } else {
       let nickname = jQ("input[name=nickname]").val();
-      let content = jQ("input[name=content]").val();
+      let content = jQ("textarea").val();
       let board_id = jQ("input[name=board_id]").val();
       let user_id = jQ("input[name=user_id]").val();
       let grade = jQ("input[name=grade]").val();
+
       let data = {
         nickname: nickname,
         content: content,
@@ -70,7 +71,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           if (rdata === 1) {
             comList();
             jQ("input[name=nickname]").val("");
-            jQ("input[name=content]").val("");
+            jQ("textarea").val("");
           } else {
             return;
           }
@@ -91,7 +92,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     } else if (form.content.value == "") {
       alert("수정할 댓글을 입력해주세요");
       form.content.focus();
-    } else if (window.confirm("수정하시겠습니까?")) {
+    } else if (window.confirm("댓글을 수정하시겠습니까?")) {
       let nickname = form.nickname.value;
       let content = form.content.value;
       let id = form.id.value;
@@ -121,7 +122,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     let form = $(button).closest("form");
     form[0].reset();
 
-    let div = $(button).closest(".modCancle");
+    let div = $(button).closest(".mod_cancle");
     div.hide();
   }
 
@@ -144,7 +145,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   }
 
   function modComment(button) {
-    jQ(button).parent().parent().next().show();
+    jQ(button).closest("ul").next().next().show();
   }
 
   function searchBoard() {
@@ -207,7 +208,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         data: JSON.stringify(likeData),
         contentType: "application/json; charset=UTF-8",
         success: function (rdata) {
-          jQ(".fa-thumbs-up").text(rdata.totalLike);
+          jQ(".fa-thumbs-up").text(" "+rdata.totalLike);
         },
         error: function (error) {
           console.log(error);
@@ -221,7 +222,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         data: JSON.stringify(likeData),
         contentType: "application/json; charset=UTF-8",
         success: function (rdata) {
-          jQ(".fa-thumbs-up").text(rdata.totalLike);
+          jQ(".fa-thumbs-up").text(" "+rdata.totalLike);
         },
         error: function (error) {
           console.log(error);
@@ -285,4 +286,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   function returnToList() {
     window.location.href = "http://localhost:8090/board/suggestion";
   }
+
+
+
 </script>

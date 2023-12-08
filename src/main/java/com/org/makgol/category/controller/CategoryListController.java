@@ -3,19 +3,19 @@ package com.org.makgol.category.controller;
 import java.util.List;
 
 import com.org.makgol.category.vo.CategoryRequestVo;
-import com.org.makgol.util.file.FileInfo;
-import com.org.makgol.util.file.FileUpload;
-import org.springframework.beans.MutablePropertyValues;
+import com.org.makgol.users.vo.UsersResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.org.makgol.category.service.CategoryListService;
 import com.org.makgol.category.vo.CategoryListVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -24,9 +24,6 @@ public class CategoryListController {
 
 	@Autowired
 	CategoryListService categoryListService;
-
-	@Autowired
-	FileUpload fileUp;
 
 	@GetMapping("/rouletteResult")
 	public String rouletteResult(@RequestParam("category") String category, Model model) {
@@ -41,61 +38,42 @@ public class CategoryListController {
 	}
 
 	@RequestMapping(value = { "/categoryList" }, method = { RequestMethod.GET, RequestMethod.POST })
-	public String categoryList(Model model) {
-		String nextPage = "jsp/category/category_list"; // ajax
+	public String categoryList(Model model,HttpSession session) {
 		List<CategoryListVo> categoryVo = categoryListService.categoryList();
+		UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+		model.addAttribute("loginedUserVo", loginedUserVo);
 		model.addAttribute("categoryVo", categoryVo);
-		return nextPage;
+		return "jsp/category/category_list";
 	}
 
-	@RequestMapping(value = "/categoryKor", method = { RequestMethod.GET, RequestMethod.POST })
-	public String categoryKor(Model model) {
-		String nextPage = "jsp/category/category_list";
-		List<CategoryListVo> categoryVo = categoryListService.categoryKor();
+	@RequestMapping(value = "/{categoryType}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String categoryMenu(Model model ,@PathVariable String categoryType) {
+		List<CategoryListVo> categoryVo;
+		switch (categoryType) {
+			case "kor":
+				categoryVo = categoryListService.categoryKor(); // 한식
+				break;
+			case "west":
+				categoryVo = categoryListService.categoryWest(); // 양식
+				break;
+			case "chi":
+				categoryVo = categoryListService.categoryChi(); // 중식
+				break;
+			case "snack":
+				categoryVo = categoryListService.categorySnack(); // 분식
+				break;
+			case "jpn":
+				categoryVo = categoryListService.categoryJpn(); // 일식
+				break;
+			case "cafe":
+				categoryVo = categoryListService.categoryCafe(); // 카페
+				break;
+			default:
+				return "error";
+		}
 		model.addAttribute("categoryVo", categoryVo);
-		return nextPage;
+		return "jsp/category/category_list";
 	}
-
-	@RequestMapping(value = "/categoryWest", method = { RequestMethod.GET, RequestMethod.POST })
-	public String categoryWest(Model model) {
-		String nextPage = "jsp/category/category_list";
-		List<CategoryListVo> categoryVo = categoryListService.categoryWest();
-		model.addAttribute("categoryVo", categoryVo);
-		return nextPage;
-	}
-
-	@RequestMapping(value = "/categoryChi", method = { RequestMethod.GET, RequestMethod.POST })
-	public String categoryChi(Model model) {
-		String nextPage = "jsp/category/category_list";
-		List<CategoryListVo> categoryVo = categoryListService.categoryChi();
-		model.addAttribute("categoryVo", categoryVo);
-		return nextPage;
-	}
-
-	@RequestMapping(value = "/categorySnack", method = { RequestMethod.GET, RequestMethod.POST })
-	public String categorySnack(Model model) {
-		String nextPage = "jsp/category/category_list";
-		List<CategoryListVo> categoryVo = categoryListService.categorySnack();
-		model.addAttribute("categoryVo", categoryVo);
-		return nextPage;
-	}
-
-	@RequestMapping(value = "/categoryJpn", method = { RequestMethod.GET, RequestMethod.POST })
-	public String categoryJpn(Model model) {
-		String nextPage = "jsp/category/category_list";
-		List<CategoryListVo> categoryVo = categoryListService.categoryJpn();
-		model.addAttribute("categoryVo", categoryVo);
-		return nextPage;
-	}
-
-	@RequestMapping(value = "/categoryCafe", method = { RequestMethod.GET, RequestMethod.POST })
-	public String categoryCafe(Model model) {
-		String nextPage = "jsp/category/category_list";
-		List<CategoryListVo> categoryVo = categoryListService.categoryCafe();
-		model.addAttribute("categoryVo", categoryVo);
-		return nextPage;
-	}
-
 
 	@PostMapping("/cateFile")
 	public String cateFile (@ModelAttribute CategoryRequestVo categoryRequestVo, RedirectAttributes redirectAttributes)  {
@@ -103,5 +81,6 @@ public class CategoryListController {
 		String message = "이미지가 등록되었습니다.";
 		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:/category/categoryMain";
-	}
+    }
 }
+

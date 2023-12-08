@@ -33,7 +33,7 @@
     <!-- 게시글 특정단어 검색 -->
     <!-- Notice select (Notice search) -->
     <select id="selectSearchNotice" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
-        SELECT b.id AS b_id, b.user_id, b.hit, b.title, b.date, b.contents, b.category, b.sympathy, u.name, u.photo
+        SELECT b.id AS b_id, b.user_id, b.hit, b.title, b.date, b.contents, b.category, b.sympathy, u.grade, u.photo
         FROM boards AS b
         JOIN users AS u ON b.user_id = u.id
         WHERE category = 'notice' AND title LIKE CONCAT('%', #{searchWord}, '%')

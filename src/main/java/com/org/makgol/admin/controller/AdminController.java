@@ -47,8 +47,6 @@ public class AdminController {
 
 	@RequestMapping(value = "/search", method = {RequestMethod.POST})
 	public String search(@RequestBody Map<String, String> map, Model model){
-		System.out.println("searchValue = " + map.get("searchValue"));
-		System.out.println("searchOption = " + map.get("searchOption"));
 
 
 		String nextPage = "jsp/admin/search_user_list";

@@ -3,8 +3,11 @@ package com.org.makgol.boards.service;
 import com.org.makgol.boards.dao.BoardNoticeDao;
 import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,6 +17,8 @@ public class BoardNoticeService {
 
     @Autowired
     BoardNoticeDao boardNoticeDao;
+    @Autowired
+    FileUpload fileUpload;
 
 
     // 게시글 전체 리스트
@@ -31,6 +36,11 @@ public class BoardNoticeService {
     // 게시글 글쓰기
     // Notice insert
     public int noticeAddList(BoardVo boardVo) {
+        MultipartFile file = boardVo.getPhotoFile();
+        System.out.println(file);
+        FileInfo fileInfo = fileUpload.fileUpload(file);
+        fileInfo.setPhotoName(boardVo.getPhoto());
+        fileInfo.setPhotoPath(boardVo.getPhoto_path());
         return boardNoticeDao.insertNotice(boardVo);
     }
 
