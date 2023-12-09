@@ -124,6 +124,7 @@ public class UsersController {
 
     @GetMapping("/myPage")
     public String myPage() {
+
         return "jsp/user/my_page";
     }
 

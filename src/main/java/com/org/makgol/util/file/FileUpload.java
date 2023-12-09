@@ -110,7 +110,6 @@ public class FileUpload {
 
 
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-
             File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
 
             try {

@@ -348,7 +348,6 @@ jQ("#logout_link").on("click", function () {
             success: function (data) {
                 console.log(data)
                 let weatherDatas = data.response.body.items.item
-                console.log(weatherDatas);
                 let temp = weatherDatas.filter((item, index) => item.category ==="T1H");
                 let T1H = temp[0].fcstValue;
                 console.log("기온은?"+T1H);

@@ -162,18 +162,18 @@ public class UsersService {
         }
 
         if (result > 0) {
-            usersRequestVo.setName(loginedUserVo.getName());
-            usersRequestVo.setEmail(loginedUserVo.getEmail());
-            UsersResponseVo newUserVo = new UsersResponseVo();
-            newUserVo.modifyMapper(usersRequestVo);
-            System.out.println("새로 저장할 유저 정보?"+newUserVo);
-            List<Integer> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
-            newUserVo.setCoordinate(coordinate);
-            session.setAttribute("loginedUserVo", newUserVo);
+                usersRequestVo.setName(loginedUserVo.getName());
+                usersRequestVo.setEmail(loginedUserVo.getEmail());
+                UsersResponseVo newUserVo = new UsersResponseVo();
+                newUserVo.modifyMapper(usersRequestVo);
+                System.out.println("새로 저장할 유저 정보?"+newUserVo);
+                List<Integer> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
+                newUserVo.setCoordinate(coordinate);
+                session.setAttribute("loginedUserVo", newUserVo);
 
-            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
-            // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+                CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+                // 비동기 작업이 완료되면 결과를 출력
+                future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
         return result;
     }

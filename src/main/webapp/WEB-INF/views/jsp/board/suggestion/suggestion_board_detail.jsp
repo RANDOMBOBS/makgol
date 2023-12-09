@@ -91,7 +91,6 @@
             <div class="create_comment_area">
                 <input type="hidden" name="board_id" value="${boardVo.id}"/>
                 <input type="hidden" name="user_id" value="${loginedUserVo.getId()}"/>
-                <input type="hidden" name="grade" value="${loginedUserVo.getGrade()}">
                 <textarea name="contents" placeholder="댓글을 입력해주세요."></textarea>
                 <button type="button" onclick="createCommentForm()">등록</button>
             </div>
