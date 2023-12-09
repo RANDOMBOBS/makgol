@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,7 +39,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-
         //http.cors();
         http.addFilterBefore(new XssFilter(), ChannelProcessingFilter.class);
 
@@ -50,8 +50,8 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-//                .csrf().disable()
-//                .formLogin().disable() // 소셜로그인만 이용할 것이기 때문에 formLogin 해제
+                .formLogin()
+                .and() // 소셜로그인만 이용할 것이기 때문에 formLogin 해제
                 .httpBasic().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint()) // 요청이 들어올 시, 인증 헤더를 보내지 않는 경우 401 응답 처리
@@ -59,31 +59,14 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/"                     // main page
-                        , "/user/login"                     // request login
-                        , "/user/loginConfirm"              // request login
-                        , "/user/join"                      // request join
-                        , "/resources/static/css/**"        // css
-                        , "/resources/static/image/**"      // image
-                        , "/resources/static/js/modal/**"   // modal js
-                        , "/resources/static/js/csv/**"
+                        //HttpMethod.GET,
+                        "/**"                     // main page
+                        , "/resources/**"        // css
                         , "/views/**"
-                        , "/user/blackList"
-                        , "/main/todayMenuList"
-                        , "/main/topMenuList"
-                        , "/auth/token", "/oauth2/**"
-                        , "/board/suggestion/**"
+
                 )
                 .permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
-                .antMatchers(
-                        "/api/account/logout"
-                        , "/user/myPage"
-                        , "/user/modifyUser"
-                        , "/user/modifyUserConfirm"
-
-                ).hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
-                //.antMatchers("/", "/user/join", "/user/login").permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
-                //.antMatchers("/api/account/logout").hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
+                .antMatchers().hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
                 //.antMatchers(HttpMethod.POST, "/api/v1/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
