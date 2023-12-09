@@ -40,6 +40,8 @@
                                 type="password"
                         />
                     </label>
+                    <c:set var="xsrfToken" value="${cookie['XSRF-TOKEN'].value}" />
+                    <input type="hidden" name="_csrf" value="${xsrfToken}"/>
                     <div id="save_id">
                         <label for="remember-check">
                             <input id="remember-check" type="checkbox"/>

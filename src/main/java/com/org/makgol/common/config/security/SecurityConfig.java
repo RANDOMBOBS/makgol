@@ -1,6 +1,7 @@
 package com.org.makgol.common.config.security;
 
 import com.org.makgol.common.RoleType;
+import com.org.makgol.common.config.security.csrf.CsrfHeaderFilter;
 import com.org.makgol.common.jwt.exception.RestAuthenticationEntryPoint;
 import com.org.makgol.common.jwt.filter.JwtAuthFilter;
 import com.org.makgol.common.jwt.handler.TokenAccessDeniedHandler;
@@ -17,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -38,17 +41,17 @@ public class SecurityConfig {
 
 
         //http.cors();
-        //http.csrf().disable();
 
         http
                 //.sessionManagement()
                 //.sessionCreationPolicy(SessionCreationPolicy.STATELESS) //세션 사용을 막는다.
                 //.and()
-                .cors()
-                .and()
                 .csrf()
-                .disable() // csrf 설정 해제
-                .formLogin().disable() // 소셜로그인만 이용할 것이기 때문에 formLogin 해제
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
+                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+//                .csrf().disable()
+//                .formLogin().disable() // 소셜로그인만 이용할 것이기 때문에 formLogin 해제
                 .httpBasic().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint()) // 요청이 들어올 시, 인증 헤더를 보내지 않는 경우 401 응답 처리
