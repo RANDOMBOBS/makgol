@@ -12,10 +12,13 @@
 <head>
     <meta charset="UTF-8"/>
     <title>막내야 골라봐 | 건의게시판 (SUGGESTION)</title>
-    <link href="<c:url value='/resources/static/css/board.css' />" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <jsp:include page="../../include/header.jsp"></jsp:include>
+<link href="<c:url value='/resources/static/css/board.css' />" rel="stylesheet" type="text/css"/>
+
+
+
 <c:url value="/board/suggestion" var="suggestion_url"/>
 <c:url value="/board/suggestion/modify" var="modify_url">
     <c:param name="b_id" value="${boardVo.id}"/>

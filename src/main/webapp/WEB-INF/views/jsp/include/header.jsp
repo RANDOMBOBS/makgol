@@ -14,16 +14,13 @@
   	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
   	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<%
-    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
-    UsersResponseVo blackList = (UsersResponseVo) session.getAttribute("blackList");
-%>
-
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
-
 
 <jsp:include page="./modal.jsp"></jsp:include>
 
+<%
+    UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
+%>
 
 <c:set var="address" value="${loginedUserVo.address.split(' ')}"/>
 <c:set var="weatherAddress" value="${address[0]} ${address[1]}"/>
@@ -229,8 +226,6 @@ jQ("#logout_link").on("click", function () {
         loginModalEle.style.display = "block";
     });
 
-</script>
-<script>
     function getWeather(){
     let coordinate = [];
     let valueX = "";
@@ -239,16 +234,10 @@ jQ("#logout_link").on("click", function () {
         let rainSnow = "";
 
 
-    <c:if test="${not empty loginedUserVo}">
-    coordinate = JSON.parse('${loginedUserVo.coordinate}');
-    valueX = coordinate[0];
-    valueY = coordinate[1];
-    </c:if>
 
-    <c:if test="${empty loginedUserVo}">
     valueX = 61;
     valueY = 126;
-    </c:if>
+
 
     let date = new Date();
     let year = date.getFullYear();
