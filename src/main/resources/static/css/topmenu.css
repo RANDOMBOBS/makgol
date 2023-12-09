@@ -1,15 +1,6 @@
 
 /* Top5 메뉴 CSS */
 
-* {
-	margin: 0;
-	padding: 0;
-}
-
-ul, li {
-	list-style: none;
-}
-
 .top_menu {
 	width: 1200px;
 	margin: 30px auto;
@@ -72,7 +63,7 @@ ul, li {
 
 .fa-chevron-right {
 	position: absolute;
-	z-index:999;
+	z-index:997;
 	bottom: 35%;
 	right: 31%;
 	font-size: 40px;
@@ -92,7 +83,7 @@ ul, li {
 
 .fa-chevron-left {
 	position: absolute;
-	z-index:999;
+	z-index:997;
 	bottom: 35%;
 	left: 31%;
 	font-size: 40px;
@@ -143,10 +134,9 @@ ul, li {
 }
 
 .top_1_5img{
-    z-index: 9999;
-    width: 80px;
-    height: 80px;
+    z-index: 997;
+    width: 230px;
     position: absolute;
-    right: 75%;
-    top:5%;
+    right: 52%;
+    top: -10%;
 }

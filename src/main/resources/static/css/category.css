@@ -8,9 +8,7 @@ body{
     width:1200px;
     margin:0 auto;
 }
-ul, li {
-    list-style: none;
-        }
+
 button {
     border: 0;
     background-color: transparent;
@@ -46,8 +44,9 @@ button.active {
 }
 .category_list_ul {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
+    margin-bottom:10px;
 }
 
 .category_list_ul li {
@@ -65,7 +64,7 @@ button.active {
     height: 300px;
     line-height: 300px;
     text-align: center;
-    margin-bottom: 10px;
+    margin:5px 5px 10px 5px;
     font-family: "Noto Sans KR", sans-serif;
     font-size: 40px;
     position: relative;
@@ -87,6 +86,28 @@ button.active {
 }
 
 img {
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+	border-radius: 7px;
+	filter: brightness(50%);
+	position: absolute;
+}
+
+.menu_name {
+	color: #fff;
+	z-index: 997;
+	font-family: 'Gamja Flower', sans-serif;
+	font-size: 55px;
+}
+
+.menu_gogo {
+	position: absolute;
+	top: 50%;
+	opacity: 0;
+	color: #fff;
+	z-index: 997;
+	font-size: 16px;
     width: 100%;
     height: 300px;
     object-fit: cover;
@@ -125,13 +146,14 @@ img {
     position: absolute;
     top: 50%;
     right: 10%;
-    border: 0;
-    background-color: transparent;
-    cursor: pointer;
-    color: #cdcaca;
-    font-size: 20px;
-    font-family: "Noto Sans KR", sans-serif;
+	border: 0;
+	background-color: transparent;
+	cursor: pointer;
+	color: #cdcaca;
+	font-size: 20px;
+	font-family: "Noto Sans KR", sans-serif;
 }
+
 .categoryMain_img{
     text-align: center;
     position: relative;
@@ -144,18 +166,9 @@ img {
     top:-65%;
     left: 39%;
 }
-.categoryMain_clip{
-    text-align: center;
-    position: absolute;
-    left: 46%;
-    top: 12%;
-}
-.categoryMain_clip img{
-    width: 150px;
-    height: 150px;
-}
+
 .categoryMenuPan{
-    margin-top: 100px;
+    margin: 100px 0px;
     border: 7px solid #000;
     background-color: #62340b;
     box-shadow: 5px 5px 10px -5px;

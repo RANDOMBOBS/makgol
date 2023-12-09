@@ -19,5 +19,6 @@ public class BoardVo {
     String photo_path;
     String name;
     String grade;
+    MultipartFile photoFile;
     List<String> images;
 }

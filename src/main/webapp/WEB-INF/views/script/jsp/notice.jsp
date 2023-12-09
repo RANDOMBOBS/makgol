@@ -8,6 +8,7 @@
 	function searchNotice() {
 		let form = document.search_notice_form;
 		let searchWord = jQ("input[name=searchWord]").val();
+		console.log(searchWord);
 		 if (searchWord == '') {
 			alert('검색어를 입력해주세요');
 			form.searchWord.focus();
@@ -22,7 +23,7 @@
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=utf-8",
 				success : function(rdata) {
-					jQ(".notice_list").html(rdata);
+					jQ(".board_list").html(rdata);
 					jQ("input[name=searchWord]").val("");
 				},
 				error : function(error) {

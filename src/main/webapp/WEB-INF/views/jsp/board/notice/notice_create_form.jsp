@@ -29,6 +29,7 @@
 
 </head>
 <body>
+    <jsp:include page="../../include/header.jsp"></jsp:include>
 	<section>
 		<div id="section_wrap">
 			<div class="word">
@@ -41,7 +42,8 @@
 					<span>작성자</span><input type="text" name="grade" value="${grade}" disabled >
 					 <input type="hidden" name="user_id" value="${user_id}"><br>
 					<span>내용</span><textarea name="contents" placeholder="내용을 입력해주세요."></textarea> <br>
-					<input type="button" value="등록" onclick="noticeAddList()"> 
+					<input type="file" name="photoFile">
+					<input type="button" value="등록" onclick="noticeAddList()">
 					<input type="reset" value="취소" onclick="history.go(-1)">
 				</form>
 			</div>

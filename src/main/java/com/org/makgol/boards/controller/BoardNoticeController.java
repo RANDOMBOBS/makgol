@@ -25,7 +25,7 @@ public class BoardNoticeController {
 
 
     @GetMapping("/notice")
-    public String notice(){
+    public String notice(Model model){
         return "jsp/board/notice/notice";
     }
 
@@ -44,6 +44,7 @@ public class BoardNoticeController {
         String searchWord = (String) map.get("searchWord");
         List<BoardVo> boardVo = boardNoticeService.searchNotice(searchWord);
         model.addAttribute("boardVo", boardVo);
+        model.addAttribute("searchWord",searchWord);
         return nextPage;
     }
 
@@ -119,6 +120,5 @@ public class BoardNoticeController {
         }
         return nextPage;
     }
-
 }
 
