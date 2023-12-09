@@ -8,6 +8,7 @@ import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
+import com.org.makgol.util.cookie.CookieUtil;
 import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import java.util.Map;
 public class UsersController {
 
     private final UsersService userService;
+    private final ServletContext servletContext;
 
     //joinUser_POST
     @PostMapping("/join")
@@ -91,30 +93,27 @@ public class UsersController {
 
     @PostMapping("/loginConfirm")
     public String loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response, HttpSession session){
+        System.out.println("로그인");
        userService.loginConfirm(usersRequestVo, response);
-        return "redirect:/user/getCookieValue";
+        return "redirect:/user/loginSucceed";
     }
 
-    @GetMapping("/getCookieValue")
+    @GetMapping("/loginSucceed")
     public String getCookieValue(HttpServletRequest request){
+        System.out.println("로그인성공");
        userService.getCookieValue(request);
        return "home";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session, @RequestParam("link") String link){
-        session.invalidate();
-        if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")||link.contains("/user/loginConfirm")){
-            return "home";
-        }else {
-            return "redirect:" + link;
-        }
+    public String logout(HttpServletRequest req, HttpServletResponse res,@RequestParam("link") String link){
+        userService.blackList(req, res);
+        return "home";
     }
 
     @GetMapping("/blackList")
-    public String blackList(HttpSession session){
-        session.removeAttribute("blackList");
-        session.invalidate();
+    public String blackList(HttpServletRequest req, HttpServletResponse res){
+        userService.blackList(req, res);
         return "home";
     }
 

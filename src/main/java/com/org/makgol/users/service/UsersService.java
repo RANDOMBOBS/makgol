@@ -177,6 +177,14 @@ public class UsersService {
     }
 
 
+    public void blackList(HttpServletRequest req, HttpServletResponse res){
+        System.out.println("블랙리스트");
+        ServletContext servletContext = req.getServletContext();
+        servletContext.removeAttribute("loginedUserVo");
+        CookieUtil.clearCookie(req, res);
+    }
+
+
     public Boolean mailCheckDuplication(String email) {
 
         Boolean result = email.equals(usersRepository.duplicationUserEmail(email));

@@ -19,11 +19,11 @@
 <jsp:include page="./modal.jsp"></jsp:include>
 
 <%
-    UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
+    if(application.getAttribute("loginedUserVo") != null) {
+        UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
+    }
 %>
 
-<c:set var="address" value="${loginedUserVo.address.split(' ')}"/>
-<c:set var="weatherAddress" value="${address[0]} ${address[1]}"/>
 
 <header id="header">
     <div class="all_category">
@@ -105,10 +105,10 @@
     <p class="img"></p>
     <div class="userTab">
         <c:choose>
-       <c:when test="${loginedUserVo != null}">
+       <c:when test="${not empty loginedUserVo}">
          <div class="welcome">
             <div class="weather_info">
-                <span class="address"><i class="fa-solid fa-location-dot"></i> ${weatherAddress}</span>
+                <span class="address"><i class="fa-solid fa-location-dot"></i> ${loginedUserVo.weatherAddr}</span>
                 <span class="temp"></span>
                 <span class="sky"></span>
                 <span class="emoticon"></span>
@@ -144,7 +144,7 @@
 
             <c:choose>
                 <c:when test="${loginedUserVo != null}">
-                    <c:if test="${loginedUserVo.getGrade() == '관리자'}">
+                    <c:if test="${loginedUserVo.grade == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
                     <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
@@ -165,14 +165,9 @@
     var jQ = jQuery;
     var currentURL = window.location.href;
 
-jQ("#logout_link").on("click", function () {
-        jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
-    });
+    if (${loginedUserVo != null} && ${loginedUserVo.grade == '블랙리스트'}) {
+        alert("접근이 제한된 사용자입니다.");
 
-
-    let black = "${blackList}";
-    if (black) {
-        alert("접근이 제한된 사용자입니다.")
         jQ.ajax({
             url: "/user/blackList",
             type: "GET",
@@ -184,6 +179,11 @@ jQ("#logout_link").on("click", function () {
             }
         });
     }
+
+
+    jQ("#logout_link").on("click", function () {
+        jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
+    });
 
     jQ(".show_category").on("click", function () {
         jQ(this).next().toggleClass("on");
@@ -225,19 +225,25 @@ jQ("#logout_link").on("click", function () {
         modalCoverEle.style.display = "block";
         loginModalEle.style.display = "block";
     });
+</script>
 
+<script>
     function getWeather(){
     let coordinate = [];
     let valueX = "";
     let valueY = "";
-        let sky = "";
-        let rainSnow = "";
+    let sky = "";
+    let rainSnow = "";
 
+    <c:if test="${not empty loginedUserVo}">
+        valueX = ${loginedUserVo.valueX}
+        valueY = ${loginedUserVo.valueY}
+    </c:if>
 
-
-    valueX = 61;
-    valueY = 126;
-
+    <c:if test="${empty loginedUserVo}">
+        valueX = 61;
+        valueY = 126;
+    </c:if>
 
     let date = new Date();
     let year = date.getFullYear();

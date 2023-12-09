@@ -49,4 +49,16 @@ public class CookieUtil {
         map.put("value", value);
         return map;
     }
+
+
+    public static void clearCookie(HttpServletRequest req, HttpServletResponse res){
+        Cookie[] cookies = req.getCookies();
+        if(cookies.length > 0 ){
+            for (int i=0 ;i< cookies.length; i++){
+                cookies[i].setPath("/");
+                cookies[i].setMaxAge(0);
+                res.addCookie(cookies[i]);
+            }
+        }
+    }
 }
