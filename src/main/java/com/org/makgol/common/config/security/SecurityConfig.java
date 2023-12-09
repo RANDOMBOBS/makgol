@@ -40,12 +40,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         //http.cors();
-        http.addFilterBefore(new XssFilter(), ChannelProcessingFilter.class);
-
         http
-                //.sessionManagement()
-                //.sessionCreationPolicy(SessionCreationPolicy.STATELESS) //세션 사용을 막는다.
-                //.and()
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
@@ -63,7 +58,6 @@ public class SecurityConfig {
                         "/**"                     // main page
                         , "/resources/**"        // css
                         , "/views/**"
-
                 )
                 .permitAll() //회원가입과 로그인을 위한 /api/account/** 로 들어노는 요청은 전부 검증없이 요청을 허용하도록 설정하였다.
                 .antMatchers().hasAnyAuthority(RoleType.USER.getCode(), RoleType.ADMIN.getCode())
@@ -83,8 +77,11 @@ public class SecurityConfig {
                 .successHandler(oAuth2AuthenticationSuccessHandler) // 인증 성공 시 Handler
                 .failureHandler(oAuth2AuthenticationFailureHandler); // 인증 실패 시 Handler
 
-                http.addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
-                .logout(logoutConfig -> { logoutConfig
+                // 토큰 필터
+                http.addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                // XSS 필터
+                http.addFilterBefore(new XssFilter(), ChannelProcessingFilter.class);
+                http.logout(logoutConfig -> { logoutConfig
                         .logoutUrl("/user/logout")
                         .addLogoutHandler(logoutService)
                         .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()));
