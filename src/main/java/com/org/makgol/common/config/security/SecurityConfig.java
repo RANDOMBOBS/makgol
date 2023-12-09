@@ -39,10 +39,10 @@ public class SecurityConfig {
 
         //http.cors();
         http
-                .csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and()
-                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
+                .csrf().disable()
+                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                //.and()
+                //.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
                 .formLogin()
                 .and() // 소셜로그인만 이용할 것이기 때문에 formLogin 해제
                 .httpBasic().disable()
