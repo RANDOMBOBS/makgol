@@ -2,12 +2,14 @@ package com.org.makgol.common.config.security;
 
 import com.org.makgol.common.RoleType;
 import com.org.makgol.common.config.security.csrf.CsrfHeaderFilter;
+import com.org.makgol.common.filter.XssFilter;
 import com.org.makgol.common.jwt.exception.RestAuthenticationEntryPoint;
 import com.org.makgol.common.jwt.filter.JwtAuthFilter;
 import com.org.makgol.common.jwt.handler.TokenAccessDeniedHandler;
 import com.org.makgol.common.jwt.util.JwtUtil;
 import com.org.makgol.common.oauth2.security.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,14 +18,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -41,6 +40,7 @@ public class SecurityConfig {
 
 
         //http.cors();
+        http.addFilterBefore(new XssFilter(), ChannelProcessingFilter.class);
 
         http
                 //.sessionManagement()
@@ -121,5 +121,6 @@ public class SecurityConfig {
     public HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository() {
         return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
+
 
 }
