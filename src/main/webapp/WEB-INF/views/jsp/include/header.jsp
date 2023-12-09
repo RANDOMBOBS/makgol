@@ -165,9 +165,10 @@
     var jQ = jQuery;
     var currentURL = window.location.href;
 
+
+
     if (${loginedUserVo != null} && ${loginedUserVo.grade == '블랙리스트'}) {
         alert("접근이 제한된 사용자입니다.");
-
         jQ.ajax({
             url: "/user/blackList",
             type: "GET",
@@ -251,7 +252,17 @@
     let day = date.getDate();
     let hour = date.getHours();
     let minute = date.getMinutes();
-
+        if (month > 0 && month < 10) {
+            month = "0" + month;
+        }
+        if (day > 0 && day < 10) {
+            day = "0" + day;
+        }
+        if (hour > 0 && hour < 10) {
+            hour = "0" + hour;
+        } else if (hour == 0) {
+            hour = "00";
+        }
     let nowTime = hour + minute.toString();
     let nowHourMinute = (parseInt(nowTime) - 44).toString();
     if(nowHourMinute < 0){
@@ -285,9 +296,6 @@
     }
     if (month > 0 && month < 10) {
         month = "0" + month;
-    }
-    if (day > 0 && day < 10) {
-        day = "0" + day;
     }
     if (hour > 0 && hour < 10) {
         hour = "0" + hour;

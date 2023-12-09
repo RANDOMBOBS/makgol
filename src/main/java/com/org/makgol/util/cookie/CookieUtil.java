@@ -1,5 +1,6 @@
 package com.org.makgol.util.cookie;
 
+import com.org.makgol.users.vo.UsersResponseVo;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
@@ -18,7 +19,7 @@ public class CookieUtil {
     // 모든 경로에 쿠키 저장
     public static void setCookie(HttpServletResponse res, String key, String value){
         String encodeValue = URLEncoder.encode(value, StandardCharsets.UTF_8);
-        String cookieValue = String.format("%s = %s; Max-Age=60; Path=/; HttpOnly; Secure; SameSite=Strict;", key, encodeValue);
+        String cookieValue = String.format("%s = %s; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Strict;", key, encodeValue);
         res.addHeader("Set-Cookie", cookieValue);
     }
 
@@ -26,7 +27,7 @@ public class CookieUtil {
     // 지정한 경로에 쿠키 저장
     public static  void setImportantCookie(HttpServletResponse res, String key, String value) {
         String encodeValue = URLEncoder.encode(value, StandardCharsets.UTF_8);
-        String cookieValue = String.format("%s = %s; Max-Age=60; Path=/user/**; HttpOnly; Secure; SameSite=Strict;", key, encodeValue);
+        String cookieValue = String.format("%s = %s; Max-Age=1800; Path=/user/**; HttpOnly; Secure; SameSite=Strict;", key, encodeValue);
         res.addHeader("Set-Cookie", cookieValue);
     }
 
@@ -41,8 +42,6 @@ public class CookieUtil {
                 value.add(URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8));
             }
         }
-        System.out.println("name = " + name);
-        System.out.println("value = " + value);
 
         Map<String, List<String>> map = new HashMap<>();
         map.put("name", name);
@@ -60,5 +59,21 @@ public class CookieUtil {
                 res.addCookie(cookies[i]);
             }
         }
+    }
+    public static boolean saveCookies(HttpServletResponse response, UsersResponseVo loginedUserVo) {
+        CookieUtil.setCookie(response, "id", String.valueOf(loginedUserVo.getId()));
+        CookieUtil.setCookie(response, "name", loginedUserVo.getName());
+        CookieUtil.setCookie(response, "email", loginedUserVo.getEmail());
+        CookieUtil.setCookie(response, "phone", loginedUserVo.getPhone());
+        CookieUtil.setCookie(response, "photo", loginedUserVo.getPhoto());
+        CookieUtil.setCookie(response, "photo_path", loginedUserVo.getPhoto_path());
+        CookieUtil.setCookie(response, "grade", loginedUserVo.getGrade());
+        CookieUtil.setCookie(response, "address", loginedUserVo.getAddress());
+        CookieUtil.setCookie(response, "longitude", String.valueOf(loginedUserVo.getLongitude()));
+        CookieUtil.setCookie(response, "latitude", String.valueOf(loginedUserVo.getLatitude()));
+        CookieUtil.setCookie(response, "weatherAddr", loginedUserVo.getWeatherAddr());
+        CookieUtil.setCookie(response, "valueX", String.valueOf(loginedUserVo.getValueX()));
+        CookieUtil.setCookie(response, "valueY", String.valueOf(loginedUserVo.getValueY()));
+        return true;
     }
 }

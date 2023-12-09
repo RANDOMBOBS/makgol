@@ -93,14 +93,12 @@ public class UsersController {
 
     @PostMapping("/loginConfirm")
     public String loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response, HttpSession session){
-        System.out.println("로그인");
        userService.loginConfirm(usersRequestVo, response);
         return "redirect:/user/loginSucceed";
     }
 
     @GetMapping("/loginSucceed")
     public String getCookieValue(HttpServletRequest request){
-        System.out.println("로그인성공");
        userService.getCookieValue(request);
        return "home";
     }
@@ -129,14 +127,14 @@ public class UsersController {
         return "jsp/user/modify_user";
     }
 
-//    @PostMapping("/modifyUserConfirm")
-//    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile, HttpSession session) {
-//        int result = userService.modifyUserInfo(usersRequestVo, oldFile, session);
-//        if (result > 0) {
-//            return "jsp/user/my_page";
-//        }
-//        return "jsp/user/modify_user";
-//    }
+    @PostMapping("/modifyUserConfirm")
+    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile,HttpServletResponse response) {
+        int result = userService.modifyUserInfo(usersRequestVo, oldFile, response);
+        if (result > 0) {
+            return "jsp/user/my_page";
+        }
+        return "jsp/user/modify_user";
+    }
 
     @GetMapping("/myStoreList")
     public String myStoreList(@RequestParam("user_id") int user_id, Model model){

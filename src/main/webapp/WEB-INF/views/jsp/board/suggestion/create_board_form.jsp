@@ -36,8 +36,8 @@
 
         <div class="column user_name">
           <span class="description">작성자</span>
-          <input type="text" name="name" value="${name}" class="name" readonly disabled />
-          <input type="hidden" name="user_id" value="${user_id}" />
+          <input type="text" name="name" value="${loginedUserVo.name}" class="name" readonly disabled />
+          <input type="hidden" name="user_id" value="${loginedUserVo.id}" />
         </div>
 
         <div class="column board_contents">
