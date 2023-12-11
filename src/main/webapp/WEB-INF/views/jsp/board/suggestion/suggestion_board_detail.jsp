@@ -12,10 +12,13 @@
 <head>
     <meta charset="UTF-8"/>
     <title>막내야 골라봐 | 건의게시판 (SUGGESTION)</title>
-    <link href="<c:url value='/resources/static/css/board.css' />" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <jsp:include page="../../include/header.jsp"></jsp:include>
+<link href="<c:url value='/resources/static/css/board.css' />" rel="stylesheet" type="text/css"/>
+
+
+
 <c:url value="/board/suggestion" var="suggestion_url"/>
 <c:url value="/board/suggestion/modify" var="modify_url">
     <c:param name="b_id" value="${boardVo.id}"/>
@@ -91,7 +94,6 @@
             <div class="create_comment_area">
                 <input type="hidden" name="board_id" value="${boardVo.id}"/>
                 <input type="hidden" name="user_id" value="${loginedUserVo.getId()}"/>
-                <input type="hidden" name="grade" value="${loginedUserVo.getGrade()}">
                 <textarea name="contents" placeholder="댓글을 입력해주세요."></textarea>
                 <button type="button" onclick="createCommentForm()">등록</button>
             </div>

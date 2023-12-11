@@ -40,9 +40,9 @@ public class SecurityConfig {
         //http.cors();
         http
                 .csrf().disable()
-                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // csrf token -> csrf 대응
                 //.and()
-                //.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
+                //.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class) // check referer -> csrf 대응
                 .formLogin()
                 .and() // 소셜로그인만 이용할 것이기 때문에 formLogin 해제
                 .httpBasic().disable()
@@ -75,10 +75,8 @@ public class SecurityConfig {
                 .successHandler(oAuth2AuthenticationSuccessHandler) // 인증 성공 시 Handler
                 .failureHandler(oAuth2AuthenticationFailureHandler); // 인증 실패 시 Handler
 
-        // 토큰 필터
-        http.addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-        // XSS 필터
-        http.addFilterBefore(new XssFilter(), ChannelProcessingFilter.class);
+        http.addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class); // 토큰 필터
+        http.addFilterBefore(new XssFilter(), ChannelProcessingFilter.class); // XSS 필터
         http.logout(logoutConfig -> { logoutConfig
                 .logoutUrl("/user/logout")
                 .addLogoutHandler(logoutService)

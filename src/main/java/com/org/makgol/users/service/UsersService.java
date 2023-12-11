@@ -13,6 +13,7 @@ import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
+import com.org.makgol.util.cookie.CookieUtil;
 import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.mail.MailSendUtil;
@@ -28,11 +29,10 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.File;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +54,7 @@ public class UsersService implements LogoutHandler {
     private final WeatherInfo     weatherInfo;
     private final MailSendUtil    mailSendUtil;
     private final UsersRepository usersRepository;
+    private final ServletContext  servletContext;
 
 
 
@@ -126,22 +127,18 @@ public class UsersService implements LogoutHandler {
 
 
 
-    public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
+    public void loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
         String email = usersRequestVo.getEmail();
-        UsersResponseVo loginedUserVo = usersRepository.findUserByEmail(email);
-
-        // 만약 로그인을 못했다면?
-        if(loginedUserVo == null){
-            throw new CustomException(ErrorCode.NOT_FOUND_USER);
-        } else{
-            List<Integer> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());
-            loginedUserVo.setCoordinate(coordinate);
-        }
-
-        if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
-            loginedUserVo = null;
-
-        } else {
+        UsersResponseVo loginedUserVo = userDao.selectUser(email);
+        // 이메일과 일치하는 유저 정보가 있고, 비밀번호도 일치하면!
+        if(loginedUserVo != null && BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
+            List<String> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());
+            String valueX = coordinate.get(0);
+            String valueY = coordinate.get(1);
+            String weatherAddr = coordinate.get(2);
+            loginedUserVo.setValueX(Integer.parseInt(valueX));
+            loginedUserVo.setValueY(Integer.parseInt(valueY));
+            loginedUserVo.setWeatherAddr(weatherAddr);
 
             // 1. 기존에 있던 리프레쉬 토큰을 취소 시킨다.
             jwtUtil.saveTokenUpdate(email, JwtUtil.REVOKED);
@@ -149,13 +146,55 @@ public class UsersService implements LogoutHandler {
             TokenVo tokenVo = jwtUtil.createSettingToken(email);
             // 3. 악세스 토큰을 쿠키에 담아 클라이언트에게 전송 시킨다.
             jwtUtil.setTokenInCookie(response, tokenVo.getAccessToken(), "Access");
+
+            CookieUtil.saveCookies(response, loginedUserVo);
+
+        } else{
+            throw new CustomException(ErrorCode.NOT_FOUND_USER);
         }
 
-        return loginedUserVo;
     }
+
 
     private void setAccessTokenInHeader(HttpServletResponse response, String accessToken) {
         response.addHeader(JwtUtil.ACCESS_TOKEN, accessToken);
+    }
+
+
+
+    public void getCookieValue(HttpServletRequest request){
+        Map<String, List<String>> map = CookieUtil.getCookie(request);
+        List<String> cookieNames = map.get("name");
+        List<String> cookieValues = map.get("value");
+        UsersResponseVo loginedUserVo = new UsersResponseVo();
+
+        for(int i=0; i<cookieNames.size(); i++){
+            String cookieName = cookieNames.get(i);
+            String cookieValue = cookieValues.get(i);
+            if(cookieName.equals("id")){
+                loginedUserVo.setId(Integer.parseInt(cookieValue));
+            } else if (cookieName.equals("name")) {
+                loginedUserVo.setName(cookieValue);
+            } else if (cookieName.equals("photo_path")) {
+                loginedUserVo.setPhoto_path(cookieValue);
+            } else if (cookieName.equals("grade")) {
+                loginedUserVo.setGrade(cookieValue);
+            } else if (cookieName.equals("weatherAddr")) {
+                loginedUserVo.setWeatherAddr(cookieValue);
+            } else if (cookieName.equals("valueX")) {
+                loginedUserVo.setValueX(Integer.parseInt(cookieValue));
+            } else if (cookieName.equals("valueY")) {
+                loginedUserVo.setValueY(Integer.parseInt(cookieValue));
+            }
+        }
+        servletContext.setAttribute("loginedUserVo", loginedUserVo);
+    }
+
+
+    public void blackList(HttpServletRequest req, HttpServletResponse res){
+        ServletContext servletContext = req.getServletContext();
+        servletContext.removeAttribute("loginedUserVo");
+        CookieUtil.clearCookie(req, res);
     }
 
 
@@ -167,12 +206,9 @@ public class UsersService implements LogoutHandler {
         return !result;
     }
 
-    public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpSession session) {
-        System.out.println("바뀐회원정보는??"+usersRequestVo);
-        UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
-        System.out.println("세션 유저 정보?"+loginedUserVo);
 
-
+    public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpServletResponse response) {
+        UsersResponseVo loginedUserVo = usersRepository.userInfo(usersRequestVo.getId());
         int result =0;
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
         if (usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()) {
@@ -196,16 +232,28 @@ public class UsersService implements LogoutHandler {
             usersRequestVo.setEmail(loginedUserVo.getEmail());
             UsersResponseVo newUserVo = new UsersResponseVo();
             newUserVo.modifyMapper(usersRequestVo);
-            System.out.println("새로 저장할 유저 정보?"+newUserVo);
-            List<Integer> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
-            newUserVo.setCoordinate(coordinate);
-            session.setAttribute("loginedUserVo", newUserVo);
+            List<String> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
+            String valueX = coordinate.get(0);
+            String valueY = coordinate.get(1);
+            String weatherAddr = coordinate.get(2);
+            newUserVo.setValueX(Integer.parseInt(valueX));
+            newUserVo.setValueY(Integer.parseInt(valueY));
+            newUserVo.setWeatherAddr(weatherAddr);
+            boolean cookieResult = CookieUtil.saveCookies(response, newUserVo);
+            System.out.println("쿠키저장결과?"+cookieResult);
+            if(cookieResult){
+                servletContext.setAttribute("loginedUserVo", newUserVo);
 
-//            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
-//            // 비동기 작업이 완료되면 결과를 출력
-//            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+            }
+            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+            // 비동기 작업이 완료되면 결과를 출력
+            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
         return result;
+    }
+
+    public UsersResponseVo userInfo(int user_id){
+        return usersRepository.userInfo(user_id);
     }
 
     public List<StoreResponseVo> myStoreList(int user_id){

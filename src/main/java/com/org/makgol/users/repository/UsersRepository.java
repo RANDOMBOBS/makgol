@@ -25,6 +25,7 @@ public interface UsersRepository {
     List<UsersResponseVo> selectUser(String email);
     int updateUserInfo(UsersRequestVo usersRequestVo);
     int updateUserPhotoInfo(UsersRequestVo usersRequestVo);
+    UsersResponseVo userInfo(int user_id);
     List<StoreResponseVo> selectMyStoreList(int user_id);
     List<BoardVo> selectMyPostList(int user_id);
     List<CommentResponseVo> selectMyCommentList(int user_id);

@@ -64,7 +64,7 @@
 
 
 	<%
-	    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+        UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
 	    if (loginedUserVo != null) {
 	%>
 	        <a href="<c:url value='/board/suggestion/create'/>"><i class="fa-regular fa-pen-to-square"></i> 글쓰기</a><br>

@@ -110,11 +110,12 @@ public class FileUpload {
 
 
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
+            File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
 
             //windows
             //File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
             //mac
-            File saveFile = new File(uploadFolder+"/"+uniqueName + fileExtension);  // 적용 후
+//            File saveFile = new File(uploadFolder+"/"+uniqueName + fileExtension);  // 적용 후
 
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
