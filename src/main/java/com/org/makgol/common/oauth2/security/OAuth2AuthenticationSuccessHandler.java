@@ -7,6 +7,7 @@ import com.org.makgol.common.oauth2.exception.BadRequestException;
 import com.org.makgol.common.oauth2.util.CookieUtils;
 import com.org.makgol.common.oauth2.util.TokenProvider;
 import com.org.makgol.users.repository.UsersRepository;
+import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.cookie.CookieUtil;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,9 +36,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final CookieUtil    cookieUtil;
     private final JwtUtil       jwtUtil;
     private final TokenProvider tokenProvider;
-
+    private final UsersService  usersService;
     private final AppProperties appProperties;
     private final UsersRepository usersRepository;
+
+    private final ServletContext servletContext;
 
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
@@ -78,7 +82,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         jwtUtil.setTokenInCookie(response, token.getAccessToken(), "Access");
 
         UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
-        cookieUtil.saveCookies(response, usersResponseVo);
+
+        log.info("usersResponseVo --> {} :", usersResponseVo.toString());
+
+        cookieUtil.saveCookiesNonEncoder(response, usersResponseVo);
+
+        servletContext.setAttribute("loginedUserVo", usersResponseVo);
 
         return UriComponentsBuilder.fromUriString(targetUri)
                 //.queryParam("error", "")

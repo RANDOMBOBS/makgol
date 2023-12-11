@@ -290,7 +290,7 @@ public class JwtUtil {
                 .secure(false)
                 //.maxAge(7 * 24 * 60 * 60)
                 .build();
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
 
 //        Cookie cookie = new Cookie(JwtUtil.REFRESH_TOKEN, refreshToken);
