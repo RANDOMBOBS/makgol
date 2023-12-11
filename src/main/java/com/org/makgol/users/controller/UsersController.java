@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Slf4j
@@ -94,9 +96,13 @@ public class UsersController {
     }
 
     @GetMapping("/loginSucceed")
-    public String getCookieValue(HttpServletRequest request){
+    public String getCookieValue(HttpServletRequest request) throws URISyntaxException{
+        String urlString = request.getHeader("Referer");
+        URI uri = new URI(urlString);
+        String path = uri.getPath(); // 경로 부분을 얻어옴
+
        userService.getCookieValue(request);
-       return "home";
+       return "redirect:"+path;
     }
 
 

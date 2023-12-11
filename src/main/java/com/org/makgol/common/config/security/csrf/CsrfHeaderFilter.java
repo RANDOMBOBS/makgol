@@ -42,7 +42,7 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
     // 허용된 도메인인지 확인
     private boolean isAllowedDomain(String referer) {
 
-        if (referer != null && referer.contains("http://localhost:8090")) {
+        if (referer != null && referer.contains("http://localhost:8080")) {
             // "http://localhost:8090/"가 포함되어 있다면 처리
             return true;
         } else {

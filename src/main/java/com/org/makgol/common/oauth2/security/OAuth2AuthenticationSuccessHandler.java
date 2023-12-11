@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import static com.org.makgol.common.oauth2.security.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
@@ -35,8 +36,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private final CookieUtil    cookieUtil;
     private final JwtUtil       jwtUtil;
-    private final TokenProvider tokenProvider;
-    private final UsersService  usersService;
     private final AppProperties appProperties;
     private final UsersRepository usersRepository;
 
@@ -47,6 +46,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     // OAuth2 로그인 성공 핸들러
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+        log.info("request --> : {}", request.getHeader("Referer"));
         String targetUrl = determineTargetUrl(request, response, authentication);
         if (response.isCommitted()) {
             logger.debug("response has already been committed. unable to redirect to " + targetUrl);
@@ -60,8 +60,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     // 타겟 URL 결정
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME).map(Cookie::getValue);
-
-        log.info("redirectUri.toString() --> : {}", redirectUri.toString());
 
         // 리다이렉트 URI가 존재하면서 인가된 URI가 아닌 경우 예외 발생
         if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get()))
@@ -89,7 +87,17 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         servletContext.setAttribute("loginedUserVo", usersResponseVo);
 
-        return UriComponentsBuilder.fromUriString(targetUri)
+        String urlString = request.getHeader("Referer");
+
+        log.info("urlString --> : {} ", urlString);
+        String path;
+        try {
+            URI uri = new URI(urlString);
+            path = uri.getPath(); // 경로 부분을 얻어옴
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return UriComponentsBuilder.fromUriString(urlString)
                 //.queryParam("error", "")
                 //.queryParam("token", token.getAccessToken())
                 .build().toUriString();

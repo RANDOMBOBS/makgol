@@ -65,7 +65,7 @@ public class CookieUtil {
         CookieUtil.setCookie(response, "name", loginedUserVo.getName());
         CookieUtil.setCookie(response, "photo_path", loginedUserVo.getPhoto_path());
         CookieUtil.setCookie(response, "grade", loginedUserVo.getGrade());
-        CookieUtil.setCookie(response, "weatherAddr", loginedUserVo.getWeatherAddr());
+        CookieUtil.setCookie(response, "weatherAddr", String.valueOf(loginedUserVo.getWeatherAddr()));
         CookieUtil.setCookie(response, "valueX", String.valueOf(loginedUserVo.getValueX()));
         CookieUtil.setCookie(response, "valueY", String.valueOf(loginedUserVo.getValueY()));
         return true;
