@@ -23,10 +23,6 @@ public class CookieUtil {
         res.addHeader("Set-Cookie", cookieValue);
     }
 
-    public static void setCookieNonEncoder(HttpServletResponse res, String key, String value){
-        String cookieValue = String.format("%s = %s; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Strict;", key, value);
-        res.addHeader("Set-Cookie", cookieValue);
-    }
 
     // 지정한 경로에 쿠키 저장
     public static  void setImportantCookie(HttpServletResponse res, String key, String value) {
@@ -72,17 +68,6 @@ public class CookieUtil {
         CookieUtil.setCookie(response, "weatherAddr", loginedUserVo.getWeatherAddr());
         CookieUtil.setCookie(response, "valueX", String.valueOf(loginedUserVo.getValueX()));
         CookieUtil.setCookie(response, "valueY", String.valueOf(loginedUserVo.getValueY()));
-        return true;
-    }
-
-    public static boolean saveCookiesNonEncoder(HttpServletResponse response, UsersResponseVo loginedUserVo) {
-        CookieUtil.setCookieNonEncoder(response, "id", String.valueOf(loginedUserVo.getId()));
-        CookieUtil.setCookieNonEncoder(response, "name", loginedUserVo.getName());
-        CookieUtil.setCookieNonEncoder(response, "photo_path", loginedUserVo.getPhoto_path());
-        CookieUtil.setCookieNonEncoder(response, "grade", loginedUserVo.getGrade());
-        CookieUtil.setCookieNonEncoder(response, "weatherAddr", loginedUserVo.getWeatherAddr());
-        CookieUtil.setCookieNonEncoder(response, "valueX", String.valueOf(loginedUserVo.getValueX()));
-        CookieUtil.setCookieNonEncoder(response, "valueY", String.valueOf(loginedUserVo.getValueY()));
         return true;
     }
 }

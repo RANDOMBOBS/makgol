@@ -85,7 +85,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         log.info("usersResponseVo --> {} :", usersResponseVo.toString());
 
-        cookieUtil.saveCookiesNonEncoder(response, usersResponseVo);
+        cookieUtil.saveCookies(response, usersResponseVo);
 
         servletContext.setAttribute("loginedUserVo", usersResponseVo);
 
