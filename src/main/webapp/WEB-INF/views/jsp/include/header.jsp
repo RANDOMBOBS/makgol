@@ -331,7 +331,7 @@
     console.log("baseTime"+baseTime)
     console.log(valueX);
     console.log(valueY);
-        $.ajax({
+        jQ.ajax({
             method: "GET",
             url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst",
             data: {
