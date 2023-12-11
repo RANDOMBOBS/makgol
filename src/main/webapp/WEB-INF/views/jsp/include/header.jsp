@@ -14,19 +14,16 @@
   	integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
   	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<%
-    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
-    UsersResponseVo blackList = (UsersResponseVo) session.getAttribute("blackList");
-%>
-
 <link href="<c:url value='/resources/static/css/header.css' />" rel="stylesheet" type="text/css" />
-
 
 <jsp:include page="./modal.jsp"></jsp:include>
 
+<%
+    if(application.getAttribute("loginedUserVo") != null) {
+        UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
+    }
+%>
 
-<c:set var="address" value="${loginedUserVo.address.split(' ')}"/>
-<c:set var="weatherAddress" value="${address[0]} ${address[1]}"/>
 
 <header id="header">
     <div class="all_category">
@@ -108,10 +105,10 @@
     <p class="img"></p>
     <div class="userTab">
         <c:choose>
-       <c:when test="${loginedUserVo != null}">
+       <c:when test="${not empty loginedUserVo}">
          <div class="welcome">
             <div class="weather_info">
-                <span class="address"><i class="fa-solid fa-location-dot"></i> ${weatherAddress}</span>
+                <span class="address"><i class="fa-solid fa-location-dot"></i> ${loginedUserVo.weatherAddr}</span>
                 <span class="temp"></span>
                 <span class="sky"></span>
                 <span class="emoticon"></span>
@@ -136,7 +133,7 @@
         </c:choose>
         <ul class="depth1">
             <li>
-                <a href="#">COMMUNITY</a>
+                <a href="#">커뮤니티</a>
                 <ul class="depth2">
                     <li><a href="<c:url value='/board/notice'/>">공지사항</a></li>
                     <li><a href="<c:url value='/board/suggestion'/>">건의사항</a></li>
@@ -147,15 +144,15 @@
 
             <c:choose>
                 <c:when test="${loginedUserVo != null}">
-                    <c:if test="${loginedUserVo.getGrade() == '관리자'}">
+                    <c:if test="${loginedUserVo.grade == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
-                    <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
-                    <li><a href="<c:url value=''/>" id="logout_link">LOGOUT</a></li>
+                    <li><a href="<c:url value='/user/myPage'><c:param name="user_id" value="${loginedUserVo.id}" /></c:url>">마이페이지</a></li>
+                    <li><a href="<c:url value=''/>" id="logout_link">로그아웃</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="#" id="register_modal">JOIN</a></li>
-                    <li><a href="#" id="login_modal">LOGIN</a></li>
+                    <li><a href="#" id="register_modal">회원가입</a></li>
+                    <li><a href="#" id="login_modal">로그인</a></li>
                 </c:otherwise>
             </c:choose>
         </ul>
@@ -168,25 +165,27 @@
     var jQ = jQuery;
     var currentURL = window.location.href;
 
-jQ("#logout_link").on("click", function () {
-        jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
-    });
 
 
-    let black = "${blackList}";
-    if (black) {
-        alert("접근이 제한된 사용자입니다.")
+    if (${loginedUserVo != null} && ${loginedUserVo.grade == '블랙리스트'}) {
+        alert("접근이 제한된 사용자입니다.");
         jQ.ajax({
             url: "/user/blackList",
             type: "GET",
             success: function (rdata) {
                 console.log("성공")
+                location.href="http://localhost:8090/"
             },
             error: function (error) {
                 console.log("실패")
             }
         });
     }
+
+
+    jQ("#logout_link").on("click", function () {
+        jQ(this).attr("href", "/user/logout?link=" + encodeURIComponent(currentURL));
+    });
 
     jQ(".show_category").on("click", function () {
         jQ(this).next().toggleClass("on");
@@ -228,36 +227,51 @@ jQ("#logout_link").on("click", function () {
         modalCoverEle.style.display = "block";
         loginModalEle.style.display = "block";
     });
-
 </script>
+
 <script>
     function getWeather(){
     let coordinate = [];
     let valueX = "";
     let valueY = "";
-        let sky = "";
-        let rainSnow = "";
-
+    let sky = "";
+    let rainSnow = "";
 
     <c:if test="${not empty loginedUserVo}">
-    coordinate = JSON.parse('${loginedUserVo.coordinate}');
-    valueX = coordinate[0];
-    valueY = coordinate[1];
+        valueX = ${loginedUserVo.valueX}
+        valueY = ${loginedUserVo.valueY}
     </c:if>
 
     <c:if test="${empty loginedUserVo}">
-    valueX = 61;
-    valueY = 126;
+        valueX = 61;
+        valueY = 126;
     </c:if>
 
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
+    if (month > 0 && month < 10) {
+        month = "0" + month;
+    }
     let day = date.getDate();
+    if (day > 0 && day < 10) {
+        day = "0" + day;
+    }
     let hour = date.getHours();
+    if (hour > 0 && hour < 10) {
+        hour = "0" + hour;
+    } else if (hour == 0) {
+        hour = "00";
+    }
     let minute = date.getMinutes();
+    if (minute > 0 && minute < 10) {
+        minute = "0" + minute;
+    } else if (minute == 0) {
+        minute = "00";
+    }
 
-    let nowTime = hour + minute.toString();
+
+    let nowTime = hour.toString() + minute.toString();
     let nowHourMinute = (parseInt(nowTime) - 44).toString();
     if(nowHourMinute < 0){
         nowHourMinute = "23"+nowHourMinute;
@@ -291,9 +305,6 @@ jQ("#logout_link").on("click", function () {
     if (month > 0 && month < 10) {
         month = "0" + month;
     }
-    if (day > 0 && day < 10) {
-        day = "0" + day;
-    }
     if (hour > 0 && hour < 10) {
         hour = "0" + hour;
     } else if (hour == 0) {
@@ -320,7 +331,7 @@ jQ("#logout_link").on("click", function () {
     console.log("baseTime"+baseTime)
     console.log(valueX);
     console.log(valueY);
-        $.ajax({
+        jQ.ajax({
             method: "GET",
             url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst",
             data: {
@@ -337,7 +348,6 @@ jQ("#logout_link").on("click", function () {
             success: function (data) {
                 console.log(data)
                 let weatherDatas = data.response.body.items.item
-                console.log(weatherDatas);
                 let temp = weatherDatas.filter((item, index) => item.category ==="T1H");
                 let T1H = temp[0].fcstValue;
                 console.log("기온은?"+T1H);

@@ -59,6 +59,11 @@
         WHERE id=#{id}
     </update>
 
+    <select id="userInfo" resultType="com.org.makgol.users.vo.UsersResponseVo" parameterType="int">
+        SELECT * FROM users WHERE id = #{user_id}
+    </select>
+
+
     <select id="selectMyStoreList" resultType="com.org.makgol.stores.vo.StoreResponseVo" parameterType="int">
         SELECT S.id, S.name, S.address, S.phone, S.photo FROM stores S
         JOIN store_likes SL
