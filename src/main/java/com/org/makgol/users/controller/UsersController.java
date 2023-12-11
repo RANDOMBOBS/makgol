@@ -82,9 +82,9 @@ public class UsersController {
     } //authNumberCheck_END
 
 
-    @GetMapping("/login")
+    @GetMapping("/index")
     public String loginForm() {
-        return "jsp/user/user_login";
+        return "home";
     }
 
     @PostMapping("/loginConfirm")
@@ -99,11 +99,6 @@ public class UsersController {
        return "home";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest req, HttpServletResponse res,@RequestParam("link") String link) {
-        userService.blackList(req, res);
-        return "home";
-    }
 
     @GetMapping("/blackList")
     public String blackList(HttpServletRequest req, HttpServletResponse res){

@@ -9,6 +9,7 @@ import com.org.makgol.common.jwt.util.JwtUtil;
 import com.org.makgol.common.jwt.vo.TokenResponseVo;
 import com.org.makgol.common.jwt.vo.TokenVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
+import com.org.makgol.users.controller.UsersController;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
@@ -33,6 +34,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,8 +57,6 @@ public class UsersService implements LogoutHandler {
     private final MailSendUtil    mailSendUtil;
     private final UsersRepository usersRepository;
     private final ServletContext  servletContext;
-
-
 
     //userFindPassword
     public String userFindPassword(String userEmail) {
@@ -286,7 +286,13 @@ public class UsersService implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        blackList(request, response);
 
+        try {
+            response.sendRedirect("index");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
