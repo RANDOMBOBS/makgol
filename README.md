@@ -129,9 +129,10 @@ Project Timeline
 
 - Spring Boot
 - **Spring Security** : 보안 설정을 위해 사용
-- **OAuth2.0** : 소셜 로그인을 위해 사용
 - **JWT** : 사용자 인증/인가를 위해 사용
-- **Session** :
+- **cors_token, check refferer** : cors 대응을 위해 사용
+- **Xss filter** : Xss 대응을 위해 사용
+- **OAuth2.0** : 소셜 로그인을 위해 사용
 - **Spring Batch** : 대용량 데이터 처리를 위해 사용
 - **mybatis**
 - **Selenium** : 상세 데이터를 수집하기 위해 사용
