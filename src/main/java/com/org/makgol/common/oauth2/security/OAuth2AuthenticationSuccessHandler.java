@@ -6,6 +6,10 @@ import com.org.makgol.common.jwt.vo.TokenVo;
 import com.org.makgol.common.oauth2.exception.BadRequestException;
 import com.org.makgol.common.oauth2.util.CookieUtils;
 import com.org.makgol.common.oauth2.util.TokenProvider;
+import com.org.makgol.users.repository.UsersRepository;
+import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
+import com.org.makgol.util.cookie.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -27,10 +31,12 @@ import static com.org.makgol.common.oauth2.security.HttpCookieOAuth2Authorizatio
 @RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    private final CookieUtil    cookieUtil;
     private final JwtUtil       jwtUtil;
     private final TokenProvider tokenProvider;
 
     private final AppProperties appProperties;
+    private final UsersRepository usersRepository;
 
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
@@ -70,6 +76,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         TokenVo token = jwtUtil.createSettingToken(email);
         // 3. 악세스 토큰을 쿠키에 담아 클라이언트에게 전송 시킨다.
         jwtUtil.setTokenInCookie(response, token.getAccessToken(), "Access");
+
+        UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
+        cookieUtil.saveCookies(response, usersResponseVo);
 
         return UriComponentsBuilder.fromUriString(targetUri)
                 //.queryParam("error", "")
