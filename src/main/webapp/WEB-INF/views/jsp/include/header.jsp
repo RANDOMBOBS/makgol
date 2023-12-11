@@ -133,7 +133,7 @@
         </c:choose>
         <ul class="depth1">
             <li>
-                <a href="#">COMMUNITY</a>
+                <a href="#">커뮤니티</a>
                 <ul class="depth2">
                     <li><a href="<c:url value='/board/notice'/>">공지사항</a></li>
                     <li><a href="<c:url value='/board/suggestion'/>">건의사항</a></li>
@@ -147,12 +147,12 @@
                     <c:if test="${loginedUserVo.grade == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
-                    <li><a href="<c:url value='/user/myPage'><c:param name="user_id" value="${loginedUserVo.id}" /></c:url>">MYPAGE</a></li>
-                    <li><a href="<c:url value=''/>" id="logout_link">LOGOUT</a></li>
+                    <li><a href="<c:url value='/user/myPage'><c:param name="user_id" value="${loginedUserVo.id}" /></c:url>">마이페이지</a></li>
+                    <li><a href="<c:url value=''/>" id="logout_link">로그아웃</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="#" id="register_modal">JOIN</a></li>
-                    <li><a href="#" id="login_modal">LOGIN</a></li>
+                    <li><a href="#" id="register_modal">회원가입</a></li>
+                    <li><a href="#" id="login_modal">로그인</a></li>
                 </c:otherwise>
             </c:choose>
         </ul>

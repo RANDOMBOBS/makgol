@@ -191,8 +191,10 @@ table {
 
 #header .userTab .depth1 .depth2 {
   display: none;
-  width: 100%;
+  width: 150px;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #fff;
   padding: 10px 20px;
 }
