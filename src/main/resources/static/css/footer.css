@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .footer{
+            background-color:#000;
+            width: 100%;
+            height: 350px;
+        }
+        ul,li{
+            list-style: none;
+        }
+        .document_ul{
+            display: flex;
+            justify-content: center;
+        }
+        .document_ul li{
+            margin: 50px 20px;
+        }
+        .document_ul li a{
+                    color:white;
+                }
+        .iconBox{
+            margin-bottom: 50px;
+        }
+        .icon_ul {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        .icon_ul li {
+            margin: 0px 10px;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            background-color: white;
+        }
+        .icon_ul li span{
+            text-shadow: 1px 0px 2px #000;
+        }
+        .icon_ul li i {
+            font-size: 30px;
+            line-height: 50px;
+            text-shadow: 1px 0px 2px #000;
+        }
+        .icon_ul li:hover i {
+            color: white;
+        }
+
+        .icon_ul li:first-child:hover{
+            background: radial-gradient(circle farthest-corner at 32% 106%,#ffe17d 0%,#ffcd69 10%,#fa9137 28%,#eb4141 42%,transparent 82%) , linear-gradient(135deg,#234bd7 12%,#c33cbe 58%);
+            color: white;
+        }
+        .icon_ul .instagram:hover .span_instagram,.youtube:hover .span_youtube,.facebook:hover .span_facebook,
+        .github:hover .span_github,.twitter:hover .span_twitter{
+            opacity: 1;
+            transition: all 0.5s;
+        }
+        .icon_ul .youtube:hover{
+            color: white;
+            background: #c4302b;
+        }
+        .icon_ul .twitter:hover{
+            background: #00acee ;
+            color: white;
+        }
+        .icon_ul .facebook:hover{
+            background: #3b5998;
+            color: white;
+        }
+        .icon_ul .github:hover{
+            background: #4c4545;
+            color: white;
+        }
+        .icon_ul .span_instagram{
+            background: radial-gradient(circle farthest-corner at 32% 106%,#ffe17d 0%,#ffcd69 10%,#fa9137 28%,#eb4141 42%,transparent 82%) , linear-gradient(135deg,#234bd7 12%,#c33cbe 58%);
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            top: -80%;
+            right: 55.5%;
+            opacity: 0;
+        }
+        .icon_ul .span_twitter{
+            background: #00acee ;
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            top: -80%;
+            right: 52.2%;
+            opacity: 0;
+        }
+        .icon_ul .span_github{
+            background: #4c4545;
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            top: -80%;
+            right: 48.3%;
+            opacity: 0;
+        }
+        .icon_ul .span_facebook{
+            background: #3b5998;
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            top: -80%;
+            right: 43.9%;
+            opacity: 0;
+        }
+        .icon_ul .span_youtube{
+            background: #c4302b ;
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            top: -80%;
+            right: 40.4%;
+            opacity: 0;
+        }
+        .information{
+            color: white;
+        }
+        .information_ul{
+            display: flex;
+            justify-content: center;
+        }
+        .information_ul li{
+            color:white;
+            margin:10px 10px;
+        }

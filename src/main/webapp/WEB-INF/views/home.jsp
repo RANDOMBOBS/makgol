@@ -13,6 +13,7 @@
           type="text/css"/>
     <link href="<c:url value='/resources/static/css/topmenu.css' />" rel="stylesheet"
           type="text/css"/>
+
     <link href="<c:url value='/resources/static/css/slick.css' />" rel="stylesheet"
           type="text/css"/>
 
@@ -89,10 +90,8 @@
 
 
 </section>
-<footer id="footer">
-    <h1>Footer</h1>
-</footer>
 
+<jsp:include page="jsp/include/footer.jsp"></jsp:include>
 
 <jsp:include page="script/jsp/main.jsp"></jsp:include>
 
