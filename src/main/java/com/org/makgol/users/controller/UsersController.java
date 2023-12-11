@@ -10,6 +10,7 @@ import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -86,9 +89,9 @@ public class UsersController {
     }
 
     @PostMapping("/loginConfirm")
-    public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session){
+    public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session, HttpServletResponse response){
         String nextPage = "home";
-        UsersResponseVo loginedUserVo = userService.loginConfirm(usersRequestVo);
+        UsersResponseVo loginedUserVo = userService.loginConfirm(usersRequestVo, response);
 
         if (loginedUserVo == null) {
             // 로그인 실패 시 'login_ng' 화면을 표시
@@ -107,7 +110,15 @@ public class UsersController {
     @GetMapping("/logout")
     public String logout(HttpSession session, @RequestParam("link") String link){
         session.invalidate();
-        if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")||link.contains("/user/loginConfirm")){
+        if(link.contains("/admin/userManagement")||
+                link.contains("/suggestion/create")||
+                link.contains("/suggestion/modify")||
+                link.contains("/user/modifyUser")||
+                link.contains("/user/myHistory")||
+                link.contains("/user/myPage")||
+                link.contains("/user/myStoreList")||
+                link.contains("/user/loginConfirm"))
+        {
             return "home";
         }else {
             return "redirect:" + link;
@@ -129,7 +140,9 @@ public class UsersController {
 
     @GetMapping("/modifyUser")
     public String modify_user() {
+
         return "jsp/user/modify_user";
+
     }
 
     @PostMapping("/modifyUserConfirm")

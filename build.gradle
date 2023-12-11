@@ -16,10 +16,6 @@ repositories {
 	maven { url 'https://repo.spring.io/snapshot' }
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
 
 tasks.named('bootBuildImage') {
 	builder = 'paketobuildpacks/builder-jammy-base:latest'
@@ -41,6 +37,7 @@ repositories {
 }
 
 dependencies {
+    // 롬복
     implementation 'org.projectlombok:lombok:1.18.28'
     // 스프링 부트 웹 애플리케이션을 시작하기 위한 의존성
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -76,8 +73,8 @@ dependencies {
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.60'
 
     //BCrypt 사용하기위한 종속성
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -85,6 +82,14 @@ dependencies {
 
     //file upload
     implementation 'commons-fileupload:commons-fileupload:1.4'
+
+    // gson 라이브러리
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    // JWT
+    compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -102,6 +107,13 @@ dependencies {
 
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    // OAuth 2.0
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+
+    // xss 대응
+    implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1'
+    implementation 'org.jsoup:jsoup:1.14.3'
 }
 
 tasks.named('test') {

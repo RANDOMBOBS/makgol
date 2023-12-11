@@ -1,4 +1,4 @@
-package com.org.makgol.common.config;
+package com.org.makgol.common;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

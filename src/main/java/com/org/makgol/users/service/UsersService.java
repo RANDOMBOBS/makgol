@@ -5,6 +5,9 @@ import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.common.exception.CustomException;
 import com.org.makgol.common.exception.ErrorCode;
+import com.org.makgol.common.jwt.util.JwtUtil;
+import com.org.makgol.common.jwt.vo.TokenResponseVo;
+import com.org.makgol.common.jwt.vo.TokenVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
@@ -17,14 +20,23 @@ import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
@@ -33,14 +45,16 @@ import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UsersService {
+public class UsersService implements LogoutHandler {
 
-    private final MailSendUtil mailSendUtil;
-    private final UserDao userDao;
-    private final RedisUtil redisUtil;
+    private final JwtUtil         jwtUtil;
+    private final UserDao         userDao;
+    private final RedisUtil       redisUtil;
+    private final FileUpload      fileUpload;
+    private final WeatherInfo     weatherInfo;
+    private final MailSendUtil    mailSendUtil;
     private final UsersRepository usersRepository;
-    private final FileUpload fileUpload;
-    private final WeatherInfo weatherInfo;
+
 
 
     //userFindPassword
@@ -101,9 +115,9 @@ public class UsersService {
 
         if (usersRepository.saveUser(usersRequestVo)) {
 
-            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
-            // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+//            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+//            // 비동기 작업이 완료되면 결과를 출력
+//            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
 
         return true;
@@ -112,9 +126,9 @@ public class UsersService {
 
 
 
-    public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo) {
+    public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
         String email = usersRequestVo.getEmail();
-        UsersResponseVo loginedUserVo = userDao.selectUser(email);
+        UsersResponseVo loginedUserVo = usersRepository.findUserByEmail(email);
 
         // 만약 로그인을 못했다면?
         if(loginedUserVo == null){
@@ -126,9 +140,25 @@ public class UsersService {
 
         if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
             loginedUserVo = null;
+
+        } else {
+
+            // 1. 기존에 있던 리프레쉬 토큰을 취소 시킨다.
+            jwtUtil.saveTokenUpdate(email, JwtUtil.REVOKED);
+            // 2. 리프레쉬를 만들고 date 값을 가져와 access 토큰에 주입 시켜 연관관계를 형성 시킨다.
+            TokenVo tokenVo = jwtUtil.createSettingToken(email);
+            // 3. 악세스 토큰을 쿠키에 담아 클라이언트에게 전송 시킨다.
+            jwtUtil.setTokenInCookie(response, tokenVo.getAccessToken(), "Access");
         }
+
         return loginedUserVo;
     }
+
+    private void setAccessTokenInHeader(HttpServletResponse response, String accessToken) {
+        response.addHeader(JwtUtil.ACCESS_TOKEN, accessToken);
+    }
+
+
 
     public Boolean mailCheckDuplication(String email) {
 
@@ -171,9 +201,9 @@ public class UsersService {
             newUserVo.setCoordinate(coordinate);
             session.setAttribute("loginedUserVo", newUserVo);
 
-            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
-            // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+//            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+//            // 비동기 작업이 완료되면 결과를 출력
+//            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
         return result;
     }
@@ -181,7 +211,6 @@ public class UsersService {
     public List<StoreResponseVo> myStoreList(int user_id){
         return userDao.selectMyStoreList(user_id);
     }
-
 
 
     public List<BoardVo> getMyPostList(int user_id){
@@ -205,7 +234,11 @@ public class UsersService {
     public int countingLikes(int user_id){
         return usersRepository.countingLikes(user_id);
     }
-}
 
+    @Override
+    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+
+    }
+}
 
 
