@@ -46,6 +46,8 @@
             font-size: 30px;
             line-height: 50px;
             text-shadow: 1px 0px 2px #000;
+            position: relative;
+            top: -40%;
         }
         .icon_ul li:hover i {
             color: white;
@@ -81,9 +83,9 @@
             color: white;
             border-radius: 5px;
             padding: 5px;
-            position: absolute;
-            top: -80%;
-            right: 55.5%;
+            position: relative;
+            top: -70%;
+            right: 18px;
             opacity: 0;
         }
         .icon_ul .span_twitter{
@@ -91,9 +93,9 @@
             color: white;
             border-radius: 5px;
             padding: 5px;
-            position: absolute;
-            top: -80%;
-            right: 52.2%;
+            position: relative;
+            top: -70%;
+            right: 5px;
             opacity: 0;
         }
         .icon_ul .span_github{
@@ -101,9 +103,9 @@
             color: white;
             border-radius: 5px;
             padding: 5px;
-            position: absolute;
-            top: -80%;
-            right: 48.3%;
+            position: relative;
+            top: -70%;
+            right: 5px;
             opacity: 0;
         }
         .icon_ul .span_facebook{
@@ -111,9 +113,9 @@
             color: white;
             border-radius: 5px;
             padding: 5px;
-            position: absolute;
-            top: -80%;
-            right: 43.9%;
+            position: relative;
+            top: -70%;
+            right: 15px;
             opacity: 0;
         }
         .icon_ul .span_youtube{
@@ -121,9 +123,9 @@
             color: white;
             border-radius: 5px;
             padding: 5px;
-            position: absolute;
-            top: -80%;
-            right: 40.4%;
+            position: relative;
+            top: -70%;
+            right: 10px;
             opacity: 0;
         }
         .information{
