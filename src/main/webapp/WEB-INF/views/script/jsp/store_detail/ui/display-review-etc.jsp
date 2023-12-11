@@ -44,7 +44,7 @@
 
         if (reviewImages.length >= 1) {
             const reviewImageEle = $("<img>").addClass("review_image");
-            reviewImageEle.attr({src: "http://localhost:8090" + reviewImages[0]}).val(item.id);
+            reviewImageEle.attr({src: "" + reviewImages[0]}).val(item.id);
             reviewImageBoxEle.append(reviewImageEle);
             reviewEtcEle.append(reviewImageBoxEle);
         }

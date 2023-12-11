@@ -27,7 +27,7 @@
       <label for="photoFile">
         <input type="file" id="photoFile" class="photo_file" name="photoFile" onchange="userimageURL(this)" />
         <i class="fa-solid fa-image"></i>
-        <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진" class="preview" />
+        <img src="${loginedUserVo.photo_path}" alt="프로필사진" class="preview" />
       </label>
     </div>
     <br />
@@ -190,7 +190,7 @@ function userimageURL(input) {
 
 
     function ModifyUserCancle(){
-       window.location.href = "http://localhost:8090/user/myPage?user_id=${loginedUserVo.id}"
+       window.location.href = "/user/myPage?user_id=${loginedUserVo.id}"
     }
 
 

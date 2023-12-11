@@ -17,7 +17,7 @@
             reviewImageMap.clear();
         }
 
-        const url = "http://localhost:8090/store/review";
+        const url = "/store/review";
         const {axios} = window;
         const {data} = await axios.post(url, formData, {headers: {'Content-Type': 'multipart/form-data'}})
 

@@ -154,7 +154,7 @@
 <script>
     <c:if test="${not empty boardVo.images}">
      <c:forEach var="item" items="${boardVo.images}" varStatus="status">
-        jQ(".image_box .image:eq(${status.index})").children().find("img").attr("src", "http://localhost:8090${item}")
+        jQ(".image_box .image:eq(${status.index})").children().find("img").attr("src", "${item}")
         jQ(".image_box .image:eq(${status.index})").children().find("img").attr("style", "display:block")
         jQ(".image_box .image:eq(${status.index})").find(".delete_image").attr("style", "display:flex")
      </c:forEach>

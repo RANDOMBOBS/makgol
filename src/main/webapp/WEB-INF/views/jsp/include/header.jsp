@@ -115,7 +115,7 @@
             </div>
             <div class="user_info">
                 <span>${loginedUserVo.name}</span>
-                <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진"/>
+                <img src="${loginedUserVo.photo_path}" alt="프로필사진"/>
             </div>
          </div>
        </c:when>
@@ -174,7 +174,7 @@
             type: "GET",
             success: function (rdata) {
                 console.log("성공")
-                location.href="http://localhost:8090/"
+                location.href="/"
             },
             error: function (error) {
                 console.log("실패")

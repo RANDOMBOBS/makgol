@@ -25,7 +25,7 @@
              <table class="info_table">
                <tr>
                  <td>
-                   <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진" />
+                   <img src="${loginedUserVo.photo_path}" alt="프로필사진" />
                  </td>
                </tr>
                <tr>

@@ -24,7 +24,7 @@
     };
 
     const aEle = document.querySelector("#redirect");
-    const redirectUri = "http://localhost:8090/store/list?x=" + request.myX + "&y=" + request.myY + "&keyword=" + request.keyword;
+    const redirectUri = "/store/list?x=" + request.myX + "&y=" + request.myY + "&keyword=" + request.keyword;
     aEle.setAttribute("href", redirectUri);
 </script>
 </html>

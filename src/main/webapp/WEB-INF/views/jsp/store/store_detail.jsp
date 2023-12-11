@@ -90,7 +90,7 @@
                 <div id="review_form">
                     <div class="review_profile">
                         <img class="user_image"
-                             src="http://localhost:8090/resources/static/image/default/user_default.jpeg">
+                             src="/resources/static/image/default/user_default.jpeg">
                         <span class="user_name">사용자</span>
                     </div>
                     <div class="review_content">

@@ -56,8 +56,8 @@
                 <span>아이디 & 비밀번호 찾기</span>
             </div>
             <div class="social_login">
-                <a id="naver_login" href="http://localhost:8090/oauth2/authorization/naver">네이버 로그인</a>
-                <a id="kakao_login" href="http://localhost:8090/oauth2/authorization/kakao">카카오 로그인</a>
+                <a id="naver_login" href="/oauth2/authorization/naver">네이버 로그인</a>
+                <a id="kakao_login" href="/oauth2/authorization/kakao">카카오 로그인</a>
             </div>
         </div>
         <div class="modal_footer"></div>
@@ -485,13 +485,13 @@
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8090/user/join",
+                url: "/user/join",
                 data: formData,
                 processData: false,
                 contentType: false,
                 success(data) {
                     alert("회원가입 되었습니다!");
-                    window.location.href = "http://localhost:8090";
+                    window.location.href = "";
                 }, error(err) {
                     alert("서버 에러");
                 }
