@@ -1,560 +1,561 @@
 body {
-  background-color: #fffdd3;
+    background-color: #fffdd3;
 }
 
 #board_list {
-  background-color: #fff;
-  margin: 50px auto;
-  padding: 50px;
-  width: 1200px;
-  border: 1px solid #eee;
-  border-radius: 15px;
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 50px;
+    width: 1200px;
+    border: 1px solid #eee;
+    border-radius: 15px;
 }
 
 #board_list .board_list_title {
-  text-align: left;
-  text-indent: 0.5em;
-  padding: 15px 0;
-  margin: 0 30px;
-  border-bottom: 3px solid #000;
+    text-align: left;
+    text-indent: 0.5em;
+    padding: 15px 0;
+    margin: 0 30px;
+    border-bottom: 3px solid #000;
 }
 
 #board_list .board_list_contents {
-  padding: 0 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 #board_list .board_list_contents form {
-  width: 340px;
-  margin: 20px 25px;
-  border: 1px solid #000;
-  border-radius: 5px;
+    width: 340px;
+    margin: 20px 25px;
+    border: 1px solid #000;
+    border-radius: 5px;
 }
 
 #board_list .board_list_contents .notice_search {
-  width: 250px;
-  margin: 20px 25px;
-  border: 1px solid #000;
-  border-radius: 5px;
+    width: 250px;
+    margin: 20px 25px;
+    border: 1px solid #000;
+    border-radius: 5px;
 }
 
 #board_list .board_list_contents form select {
-  border: none;
-  font-weight: bold;
-  height: 30px;
+    border: none;
+    font-weight: bold;
+    height: 30px;
 }
 
 #board_list .board_list_contents form input {
-  height: 30px;
-  border: none;
-  width: 200px;
-  text-align:left;
-  padding-left : 15px;
+    height: 30px;
+    border: none;
+    width: 200px;
+    text-align: left;
+    padding-left: 15px;
 }
 
 #board_list .board_list_contents form input:focus {
-    outline:none;
+    outline: none;
 }
 
 #board_list .board_list_contents form button {
-  height: 30px;
-  width: 30px;
-  border: none;
-  background: none;
+    height: 30px;
+    width: 30px;
+    border: none;
+    background: none;
 }
 
 #board_list .board_list_contents .board_list {
-  width: 95%;
-  margin: 10px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+    width: 95%;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 #board_list .board_list_contents .board_list h3 {
-  width: 100%;
-  text-align: left;
-  margin-bottom: 30px;
-  font-size: 20px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 30px;
+    font-size: 20px;
 }
 
 #board_list .board_list_contents .board_list h4 {
-  width: 100%;
-  text-align: center;
-  margin: 100px auto;
-  font-size: 23px;
+    width: 100%;
+    text-align: center;
+    margin: 100px auto;
+    font-size: 23px;
 }
 
 #board_list .board_list_contents .board_list h3 span {
-  font-size: 1.3em;
+    font-size: 1.3em;
 }
 
 #board_list .board_list_contents .board_list table {
-  width: 100%;
+    width: 100%;
 }
 
 #board_list .board_list_contents .board_list table col:nth-child(1) {
-  width: 100px;
+    width: 100px;
 }
 
-#board_list .board_list_contents .board_list table col:nth-child(2)  {
-  width: auto;
+#board_list .board_list_contents .board_list table col:nth-child(2) {
+    width: auto;
 }
 
-#board_list .board_list_contents .board_list table col:nth-child(3)  {
-  width: 150px;
+#board_list .board_list_contents .board_list table col:nth-child(3) {
+    width: 150px;
 }
 
-#board_list .board_list_contents .board_list table col:nth-child(4)  {
-  width: 120px;
+#board_list .board_list_contents .board_list table col:nth-child(4) {
+    width: 120px;
 }
+
 #board_list .board_list_contents .board_list table col:nth-child(5),
 #board_list .board_list_contents .board_list table col:nth-child(6) {
-  width: 70px;
+    width: 70px;
 }
 
 #board_list .board_list_contents .board_list table thead {
-  height: 50px;
-  border: 2px solid #ffe286;
-  background-color: #fdf97e;
+    height: 50px;
+    border: 2px solid #ffe286;
+    background-color: #fdf97e;
 }
 
 #board_list .board_list_contents .board_list table thead th {
-  border: 2px solid #ffe286;
+    border: 2px solid #ffe286;
 }
 
 #board_list .board_list_contents .board_list table tbody {
-  border: 2px solid #ffe286;
-  font-size: 0.9em;
+    border: 2px solid #ffe286;
+    font-size: 0.9em;
 }
 
 #board_list .board_list_contents .board_list table tbody tr {
-  height: 50px;
-  border-bottom: 1px solid #ffe286;
+    height: 50px;
+    border-bottom: 1px solid #ffe286;
 }
 
 #board_list .board_list_contents .board_list table tr td:nth-child(2) a {
-  padding: 0 20px;
-  display: block;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  text-align: left;
+    padding: 0 20px;
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    text-align: left;
 }
 
 #board_list .board_list_contents .board_list table tr td:nth-child(2):hover {
-  font-weight: bold;
-  text-decoration: underline;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 #board_list .board_list_contents .board_list > a {
-  display: block;
-  border-radius: 5px;
-  padding: 5px 10px;
-  height: 35px;
-  line-height: 25px;
-  margin: 20px 0;
-  border: none;
-  font-size: 14px;
-  background: #eee;
-  font-weight: bold;
-  cursor: pointer;
+    display: block;
+    border-radius: 5px;
+    padding: 5px 10px;
+    height: 35px;
+    line-height: 25px;
+    margin: 20px 0;
+    border: none;
+    font-size: 14px;
+    background: #eee;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 #board_write {
-  background-color: #fff;
-  margin: 50px auto;
-  padding: 50px;
-  width: 1000px;
-  border: 1px solid #eee;
-  border-radius: 15px;
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 50px;
+    width: 1000px;
+    border: 1px solid #eee;
+    border-radius: 15px;
 }
 
 #board_write .write_board {
-  text-align: left;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 10px 0;
-  border-bottom: 2px solid #aaa;
+    text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 2px solid #aaa;
 }
 
 #board_write .write_board_form {
-  position: relative;
+    position: relative;
 }
 
 #board_write .write_board_form .column {
-  margin: 13px 0;
-  display: flex;
-  align-items: center;
-  text-align: left;
-  height: 40px;
+    margin: 13px 0;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    height: 40px;
 }
 
 #board_write .write_board_form .column span.description {
-  display: inline-block;
-  width: 130px;
-  text-align: left;
-  font-weight: bold;
+    display: inline-block;
+    width: 130px;
+    text-align: left;
+    font-weight: bold;
 }
 
 #board_write .write_board_form .column select {
-  width: 200px;
-  height: 30px;
+    width: 200px;
+    height: 30px;
 }
 
 #board_write .write_board_form .column select option {
-  height: 30px;
+    height: 30px;
 }
 
 #board_write .write_board_form .column select option:first-child {
-  display: none;
+    display: none;
 }
 
 #board_write .write_board_form .column .name {
-  text-align: left;
+    text-align: left;
 }
 
 #board_write .write_board_form .column .title {
-  text-align: left;
-  text-indent: 1em;
-  width: 650px;
-  height: 30px;
+    text-align: left;
+    text-indent: 1em;
+    width: 650px;
+    height: 30px;
 }
 
 #board_write .write_board_form .column .name {
-  width: 200px;
-  height: 30px;
-  text-indent: 1em;
+    width: 200px;
+    height: 30px;
+    text-indent: 1em;
 }
 
 #board_write .write_board_form .board_contents {
-  height: 500px;
-  align-items: flex-start;
-  margin: 13px 0;
+    height: 500px;
+    align-items: flex-start;
+    margin: 13px 0;
 }
 
 #board_write .write_board_form .column textarea {
-  text-align: left;
-  padding: 10px;
-  font-family: sans-serif;
-  resize: none;
-  width: 650px;
-  height: 500px;
+    text-align: left;
+    padding: 10px;
+    font-family: sans-serif;
+    resize: none;
+    width: 650px;
+    height: 500px;
 }
 
 #board_write .write_board_form .image_info {
-  text-align: left;
-  color: #a3a3a3;
-  padding: 10px 0;
-  font-size: 15px;
+    text-align: left;
+    color: #a3a3a3;
+    padding: 10px 0;
+    font-size: 15px;
 }
 
 #board_write .write_board_form .image_box {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
 }
 
 #board_write .write_board_form .image_box .image {
-  position: relative;
+    position: relative;
 }
 
 #board_write .write_board_form .image_box .image .delete_image {
-  display: none;
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  right: 0;
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 0;
 }
 
 #board_write .write_board_form .image_box .delete_image i {
-  border: 1px solid #333;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  font-size: 20px;
-  background-color: #333;
-  color: #fff;
+    border: 1px solid #333;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    background-color: #333;
+    color: #fff;
 }
 
 #board_write .write_board_form .image_box label input {
-  display: none;
+    display: none;
 }
 
 #board_write .write_board_form .image_box label .no_image {
-  width: 150px;
-  height: 200px;
-  cursor: pointer;
-  position: relative;
+    width: 150px;
+    height: 200px;
+    cursor: pointer;
+    position: relative;
 }
 
 #board_write .write_board_form .image_box label .no_image i {
-  color: #aaa;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border: 1px solid #ddd;
-  display: block;
-  font-size: 50px;
-  text-align: center;
-  line-height: 200px;
-  width: 150px;
-  height: 200px;
+    color: #aaa;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid #ddd;
+    display: block;
+    font-size: 50px;
+    text-align: center;
+    line-height: 200px;
+    width: 150px;
+    height: 200px;
 }
 
 #board_write .write_board_form .image_box label .no_image img {
-  position: absolute;
-  display: none;
-  top: 0;
-  left: 0;
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
 }
 
 #board_write .write_board_form .buttons input {
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #000;
-  border-radius: 5px;
-  padding: 10px 20px;
-  width: 100px;
-  margin: 5px;
-  font-weight: bold;
-  cursor: pointer;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: 100px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 #board_write .write_board_form .buttons input.ok_board {
-  background-color: #000;
-  color: #fff;
-  border: none;
+    background-color: #000;
+    color: #fff;
+    border: none;
 }
 
 #board_write .write_board_form .buttons input.board_list {
-  position: absolute;
-  right: 0;
-  width: 80px;
+    position: absolute;
+    right: 0;
+    width: 80px;
 }
 
 #board_detail {
-  background-color: #fff;
-  margin: 50px auto;
-  padding: 50px;
-  width: 1200px;
-  border: 1px solid #eee;
-  border-radius: 15px;
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 50px;
+    width: 1200px;
+    border: 1px solid #eee;
+    border-radius: 15px;
 }
 
 #board_detail .board_detail_top {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30px;
 }
 
 #board_detail .board_detail_top .board_detail_title {
-  text-align: left;
-  text-indent: 0.5em;
-  padding: 15px 0;
+    text-align: left;
+    text-indent: 0.5em;
+    padding: 15px 0;
 }
 
 #board_detail .board_detail_top .board_detail_button {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  width: 210px;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 210px;
+    margin-bottom: 10px;
 }
 
 #board_detail .board_detail_top .board_detail_button a {
-  display: inline-block;
-  height: 30px;
-  line-height: 30px;
-  width: 65px;
-  background-color: #eee;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 14px;
-  margin: 0 5px;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 65px;
+    background-color: #eee;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0 5px;
 }
 
 #board_detail .board_detail_table {
-  margin: 0 auto;
-  width: 95%;
-  border-top: 3px solid #000;
+    margin: 0 auto;
+    width: 95%;
+    border-top: 3px solid #000;
 }
 
 #board_detail .board_detail_table .text td:nth-child(1) {
-  background-color: #fdf97e;
-  font-weight: bold;
-  font-size: 18px;
+    background-color: #fdf97e;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 #board_detail .board_detail_table .text td:nth-child(2) {
-  text-align: left;
-  padding: 10px 20px;
-  border-bottom: 2px solid #ffe286;
+    text-align: left;
+    padding: 10px 20px;
+    border-bottom: 2px solid #ffe286;
 }
 
 #board_detail .board_detail_table .content td {
-  text-align: left;
-  padding: 50px;
+    text-align: left;
+    padding: 50px;
 }
 
 #board_detail .board_detail_table .image td img {
-  max-width: 1000px;
-  max-height: 800px;
-  margin: 30px;
+    max-width: 1000px;
+    max-height: 800px;
+    margin: 30px;
 }
 
 #board_detail .board_like {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 50px;
-  margin: 30px auto;
-  border-bottom: 2px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
+    margin: 30px auto;
+    border-bottom: 2px solid #eee;
 }
 
 #board_detail .board_like label {
-  display: block;
-  border: 2px solid #000;
-  border-radius: 10px;
-  font-size: 25px;
-  padding: 5px 20px;
-  cursor: pointer;
+    display: block;
+    border: 2px solid #000;
+    border-radius: 10px;
+    font-size: 25px;
+    padding: 5px 20px;
+    cursor: pointer;
 }
 
 #board_detail .create_comment_form {
-  text-align: left;
-  padding: 20px;
+    text-align: left;
+    padding: 20px;
 }
 
 #board_detail .create_comment_form input {
-  width: 200px;
-  height: 30px;
-  text-align: left;
-  padding: 0 20px;
-  margin: 5px 0;
+    width: 200px;
+    height: 30px;
+    text-align: left;
+    padding: 0 20px;
+    margin: 5px 0;
 }
 
 #board_detail .create_comment_form .create_comment_area {
-  display: flex;
+    display: flex;
 }
 
 #board_detail .create_comment_form textarea {
-  font-family: sans-serif;
-  margin-right: 5px;
-  resize: none;
-  width: 100%;
-  height: 120px;
-  text-align: left;
-  padding: 20px;
+    font-family: sans-serif;
+    margin-right: 5px;
+    resize: none;
+    width: 100%;
+    height: 120px;
+    text-align: left;
+    padding: 20px;
 }
 
 #board_detail .create_comment_form .create_comment_area button {
-  width: 100px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: #eee;
-  border: 1px solid #000;
+    width: 100px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #eee;
+    border: 1px solid #000;
 }
 
 #board_detail .boardCommentList {
-  border-top: 3px solid #000;
-  margin-top: 30px;
-  padding: 10px 0;
+    border-top: 3px solid #000;
+    margin-top: 30px;
+    padding: 10px 0;
 }
 
 #board_detail .boardCommentList .one_comment {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
 }
 
 #board_detail .boardCommentList .one_comment ul {
-  display: flex;
-  align-items: center;
-  position: relative;
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
 #board_detail .boardCommentList .one_comment ul .button {
-  position: relative;
-  right: 0;
+    position: relative;
+    right: 0;
 }
 
 #board_detail .boardCommentList .one_comment ul .photo img {
-  width: 35px;
-  height: 35px;
-  border: 2px solid #ddd;
-  border-radius: 50%;
-  margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
 #board_detail .boardCommentList .one_comment ul .nickname {
-  text-align: left;
-  font-weight: bold;
+    text-align: left;
+    font-weight: bold;
 }
 
 #board_detail .boardCommentList .one_comment ul .date {
-  text-align: right;
-  margin: 0 20px;
+    text-align: right;
+    margin: 0 20px;
 }
 
 #board_detail .boardCommentList .one_comment ul .button {
-  position: absolute;
-  right: 0;
+    position: absolute;
+    right: 0;
 }
 
 #board_detail .boardCommentList .one_comment ul .button input {
-  font-weight: bold;
-  width: 40px;
-  color: #555;
-  border: none;
-  background: none;
-  cursor: pointer;
+    font-weight: bold;
+    width: 40px;
+    color: #555;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
 #board_detail .boardCommentList .one_comment ul .button input:hover {
-  text-decoration: underline;
-  color: #000;
+    text-decoration: underline;
+    color: #000;
 }
 
 #board_detail .boardCommentList .one_comment .content {
-  text-align: left;
-  margin-left: 45px;
-  padding: 5px 0;
-  font-size: 14px;
+    text-align: left;
+    margin-left: 45px;
+    padding: 5px 0;
+    font-size: 14px;
 }
 
 #board_detail .boardCommentList .one_comment .mod_cancle form {
-  text-align: left;
-  padding: 20px;
+    text-align: left;
+    padding: 20px;
 }
 
 #board_detail .boardCommentList .one_comment .mod_cancle form .nickname {
-  width: 200px;
-  height: 30px;
-  text-align: left;
-  padding: 0 20px;
-  margin: 5px 0;
+    width: 200px;
+    height: 30px;
+    text-align: left;
+    padding: 0 20px;
+    margin: 5px 0;
 }
 
 #board_detail .boardCommentList .one_comment .mod_cancle form textarea {
-  font-family: sans-serif;
-  margin-right: 5px;
-  resize: none;
-  width: 100%;
-  height: 120px;
-  text-align: left;
-  padding: 20px;
+    font-family: sans-serif;
+    margin-right: 5px;
+    resize: none;
+    width: 100%;
+    height: 120px;
+    text-align: left;
+    padding: 20px;
 }
 
 #board_detail .boardCommentList .one_comment .mod_cancle form .buttons {
-  text-align: right;
+    text-align: right;
 }
 
 #board_detail .boardCommentList .one_comment .mod_cancle form .buttons input {
-  width: 50px;
-  height: 30px;
-  font-size: 12px;
+    width: 50px;
+    height: 30px;
+    font-size: 12px;
 }
 

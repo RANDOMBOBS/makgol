@@ -3,10 +3,7 @@ package com.org.makgol.stores.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.org.makgol.stores.dao.StoresDao;
-import com.org.makgol.stores.dto.RequestStoreListDto;
-import com.org.makgol.stores.dto.ResponseStoreListDto;
-import com.org.makgol.stores.dto.StoreDetailDto;
-import com.org.makgol.stores.dto.StoreMenuDto;
+import com.org.makgol.stores.dto.*;
 import com.org.makgol.stores.repository.StoresRepository;
 import com.org.makgol.stores.type.KakaoLocalResponseJSON;
 import com.org.makgol.stores.vo.KakaoLocalRequestVo;
@@ -14,8 +11,9 @@ import com.org.makgol.stores.vo.StoreRequestMenuVo;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.repository.UsersRepository;
-import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.UsersResponseVo;
+import com.org.makgol.util.file.FileInfo;
+import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.kakaoMap.KakaoMap;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +42,7 @@ public class StoreService {
     private final UsersRepository usersRepository;
     private final KakaoMap kakaoMapSearch;
     private final StoresDao storesDao;
+    private final FileUpload fileUpload;
 
     public List<ResponseStoreListDto> findStoreListData(RequestStoreListDto requestStoreListDto) {
         List<ResponseStoreListDto> result = null;
@@ -64,7 +63,7 @@ public class StoreService {
 
     public String findStoreIdWithPlaceName(String name) {
         String id = "";
-        try{
+        try {
             id = storesRepository.findStoreIdWithPlaceName(name);
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +71,7 @@ public class StoreService {
         return id;
     }
 
-    public StoreDetailDto findStoreDetailWithId(String storeId) {
+    public StoreDetailDto findStoreDetailWithId(int storeId) {
         StoreDetailDto result = null;
         try {
             result = storesRepository.findStoreDetailWithId(storeId);
@@ -82,7 +81,7 @@ public class StoreService {
         return result;
     }
 
-    public List<StoreMenuDto> findStoreMenuWithId(String storeId) {
+    public List<StoreMenuDto> findStoreMenuWithId(int storeId) {
         List<StoreMenuDto> result = null;
         try {
             result = storesRepository.findStoreMenuWithId(storeId);
@@ -90,6 +89,49 @@ public class StoreService {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public List<StoreReviewDto> findStoreReviewWithId(int storeId) {
+        List<StoreReviewDto> result = null;
+        try {
+            result = storesRepository.findStoreReviewWithId(storeId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<String> findStoreReviewImageWithId(int reviewId) {
+        List<String> result = null;
+        try {
+            result = storesRepository.findStoreReviewImageWithId(reviewId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<UserInfoDto> findUserInfoWithId(int userId) {
+        List<UserInfoDto> result = null;
+        try {
+            result = storesRepository.findUserInfoWithId(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public void createReview(CreateReviewDto createReviewDto) {
+        List<FileInfo> fileInfoList = fileUpload.fileListUpload(createReviewDto.getReviewImages());
+        try {
+            storesRepository.createReview(createReviewDto);
+            fileInfoList.forEach((fileInfo -> {
+                UploadReviewImageDto uploadReviewImageDto = new UploadReviewImageDto(createReviewDto.getId(), fileInfo.getPhotoName(), fileInfo.getPhotoPath());
+                storesRepository.uploadReviewImage(uploadReviewImageDto);
+            }));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public KakaoLocalResponseJSON callKakaoLocalAPI(KakaoLocalRequestVo searchRequestVo) {
@@ -173,7 +215,7 @@ public class StoreService {
     }
 
 
-    public boolean saveStoresProcess(String email){
+    public boolean saveStoresProcess(String email) {
         log.info("saveStoresProcess");
         UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
         List<StoreRequestVo> storeRequestVoList = kakaoMapSearch.storeInfoSearch(usersResponseVo);

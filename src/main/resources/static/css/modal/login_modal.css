@@ -134,7 +134,7 @@
     transform: translate(-50%, -50%);
 }
 
-.login_modal .modal_body .social_login button {
+.login_modal .modal_body .social_login a {
     width: 320px;
     height: 53px;
     display: flex;
@@ -149,7 +149,7 @@
     outline: none;
 }
 
-.login_modal .modal_body .social_login button:hover {
+.login_modal .modal_body .social_login a:hover {
     cursor: pointer;
     text-decoration: underline;
 }
