@@ -29,6 +29,14 @@ public class StoreController {
     private final StoreService storeService;
     private final HttpTransactionLogger logger;
 
+    @GetMapping("/rouletteResult")
+    public String rouletteResult(@RequestParam("category") String category, Model model) {
+        System.out.println("category = " + category);
+        String nextPage = "jsp/store/store_list";
+        model.addAttribute("keyword", category);
+        return nextPage;
+    }
+
     @GetMapping(value = "/test")
     public String test() {
         return "jsp/store/test";
