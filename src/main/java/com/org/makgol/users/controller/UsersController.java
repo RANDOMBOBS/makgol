@@ -12,6 +12,7 @@ import com.org.makgol.util.cookie.CookieUtil;
 import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -117,20 +118,26 @@ public class UsersController {
 
 
     @GetMapping("/myPage")
-    public String myPage() {
-
-        return "jsp/user/my_page";
+    public String myPage(@RequestParam("user_id") int user_id, Model model) {
+       UsersResponseVo userInfo = userService.userInfo(user_id);
+       model.addAttribute("userInfo", userInfo);
+       return "jsp/user/my_page";
     }
 
     @GetMapping("/modifyUser")
-    public String modify_user() {
+    public String modify_user(@RequestParam("user_id") int user_id, Model model) {
+        UsersResponseVo userInfo = userService.userInfo(user_id);
+        model.addAttribute("userInfo", userInfo);
         return "jsp/user/modify_user";
     }
 
     @PostMapping("/modifyUserConfirm")
-    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile,HttpServletResponse response) {
+    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile,HttpServletResponse response, Model model) {
+        System.out.println("usersRequestVo = " + usersRequestVo);
         int result = userService.modifyUserInfo(usersRequestVo, oldFile, response);
         if (result > 0) {
+            UsersResponseVo userInfo = userService.userInfo(usersRequestVo.getId());
+            model.addAttribute("userInfo", userInfo);
             return "jsp/user/my_page";
         }
         return "jsp/user/modify_user";

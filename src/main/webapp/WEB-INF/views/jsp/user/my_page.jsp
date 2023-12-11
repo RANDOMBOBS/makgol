@@ -32,16 +32,18 @@
                  <td>${loginedUserVo.name} / ${loginedUserVo.grade}</td>
                </tr>
                <tr>
-                 <td>${loginedUserVo.email}</td>
+                 <td>${userInfo.email}</td>
                </tr>
                <tr>
-                 <td>${loginedUserVo.phone}</td>
+                 <td>${userInfo.phone}</td>
                </tr>
                <tr>
-                 <td>${loginedUserVo.address}</td>
+                 <td>${userInfo.address}</td>
                </tr>
              </table>
-             <span class="mod_my_info"><a href="<c:url value='/user/modifyUser'/>">수정하기</a></span>
+             <span class="mod_my_info">
+                <a href="<c:url value='/user/modifyUser'><c:param name='user_id' value='${loginedUserVo.id}' /></c:url>">수정하기</a>
+             </span>
            </div>
 
            <c:url value='/user/myStoreList' var='my_store_url'>

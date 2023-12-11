@@ -147,7 +147,7 @@
                     <c:if test="${loginedUserVo.grade == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
-                    <li><a href="<c:url value='/user/myPage'/>">MYPAGE</a></li>
+                    <li><a href="<c:url value='/user/myPage'><c:param name="user_id" value="${loginedUserVo.id}" /></c:url>">MYPAGE</a></li>
                     <li><a href="<c:url value=''/>" id="logout_link">LOGOUT</a></li>
                 </c:when>
                 <c:otherwise>
@@ -174,6 +174,7 @@
             type: "GET",
             success: function (rdata) {
                 console.log("성공")
+                location.href="http://localhost:8090/"
             },
             error: function (error) {
                 console.log("실패")
@@ -249,21 +250,28 @@
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
+    if (month > 0 && month < 10) {
+        month = "0" + month;
+    }
     let day = date.getDate();
+    if (day > 0 && day < 10) {
+        day = "0" + day;
+    }
     let hour = date.getHours();
+    if (hour > 0 && hour < 10) {
+        hour = "0" + hour;
+    } else if (hour == 0) {
+        hour = "00";
+    }
     let minute = date.getMinutes();
-        if (month > 0 && month < 10) {
-            month = "0" + month;
-        }
-        if (day > 0 && day < 10) {
-            day = "0" + day;
-        }
-        if (hour > 0 && hour < 10) {
-            hour = "0" + hour;
-        } else if (hour == 0) {
-            hour = "00";
-        }
-    let nowTime = hour + minute.toString();
+    if (minute > 0 && minute < 10) {
+        minute = "0" + minute;
+    } else if (minute == 0) {
+        minute = "00";
+    }
+
+
+    let nowTime = hour.toString() + minute.toString();
     let nowHourMinute = (parseInt(nowTime) - 44).toString();
     if(nowHourMinute < 0){
         nowHourMinute = "23"+nowHourMinute;

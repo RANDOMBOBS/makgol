@@ -63,14 +63,8 @@ public class CookieUtil {
     public static boolean saveCookies(HttpServletResponse response, UsersResponseVo loginedUserVo) {
         CookieUtil.setCookie(response, "id", String.valueOf(loginedUserVo.getId()));
         CookieUtil.setCookie(response, "name", loginedUserVo.getName());
-        CookieUtil.setCookie(response, "email", loginedUserVo.getEmail());
-        CookieUtil.setCookie(response, "phone", loginedUserVo.getPhone());
-        CookieUtil.setCookie(response, "photo", loginedUserVo.getPhoto());
         CookieUtil.setCookie(response, "photo_path", loginedUserVo.getPhoto_path());
         CookieUtil.setCookie(response, "grade", loginedUserVo.getGrade());
-        CookieUtil.setCookie(response, "address", loginedUserVo.getAddress());
-        CookieUtil.setCookie(response, "longitude", String.valueOf(loginedUserVo.getLongitude()));
-        CookieUtil.setCookie(response, "latitude", String.valueOf(loginedUserVo.getLatitude()));
         CookieUtil.setCookie(response, "weatherAddr", loginedUserVo.getWeatherAddr());
         CookieUtil.setCookie(response, "valueX", String.valueOf(loginedUserVo.getValueX()));
         CookieUtil.setCookie(response, "valueY", String.valueOf(loginedUserVo.getValueY()));

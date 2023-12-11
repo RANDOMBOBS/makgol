@@ -147,22 +147,10 @@ public class UsersService {
                 loginedUserVo.setId(Integer.parseInt(cookieValue));
             } else if (cookieName.equals("name")) {
                 loginedUserVo.setName(cookieValue);
-            } else if (cookieName.equals("email")) {
-                loginedUserVo.setEmail(cookieValue);
-            } else if (cookieName.equals("phone")) {
-                loginedUserVo.setPhone(cookieValue);
-            } else if (cookieName.equals("photo")) {
-                loginedUserVo.setPhoto(cookieValue);
             } else if (cookieName.equals("photo_path")) {
                 loginedUserVo.setPhoto_path(cookieValue);
-            } else if (cookieName.equals("longitude")) {
-                loginedUserVo.setLongitude(Double.parseDouble(cookieValue));
-            } else if (cookieName.equals("latitude")) {
-                loginedUserVo.setLatitude(Double.parseDouble(cookieValue));
             } else if (cookieName.equals("grade")) {
                 loginedUserVo.setGrade(cookieValue);
-            } else if (cookieName.equals("address")) {
-                loginedUserVo.setAddress(cookieValue);
             } else if (cookieName.equals("weatherAddr")) {
                 loginedUserVo.setWeatherAddr(cookieValue);
             } else if (cookieName.equals("valueX")) {
@@ -176,7 +164,6 @@ public class UsersService {
 
 
     public void blackList(HttpServletRequest req, HttpServletResponse res){
-        System.out.println("블랙리스트");
         ServletContext servletContext = req.getServletContext();
         servletContext.removeAttribute("loginedUserVo");
         CookieUtil.clearCookie(req, res);
@@ -192,8 +179,7 @@ public class UsersService {
 
 
     public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpServletResponse response) {
-        UsersResponseVo loginedUserVo = (UsersResponseVo) servletContext.getAttribute("loginedUserVo");
-
+        UsersResponseVo loginedUserVo = usersRepository.userInfo(usersRequestVo.getId());
         int result =0;
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
         if (usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()) {
@@ -235,6 +221,10 @@ public class UsersService {
             future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
         return result;
+    }
+
+    public UsersResponseVo userInfo(int user_id){
+        return usersRepository.userInfo(user_id);
     }
 
     public List<StoreResponseVo> myStoreList(int user_id){

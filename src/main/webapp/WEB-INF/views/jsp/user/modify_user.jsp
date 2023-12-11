@@ -20,7 +20,7 @@
 
  <div id="modify_user">
       <h1 class="modify_user_title">회원정보 수정</h1>
-  <form action="<c:url value='/user/modifyUserConfirm'><c:param name="oldFile" value="${loginedUserVo.photo_path}"/></c:url>"
+  <form action="<c:url value='/user/modifyUserConfirm'><c:param name="oldFile" value="${userInfo.photo_path}"/></c:url>"
         method="post" name="modify_user_info" class="modify_user_form" enctype="multipart/form-data">
 
     <div class="profile_image">
@@ -35,7 +35,7 @@
     <div class="column email">
       <p class="caution">* 이메일과 이름은 변경하실 수 없습니다.</p>
       <span class="description">이메일</span>
-      <input type="text" class="form-control" name="email" id="email" value="${loginedUserVo.email}" readonly disabled />
+      <input type="text" class="form-control" name="email" id="email" value="${userInfo.email}" readonly disabled />
     </div>
 
     <div class="column name">
@@ -56,15 +56,15 @@
 
     <div class="column phone">
       <span class="description">전화번호</span>
-      <input placeholder="전화번호" id="phone" name="phone" value="${loginedUserVo.phone}" />
+      <input placeholder="전화번호" id="phone" name="phone" value="${userInfo.phone}" />
     </div>
 
     <div class="column address">
       <span class="description">주소</span>
-      <input type="text" id="sample5_address" name="address" value="${loginedUserVo.address}" readonly/>
+      <input type="text" id="sample5_address" name="address" value="${userInfo.address}" readonly/>
 
-      <input type="hidden" name="longitude" id="resultX" value="${loginedUserVo.longitude}" />
-      <input type="hidden" name="latitude" id="resultY" value="${loginedUserVo.latitude}" />
+      <input type="hidden" name="longitude" id="resultX" value="${userInfo.longitude}" />
+      <input type="hidden" name="latitude" id="resultY" value="${userInfo.latitude}" />
       <input type="button" class="search" onclick="sample5_execDaumPostcode()" value="검색" />
     </div>
 
@@ -108,7 +108,7 @@ function userimageURL(input) {
 
      var mapContainer = document.getElementById('map'), // 지도를 표시할 div
        mapOption = {
-         center: new daum.maps.LatLng(${loginedUserVo.latitude}, ${loginedUserVo.longitude}), // 지도의 중심좌표
+         center: new daum.maps.LatLng(${userInfo.latitude}, ${userInfo.longitude}), // 지도의 중심좌표
          level: 5 // 지도의 확대 레벨
        };
 
@@ -118,7 +118,7 @@ function userimageURL(input) {
      var geocoder = new daum.maps.services.Geocoder();
      // 마커를 미리 생성
      var marker = new daum.maps.Marker({
-       position: new daum.maps.LatLng(${loginedUserVo.latitude}, ${loginedUserVo.longitude}),
+       position: new daum.maps.LatLng(${userInfo.latitude}, ${userInfo.longitude}),
        map: map
      });
 
@@ -190,7 +190,7 @@ function userimageURL(input) {
 
 
     function ModifyUserCancle(){
-       window.location.href = "http://localhost:8090/user/myPage"
+       window.location.href = "http://localhost:8090/user/myPage?user_id=${loginedUserVo.id}"
     }
 
 
