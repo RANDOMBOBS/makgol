@@ -69,7 +69,7 @@ public class UsersService implements LogoutHandler {
             map.put("newPassword", newPassword);
             map.put("userEmail", userEmail);
             if (usersRepository.updatePassword(map)) {
-                mailSendUtil.sendMail(randomNumber, userEmail);
+                mailSendUtil.sendMail(randomNumber, userEmail, false);
             }
             return newPassword;
 
@@ -84,7 +84,7 @@ public class UsersService implements LogoutHandler {
     public boolean checkEmail(String email) {
         int authNumber = mailSendUtil.makeRandomNumber();
         String key = String.valueOf(authNumber);
-        if (mailSendUtil.sendMail(authNumber, email)) {
+        if (mailSendUtil.sendMail(authNumber, email, true)) {
             return redisUtil.setDataExpire(key, email, 60 * 3L);
         }
         return false;

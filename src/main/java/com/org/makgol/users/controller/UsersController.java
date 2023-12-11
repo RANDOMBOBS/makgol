@@ -51,9 +51,8 @@ public class UsersController {
 
 
     @PostMapping("/findPassword")
-    public void userFindPassword() {
-        String userEmail = "tjsgus223@naver.com";
-        userService.userFindPassword(userEmail);
+    public void userFindPassword(@RequestParam("email") String email) {
+        userService.userFindPassword(email);
 
     } // userFindPassword_END
 
