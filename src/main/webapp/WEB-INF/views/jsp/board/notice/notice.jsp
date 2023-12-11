@@ -27,6 +27,7 @@
 		</div>
 	</section>
 
+    <jsp:include page="../..//include/footer.jsp"></jsp:include>
 	<jsp:include page="../../../script/jsp/notice.jsp"></jsp:include>
 
 	<script>

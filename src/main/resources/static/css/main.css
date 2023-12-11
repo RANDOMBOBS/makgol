@@ -147,3 +147,7 @@ body::-webkit-scrollbar {
   margin: 0 20px;
   background-color: transparent;
 }
+
+#event {
+    margin: 0 30px;
+}
