@@ -8,11 +8,8 @@ import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
-import com.org.makgol.util.cookie.CookieUtil;
-import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,12 +20,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Map;
 
+@Slf4j
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -105,7 +100,7 @@ public class UsersController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest req, HttpServletResponse res,@RequestParam("link") String link){
+    public String logout(HttpServletRequest req, HttpServletResponse res,@RequestParam("link") String link) {
         userService.blackList(req, res);
         return "home";
     }

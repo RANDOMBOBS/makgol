@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>
+
 </head>
 <body>
 <div class="modal_cover">
@@ -39,6 +40,8 @@
                                 type="password"
                         />
                     </label>
+                    <c:set var="xsrfToken" value="${cookie['XSRF-TOKEN'].value}" />
+                    <input type="hidden" name="_csrf" value="${xsrfToken}"/>
                     <div id="save_id">
                         <label for="remember-check">
                             <input id="remember-check" type="checkbox"/>
