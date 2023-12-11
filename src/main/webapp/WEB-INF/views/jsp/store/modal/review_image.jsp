@@ -7,6 +7,8 @@
           type="text/css"/>
     <link href="<c:url value='/resources/static/css/shop_detail/modal/upload_review_image.css'/>" rel="stylesheet"
           type="text/css"/>
+    <link href="<c:url value='/resources/static/css/slick.css' />" rel="stylesheet"
+          type="text/css"/>
 </head>
 <body>
 <div class="modal_cover">
@@ -16,13 +18,7 @@
             <button class="close_button">X</button>
         </div>
         <div class="list_modal_body">
-            <%--            <div class="button_area">--%>
-            <%--                <button><i class="fa-solid fa-angle-left"></i></button>--%>
-            <%--            </div>--%>
             <div class="review_image_list"></div>
-            <%--            <div class="button_area">--%>
-            <%--                <button><i class="fa-solid fa-angle-right"></i></button>--%>
-            <%--            </div>--%>
         </div>
     </div>
     <div class="upload_modal">
