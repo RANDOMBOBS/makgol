@@ -139,7 +139,6 @@ public class UsersService implements LogoutHandler {
             loginedUserVo.setValueX(Integer.parseInt(valueX));
             loginedUserVo.setValueY(Integer.parseInt(valueY));
             loginedUserVo.setWeatherAddr(weatherAddr);
-            CookieUtil.saveCookies(response, loginedUserVo);
 
             // 1. 기존에 있던 리프레쉬 토큰을 취소 시킨다.
             jwtUtil.saveTokenUpdate(email, JwtUtil.REVOKED);
@@ -147,6 +146,9 @@ public class UsersService implements LogoutHandler {
             TokenVo tokenVo = jwtUtil.createSettingToken(email);
             // 3. 악세스 토큰을 쿠키에 담아 클라이언트에게 전송 시킨다.
             jwtUtil.setTokenInCookie(response, tokenVo.getAccessToken(), "Access");
+
+            CookieUtil.saveCookies(response, loginedUserVo);
+
         } else{
             throw new CustomException(ErrorCode.NOT_FOUND_USER);
         }
