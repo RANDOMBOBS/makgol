@@ -246,13 +246,8 @@
         const registerModalButtonEle = $(".user_option span:nth-child(1)");
 
         registerModalButtonEle.click(() => {
-            const modalCoverEle = $(".modal_cover");
-            const registerModalEle = $(".register_modal");
-
             $(".login_modal").css({display: "none"});
-
-            modalCoverEle.css({display: "block"});
-            registerModalEle.css({display: "block"});
+            $(".register_modal").css({display: "block"});
         })
     };
 
