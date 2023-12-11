@@ -40,7 +40,7 @@
                                 type="password"
                         />
                     </label>
-                    <c:set var="xsrfToken" value="${cookie['XSRF-TOKEN'].value}" />
+                    <c:set var="xsrfToken" value="${cookie['XSRF-TOKEN'].value}"/>
                     <input type="hidden" name="_csrf" value="${xsrfToken}"/>
                     <div id="save_id">
                         <label for="remember-check">
@@ -56,8 +56,8 @@
                 <span>아이디 & 비밀번호 찾기</span>
             </div>
             <div class="social_login">
-                <button id="naver_login">네이버 로그인</button>
-                <button id="kakao_login">카카오 로그인</button>
+                <a id="naver_login" href="http://localhost:8090/oauth2/authorization/naver">네이버 로그인</a>
+                <a id="kakao_login" href="http://localhost:8090/oauth2/authorization/kakao">카카오 로그인</a>
             </div>
         </div>
         <div class="modal_footer"></div>
