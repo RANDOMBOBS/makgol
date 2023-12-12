@@ -9,6 +9,24 @@
         searchKeywordEle.text(keyword);
         const shopInfoListEle = $(".shop_info_list");
 
+        if (!shops.length) {
+            const h3Ele1 = $("<h3>");
+            h3Ele1.css({color: "#99958b"}).text("주변에 " + keyword + " 카테고리에");
+            const h3Ele2 = $("<h3>");
+            h3Ele2.css({color: "#99958b"}).text("해당하는 업장이 존재하지 않습니다.");
+
+
+            shopInfoListEle.css({
+                background: "#cccccc",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            });
+
+            shopInfoListEle.append(h3Ele1, h3Ele2);
+        }
+
         shops.forEach((shop) => {
             const shopInfoItemEle = $("<div>").addClass("shop_info_item");
 
