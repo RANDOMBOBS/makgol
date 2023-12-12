@@ -148,6 +148,7 @@ body::-webkit-scrollbar {
   background-color: transparent;
 }
 
+// 이벤트 배너 CSS
 #event {
-    margin: 0 30px;
+    margin: 30px 0px;
 }
