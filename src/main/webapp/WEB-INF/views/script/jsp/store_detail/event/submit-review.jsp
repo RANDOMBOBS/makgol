@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
-    const submitReview = async (storeId, userId = String(85)) => {
+    const submitReview = async (storeId) => {
         const review = $("#text_review").val();
         let reviewImages = reviewImageMap.get("reviewImages");
 
@@ -8,7 +8,6 @@
 
         const formData = new FormData();
 
-        formData.append("userId", userId);
         formData.append("storeId", storeId);
         formData.append("review", review);
 
@@ -19,11 +18,13 @@
 
         const url = "http://localhost:8090/store/review";
         const {axios} = window;
-        const {data} = await axios.post(url, formData, {headers: {'Content-Type': 'multipart/form-data'}})
 
-        if (data.success) {
+        try {
+            await axios.post(url, formData, {headers: {'Content-Type': 'multipart/form-data'}});
             alert("리뷰를 작성하였습니다.");
             location.reload();
+        } catch (err) {
+            alert("로그인 해주세요.")
         }
     }
 </script>

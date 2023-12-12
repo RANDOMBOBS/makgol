@@ -91,7 +91,14 @@
                     <div class="review_profile">
                         <img class="user_image"
                              src="http://localhost:8090/resources/static/image/default/user_default.jpeg">
-                        <span class="user_name">사용자</span>
+                        <c:choose>
+                            <c:when test="${loginedUserVo == null}">
+                                <span class="user_name">사용자</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span class="user_name">${loginedUserVo.getName()}</span>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                     <div class="review_content">
                         <textarea spellcheck="false" id="text_review" class="content"></textarea>
