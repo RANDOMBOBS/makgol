@@ -43,10 +43,10 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
     private boolean isAllowedDomain(String referer) {
 
         if (referer != null && referer.contains("http://localhost:8080")) {
-            // "http://localhost:8090/"가 포함되어 있다면 처리
+            // "http://localhost:8080/"가 포함되어 있다면 처리
             return true;
         } else {
-            // "http://localhost:8090/"가 포함되어 있지 않다면 처리
+            // "http://localhost:8080/"가 포함되어 있지 않다면 처리
             return false;
         }
     }

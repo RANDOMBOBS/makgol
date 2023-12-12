@@ -18,7 +18,6 @@
 <link href="<c:url value='/resources/static/css/board.css' />" rel="stylesheet" type="text/css"/>
 
 
-
 <c:url value="/board/suggestion" var="suggestion_url"/>
 <c:url value="/board/suggestion/modify" var="modify_url">
     <c:param name="b_id" value="${boardVo.id}"/>
@@ -43,7 +42,7 @@
             </c:otherwise>
         </c:choose>
         <div class="board_detail_button">
-            <c:if test="${boardVo.user_id == loginedUserVo.getId()}">
+            <c:if test="${boardVo.user_id == loginedUserVo.getId() || loginedUserVo.getGrade() == '관리자'}">
                 <a href="${modify_url}">수정</a>
                 <a href="#" onclick="boardDelete()">삭제</a>
             </c:if>
@@ -81,33 +80,34 @@
 
     <div class="board_like">
         <label for="like">
-            <input type="checkbox" id="like" style="display: none" data-b-id="${boardVo.id}" data-user-id="${loginedUserVo.id}" />
+            <input type="checkbox" id="like" style="display: none" data-b-id="${boardVo.id}"
+                   data-user-id="${loginedUserVo.id}"/>
             <i class="fa-regular fa-thumbs-up"> ${boardVo.sympathy}</i>
         </label>
     </div>
 
 
-<form name="create_comment_form" class="create_comment_form">
-    <c:choose>
-        <c:when test="${loginedUserVo != null}">
-            <input type="text" name="nickname" placeholder="닉네임"/>
-            <div class="create_comment_area">
+    <form name="create_comment_form" class="create_comment_form">
+        <c:choose>
+            <c:when test="${loginedUserVo != null}">
+                <input type="text" name="nickname" placeholder="닉네임"/>
+                <div class="create_comment_area">
+                    <input type="hidden" name="board_id" value="${boardVo.id}"/>
+                    <input type="hidden" name="user_id" value="${loginedUserVo.getId()}"/>
+                    <textarea name="contents" placeholder="댓글을 입력해주세요."></textarea>
+                    <button type="button" onclick="createCommentForm()">등록</button>
+                </div>
+            </c:when>
+
+            <c:otherwise>
                 <input type="hidden" name="board_id" value="${boardVo.id}"/>
-                <input type="hidden" name="user_id" value="${loginedUserVo.getId()}"/>
-                <textarea name="contents" placeholder="댓글을 입력해주세요."></textarea>
-                <button type="button" onclick="createCommentForm()">등록</button>
-            </div>
-        </c:when>
+                <input type="text" name="nickname" placeholder="닉네임" disabled/>
+                <textarea name="contents" placeholder="로그인 후 댓글 작성이 가능합니다." disabled></textarea>
+            </c:otherwise>
+        </c:choose>
+    </form>
 
-        <c:otherwise>
-            <input type="hidden" name="board_id" value="${boardVo.id}"/>
-            <input type="text" name="nickname" placeholder="닉네임" disabled/>
-            <textarea name="contents" placeholder="로그인 후 댓글 작성이 가능합니다." disabled></textarea>
-        </c:otherwise>
-    </c:choose>
-</form>
-
-<div class="boardCommentList"></div>
+    <div class="boardCommentList"></div>
 </div>
 
 <jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>

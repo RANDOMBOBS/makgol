@@ -137,7 +137,14 @@ public class StoreController {
     }
 
     @PostMapping(value = "/review")
-    public ResponseEntity<?> createReview(@ModelAttribute CreateReviewDto createReviewDto) {
+    public ResponseEntity<?> createReview(@ModelAttribute CreateReviewDto createReviewDto, @CookieValue(name = "id", required = false) Integer userId) {
+        if (userId == null) {
+            KakaoLocalResponseVo fail = new KakaoLocalResponseVo<>(false, "로그인되지 않았습니다.", null);
+            return new ResponseEntity<>(fail, HttpStatus.FORBIDDEN);
+        }
+
+        createReviewDto.setUserId(userId);
+
         // 이미지 업로드를 안한 경우 빈 리스트로 초기화
         if (createReviewDto.getReviewImages() == null) {
             createReviewDto.setReviewImages(new ArrayList<>());
@@ -145,7 +152,7 @@ public class StoreController {
 
         storeService.createReview(createReviewDto);
 
-        KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "업장 아이디에 해당하는 리뷰를 가져옵니다.", null);
+        KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "리뷰를 생성합니다.", null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
