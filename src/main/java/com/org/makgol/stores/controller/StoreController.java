@@ -128,6 +128,7 @@ public class StoreController {
                     responseStoreReviewDto.setContent(storeReviewDto.getContent());
                     responseStoreReviewDto.setDate(storeReviewDto.getDate());
                     responseStoreReviewDto.setReview_photo_path(storeReviewImages.get(storeReviewDto.getId()));
+                    responseStoreReviewDto.setUserId(storeReviewDto.getUser_id());
                     responseStoreReviewDto.setName(userInfoDto.getName());
                     responseStoreReviewDto.setUser_photo_path(userInfoDto.getPhoto_path());
                 });
