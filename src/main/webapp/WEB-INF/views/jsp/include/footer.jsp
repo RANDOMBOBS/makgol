@@ -34,7 +34,7 @@
             <ul class="information_ul">
                 <li>(주)랜덤밥스</li>
                 <li>대표이사:이승훈</li>
-                <li>사업자등록번호:2023-06-28</li>
+                <li>사업자등록번호:213-23-0628</li>
             </ul>
             <ul class="information_ul">
                 <li>서울 강남구 강남대로96길 16 4층</li>

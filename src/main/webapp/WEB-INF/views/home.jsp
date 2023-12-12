@@ -78,6 +78,7 @@
                 <span>Top 5</span>
                 <span><img id="top5image" src="<c:url value='/resources/static/image/default/top5.png' />"></span>
             </div>
+
             <div class="topmenu_list">
                 <div class="topmenu_list_div">
                 </div>
