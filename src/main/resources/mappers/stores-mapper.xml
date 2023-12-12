@@ -63,6 +63,14 @@
         VALUES (#{userId}, #{storeId}, #{review}, now())
     </insert>
 
+    <update id="modifyReviewWithId" parameterType="com.org.makgol.stores.dto.ModifyReviewDto">
+        UPDATE mak_gol.reviews
+        SET content = #{review},
+            date    = now()
+        WHERE id =
+              #{reviewId}
+    </update>
+    
     <insert id="uploadReviewImage" parameterType="com.org.makgol.stores.dto.UploadReviewImageDto">
         INSERT
         INTO mak_gol.review_images (review_id, photo, photo_path, date)

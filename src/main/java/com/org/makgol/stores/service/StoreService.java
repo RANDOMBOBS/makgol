@@ -134,6 +134,14 @@ public class StoreService {
         }
     }
 
+    public void modifyReviewWithId(ModifyReviewDto modifyReviewDto) {
+        try {
+            storesRepository.modifyReviewWithId(modifyReviewDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteReviewWithId(int reviewId) {
         try {
             storesRepository.deleteReviewWithId(reviewId);

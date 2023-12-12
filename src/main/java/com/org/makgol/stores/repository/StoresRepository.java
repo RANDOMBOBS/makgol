@@ -26,9 +26,13 @@ public interface StoresRepository {
 
     List<UserInfoDto> findUserInfoWithId(int userId);
 
-    void deleteReviewWithId(int reviewId);
-
     void createReview(CreateReviewDto createReviewDto);
+
+    void modifyReviewWithId(ModifyReviewDto modifyReviewDto);
+
+    String getModDateById(int reviewId);
+
+    void deleteReviewWithId(int reviewId);
 
     void uploadReviewImage(UploadReviewImageDto uploadReviewImageDto);
 
