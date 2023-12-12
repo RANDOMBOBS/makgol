@@ -26,6 +26,8 @@ public interface StoresRepository {
 
     List<UserInfoDto> findUserInfoWithId(int userId);
 
+    void deleteReviewWithId(int reviewId);
+
     void createReview(CreateReviewDto createReviewDto);
 
     void uploadReviewImage(UploadReviewImageDto uploadReviewImageDto);
@@ -35,4 +37,6 @@ public interface StoresRepository {
     void saveMenus(Map<String, Object> map);
 
     void saveStores(StoreRequestVo storeRequestVo);
+
+
 }

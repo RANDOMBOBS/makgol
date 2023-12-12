@@ -22,7 +22,7 @@
             requestStoreMenu(shopId),
             requestStoreReview(shopId)
         ]);
-        
+
         displayImage(detail.photo);
         linkHeadOffice(detail.site);
         displayDetail(detail);

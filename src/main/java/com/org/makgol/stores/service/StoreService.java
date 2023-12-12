@@ -134,6 +134,14 @@ public class StoreService {
         }
     }
 
+    public void deleteReviewWithId(int reviewId) {
+        try {
+            storesRepository.deleteReviewWithId(reviewId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public KakaoLocalResponseJSON callKakaoLocalAPI(KakaoLocalRequestVo searchRequestVo) {
         String x = searchRequestVo.getX();
         String y = searchRequestVo.getY();

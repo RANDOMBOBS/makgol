@@ -165,6 +165,13 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/review_id/{review_id}")
+    public ResponseEntity<?> deleteReviewWithId(@PathVariable int review_id) {
+        storeService.deleteReviewWithId(review_id);
+        KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "리뷰를 삭제하였습니다.", null);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/kakao-local-api")
     public String callKakaoLocalApi(KakaoLocalRequestVo kakaoLocalRequestVo) {
         logger.logRequestDto(kakaoLocalRequestVo);

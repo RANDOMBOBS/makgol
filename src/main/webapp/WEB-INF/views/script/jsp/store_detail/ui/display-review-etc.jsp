@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="../event/modify-review.jsp"></jsp:include>
+<jsp:include page="../event/delete-review.jsp"></jsp:include>
 <script>
     const displayReviewEtc = (item) => {
         const loginedUserId = "${loginedUserVo.id}";
@@ -28,12 +30,8 @@
             const modifyButtonEle = $("<button>").addClass("button modify_button");
             const deleteButtonEle = $("<button>").addClass("button delete_button");
 
-            modifyButtonEle.click(() => {
-                alert("수정")
-            });
-            deleteButtonEle.click(() => {
-                alert("삭제")
-            });
+            modifyButtonEle.click(modifyReview);
+            deleteButtonEle.click(deleteReview);
 
             modifyButtonEle.append(modifyIconEle);
             deleteButtonEle.append(deleteIconEle);
