@@ -4,6 +4,9 @@
 .top_menu {
 	width: 1200px;
 	margin: 30px auto;
+	border-radius : 0 10px 10px 10px;
+	border: 12px solid #ffa500;
+	background-color:white;
 }
 
 .topmenu_main_div {
@@ -47,7 +50,6 @@
 .topmenu_list_ul .slick-center{
     opacity:1;
     transform:scale(1.08);
-    //
 }
 
 .topmenu_list_ul .topmenu_list {

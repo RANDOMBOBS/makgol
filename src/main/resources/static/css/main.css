@@ -147,3 +147,11 @@ body::-webkit-scrollbar {
   margin: 0 20px;
   background-color: transparent;
 }
+
+#event {
+    margin: 30px 0px;
+}
+
+#event img{
+    width:1400px;
+}

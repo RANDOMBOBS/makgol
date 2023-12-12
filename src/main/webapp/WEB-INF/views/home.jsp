@@ -76,6 +76,7 @@
             <div class="topmenu_main_div">
                 <span><img id="top5image" src="<c:url value='/resources/static/image/default/top5.png' />"></span>
                 <span>Top 5</span>
+                <span><img id="top5image" src="<c:url value='/resources/static/image/default/top5.png' />"></span>
             </div>
             <div class="topmenu_list">
                 <div class="topmenu_list_div">
@@ -85,7 +86,10 @@
     </div>
 
     <div id="event">
-        <div><img src="<c:url value='/resources/static/image/default/Christmas.png' />"></div>
+        <div class="img1"><img src="<c:url value='/resources/static/image/default/winter_1.png' />"></div>
+        <div class="img2"><img src="<c:url value='/resources/static/image/default/winter_2.png' />"></div>
+        <div class="img3"><img src="<c:url value='/resources/static/image/default/winter_3.png' />"></div>
+        <div class="img4"><img src="<c:url value='/resources/static/image/default/winter_4.png' />"></div>
     </div>
 
 
@@ -95,11 +99,26 @@
 
 <jsp:include page="script/jsp/main.jsp"></jsp:include>
 
-0
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
     $.noConflict();
     var jQ = jQuery;
+
+    jQ(function(){
+              jQ('#event').slick({
+                  slide: 'div',
+                  infinite: true,
+                  slidesToShow : 1,
+                  slidesToScroll : 1,
+                  autoplaySpeed: 4000,
+                  autoplay : true,
+                  draggable : true,
+                  arrows: false,
+                  fade: true
+              });
+    })
+
 
     function getAllcategory() {
         jQ.ajax({
