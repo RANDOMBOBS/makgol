@@ -16,7 +16,7 @@
             reviewImageMap.clear();
         }
 
-        const url = "http://localhost:8090/store/review";
+        const url = "/store/review";
         const {axios} = window;
 
         try {

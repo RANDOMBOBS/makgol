@@ -17,6 +17,8 @@ public class FileUpload {
 
     @Value("${file.path.matcher}")
     private String filePathMatcher;
+    @Value("${domain.address}")
+    private String domainAddress;
 
     public List<FileInfo> fileListUpload(List<MultipartFile> fileList) {
         List<FileInfo> fileInfoList = new ArrayList<>();
@@ -35,6 +37,9 @@ public class FileUpload {
             String currentDirectory = System.getProperty("user.dir");
             System.out.println("현재 디렉토리: " + currentDirectory);
 
+            //mac 경로
+//            String uploadFolder = currentDirectory+"/src/main/resources/static/image";
+            //windows 경로
             String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image";
 
 		/*
@@ -55,11 +60,14 @@ public class FileUpload {
 
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
 
+            //mac
+//            File saveFile = new File(uploadFolder+"/"+uniqueName + fileExtension);  // 적용 후
+            //windows
             File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
 
             try {
                 fileList.get(index).transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-                fileInfo.setPhotoPath(filePathMatcher+uniqueName+fileExtension);
+                fileInfo.setPhotoPath(domainAddress+filePathMatcher+uniqueName+fileExtension);
                 fileInfo.setPhotoName(fileRealName);
                 fileInfoList.add(fileInfo);
             } catch (IllegalStateException e) {
@@ -119,7 +127,7 @@ public class FileUpload {
 
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-                fileInfo.setPhotoPath(filePathMatcher+uniqueName+fileExtension);
+                fileInfo.setPhotoPath(domainAddress+filePathMatcher+uniqueName+fileExtension);
                 fileInfo.setPhotoName(uniqueName + fileExtension);
 
                 byte[] fileData = file.getBytes();  // 파일의 바이트 데이터를 얻음
@@ -176,7 +184,7 @@ public class FileUpload {
 
                 try {
                     fileList.get(index).transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-                    fileInfo.setPhotoPath(filePathMatcher+uniqueName+fileExtension);
+                    fileInfo.setPhotoPath(domainAddress+filePathMatcher+uniqueName+fileExtension);
                     fileInfo.setPhotoName(fileRealName);
                     fileInfoList.add(fileInfo);
                 } catch (IllegalStateException e) {

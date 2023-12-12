@@ -17,7 +17,7 @@
     <h1 class="my_history_title">내 활동 이력</h1>
     <div class="user">
         <span class="photo">
-            <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진" />
+            <img src="${loginedUserVo.photo_path}" alt="프로필사진" />
         </span>
         <div class="user_info">
             <div class="user_name_role">

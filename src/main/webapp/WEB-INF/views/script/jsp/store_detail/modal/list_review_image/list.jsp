@@ -10,7 +10,7 @@
         reviewImages.forEach((imgUrl) => {
             const reviewExpendImageEle = $("<div>").addClass("expend_image");
             const imgEle = $("<img>");
-            imgEle.attr({src: "http://localhost:8090" + imgUrl});
+            imgEle.attr({src: "" + imgUrl});
             reviewExpendImageEle.append(imgEle);
             reviewImageListEle.append(reviewExpendImageEle);
         })

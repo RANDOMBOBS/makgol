@@ -282,7 +282,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   }
 
   function returnToList() {
-    window.location.href = "http://localhost:8090/board/suggestion";
+    window.location.href = "/board/suggestion";
   }
 
 

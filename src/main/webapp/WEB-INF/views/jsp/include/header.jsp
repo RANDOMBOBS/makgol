@@ -38,10 +38,10 @@
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8090/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8090/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
                     </c:otherwise>
                 </c:choose>
 
@@ -97,50 +97,50 @@
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8090/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8090/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8090/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8090/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8090/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8090/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8090/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8090/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8090/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8090/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
                     </c:otherwise>
                 </c:choose>
             </li>
@@ -149,6 +149,7 @@
     <p class="img"></p>
     <div class="userTab">
         <c:choose>
+
             <c:when test="${not empty loginedUserVo}">
                 <div class="welcome">
                     <div class="weather_info">
@@ -160,7 +161,7 @@
                     </div>
                     <div class="user_info">
                         <span>${loginedUserVo.name}</span>
-                        <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진"/>
+                        <img src="${loginedUserVo.photo_path}" alt="프로필사진"/>
                     </div>
                 </div>
             </c:when>
@@ -222,7 +223,8 @@
             type: "GET",
             success: function (rdata) {
                 console.log("성공")
-                location.href = "http://localhost:8090/"
+
+                location.href = "/"
             },
             error: function (error) {
                 console.log("실패")

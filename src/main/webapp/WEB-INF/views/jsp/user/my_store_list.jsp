@@ -16,7 +16,7 @@
         </div>
         <div class="friends">
           <div class="friend">
-            <img src="http://localhost:8090/resources/static/image/default/my_restaurant.png" alt="photo" />
+            <img src="/resources/static/image/default/my_restaurant.png" alt="photo" />
             <div>
               <p class="title">내가 찜한 식당</p>
               <p class="content">내가 찜한 식당 목록 보여주세요!</p>
@@ -38,7 +38,7 @@
     <div class="stores">
         <div class="request">
             <span class="my_message">내가 찜한 식당 목록 보여주세요!</span>
-            <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="" />
+            <img src="${loginedUserVo.photo_path}" alt="" />
         </div>
         <c:forEach var="item" items="${storeVos}">
         <div class="one_store">
@@ -47,7 +47,7 @@
                     <img src="<c:url value='https://${item.photo}' />" alt="${item.photo}" />
                 </c:when>
                 <c:otherwise>
-                    <img src="http://localhost:8090/resources/static/image/default/no_image.jpg" alt="이미지가 없습니다." />
+                    <img src="/resources/static/image/default/no_image.jpg" alt="이미지가 없습니다." />
                 </c:otherwise>
             </c:choose>
             <div class="store_info">

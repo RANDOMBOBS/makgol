@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,6 @@ public class UsersService implements LogoutHandler {
     private final UsersRepository usersRepository;
     private final ServletContext servletContext;
 
-
     //userFindPassword
     public String userFindPassword(String userEmail) {
 
@@ -62,7 +62,7 @@ public class UsersService implements LogoutHandler {
             map.put("newPassword", newPassword);
             map.put("userEmail", userEmail);
             if (usersRepository.updatePassword(map)) {
-                mailSendUtil.sendMail(randomNumber, userEmail);
+                mailSendUtil.sendMail(randomNumber, userEmail, false);
             }
             return newPassword;
 
@@ -77,7 +77,7 @@ public class UsersService implements LogoutHandler {
     public boolean checkEmail(String email) {
         int authNumber = mailSendUtil.makeRandomNumber();
         String key = String.valueOf(authNumber);
-        if (mailSendUtil.sendMail(authNumber, email)) {
+        if (mailSendUtil.sendMail(authNumber, email, true)) {
             return redisUtil.setDataExpire(key, email, 60 * 3L);
         }
         return false;
@@ -130,7 +130,7 @@ public class UsersService implements LogoutHandler {
             loginedUserVo.setValueX(Integer.parseInt(valueX));
             loginedUserVo.setValueY(Integer.parseInt(valueY));
             loginedUserVo.setWeatherAddr(weatherAddr);
-
+            CookieUtil.saveCookies(response, loginedUserVo);
             // 1. 기존에 있던 리프레쉬 토큰을 취소 시킨다.
             jwtUtil.saveTokenUpdate(email, JwtUtil.REVOKED);
             // 2. 리프레쉬를 만들고 date 값을 가져와 access 토큰에 주입 시켜 연관관계를 형성 시킨다.
@@ -138,7 +138,6 @@ public class UsersService implements LogoutHandler {
             // 3. 악세스 토큰을 쿠키에 담아 클라이언트에게 전송 시킨다.
             jwtUtil.setTokenInCookie(response, tokenVo.getAccessToken(), "Access");
 
-            CookieUtil.saveCookies(response, loginedUserVo);
 
         } else {
             throw new CustomException(ErrorCode.NOT_FOUND_USER);
@@ -282,8 +281,12 @@ public class UsersService implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        blackList(request, response);
 
+        try {
+            response.sendRedirect("index");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
-
-

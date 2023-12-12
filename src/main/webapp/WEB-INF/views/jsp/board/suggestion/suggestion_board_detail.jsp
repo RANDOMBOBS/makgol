@@ -71,7 +71,7 @@
         <c:if test="${not empty boardVo.images}">
             <c:forEach var="item" items="${boardVo.images}">
                 <tr class="image">
-                    <td colspan="2"><img src="http://localhost:8090${item}"></td>
+                    <td colspan="2"><img src="${item}"></td>
                 </tr>
             </c:forEach>
         </c:if>

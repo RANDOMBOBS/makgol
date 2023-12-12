@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Slf4j
@@ -49,9 +51,8 @@ public class UsersController {
 
 
     @PostMapping("/findPassword")
-    public void userFindPassword() {
-        String userEmail = "tjsgus223@naver.com";
-        userService.userFindPassword(userEmail);
+    public void userFindPassword(@RequestParam("email") String email) {
+        userService.userFindPassword(email);
 
     } // userFindPassword_END
 
@@ -82,9 +83,9 @@ public class UsersController {
     } //authNumberCheck_END
 
 
-    @GetMapping("/login")
+    @GetMapping("/index")
     public String loginForm() {
-        return "jsp/user/user_login";
+        return "home";
     }
 
     @PostMapping("/loginConfirm")
@@ -94,16 +95,15 @@ public class UsersController {
     }
 
     @GetMapping("/loginSucceed")
-    public String getCookieValue(HttpServletRequest request){
+    public String getCookieValue(HttpServletRequest request) throws URISyntaxException{
+        String urlString = request.getHeader("Referer");
+        URI uri = new URI(urlString);
+        String path = uri.getPath(); // 경로 부분을 얻어옴
+
        userService.getCookieValue(request);
-       return "home";
+       return "redirect:"+path;
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest req, HttpServletResponse res,@RequestParam("link") String link) {
-        userService.blackList(req, res);
-        return "home";
-    }
 
     @GetMapping("/blackList")
     public String blackList(HttpServletRequest req, HttpServletResponse res){

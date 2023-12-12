@@ -6,6 +6,11 @@ import com.org.makgol.common.jwt.vo.TokenVo;
 import com.org.makgol.common.oauth2.exception.BadRequestException;
 import com.org.makgol.common.oauth2.util.CookieUtils;
 import com.org.makgol.common.oauth2.util.TokenProvider;
+import com.org.makgol.users.repository.UsersRepository;
+import com.org.makgol.users.service.UsersService;
+import com.org.makgol.users.vo.UsersRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
+import com.org.makgol.util.cookie.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -13,11 +18,13 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import static com.org.makgol.common.oauth2.security.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
@@ -27,16 +34,19 @@ import static com.org.makgol.common.oauth2.security.HttpCookieOAuth2Authorizatio
 @RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    private final CookieUtil    cookieUtil;
     private final JwtUtil       jwtUtil;
-    private final TokenProvider tokenProvider;
-
     private final AppProperties appProperties;
+    private final UsersRepository usersRepository;
+
+    private final ServletContext servletContext;
 
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     // OAuth2 로그인 성공 핸들러
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+        log.info("request --> : {}", request.getHeader("Referer"));
         String targetUrl = determineTargetUrl(request, response, authentication);
         if (response.isCommitted()) {
             logger.debug("response has already been committed. unable to redirect to " + targetUrl);
@@ -50,8 +60,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     // 타겟 URL 결정
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME).map(Cookie::getValue);
-
-        log.info("redirectUri.toString() --> : {}", redirectUri.toString());
 
         // 리다이렉트 URI가 존재하면서 인가된 URI가 아닌 경우 예외 발생
         if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get()))
@@ -71,7 +79,25 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // 3. 악세스 토큰을 쿠키에 담아 클라이언트에게 전송 시킨다.
         jwtUtil.setTokenInCookie(response, token.getAccessToken(), "Access");
 
-        return UriComponentsBuilder.fromUriString(targetUri)
+        UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
+
+        log.info("usersResponseVo --> {} :", usersResponseVo.toString());
+
+        cookieUtil.saveCookies(response, usersResponseVo);
+
+        servletContext.setAttribute("loginedUserVo", usersResponseVo);
+
+        String urlString = request.getHeader("Referer");
+
+        log.info("urlString --> : {} ", urlString);
+        String path;
+        try {
+            URI uri = new URI(urlString);
+            path = uri.getPath(); // 경로 부분을 얻어옴
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return UriComponentsBuilder.fromUriString(urlString)
                 //.queryParam("error", "")
                 //.queryParam("token", token.getAccessToken())
                 .build().toUriString();

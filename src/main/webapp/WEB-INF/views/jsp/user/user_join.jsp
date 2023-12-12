@@ -216,7 +216,7 @@
 
                 jQuery.ajax({
                     type: "POST",
-                    url: "http://localhost:8090/user/join",
+                    url: "/user/join",
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -226,7 +226,7 @@
                                 // 회원가입 성공
                                 if (data === true) {
                                     alert(data);
-                                    window.location.href = "http://localhost:8090";
+                                    window.location.href = "";
                                     // 실패
                                 } else {
                                     alert(data);

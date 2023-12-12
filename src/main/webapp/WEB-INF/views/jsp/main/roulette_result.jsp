@@ -10,11 +10,11 @@
 </c:url>
 <c:choose>
     <c:when test="${loginedUserVo == null}">
-        <a href="http://localhost:8090/store/list?x=127.028290548097&y=37.4998293543379&keyword=${menu}">메뉴
+        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=${menu}">메뉴
             보러가기</a>
     </c:when>
     <c:otherwise>
-        <a href="http://localhost:8090/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=${menu}">메뉴
+        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=${menu}">메뉴
             보러가기</a>
     </c:otherwise>
 </c:choose>
