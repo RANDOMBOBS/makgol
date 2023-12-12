@@ -11,6 +11,7 @@ import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.cookie.CookieUtil;
+import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Optional;
 
 import static com.org.makgol.common.oauth2.security.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
@@ -33,6 +35,8 @@ import static com.org.makgol.common.oauth2.security.HttpCookieOAuth2Authorizatio
 @Component
 @RequiredArgsConstructor
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+    private final WeatherInfo weatherInfo;
 
     private final CookieUtil    cookieUtil;
     private final JwtUtil       jwtUtil;
@@ -82,6 +86,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         UsersResponseVo usersResponseVo = usersRepository.findUserByEmail(email);
 
         log.info("usersResponseVo --> {} :", usersResponseVo.toString());
+
+        List<String> coordinate = weatherInfo.findCoordinate(usersResponseVo.getAddress());
+        String valueX = coordinate.get(0);
+        String valueY = coordinate.get(1);
+        String weatherAddr = coordinate.get(2);
+        usersResponseVo.setValueX(Integer.parseInt(valueX));
+        usersResponseVo.setValueY(Integer.parseInt(valueY));
+        usersResponseVo.setWeatherAddr(weatherAddr);
 
         cookieUtil.saveCookies(response, usersResponseVo);
 

@@ -8,6 +8,7 @@ import com.org.makgol.common.jwt.filter.JwtAuthFilter;
 import com.org.makgol.common.jwt.handler.TokenAccessDeniedHandler;
 import com.org.makgol.common.jwt.util.JwtUtil;
 import com.org.makgol.common.oauth2.security.*;
+import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
