@@ -90,13 +90,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String urlString = request.getHeader("Referer");
 
         log.info("urlString --> : {} ", urlString);
-        String path;
-        try {
-            URI uri = new URI(urlString);
-            path = uri.getPath(); // 경로 부분을 얻어옴
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+
         return UriComponentsBuilder.fromUriString(urlString)
                 //.queryParam("error", "")
                 //.queryParam("token", token.getAccessToken())
