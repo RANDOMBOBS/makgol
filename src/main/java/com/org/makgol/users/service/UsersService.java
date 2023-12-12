@@ -1,12 +1,11 @@
 package com.org.makgol.users.service;
 
 import com.org.makgol.boards.vo.BoardLikeVo;
-import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.boards.vo.BoardVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.common.exception.CustomException;
 import com.org.makgol.common.exception.ErrorCode;
 import com.org.makgol.common.jwt.util.JwtUtil;
-import com.org.makgol.common.jwt.vo.TokenResponseVo;
 import com.org.makgol.common.jwt.vo.TokenVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
@@ -21,9 +20,6 @@ import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -32,11 +28,9 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
@@ -47,15 +41,14 @@ import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 @RequiredArgsConstructor
 public class UsersService implements LogoutHandler {
 
-    private final JwtUtil         jwtUtil;
-    private final UserDao         userDao;
-    private final RedisUtil       redisUtil;
-    private final FileUpload      fileUpload;
-    private final WeatherInfo     weatherInfo;
-    private final MailSendUtil    mailSendUtil;
+    private final JwtUtil jwtUtil;
+    private final UserDao userDao;
+    private final RedisUtil redisUtil;
+    private final FileUpload fileUpload;
+    private final WeatherInfo weatherInfo;
+    private final MailSendUtil mailSendUtil;
     private final UsersRepository usersRepository;
-    private final ServletContext  servletContext;
-
+    private final ServletContext servletContext;
 
 
     //userFindPassword
@@ -125,13 +118,11 @@ public class UsersService implements LogoutHandler {
     }// joinUser_END
 
 
-
-
     public void loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
         String email = usersRequestVo.getEmail();
         UsersResponseVo loginedUserVo = userDao.selectUser(email);
         // 이메일과 일치하는 유저 정보가 있고, 비밀번호도 일치하면!
-        if(loginedUserVo != null && BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
+        if (loginedUserVo != null && BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
             List<String> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());
             String valueX = coordinate.get(0);
             String valueY = coordinate.get(1);
@@ -149,7 +140,7 @@ public class UsersService implements LogoutHandler {
 
             CookieUtil.saveCookies(response, loginedUserVo);
 
-        } else{
+        } else {
             throw new CustomException(ErrorCode.NOT_FOUND_USER);
         }
 
@@ -161,17 +152,16 @@ public class UsersService implements LogoutHandler {
     }
 
 
-
-    public void getCookieValue(HttpServletRequest request){
+    public void getCookieValue(HttpServletRequest request) {
         Map<String, List<String>> map = CookieUtil.getCookie(request);
         List<String> cookieNames = map.get("name");
         List<String> cookieValues = map.get("value");
         UsersResponseVo loginedUserVo = new UsersResponseVo();
 
-        for(int i=0; i<cookieNames.size(); i++){
+        for (int i = 0; i < cookieNames.size(); i++) {
             String cookieName = cookieNames.get(i);
             String cookieValue = cookieValues.get(i);
-            if(cookieName.equals("id")){
+            if (cookieName.equals("id")) {
                 loginedUserVo.setId(Integer.parseInt(cookieValue));
             } else if (cookieName.equals("name")) {
                 loginedUserVo.setName(cookieValue);
@@ -179,6 +169,10 @@ public class UsersService implements LogoutHandler {
                 loginedUserVo.setPhoto_path(cookieValue);
             } else if (cookieName.equals("grade")) {
                 loginedUserVo.setGrade(cookieValue);
+            } else if (cookieName.equals("userX")) {
+                loginedUserVo.setLongitude(Integer.parseInt(cookieValue));
+            } else if (cookieName.equals("userY")) {
+                loginedUserVo.setLatitude(Integer.parseInt(cookieValue));
             } else if (cookieName.equals("weatherAddr")) {
                 loginedUserVo.setWeatherAddr(cookieValue);
             } else if (cookieName.equals("valueX")) {
@@ -191,12 +185,11 @@ public class UsersService implements LogoutHandler {
     }
 
 
-    public void blackList(HttpServletRequest req, HttpServletResponse res){
+    public void blackList(HttpServletRequest req, HttpServletResponse res) {
         ServletContext servletContext = req.getServletContext();
         servletContext.removeAttribute("loginedUserVo");
         CookieUtil.clearCookie(req, res);
     }
-
 
 
     public Boolean mailCheckDuplication(String email) {
@@ -209,16 +202,16 @@ public class UsersService implements LogoutHandler {
 
     public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpServletResponse response) {
         UsersResponseVo loginedUserVo = usersRepository.userInfo(usersRequestVo.getId());
-        int result =0;
+        int result = 0;
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
         if (usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()) {
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
             result = userDao.updateUserPhotoInfo(usersRequestVo);
-            if(result > 0){
-                oldFile = "["+oldFile+"]";
-                System.out.println("예전파일은?" +oldFile);
+            if (result > 0) {
+                oldFile = "[" + oldFile + "]";
+                System.out.println("예전파일은?" + oldFile);
                 FileUpload.deleteFileList(oldFile);
             }
         } else {
@@ -240,46 +233,50 @@ public class UsersService implements LogoutHandler {
             newUserVo.setValueY(Integer.parseInt(valueY));
             newUserVo.setWeatherAddr(weatherAddr);
             boolean cookieResult = CookieUtil.saveCookies(response, newUserVo);
-            System.out.println("쿠키저장결과?"+cookieResult);
-            if(cookieResult){
+            System.out.println("쿠키저장결과?" + cookieResult);
+            if (cookieResult) {
                 servletContext.setAttribute("loginedUserVo", newUserVo);
 
             }
             CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
             // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+            future.thenAccept(result_info -> {
+                log.info("saveStoresInfo --> : {}", result_info);
+            });
         }
         return result;
     }
 
-    public UsersResponseVo userInfo(int user_id){
+    public UsersResponseVo userInfo(int user_id) {
         return usersRepository.userInfo(user_id);
     }
 
-    public List<StoreResponseVo> myStoreList(int user_id){
+    public List<StoreResponseVo> myStoreList(int user_id) {
         return userDao.selectMyStoreList(user_id);
     }
 
 
-    public List<BoardVo> getMyPostList(int user_id){
+    public List<BoardVo> getMyPostList(int user_id) {
         return userDao.selectMyPostList(user_id);
     }
 
-    public List<CommentResponseVo> getMyCommentList(int user_id){
+    public List<CommentResponseVo> getMyCommentList(int user_id) {
         return userDao.selectMyCommentList(user_id);
     }
 
-    public List<BoardLikeVo> getMyLikePost(int user_id){
+    public List<BoardLikeVo> getMyLikePost(int user_id) {
         return userDao.selectMyLikePostList(user_id);
     }
 
-    public int countingPosts(int user_id){
+    public int countingPosts(int user_id) {
         return usersRepository.countingPosts(user_id);
     }
-    public int countingComments(int user_id){
+
+    public int countingComments(int user_id) {
         return usersRepository.countingComments(user_id);
     }
-    public int countingLikes(int user_id){
+
+    public int countingLikes(int user_id) {
         return usersRepository.countingLikes(user_id);
     }
 
