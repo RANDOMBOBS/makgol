@@ -170,9 +170,9 @@ public class UsersService implements LogoutHandler {
             } else if (cookieName.equals("grade")) {
                 loginedUserVo.setGrade(cookieValue);
             } else if (cookieName.equals("userX")) {
-                loginedUserVo.setLongitude(Integer.parseInt(cookieValue));
+                loginedUserVo.setLongitude(Double.parseDouble(cookieValue));
             } else if (cookieName.equals("userY")) {
-                loginedUserVo.setLatitude(Integer.parseInt(cookieValue));
+                loginedUserVo.setLatitude(Double.parseDouble(cookieValue));
             } else if (cookieName.equals("weatherAddr")) {
                 loginedUserVo.setWeatherAddr(cookieValue);
             } else if (cookieName.equals("valueX")) {
