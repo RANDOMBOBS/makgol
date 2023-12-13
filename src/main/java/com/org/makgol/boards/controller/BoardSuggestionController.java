@@ -4,13 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.org.makgol.boards.vo.BoardCreateRequestVo;
 import com.org.makgol.boards.vo.BoardDetailResponseVo;
 import com.org.makgol.comment.vo.CommentRequestVo;
-import com.org.makgol.users.vo.UsersResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -84,7 +81,7 @@ public class BoardSuggestionController {
 	 * @return suggestion_board_detail.jsp로 이동
 	 */
 	@RequestMapping(value = "/detail", method = { RequestMethod.GET, RequestMethod.POST })
-	public String detail(@RequestParam("b_id") int id, Model model, HttpSession httpSession) {
+	public String detail(@RequestParam("b_id") int id, Model model) {
 		String nextPage = "jsp/board/suggestion/suggestion_board_detail";
 		BoardDetailResponseVo boardVo = boardService.readSuggestionBoard(id);
 		boardService.addHit(id);

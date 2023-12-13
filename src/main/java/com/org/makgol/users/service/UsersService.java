@@ -120,7 +120,7 @@ public class UsersService implements LogoutHandler {
 
     public void loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
         String email = usersRequestVo.getEmail();
-        UsersResponseVo loginedUserVo = userDao.selectUser(email);
+        UsersResponseVo loginedUserVo = usersRepository.findUserByEmail(email);
         // 이메일과 일치하는 유저 정보가 있고, 비밀번호도 일치하면!
         if (loginedUserVo != null && BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
             List<String> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());

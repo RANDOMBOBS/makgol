@@ -444,6 +444,8 @@
                 if (rainSnow != "") {
                     sky = rainSnow;
                 }
+
+                sky = "흐림"
                 console.log("뭐가 오나요?" + rainSnow)
                 console.log("하늘 상태 한글로?" + sky);
 
@@ -458,7 +460,7 @@
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sunny.jpeg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-sun' style='color:#ffa500'></i>");
                 } else if (sky == "구름많음") {
-                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/Christmas.png)");
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/cloudy.png)");
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun' style='color:#00e5ff' ></i>")
                 } else if (sky == "흐림") {
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/blur.jpg)");
@@ -467,10 +469,10 @@
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud-showers-heavy'  style='color:#074dbb'></i>")
                 } else if (sky == "눈") {
-                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow1.jpg)");
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-snowflake'  style='color:#7fb1ff'></i>")
                 } else if (sky == "진눈깨비(눈+비)") {
-                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/top5.png)");
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sleet.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'  style='color:#8cb9ff'></i>")
                 }
 
