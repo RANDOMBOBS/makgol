@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>막내야 골라봐 | 건의게시판 (SUGGESTION)</title>
+    <title>막내야 골라봐 20170409| 건의게시판 (SUGGESTION)</title>
     <link href="<c:url value='/resources/static/css/board.css' />" rel="stylesheet" type="text/css"/>
 </head>
 <body>
