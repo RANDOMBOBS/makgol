@@ -443,8 +443,6 @@
                 if (rainSnow != "") {
                     sky = rainSnow;
                 }
-
-                sky = "흐림"
                 console.log("뭐가 오나요?" + rainSnow)
                 console.log("하늘 상태 한글로?" + sky);
 
@@ -454,13 +452,12 @@
                 } else {
                     jQ(".sky").text(sky);
                 }
-
                 if (sky == "맑음") {
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sunny.jpeg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-sun' style='color:#ffa500'></i>");
                 } else if (sky == "구름많음") {
-                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/cloudy.png)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun' style='color:#00e5ff' ></i>")
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/cloudy.jpg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun' style='color:#4bb4ff' ></i>")
                 } else if (sky == "흐림") {
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/blur.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud'  style='color:#6f6f6f'></i>")
@@ -471,7 +468,7 @@
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-snowflake'  style='color:#7fb1ff'></i>")
                 } else if (sky == "진눈깨비(눈+비)") {
-                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/sleet.jpg)");
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'  style='color:#8cb9ff'></i>")
                 }
 
