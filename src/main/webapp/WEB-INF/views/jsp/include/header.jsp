@@ -146,7 +146,7 @@
             </li>
         </ul>
     </div>
-    <a href="http://localhost:8090"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
+    <a href="http://localhost:8080"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
     <div class="userTab">
         <c:choose>
 
