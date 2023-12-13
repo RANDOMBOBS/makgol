@@ -63,7 +63,9 @@ public class StoreRequestVo {
             // 매칭된 문자열을 찾고 출력
             if (matcher.find()) {
                 find_word = matcher.group();
-
+                break;
+            } else {
+                find_word = "기타";
             }
         }
 

@@ -220,3 +220,7 @@ table {
   text-decoration: underline;
   color: #ffa500;
 }
+#logoimage{
+    width:300px;
+    margin: 5px 0;
+}

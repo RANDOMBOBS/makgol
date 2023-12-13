@@ -89,8 +89,8 @@
 
     <form name="create_comment_form" class="create_comment_form">
         <c:choose>
-            <c:when test="${loginedUserVo != null}">
-                <input type="text" name="nickname" placeholder="닉네임"/>
+            <c:when test="${loginedUserVo.getGrade() == '관리자'}">
+                <input type="text" name="nickname" value="관리자" disabled/>
                 <div class="create_comment_area">
                     <input type="hidden" name="board_id" value="${boardVo.id}"/>
                     <input type="hidden" name="user_id" value="${loginedUserVo.getId()}"/>
@@ -101,8 +101,8 @@
 
             <c:otherwise>
                 <input type="hidden" name="board_id" value="${boardVo.id}"/>
-                <input type="text" name="nickname" placeholder="닉네임" disabled/>
-                <textarea name="contents" placeholder="로그인 후 댓글 작성이 가능합니다." disabled></textarea>
+                <input type="text" name="nickname" value="관리자" disabled/>
+                <textarea name="contents" placeholder="관리자만 댓글 작성이 가능합니다." disabled></textarea>
             </c:otherwise>
         </c:choose>
     </form>
