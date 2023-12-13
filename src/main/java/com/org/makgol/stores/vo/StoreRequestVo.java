@@ -64,6 +64,8 @@ public class StoreRequestVo {
             if (matcher.find()) {
                 find_word = matcher.group();
 
+            } else {
+                find_word = "기타";
             }
         }
 
