@@ -213,7 +213,8 @@ public class BoardSuggestionController {
 		Map<String, Integer> map = new HashMap<>();
 		int status = boardService.userLikeStatus(boardVo);
 		map.put("status", status);
-		return map;	}
+		return map;
+	}
 	
 	
 	

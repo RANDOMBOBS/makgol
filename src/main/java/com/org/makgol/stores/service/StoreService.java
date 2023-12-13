@@ -304,7 +304,8 @@ public class StoreService {
 
             return true;
         } catch (Exception e) {
-            return false;
+            e.printStackTrace();
         }
+        return false;
     }
 }
