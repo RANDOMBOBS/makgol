@@ -8,12 +8,10 @@
 
     <link href="<c:url value='/resources/static/css/main.css' />" rel="stylesheet"
           type="text/css"/>
-
     <link href="<c:url value='/resources/static/css/todaymenu.css' />" rel="stylesheet"
           type="text/css"/>
     <link href="<c:url value='/resources/static/css/topmenu.css' />" rel="stylesheet"
           type="text/css"/>
-
     <link href="<c:url value='/resources/static/css/slick.css' />" rel="stylesheet"
           type="text/css"/>
 

@@ -70,7 +70,5 @@ public class MainController {
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
 	}
-
-
 }
 
