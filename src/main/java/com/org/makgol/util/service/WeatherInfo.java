@@ -13,9 +13,11 @@ public class WeatherInfo {
         List<String> coordinate = new ArrayList<String>();
         try {
             //mac
-            FileReader fileReader = new FileReader("src/main/resources/static/csv/기상청41_단기예보 조회서비스_오픈API활용가이드_격자_위경도(20230611).csv", Charset.forName("EUC-KR"));
+            //FileReader fileReader = new FileReader("src/main/resources/static/csv/기상청41_단기예보 조회서비스_오픈API활용가이드_격자_위경도(20230611).csv", Charset.forName("EUC-KR"));
+            //server
+            FileReader fileReader = new FileReader("csv/기상청41_단기예보 조회서비스_오픈API활용가이드_격자_위경도(20230611).csv", Charset.forName("EUC-KR"));
             //windows
-//            FileReader fileReader = new FileReader("src\\main\\resources\\static\\csv\\기상청41_단기예보 조회서비스_오픈API활용가이드_격자_위경도(20230611).csv", Charset.forName("EUC-KR"));
+            //FileReader fileReader = new FileReader("src\\main\\resources\\static\\csv\\기상청41_단기예보 조회서비스_오픈API활용가이드_격자_위경도(20230611).csv", Charset.forName("EUC-KR"));
             BufferedReader file = new BufferedReader(fileReader);
             String line = "";
             String userAddr = "";

@@ -9,6 +9,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class PathConfig implements WebMvcConfigurer {
     @Value("${file.path.matcher}")
     private String filePathMatcher;
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//
+//        String currentDirectory = System.getProperty("user.dir");
+//        System.out.println("현재 디렉토리: " + currentDirectory);
+//        String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image\\";
+//        uploadFolder = uploadFolder.replace("\\","/");
+//        registry.addResourceHandler(filePathMatcher+"**")
+//                .addResourceLocations("file:"+uploadFolder);
+//    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
