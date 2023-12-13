@@ -19,7 +19,6 @@
 
     <title>막내야 골라봐 | 메인 (MAIN)</title>
 
-
 </head>
 <body>
 <jsp:include page="jsp/include/header.jsp"></jsp:include>
@@ -41,27 +40,33 @@
                     <li class="today">오늘의메뉴</li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="korToday()">한식 </button>
+                                onclick="korToday()">한식
+                        </button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="westToday()">양식</button>
+                                onclick="westToday()">양식
+                        </button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="chiToday()">중식</button>
+                                onclick="chiToday()">중식
+                        </button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="snackToday()">분식</button>
+                                onclick="snackToday()">분식
+                        </button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="jpnToday()">일식</button>
+                                onclick="jpnToday()">일식
+                        </button>
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="cafeToday()">카페</button>
+                                onclick="cafeToday()">카페
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -103,8 +108,6 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
-    $.noConflict();
-    var jQ = jQuery;
 
     jQ(function(){
               jQ('#event').slick({
@@ -116,7 +119,9 @@
                   autoplay : true,
                   draggable : true,
                   arrows: false,
-                  fade: true
+                  fade: true,
+                  pauseOnFocus: false,
+                 pauseOnHover: false
               });
     })
 

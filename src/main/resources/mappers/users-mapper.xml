@@ -23,6 +23,16 @@
         VALUES (#{name}, #{email}, #{password}, #{phone}, #{photo}, #{photo_path}, now(), #{address}, #{longitude}, #{latitude})
     </insert>
 
+    <insert id="save" parameterType="com.org.makgol.users.vo.Users">
+        INSERT INTO users (name, email, password, phone, photo, photo_path, date, address, longitude, latitude)
+        VALUES (#{name}, #{email}, #{password}, #{phone}, #{photo}, #{photo_path}, now(), #{address}, #{longitude}, #{latitude})
+    </insert>
+
+    <insert id="saveSocial" parameterType="com.org.makgol.common.oauth2.entity.SocialAuth">
+        INSERT INTO social_users (user_id, provider_id, provider, email, name, image_url, ip, date)
+        VALUES (#{user_id}, #{provider_id}, #{provider}, #{email}, #{name}, #{image_url}, #{ip}, now())
+    </insert>
+
     <select id="findUserEmail" parameterType="String">
         SELECT email FROM users WHERE email = #{email}
     </select>
@@ -48,6 +58,11 @@
         UPDATE users SET password=#{password}, phone=#{phone}, photo=#{photo}, photo_path=#{photo_path}, address=#{address}, longitude=#{longitude}, latitude=#{latitude}
         WHERE id=#{id}
     </update>
+
+    <select id="userInfo" resultType="com.org.makgol.users.vo.UsersResponseVo" parameterType="int">
+        SELECT * FROM users WHERE id = #{user_id}
+    </select>
+
 
     <select id="selectMyStoreList" resultType="com.org.makgol.stores.vo.StoreResponseVo" parameterType="int">
         SELECT S.id, S.name, S.address, S.phone, S.photo FROM stores S
@@ -82,6 +97,10 @@
         UPDATE users SET password = #{newPassword} WHERE email = #{userEmail}
     </select>
 
+    <select id="findByEmail" resultType="com.org.makgol.users.vo.Users" parameterType="String">
+        SELECT * FROM users WHERE email = #{email}
+    </select>
+
     <select id="countingPosts" resultType="int" parameterType="int">
         SELECT COUNT(*) FROM boards WHERE user_id=#{user_id}
     </select>
@@ -93,4 +112,6 @@
     <select id="countingLikes" resultType="int" parameterType="int">
         SELECT COUNT(*) FROM board_likes WHERE user_id=#{user_id}
     </select>
+
+
 </mapper>

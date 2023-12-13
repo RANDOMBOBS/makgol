@@ -39,8 +39,9 @@
 				<form action="<c:url value='/board/noticeAddList'/>" name="notice_create_form" method="post" >
 					<span>카테고리</span><input type="text" name="category" value="공지사항" disabled> <br>
 					<span>제목</span><input type="text" name="title" placeholder="제목을 입력해주세요.">
-					<span>작성자</span><input type="text" name="grade" value="${grade}" disabled >
-					 <input type="hidden" name="user_id" value="${user_id}"><br>
+					<span>작성자</span>
+					<input type="text" name="name" value="${loginedUserVo.grade}" class="name" readonly disabled />
+                    <input type="hidden" name="user_id" value="${loginedUserVo.id}" />
 					<span>내용</span><textarea name="contents" placeholder="내용을 입력해주세요."></textarea> <br>
 					<input type="file" name="photoFile">
 					<input type="button" value="등록" onclick="noticeAddList()">

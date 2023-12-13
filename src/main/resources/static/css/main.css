@@ -153,5 +153,5 @@ body::-webkit-scrollbar {
 }
 
 #event img{
-    width:1400px;
+    border-radius:10px;
 }

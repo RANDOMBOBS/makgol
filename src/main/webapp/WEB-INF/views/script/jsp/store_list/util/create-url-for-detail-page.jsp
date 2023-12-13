@@ -46,7 +46,6 @@
     }
 
     const createUrlForDetailPage = (shop) => {
-
         const setShopCoordinate = (shop) => {
             const {longitude, latitude} = shop;
             const shopX = longitude;

@@ -1,15 +1,18 @@
 package com.org.makgol.users.service;
 
 import com.org.makgol.boards.vo.BoardLikeVo;
-import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.boards.vo.BoardVo;
+import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.common.exception.CustomException;
 import com.org.makgol.common.exception.ErrorCode;
+import com.org.makgol.common.jwt.util.JwtUtil;
+import com.org.makgol.common.jwt.vo.TokenVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
 import com.org.makgol.users.dao.UserDao;
 import com.org.makgol.users.repository.UsersRepository;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
+import com.org.makgol.util.cookie.CookieUtil;
 import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.mail.MailSendUtil;
@@ -17,11 +20,15 @@ import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
-import java.io.File;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,15 +40,16 @@ import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UsersService {
+public class UsersService implements LogoutHandler {
 
-    private final MailSendUtil mailSendUtil;
+    private final JwtUtil jwtUtil;
     private final UserDao userDao;
     private final RedisUtil redisUtil;
-    private final UsersRepository usersRepository;
     private final FileUpload fileUpload;
     private final WeatherInfo weatherInfo;
-
+    private final MailSendUtil mailSendUtil;
+    private final UsersRepository usersRepository;
+    private final ServletContext servletContext;
 
     //userFindPassword
     public String userFindPassword(String userEmail) {
@@ -54,7 +62,7 @@ public class UsersService {
             map.put("newPassword", newPassword);
             map.put("userEmail", userEmail);
             if (usersRepository.updatePassword(map)) {
-                mailSendUtil.sendMail(randomNumber, userEmail);
+                mailSendUtil.sendMail(randomNumber, userEmail, false);
             }
             return newPassword;
 
@@ -69,7 +77,7 @@ public class UsersService {
     public boolean checkEmail(String email) {
         int authNumber = mailSendUtil.makeRandomNumber();
         String key = String.valueOf(authNumber);
-        if (mailSendUtil.sendMail(authNumber, email)) {
+        if (mailSendUtil.sendMail(authNumber, email, true)) {
             return redisUtil.setDataExpire(key, email, 60 * 3L);
         }
         return false;
@@ -101,34 +109,87 @@ public class UsersService {
 
         if (usersRepository.saveUser(usersRequestVo)) {
 
-            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
-            // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+//            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+//            // 비동기 작업이 완료되면 결과를 출력
+//            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
 
         return true;
     }// joinUser_END
 
 
-
-
-    public UsersResponseVo loginConfirm(UsersRequestVo usersRequestVo) {
+    public void loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
         String email = usersRequestVo.getEmail();
         UsersResponseVo loginedUserVo = userDao.selectUser(email);
+        // 이메일과 일치하는 유저 정보가 있고, 비밀번호도 일치하면!
+        if (loginedUserVo != null && BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
+            List<String> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());
+            String valueX = coordinate.get(0);
+            String valueY = coordinate.get(1);
+            String weatherAddr = coordinate.get(2);
+            loginedUserVo.setValueX(Integer.parseInt(valueX));
+            loginedUserVo.setValueY(Integer.parseInt(valueY));
+            loginedUserVo.setWeatherAddr(weatherAddr);
+            CookieUtil.saveCookies(response, loginedUserVo);
+            // 1. 기존에 있던 리프레쉬 토큰을 취소 시킨다.
+            jwtUtil.saveTokenUpdate(email, JwtUtil.REVOKED);
+            // 2. 리프레쉬를 만들고 date 값을 가져와 access 토큰에 주입 시켜 연관관계를 형성 시킨다.
+            TokenVo tokenVo = jwtUtil.createSettingToken(email);
+            // 3. 악세스 토큰을 쿠키에 담아 클라이언트에게 전송 시킨다.
+            jwtUtil.setTokenInCookie(response, tokenVo.getAccessToken(), "Access");
 
-        // 만약 로그인을 못했다면?
-        if(loginedUserVo == null){
+
+        } else {
             throw new CustomException(ErrorCode.NOT_FOUND_USER);
-        } else{
-            List<Integer> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());
-            loginedUserVo.setCoordinate(coordinate);
         }
 
-        if (!BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
-            loginedUserVo = null;
-        }
-        return loginedUserVo;
     }
+
+
+    private void setAccessTokenInHeader(HttpServletResponse response, String accessToken) {
+        response.addHeader(JwtUtil.ACCESS_TOKEN, accessToken);
+    }
+
+
+    public void getCookieValue(HttpServletRequest request) {
+        Map<String, List<String>> map = CookieUtil.getCookie(request);
+        List<String> cookieNames = map.get("name");
+        List<String> cookieValues = map.get("value");
+        UsersResponseVo loginedUserVo = new UsersResponseVo();
+
+        for (int i = 0; i < cookieNames.size(); i++) {
+            String cookieName = cookieNames.get(i);
+            String cookieValue = cookieValues.get(i);
+            if (cookieName.equals("id")) {
+                loginedUserVo.setId(Integer.parseInt(cookieValue));
+            } else if (cookieName.equals("name")) {
+                loginedUserVo.setName(cookieValue);
+            } else if (cookieName.equals("photo_path")) {
+                loginedUserVo.setPhoto_path(cookieValue);
+            } else if (cookieName.equals("grade")) {
+                loginedUserVo.setGrade(cookieValue);
+            } else if (cookieName.equals("userX")) {
+                loginedUserVo.setLongitude(Double.parseDouble(cookieValue));
+            } else if (cookieName.equals("userY")) {
+                loginedUserVo.setLatitude(Double.parseDouble(cookieValue));
+            } else if (cookieName.equals("weatherAddr")) {
+                loginedUserVo.setWeatherAddr(cookieValue);
+            } else if (cookieName.equals("valueX")) {
+                loginedUserVo.setValueX(Integer.parseInt(cookieValue));
+            } else if (cookieName.equals("valueY")) {
+                loginedUserVo.setValueY(Integer.parseInt(cookieValue));
+            }
+        }
+        servletContext.setAttribute("loginedUserVo", loginedUserVo);
+    }
+
+
+    public void blackList(HttpServletRequest req, HttpServletResponse res) {
+        ServletContext servletContext = req.getServletContext();
+        servletContext.removeAttribute("loginedUserVo");
+        CookieUtil.clearCookie(req, res);
+    }
+
 
     public Boolean mailCheckDuplication(String email) {
 
@@ -137,22 +198,19 @@ public class UsersService {
         return !result;
     }
 
-    public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpSession session) {
-        System.out.println("바뀐회원정보는??"+usersRequestVo);
-        UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
-        System.out.println("세션 유저 정보?"+loginedUserVo);
 
-
-        int result =0;
+    public int modifyUserInfo(UsersRequestVo usersRequestVo, String oldFile, HttpServletResponse response) {
+        UsersResponseVo loginedUserVo = usersRepository.userInfo(usersRequestVo.getId());
+        int result = 0;
         usersRequestVo.setPassword(BCrypt.hashpw(usersRequestVo.getPassword(), BCrypt.gensalt()));
         if (usersRequestVo.getPhotoFile() != null && !usersRequestVo.getPhotoFile().isEmpty()) {
             FileInfo fileInfo = fileUpload.fileUpload(usersRequestVo.getPhotoFile());
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
             result = userDao.updateUserPhotoInfo(usersRequestVo);
-            if(result > 0){
-                oldFile = "["+oldFile+"]";
-                System.out.println("예전파일은?" +oldFile);
+            if (result > 0) {
+                oldFile = "[" + oldFile + "]";
+                System.out.println("예전파일은?" + oldFile);
                 FileUpload.deleteFileList(oldFile);
             }
         } else {
@@ -166,46 +224,69 @@ public class UsersService {
             usersRequestVo.setEmail(loginedUserVo.getEmail());
             UsersResponseVo newUserVo = new UsersResponseVo();
             newUserVo.modifyMapper(usersRequestVo);
-            System.out.println("새로 저장할 유저 정보?"+newUserVo);
-            List<Integer> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
-            newUserVo.setCoordinate(coordinate);
-            session.setAttribute("loginedUserVo", newUserVo);
+            List<String> coordinate = weatherInfo.findCoordinate(newUserVo.getAddress());
+            String valueX = coordinate.get(0);
+            String valueY = coordinate.get(1);
+            String weatherAddr = coordinate.get(2);
+            newUserVo.setValueX(Integer.parseInt(valueX));
+            newUserVo.setValueY(Integer.parseInt(valueY));
+            newUserVo.setWeatherAddr(weatherAddr);
+            boolean cookieResult = CookieUtil.saveCookies(response, newUserVo);
+            System.out.println("쿠키저장결과?" + cookieResult);
+            if (cookieResult) {
+                servletContext.setAttribute("loginedUserVo", newUserVo);
 
+            }
             CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
             // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+            future.thenAccept(result_info -> {
+                log.info("saveStoresInfo --> : {}", result_info);
+            });
         }
         return result;
     }
 
-    public List<StoreResponseVo> myStoreList(int user_id){
+    public UsersResponseVo userInfo(int user_id) {
+        return usersRepository.userInfo(user_id);
+    }
+
+    public List<StoreResponseVo> myStoreList(int user_id) {
         return userDao.selectMyStoreList(user_id);
     }
 
 
-
-    public List<BoardVo> getMyPostList(int user_id){
+    public List<BoardVo> getMyPostList(int user_id) {
         return userDao.selectMyPostList(user_id);
     }
 
-    public List<CommentResponseVo> getMyCommentList(int user_id){
+    public List<CommentResponseVo> getMyCommentList(int user_id) {
         return userDao.selectMyCommentList(user_id);
     }
 
-    public List<BoardLikeVo> getMyLikePost(int user_id){
+    public List<BoardLikeVo> getMyLikePost(int user_id) {
         return userDao.selectMyLikePostList(user_id);
     }
 
-    public int countingPosts(int user_id){
+    public int countingPosts(int user_id) {
         return usersRepository.countingPosts(user_id);
     }
-    public int countingComments(int user_id){
+
+    public int countingComments(int user_id) {
         return usersRepository.countingComments(user_id);
     }
-    public int countingLikes(int user_id){
+
+    public int countingLikes(int user_id) {
         return usersRepository.countingLikes(user_id);
     }
+
+    @Override
+    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        blackList(request, response);
+
+        try {
+            response.sendRedirect("index");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
-
-
-

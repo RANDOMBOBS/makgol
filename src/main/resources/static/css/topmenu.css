@@ -4,7 +4,7 @@
 .top_menu {
 	width: 1200px;
 	margin: 30px auto;
-	border-radius : 0 10px 10px 10px;
+	border-radius : 10px;
 	border: 12px solid #ffa500;
 	background-color:white;
 }
@@ -39,7 +39,7 @@
 
 .topmenu_list_div {
 	width: 1200px;
-	padding: 30px;
+	padding: 0px 30px 30px 30px;
 }
 
 .topmenu_list_ul .topmenu_list{
