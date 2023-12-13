@@ -25,20 +25,21 @@
             requestStoreReview(shopId)
         ]);
         const userId = "${loginedUserVo.id}";
+        const ids = {userId, shopId}
 
         displayImage(detail.photo);
         linkHeadOffice(detail.site);
-        displayDetail(detail);
+        await displayDetail(detail, ids);
         displayMenu(menus);
         displayInitialMap({shopX, shopY, myX, myY, distance});
         displayReview(reviews);
         displayReviewForm();
 
         $("#likes").click(async () => {
-            if (await getLikesStatus(userId, shopId)) {
-                await increaseLikes(userId, shopId)
+            if (await getLikesStatus(ids)) {
+                await increaseLikes(ids)
             } else {
-                await decreaseLikes(userId, shopId);
+                await decreaseLikes(ids);
             }
         })
 

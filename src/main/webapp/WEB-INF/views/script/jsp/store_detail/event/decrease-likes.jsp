@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
-    const decreaseLikes = async (userId, shopId) => {
+    const decreaseLikes = async ({userId, shopId}) => {
         const url = "/store/delikes?user_id=" + userId + "&shop_id=" + shopId;
         const {axios} = window;
 
