@@ -22,6 +22,6 @@
         <img id="image" src="<c:url value='/resources/static/image/default/ok.gif' />">
         <a href="${suggestion_url}"><br>목록보기</a>
     </div>
-    <jsp:include page="../..//include/footer.jsp"></jsp:include>
+    <jsp:include page="../../include/footer.jsp"></jsp:include>
 </body>
 </html>

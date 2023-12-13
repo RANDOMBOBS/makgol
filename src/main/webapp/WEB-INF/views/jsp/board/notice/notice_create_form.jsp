@@ -43,7 +43,6 @@
 					<input type="text" name="name" value="${loginedUserVo.grade}" class="name" readonly disabled />
                     <input type="hidden" name="user_id" value="${loginedUserVo.id}" />
 					<span>내용</span><textarea name="contents" placeholder="내용을 입력해주세요."></textarea> <br>
-					<input type="file" name="photoFile">
 					<input type="button" value="등록" onclick="noticeAddList()">
 					<input type="reset" value="취소" onclick="history.go(-1)">
 				</form>
