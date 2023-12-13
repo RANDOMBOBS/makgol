@@ -6,17 +6,28 @@
         const reviewContent = $(e.target).parent().parent().parent().parent().siblings(".review_content").children(".content");
         const reviewText = reviewContent.text();
 
-        const deleteButtonEle = $(e.target).parent().siblings(".delete_button")
-        deleteButtonEle.prop("disabled", true);
+        $(e.target).parent().siblings(".delete_button").prop("disabled", true);
+        $("#text_review").prop("disabled", true)
+        $("#submit_review").prop("disabled", true)
+        $("#upload_image").prop("disabled", true)
 
-        const reviewModifyElement = $("<textarea>");
-        reviewModifyElement.val(reviewText);
-        reviewModifyElement.addClass("content");
+        const reviewModifyEle = $("<textarea>");
+        reviewModifyEle.val(reviewText);
+        reviewModifyEle.addClass("content");
 
-        reviewContent.replaceWith(reviewModifyElement);
+        reviewContent.replaceWith(reviewModifyEle);
 
+        const reviewImageBoxEle = $(e.target).parent().parent().parent().siblings(".review_image_box");
+        reviewImageBoxEle.click(() => {
+            $(".modal_cover").css({display: "none"});
+            $(".list_modal").css({display: "none"});
+
+            openUploadModal(reviewId);
+        })
+
+        // 파란색 연필 버튼을 다시 눌렀을 때 실행
         $(e.target).click(async () => {
-            const modifiedReview = reviewModifyElement.val();
+            const modifiedReview = reviewModifyEle.val();
 
             const url = "/store/review_id/" + reviewId;
             const {axios} = window;
@@ -24,9 +35,9 @@
             try {
                 await axios.put(url, {review: modifiedReview});
                 const reviewContentEle = $("<div>").addClass("content");
-                reviewContentEle.text(reviewModifyElement.val());
+                reviewContentEle.text(reviewModifyEle.val());
 
-                reviewModifyElement.replaceWith(reviewContentEle);
+                reviewModifyEle.replaceWith(reviewContentEle);
 
                 alert("리뷰를 수정하였습니다.")
                 location.reload();

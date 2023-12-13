@@ -104,9 +104,9 @@
                         <textarea spellcheck="false" id="text_review" class="content"></textarea>
                         <button id="submit_review">작성</button>
                     </div>
-                    <div id="upload_image">
+                    <button id="upload_image">
                         <img class="review_image" src="https://budongsancanada.com/Images/no_image.jpg">
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>

@@ -356,6 +356,9 @@ article #review #upload_image {
     justify-content: center;
     align-items: center;
     margin-left: 12px;
+    background: none;
+    border: none;
+    outline: none;
 }
 
 article #review #upload_image > img {

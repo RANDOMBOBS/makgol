@@ -1,6 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
     const deleteReview = async (e) => {
+        const result = confirm("리뷰를 삭제하시겠습니까?");
+
+        if (!result) return;
+
         const reviewId = $(e.target).parent().parent().parent().parent().siblings("input").val()
 
         const url = "/store/review_id/" + reviewId;
