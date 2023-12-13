@@ -20,7 +20,7 @@
             <div class="head_box">
                 <h1 id="search_keyword"></h1>
                 <div class="buttons">
-                    <button class="button_style">다른 메뉴</button>
+                    <%--                    <button class="button_style">다른 메뉴</button>--%>
                     <select class="button_style" id="option" name="option">
                         <option value="">찾기 옵션</option>
                         <option value="distance">거리순</option>
