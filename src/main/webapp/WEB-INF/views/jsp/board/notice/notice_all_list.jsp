@@ -44,7 +44,7 @@
           </c:url>
           <a href="${detail_url}">${item.title}</a>
         </td>
-        <td>${item.grade}</td>
+        <td>관리자</td>
 
         <c:choose>
           <c:when test="${fn:contains(item.date, today)}">

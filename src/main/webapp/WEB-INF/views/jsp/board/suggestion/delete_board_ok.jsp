@@ -12,8 +12,9 @@
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
 
-	<h3>글 삭제 성공!</h3>
+	<h1>글 삭제 성공!</h1>
 <c:url value="/board/suggestion" var="suggestion_url"/>
-<a href="${suggestion_url}">목록보기</a>
+<img id="image" src="<c:url value='/resources/static/image/default/ok.gif' />">
+<a href="${suggestion_url}"><br>목록보기</a>
 </body>
 </html>

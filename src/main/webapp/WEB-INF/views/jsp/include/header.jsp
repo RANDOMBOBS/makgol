@@ -116,7 +116,7 @@
             </li>
             <li>
                 <c:choose>
-                    <c:when test="${loginedUserVo == null}">
+                    <c:when test="${loginedUserVogit == null}">
                         <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
                     </c:when>
                     <c:otherwise>
