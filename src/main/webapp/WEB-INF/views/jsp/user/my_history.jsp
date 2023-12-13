@@ -21,7 +21,7 @@
         </span>
         <div class="user_info">
             <div class="user_name_role">
-                <span class="name">${loginedUserVo.name}(${loginedUserVo.email})</span>
+                <span class="name">${loginedUserVo.name}</span>
                 <span class="role">${loginedUserVo.grade}</span>
             </div>
             <p class="total_history_list">

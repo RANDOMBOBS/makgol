@@ -416,11 +416,14 @@ body {
 }
 
 #board_detail .board_like label {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 2px solid #000;
     border-radius: 10px;
     font-size: 25px;
-    padding: 5px 20px;
+    width: 85px;
+    height: 45px;
     cursor: pointer;
 }
 
