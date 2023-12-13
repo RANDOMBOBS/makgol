@@ -30,11 +30,19 @@ public interface StoresRepository {
 
     void modifyReviewWithId(ModifyReviewDto modifyReviewDto);
 
-    String getModDateById(int reviewId);
+    StoreLikesDto getLikesStatus(LikesDto likesDto);
 
-    void deleteReviewWithId(int reviewId);
+    void increaseLikesWithId(LikesDto likesDto);
+
+    void createStoreLikesRecord(LikesDto likesDto);
+
+    void decreaseLikesWithId(LikesDto likesDto);
+
+    void removeStoreLikesRecord(LikesDto likesDto);
 
     void uploadReviewImage(UploadReviewImageDto uploadReviewImageDto);
+
+    void deleteReviewWithId(int reviewId);
 
     void saveCategoryMenu(Map<String, Object> map);
 

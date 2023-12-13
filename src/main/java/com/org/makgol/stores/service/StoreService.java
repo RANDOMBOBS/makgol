@@ -134,6 +134,35 @@ public class StoreService {
         }
     }
 
+    public boolean getLikesStatus(LikesDto likesDto) {
+        try {
+            StoreLikesDto result = storesRepository.getLikesStatus(likesDto);
+
+            return result == null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void increaseLikesWithId(LikesDto likesDto) {
+        try {
+            storesRepository.increaseLikesWithId(likesDto);
+            storesRepository.createStoreLikesRecord(likesDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void decreaseLikesWithId(LikesDto likesDto) {
+        try {
+            storesRepository.decreaseLikesWithId(likesDto);
+            storesRepository.removeStoreLikesRecord(likesDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void modifyReviewWithId(ModifyReviewDto modifyReviewDto) {
         try {
             storesRepository.modifyReviewWithId(modifyReviewDto);
