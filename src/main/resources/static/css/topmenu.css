@@ -4,7 +4,7 @@
 .top_menu {
 	width: 1200px;
 	margin: 30px auto;
-	border-radius : 0 10px 10px 10px;
+	border-radius : 10px 10px 10px 10px;
 	border: 12px solid #ffa500;
 	background-color:white;
 }
