@@ -146,7 +146,7 @@
             </li>
         </ul>
     </div>
-    <p class="img"></p>
+    <a href="http://localhost:8080"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
     <div class="userTab">
         <c:choose>
 
@@ -184,7 +184,6 @@
                     <li><a href="<c:url value='/board/notice'/>">공지사항</a></li>
                     <li><a href="<c:url value='/board/suggestion'/>">건의사항</a></li>
                     <li><a href="<c:url value='/board/vent'/>">하소연 게시판</a></li>
-                    <li><a href="<c:url value='/category/categoryMain'/>">카테고리 리스트</a></li>
                 </ul>
             </li>
 
