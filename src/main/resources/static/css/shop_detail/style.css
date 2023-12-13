@@ -294,6 +294,9 @@ article #review .review_content .content {
     color: #6b6b6b;
     border-radius: 5px;
     padding: 5px;
+    resize: none;
+    outline: none;
+    text-align: left;
 }
 
 article #review #review_list .review_item .review_etc {
@@ -353,6 +356,9 @@ article #review #upload_image {
     justify-content: center;
     align-items: center;
     margin-left: 12px;
+    background: none;
+    border: none;
+    outline: none;
 }
 
 article #review #upload_image > img {

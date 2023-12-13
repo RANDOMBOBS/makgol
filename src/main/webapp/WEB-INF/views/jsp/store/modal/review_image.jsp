@@ -14,7 +14,7 @@
 <div class="modal_cover">
     <div class="list_modal">
         <div class="modal_head">
-            <h1>List Review Image</h1>
+            <h1>리뷰 이미지 목록</h1>
             <button class="close_button">X</button>
         </div>
         <div class="list_modal_body">
@@ -23,7 +23,7 @@
     </div>
     <div class="upload_modal">
         <div class="modal_head">
-            <h1>Upload Review Image</h1>
+            <h1>리뷰 이미지 업로드</h1>
             <button class="close_button">X</button>
         </div>
         <div class="image_info">이미지는 최대 5장까지 첨부가능합니다.</div>

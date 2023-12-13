@@ -57,7 +57,7 @@
                     <li class="phone">${item.phone}</li>
                     <li>
                         <p>
-                            <a href="#">식당 보러가기 <i class="fa-solid fa-angles-right"></i></a>
+                            <a href="#"> 식당 보러가기 <i class="fa-solid fa-angles-right"></i></a>
                         </p>
                     </li>
                 </ul>

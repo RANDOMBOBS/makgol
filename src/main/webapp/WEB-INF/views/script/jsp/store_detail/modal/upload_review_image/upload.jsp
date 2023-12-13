@@ -36,13 +36,16 @@
         reviewImages = reviewImages.filter(file => file.name != presentFile.name)
     }
 
-    const upload = () => {
+    const upload = async (id) => {
+        if (id) {
+            const result = await requestReviewImage(id);
+            console.log(result)
+        }
+
         $("#upload_review_image").click(() => {
             reviewImageMap.set("reviewImages", reviewImages);
             $(".modal_cover").css({display: "none"});
             $(".upload_modal").css({display: "none"});
         })
     };
-
-
 </script>

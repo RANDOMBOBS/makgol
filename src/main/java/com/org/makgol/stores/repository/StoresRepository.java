@@ -28,11 +28,27 @@ public interface StoresRepository {
 
     void createReview(CreateReviewDto createReviewDto);
 
+    void modifyReviewWithId(ModifyReviewDto modifyReviewDto);
+
+    StoreLikesDto getLikesStatus(LikesDto likesDto);
+
+    void increaseLikesWithId(LikesDto likesDto);
+
+    void createStoreLikesRecord(LikesDto likesDto);
+
+    void decreaseLikesWithId(LikesDto likesDto);
+
+    void removeStoreLikesRecord(LikesDto likesDto);
+
     void uploadReviewImage(UploadReviewImageDto uploadReviewImageDto);
+
+    void deleteReviewWithId(int reviewId);
 
     void saveCategoryMenu(Map<String, Object> map);
 
     void saveMenus(Map<String, Object> map);
 
     void saveStores(StoreRequestVo storeRequestVo);
+
+
 }
