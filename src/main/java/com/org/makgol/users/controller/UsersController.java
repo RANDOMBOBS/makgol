@@ -130,7 +130,6 @@ public class UsersController {
 
     @PostMapping("/modifyUserConfirm")
     public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile, HttpServletResponse response, Model model) {
-        System.out.println("usersRequestVo = " + usersRequestVo);
         int result = userService.modifyUserInfo(usersRequestVo, oldFile, response);
         if (result > 0) {
             UsersResponseVo userInfo = userService.userInfo(usersRequestVo.getId());

@@ -232,7 +232,6 @@ public class UsersService implements LogoutHandler {
             newUserVo.setValueY(Integer.parseInt(valueY));
             newUserVo.setWeatherAddr(weatherAddr);
             boolean cookieResult = CookieUtil.saveCookies(response, newUserVo);
-            System.out.println("쿠키저장결과?" + cookieResult);
             if (cookieResult) {
                 servletContext.setAttribute("loginedUserVo", newUserVo);
 
