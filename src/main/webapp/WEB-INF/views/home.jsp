@@ -119,7 +119,9 @@
                   autoplay : true,
                   draggable : true,
                   arrows: false,
-                  fade: true
+                  fade: true,
+                  pauseOnFocus: false,
+                 pauseOnHover: false
               });
     })
 
