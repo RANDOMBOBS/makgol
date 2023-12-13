@@ -16,7 +16,7 @@
 <ul class="todaymenu_list_ul">
     <c:forEach var="item" items="${categoryVo}" varStatus="loop" begin="0" end="9">
         <li class="todaymenu_list">
-            <img class="img" src="${item.photoPath}">
+            <img class="img" src="<c:url value='/resources/static/image/default/todayMenu_${loop.index + 1}.jpg'/>">
             <span class="today_menu_name">${item.menu}</span>
             <span class="today_menu_gogo">해당메뉴 검색하기 >></span>
         </li>

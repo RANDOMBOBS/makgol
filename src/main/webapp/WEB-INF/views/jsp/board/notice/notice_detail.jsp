@@ -51,14 +51,14 @@
                   <td class="date">${boardVo.date}</td>
                 </tr>
                 <tr class="content">
-                  <td colspan="2">
+                  <td colspan="2" class="content_td">
                   <pre width="100%" style="white-space: pre-wrap; word-wrap: break-word;">${boardVo.contents}</pre></td>
                 </tr>
               </table>
 
     </section>
 
-    <jsp:include page="../..//include/footer.jsp"></jsp:include>
+    <jsp:include page="../../include/footer.jsp"></jsp:include>
 
     <jsp:include page="../../../script/jsp/notice.jsp"></jsp:include>
 

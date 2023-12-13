@@ -7,14 +7,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<style>
+.result{
+		text-align:center;
+		margin:50px 0px;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../../include/header.jsp"></jsp:include>
+	<div class="result">
 	<h1>글쓰기성공!</h1>
     <c:url value="/board/suggestion" var="suggestion_url"/>
     <img id="image" src="<c:url value='/resources/static/image/default/ok.gif' />">
     <a href="${suggestion_url}">목록보기</a>
+    </div>
     <jsp:include page="../../include/footer.jsp"></jsp:include>
 </body>
 </html>
