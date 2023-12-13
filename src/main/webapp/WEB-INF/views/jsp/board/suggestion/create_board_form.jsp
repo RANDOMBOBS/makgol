@@ -36,8 +36,8 @@
 
         <div class="column user_name">
           <span class="description">작성자</span>
-          <input type="text" name="name" value="${name}" class="name" readonly disabled />
-          <input type="hidden" name="user_id" value="${user_id}" />
+          <input type="text" name="name" value="${loginedUserVo.name}" class="name" readonly disabled />
+          <input type="hidden" name="user_id" value="${loginedUserVo.id}" />
         </div>
 
         <div class="column board_contents">
@@ -117,6 +117,8 @@
         <br />
 
         <div class="buttons">
+        <c:set var="xsrfToken" value="${cookie['XSRF-TOKEN'].value}" />
+          <input type="hidden" name="_csrf" value="${xsrfToken}"/>
           <input type="button" class="ok_board" value="작성" onclick="createBoardForm();" />
           <input type="reset" class="cancel" value="초기화" onclick="resetContents()"/>
           <input type="button" class="board_list" value="글목록" onclick="returnToList()"/>

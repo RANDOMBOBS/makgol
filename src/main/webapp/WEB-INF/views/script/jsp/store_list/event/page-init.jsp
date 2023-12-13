@@ -18,7 +18,9 @@
         shopInfo.keyword = request.keyword;
 
         const myCoordinate = {longitude: request.longitude, latitude: request.latitude};
-        
+
+        localStorage.setItem("myCoordinate", JSON.stringify(myCoordinate));
+
         displayInitialShopList(shopInfo);
         displayInitialMap(shops, myCoordinate);
 

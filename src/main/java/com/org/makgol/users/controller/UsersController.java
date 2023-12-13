@@ -8,26 +8,31 @@ import com.org.makgol.users.service.UsersService;
 import com.org.makgol.users.vo.AuthNumberVo;
 import com.org.makgol.users.vo.UsersRequestVo;
 import com.org.makgol.users.vo.UsersResponseVo;
-import com.org.makgol.util.file.FileUpload;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UsersController {
 
     private final UsersService userService;
+    private final ServletContext servletContext;
 
     //joinUser_POST
     @PostMapping("/join")
@@ -46,9 +51,8 @@ public class UsersController {
 
 
     @PostMapping("/findPassword")
-    public void userFindPassword() {
-        String userEmail = "tjsgus223@naver.com";
-        userService.userFindPassword(userEmail);
+    public void userFindPassword(@RequestParam("email") String email) {
+        userService.userFindPassword(email);
 
     } // userFindPassword_END
 
@@ -79,63 +83,56 @@ public class UsersController {
     } //authNumberCheck_END
 
 
-    @GetMapping("/login")
+    @GetMapping("/index")
     public String loginForm() {
-        // 로그인 화면 템플릿 경로를 설정
-        return "jsp/user/user_login";
+        return "home";
     }
 
     @PostMapping("/loginConfirm")
-    public String loginConfirm(UsersRequestVo usersRequestVo, HttpSession session){
-        String nextPage = "home";
-        UsersResponseVo loginedUserVo = userService.loginConfirm(usersRequestVo);
-
-        if (loginedUserVo == null) {
-            // 로그인 실패 시 'login_ng' 화면을 표시
-            nextPage = "jsp/user/user_login_ng";
-        } else {
-            if (!(loginedUserVo.getGrade() != null && "블랙리스트".equals(loginedUserVo.getGrade()))) {
-                // 로그인 성공 시 사용자 정보를 세션에 저장하고 세션
-                session.setAttribute("loginedUserVo", loginedUserVo);
-            } else {
-                session.setAttribute("blackList", loginedUserVo);
-            }
-        }
-        return nextPage;
+    public String loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response){
+       userService.loginConfirm(usersRequestVo, response);
+        return "redirect:/user/loginSucceed";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session, @RequestParam("link") String link){
-        session.invalidate();
-        if(link.contains("/admin/userManagement")||link.contains("/suggestion/create")||link.contains("/suggestion/modify")||link.contains("/user/modifyUser")||link.contains("/user/myHistory")||link.contains("/user/myPage")||link.contains("/user/myStoreList")||link.contains("/user/loginConfirm")){
-            return "home";
-        }else {
-            return "redirect:" + link;
-        }
+    @GetMapping("/loginSucceed")
+    public String getCookieValue(HttpServletRequest request) throws URISyntaxException{
+        String urlString = request.getHeader("Referer");
+        URI uri = new URI(urlString);
+        String path = uri.getPath(); // 경로 부분을 얻어옴
+
+       userService.getCookieValue(request);
+       return "redirect:"+path;
     }
+
 
     @GetMapping("/blackList")
-    public String blackList(HttpSession session){
-        session.removeAttribute("blackList");
-        session.invalidate();
+    public String blackList(HttpServletRequest req, HttpServletResponse res){
+        userService.blackList(req, res);
         return "home";
     }
 
 
     @GetMapping("/myPage")
-    public String myPage() {
-        return "jsp/user/my_page";
+    public String myPage(@RequestParam("user_id") int user_id, Model model) {
+       UsersResponseVo userInfo = userService.userInfo(user_id);
+       model.addAttribute("userInfo", userInfo);
+       return "jsp/user/my_page";
     }
 
     @GetMapping("/modifyUser")
-    public String modify_user() {
+    public String modify_user(@RequestParam("user_id") int user_id, Model model) {
+        UsersResponseVo userInfo = userService.userInfo(user_id);
+        model.addAttribute("userInfo", userInfo);
         return "jsp/user/modify_user";
     }
 
     @PostMapping("/modifyUserConfirm")
-    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile, HttpSession session) {
-        int result = userService.modifyUserInfo(usersRequestVo, oldFile, session);
+    public String modifyUserConfirm(@ModelAttribute UsersRequestVo usersRequestVo, @RequestParam("oldFile") String oldFile,HttpServletResponse response, Model model) {
+        System.out.println("usersRequestVo = " + usersRequestVo);
+        int result = userService.modifyUserInfo(usersRequestVo, oldFile, response);
         if (result > 0) {
+            UsersResponseVo userInfo = userService.userInfo(usersRequestVo.getId());
+            model.addAttribute("userInfo", userInfo);
             return "jsp/user/my_page";
         }
         return "jsp/user/modify_user";
@@ -197,5 +194,3 @@ public class UsersController {
         return a;
     }
 }
-
-

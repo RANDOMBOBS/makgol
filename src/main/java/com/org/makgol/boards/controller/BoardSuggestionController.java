@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.org.makgol.boards.vo.BoardCreateRequestVo;
@@ -49,21 +50,11 @@ public class BoardSuggestionController {
 	/**
 	 * suggestion 글 쓰기 버튼
 	 * 
-	 * @param model   : 다음 화면으로 name 값을 전달
-	 * @param session :
-	 * 
 	 * @return create_board_form.jsp로 이동
 	 */
 	@GetMapping("/create")
-	public String create(Model model, HttpSession session) {
+	public String create() {
 		String nextPage = "jsp/board/suggestion/create_board_form";
-		UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
-		String userName = loginedUserVo.getName();
-		int userId = loginedUserVo.getId();
-		if (loginedUserVo != null) {
-			model.addAttribute("name", userName);
-			model.addAttribute("user_id", userId);
-		}
 		return nextPage;
 	}
 

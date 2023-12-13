@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>
+
 </head>
 <body>
 <div class="modal_cover">
@@ -39,6 +40,8 @@
                                 type="password"
                         />
                     </label>
+                    <c:set var="xsrfToken" value="${cookie['XSRF-TOKEN'].value}"/>
+                    <input type="hidden" name="_csrf" value="${xsrfToken}"/>
                     <div id="save_id">
                         <label for="remember-check">
                             <input id="remember-check" type="checkbox"/>
@@ -53,8 +56,8 @@
                 <span>아이디 & 비밀번호 찾기</span>
             </div>
             <div class="social_login">
-                <button id="naver_login">네이버 로그인</button>
-                <button id="kakao_login">카카오 로그인</button>
+                <a id="naver_login" href="/oauth2/authorization/naver">네이버 로그인</a>
+                <a id="kakao_login" href="/oauth2/authorization/kakao">카카오 로그인</a>
             </div>
         </div>
         <div class="modal_footer"></div>
@@ -243,13 +246,8 @@
         const registerModalButtonEle = $(".user_option span:nth-child(1)");
 
         registerModalButtonEle.click(() => {
-            const modalCoverEle = $(".modal_cover");
-            const registerModalEle = $(".register_modal");
-
             $(".login_modal").css({display: "none"});
-
-            modalCoverEle.css({display: "block"});
-            registerModalEle.css({display: "block"});
+            $(".register_modal").css({display: "block"});
         })
     };
 
@@ -487,13 +485,13 @@
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8090/user/join",
+                url: "/user/join",
                 data: formData,
                 processData: false,
                 contentType: false,
                 success(data) {
                     alert("회원가입 되었습니다!");
-                    window.location.href = "http://localhost:8090";
+                    window.location.href = "";
                 }, error(err) {
                     alert("서버 에러");
                 }

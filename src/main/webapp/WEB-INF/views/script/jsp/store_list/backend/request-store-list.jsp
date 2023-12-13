@@ -4,7 +4,7 @@
 <script>
     const requestStoreList = async (payload) => {
         const {keyword, longitude, latitude} = payload
-        const url = "http://localhost:8090/store/list_data?longitude=" + longitude + "&latitude=" + latitude + "&keyword=" + keyword;
+        const url = "/store/list_data?longitude=" + longitude + "&latitude=" + latitude + "&keyword=" + keyword;
 
         const {axios} = window;
         const {data} = await axios.get(url);

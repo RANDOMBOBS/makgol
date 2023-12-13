@@ -25,23 +25,25 @@
              <table class="info_table">
                <tr>
                  <td>
-                   <img src="http://localhost:8090${loginedUserVo.photo_path}" alt="프로필사진" />
+                   <img src="${loginedUserVo.photo_path}" alt="프로필사진" />
                  </td>
                </tr>
                <tr>
                  <td>${loginedUserVo.name} / ${loginedUserVo.grade}</td>
                </tr>
                <tr>
-                 <td>${loginedUserVo.email}</td>
+                 <td>${userInfo.email}</td>
                </tr>
                <tr>
-                 <td>${loginedUserVo.phone}</td>
+                 <td>${userInfo.phone}</td>
                </tr>
                <tr>
-                 <td>${loginedUserVo.address}</td>
+                 <td>${userInfo.address}</td>
                </tr>
              </table>
-             <span class="mod_my_info"><a href="<c:url value='/user/modifyUser'/>">수정하기</a></span>
+             <span class="mod_my_info">
+                <a href="<c:url value='/user/modifyUser'><c:param name='user_id' value='${loginedUserVo.id}' /></c:url>">수정하기</a>
+             </span>
            </div>
 
            <c:url value='/user/myStoreList' var='my_store_url'>
@@ -55,28 +57,28 @@
              <div class="history_table">
                <ul>
                  <li><a href="${my_store_url}"></a></li>
-                 <li><img src="../../../resources/static/image/default/my_restaurant.png" alt="식당아이콘" /></li>
+                 <li><img src="../../../fileUpload/default/my_restaurant.png" alt="식당아이콘" /></li>
                  <li>좋아요한 식당</li>
                </ul>
                <ul>
                  <li>
                    <a href="<c:url value='/user/myHistory?show=myPosts'/>"></a>
                  </li>
-                 <li><img src="../../../resources/static/image/default/my_board.png" alt="게시판아이콘" /></li>
+                 <li><img src="../../../fileUpload/default/my_board.png" alt="게시판아이콘" /></li>
                  <li>작성한 글</li>
                </ul>
                <ul>
                  <li>
                    <a href="<c:url value='/user/myHistory?show=myComments'/>"></a>
                  </li>
-                 <li><img src="../../../resources/static/image/default/my_comment.png" alt="댓글아이콘" /></li>
+                 <li><img src="../../../fileUpload/default/my_comment.png" alt="댓글아이콘" /></li>
                  <li>작성한 댓글</li>
                </ul>
                <ul>
                  <li>
                    <a href="<c:url value='/user/myHistory?show=myLikePosts'/>"></a>
                  </li>
-                 <li><img src="../../../resources/static/image/default/my_like_board.png" alt="공감아이콘" /></li>
+                 <li><img src="../../../fileUpload/default/my_like_board.png" alt="공감아이콘" /></li>
                  <li>공감한 글</li>
                </ul>
              </div>

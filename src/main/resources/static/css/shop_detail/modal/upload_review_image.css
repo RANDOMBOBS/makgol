@@ -1,0 +1,108 @@
+.upload_modal {
+    display: none;
+    opacity: 1;
+    width: 950px;
+    height: 400px;
+    background: #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    flex-direction: column;
+}
+
+.upload_modal .image_info {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #555555;
+}
+
+.upload_modal .upload_image_list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.upload_modal .upload_image_list .image {
+    position: relative;
+}
+
+.upload_modal .upload_image_list .image .delete_image {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+}
+
+.upload_modal .upload_image_list .delete_image i {
+    border: 1px solid #333;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+.upload_modal .upload_image_list label input {
+    display: none;
+}
+
+.upload_modal .upload_image_list label .no_image {
+    width: 150px;
+    height: 200px;
+    cursor: pointer;
+    position: relative;
+}
+
+.upload_modal .upload_image_list label .no_image i {
+    color: #aaa;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid #ddd;
+    display: block;
+    font-size: 50px;
+    text-align: center;
+    line-height: 200px;
+    width: 150px;
+    height: 200px;
+}
+
+.upload_modal .upload_image_list label .no_image img {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+}
+
+.upload_modal .button_area {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.upload_modal #upload_review_image {
+    width: 180px;
+    height: 45px;
+    background-color: #ffffff;
+    outline: none;
+    border: 1px solid orange;
+    border-radius: 5px;
+    color: #ff8a00;
+    cursor: pointer;
+}
+
+.upload_modal #upload_review_image:hover {
+    background-color: orange;
+    color: white;
+}

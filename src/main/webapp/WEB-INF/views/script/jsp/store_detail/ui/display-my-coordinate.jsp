@@ -2,7 +2,7 @@
 <script>
     const displayMyCoordinate = (map, {myX, myY}) => {
         const {kakao} = window;
-        const imageSrc = "http://localhost:8090/resources/static/image/default/red_ping.png"; // 마커이미지의 주소입니다
+        const imageSrc = "/resources/static/image/default/red_ping.png"; // 마커이미지의 주소입니다
         const imageSize = new kakao.maps.Size(30, 47); // 마커이미지의 크기입니다
 
         const markerImage = new kakao.maps.MarkerImage(

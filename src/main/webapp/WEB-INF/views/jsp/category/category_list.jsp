@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%>
                 <button type="submit" class="form_button">등록</button>
             </form>
         </c:if>
-        <img class="img" src="http://localhost:8090${item.photoPath}">
+        <img class="img" src="${item.photoPath}">
         <span class="menu_name">${item.menu_name}</span>
         <span class="menu_gogo">근처식당 찾아보기 >></span>
     </li>

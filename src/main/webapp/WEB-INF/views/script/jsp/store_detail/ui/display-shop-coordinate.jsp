@@ -3,7 +3,7 @@
     const displayShopCoordinate = (map, {shopX, shopY}) => {
         const {kakao} = window;
 
-        const imageSrc = "http://localhost:8090/resources/static/image/default/sky_blue_ping.png";
+        const imageSrc = "/resources/static/image/default/sky_blue_ping.png";
         const imageSize = new kakao.maps.Size(24, 36);
 
         const markerImage = new kakao.maps.MarkerImage(
