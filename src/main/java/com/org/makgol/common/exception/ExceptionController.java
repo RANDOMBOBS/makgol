@@ -14,7 +14,7 @@ public class ExceptionController {
 		log.error("handleCustomException throw CustomException : {}", e.getErrorCode());
 		ModelAndView mView=new ModelAndView();
 		mView.addObject("exception",e);
-		mView.setViewName("jsp/error/error404");
+		mView.setViewName("jsp/error/error");
 
 		return mView;
 	}

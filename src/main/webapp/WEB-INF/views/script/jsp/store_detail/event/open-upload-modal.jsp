@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="../modal/upload_review_image/upload.jsp"></jsp:include>
 <script>
-    const openUploadModal = () => {
+    const openUploadModal = (id) => {
         $(".modal_cover").css({display: "block"});
         $(".upload_modal").css({display: "flex"});
         $(".list_modal").css({display: "none"});
 
-        upload();
+        upload(id);
 
         const uploadImageCloseButtonEle = $(".upload_modal .close_button");
 

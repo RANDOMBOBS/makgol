@@ -16,6 +16,7 @@ public class ResponseStoreReviewDto {
     String content;
     String date;
     String name;
+    int userId;
     String user_photo_path;
     List<String> review_photo_path;
 }

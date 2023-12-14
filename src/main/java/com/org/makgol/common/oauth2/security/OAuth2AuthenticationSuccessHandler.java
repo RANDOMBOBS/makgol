@@ -99,11 +99,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         servletContext.setAttribute("loginedUserVo", usersResponseVo);
 
-        String urlString = request.getHeader("Referer");
-
-        log.info("urlString --> : {} ", urlString);
-
-        return UriComponentsBuilder.fromUriString(urlString)
+        return UriComponentsBuilder.fromUriString("/")
                 //.queryParam("error", "")
                 //.queryParam("token", token.getAccessToken())
                 .build().toUriString();

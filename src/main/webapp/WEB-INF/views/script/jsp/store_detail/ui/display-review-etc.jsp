@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="../event/modify-review.jsp"></jsp:include>
+<jsp:include page="../event/delete-review.jsp"></jsp:include>
 <script>
     const displayReviewEtc = (item) => {
+        const loginedUserId = "${loginedUserVo.id}";
+        const reviewUserId = String(item.userId);
+
         const reviewEtcEle = $("<div>").addClass("review_etc");
 
         const reviewImageBoxEle = $("<div>").addClass("review_image_box");
@@ -15,27 +20,25 @@
         dateBoxEle.append($("<div>").addClass("date").text(date));
         dateBoxEle.append($("<div>").addClass("date").text(time));
 
-        const modifyIconEle = $("<i>").css({fontSize: "16px", marginRight: "5px"});
-        const deleteIconEle = $("<i>").css({fontSize: "16px", marginRight: "5px"});
+        if (loginedUserId === reviewUserId) {
+            const modifyIconEle = $("<i>").css({fontSize: "16px", marginRight: "5px"});
+            const deleteIconEle = $("<i>").css({fontSize: "16px", marginRight: "5px"});
 
-        modifyIconEle.addClass("fa-solid fa-pencil modify_button");
-        deleteIconEle.addClass("fa-solid fa-trash delete_button");
+            modifyIconEle.addClass("fa-solid fa-pencil modify_button");
+            deleteIconEle.addClass("fa-solid fa-trash delete_button");
 
-        const modifyButtonEle = $("<button>").addClass("button modify_button");
-        const deleteButtonEle = $("<button>").addClass("button delete_button");
+            const modifyButtonEle = $("<button>").addClass("button modify_button");
+            const deleteButtonEle = $("<button>").addClass("button delete_button");
 
-        modifyButtonEle.click(() => {
-            alert("수정")
-        });
-        deleteButtonEle.click(() => {
-            alert("삭제")
-        });
+            modifyButtonEle.click(modifyReview);
+            deleteButtonEle.click(deleteReview);
 
-        modifyButtonEle.append(modifyIconEle);
-        deleteButtonEle.append(deleteIconEle);
+            modifyButtonEle.append(modifyIconEle);
+            deleteButtonEle.append(deleteIconEle);
 
-        optionBoxEle.append(modifyButtonEle);
-        optionBoxEle.append(deleteButtonEle);
+            optionBoxEle.append(modifyButtonEle);
+            optionBoxEle.append(deleteButtonEle);
+        }
 
         etcBoxEle.append(dateBoxEle);
         etcBoxEle.append(optionBoxEle);

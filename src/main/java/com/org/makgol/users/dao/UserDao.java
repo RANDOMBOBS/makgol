@@ -31,11 +31,11 @@ public class UserDao {
 
 
 	// 사용자 정보 조회 (로그인)
-	public UsersResponseVo selectUser(String email) {
-		List<UsersResponseVo> list = null;
-		list = usersRepository.selectUser(email);
-		return list.size()>0 ? list.get(0) : null;
-	}
+//	public UsersResponseVo selectUser(String email) {
+//		List<UsersResponseVo> list = null;
+//		list = usersRepository.selectUser(email);
+//		return list.size()>0 ? list.get(0) : null;
+//	}
 
 	public int updateUserInfo(UsersRequestVo usersRequestVo){
 		int result = -1;

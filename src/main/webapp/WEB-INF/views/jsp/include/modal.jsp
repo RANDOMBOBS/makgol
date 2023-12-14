@@ -15,7 +15,7 @@
 <div class="modal_cover">
     <div class="login_modal">
         <div class="modal_head">
-            <h1>Log In</h1>
+            <h1>로그인</h1>
             <button class="close_button">X</button>
         </div>
         <div class="modal_body">
@@ -64,7 +64,7 @@
     </div>
     <div class="register_modal">
         <div class="modal_head">
-            <h1>Join</h1>
+            <h1>회원가입</h1>
             <button class="close_button">X</button>
         </div>
         <div class="modal_body">
@@ -97,7 +97,7 @@
                                     <button id="email_validate">중복 확인</button>
                                 </div>
                             </td>
-                            <td id="email_input_error" class="input_error">이메일 유효성을 지켜주세요!</td>
+                            <td id="email_input_error" class="input_error">이메일 형식을 지켜주세요!</td>
                         </tr>
                         <tr>
                             <td class="input_box">
