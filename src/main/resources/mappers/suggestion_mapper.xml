@@ -178,7 +178,7 @@
 
             <select id="selectSearchBoard" resultMap="boardResult"
                     parameterType="hashmap">
-                SELECT b.id AS b_id, b.user_id, b.hit, b.title, b.date, b.contents,
+                SELECT b.id AS id, b.user_id, b.hit, b.title, b.date, b.contents,
                 b.category, b.sympathy, u.name, u.photo
                 FROM boards AS b
                 JOIN users AS u
