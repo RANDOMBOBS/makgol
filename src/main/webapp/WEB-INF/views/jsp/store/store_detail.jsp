@@ -114,6 +114,7 @@
         <div class="item_info_footer"></div>
     </div>
 </article>
+<jsp:include page="../include/footer.jsp"></jsp:include>
 <script
         type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5e40f301ec35188c140844617fdf45bf"
