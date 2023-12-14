@@ -23,7 +23,7 @@
             parameterType="hashmap">
         SELECT *
         FROM stores
-        JOIN menus ON stores.id = menu.store_id
+        JOIN menus ON stores.id = menus.store_id
         WHERE menus.menu = #{category}
         AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
 

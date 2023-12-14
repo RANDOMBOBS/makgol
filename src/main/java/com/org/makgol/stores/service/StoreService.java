@@ -62,8 +62,17 @@ public class StoreService {
                     || "중식".equals(keyword)
                     || "기타".equals(keyword)){
 
+                log.info("category --> {} :", keyword);
+                log.info("longitude --> {} :", longitude);
+                log.info("latitude--> {} :", latitude);
+                log.info("result = storesRepository.findStoreList(map);");
                 result = storesRepository.findStoreList(map);
+
             } else {
+                log.info("category --> {} :", keyword);
+                log.info("longitude --> {} :", longitude);
+                log.info("latitude--> {} :", latitude);
+                log.info("result = storesRepository.findStoreListMenu(map);");
                 result = storesRepository.findStoreListMenu(map);
             }
         } catch (Exception e) {

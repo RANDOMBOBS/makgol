@@ -20,7 +20,7 @@
 	<h1>글수정 오류!!!!!</h1>
 	<c:url value="/board/suggestion" var="suggestion_url" />
 	<img id="image" src="<c:url value='/resources/static/image/default/ng.gif' />">
-	<a href="${suggestion_url}">목록보기</a>
+	<a href="${suggestion_url}"><br>목록보기</a>
 	</div>
 	<jsp:include page="../../include/footer.jsp"></jsp:include>
 </body>
