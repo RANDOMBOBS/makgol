@@ -16,7 +16,17 @@
         SELECT *
         FROM mak_gol.stores
         WHERE category = #{category}
-          AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
+        AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
+    </select>
+
+    <select id="findStoreListMenu" resultType="com.org.makgol.stores.dto.ResponseStoreListDto"
+            parameterType="hashmap">
+        SELECT *
+        FROM stores
+        JOIN menus ON stores.id = menu.store_id
+        WHERE menus.menu = #{category}
+        AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
+
     </select>
 
     <select id="findStoreDetailWithId" resultType="com.org.makgol.stores.dto.StoreDetailDto" parameterType="Integer">
