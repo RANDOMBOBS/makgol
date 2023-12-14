@@ -14,6 +14,6 @@
 
 	<h3>글쓰기 오류!!!!!</h3>
 	<c:url value="/board/suggestion" var="suggestion_url" />
-	<a href="${suggestion_url}">목록보기</a>
+	<a href="${suggestion_url}"><br>목록보기</a>
 </body>
 </html>

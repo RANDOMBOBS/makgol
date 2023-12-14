@@ -52,7 +52,7 @@
                 </tr>
                 <tr class="content">
                   <td colspan="2" class="content_td">
-                  <pre width="100%" style="white-space: pre-wrap; word-wrap: break-word;">${boardVo.contents}</pre></td>
+                  ${boardVo.contents}</td>
                 </tr>
               </table>
 
