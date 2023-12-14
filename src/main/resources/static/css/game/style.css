@@ -1,0 +1,186 @@
+body {
+  background-color: #ffe286;
+  font-family: Montserrat, sans-serif;
+  margin: 0;
+}
+
+#backBtn {
+  color: #ffd400;
+  font-size: 13.5px;
+  float: left;
+  position: fixed;
+  left: 9px;
+  top: 8px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+h3 {
+  padding-top: 40px;
+  margin: 0 auto;
+  width: 400px;
+  font-size: 60px;
+  color: black;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: 10px;
+  text-align: center;
+}
+#decBtn,
+#incBtn,
+#startBtn,
+#korLang,
+#engLang,
+span {
+  color: black;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  border: none;
+  font-size: 35px;
+  background-color: transparent;
+  letter-spacing: 5px;
+  text-align: center;
+}
+
+h1:hover,
+#decBtn:hover,
+#incBtn:hover,
+#startBtn:hover,
+#korLang:hover,
+#engLang:hover {
+  color: mediumspringgreen;
+  cursor: pointer;
+  text-align: center;
+}
+
+#decBtn:hover,
+#incBtn:hover,
+#startBtn:hover,
+#korLang:hover,
+#engLang:hover {
+  transform: scale(1.07);
+}
+
+#startBtn {
+  font-size: 70px;
+}
+
+#korLang,
+#engLang {
+  font-size: 30px;
+}
+
+#setNumPlayers,
+#begin,
+#langBtns {
+  text-align: right;
+}
+
+#numPlayers {
+  float: left;
+  display: block;
+  font-size: 50px;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+#left {
+  width: 400px;
+  background-color: #ffeeaa;
+  float: left;
+}
+#right {
+  width: 400px;
+  background-color: #ffeeaa;
+  float: right;
+}
+
+
+#initBtns {
+  border: 2px black solid;
+  border-radius: 5px;
+  width: 200px;
+  margin: 0 auto;
+  background-color: #ffa500;
+}
+
+#canvasContainer {
+  text-align: center;
+  background-color: #534f3a;
+  width: 80%; /* canvasContainer의 너비를 설정 */
+  margin: 0 auto; /* 가운데 정렬을 위해 auto 마진을 사용 */
+  overflow: hidden; /* 자식 요소의 float 속성을 잡기 위해 사용 */
+}
+
+.inputBox {
+  border: 0.5px solid white;
+  border-radius: 5px;
+  background-color: #181818;
+  color: #ffd400;
+  text-align: center;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+.inputBox:focus,
+.inputBox:hover {
+  border: 1px solid mediumspringgreen;
+}
+
+.nextBtn {
+  display: block;
+  background-color: #181818;
+  color: #ffd400;
+  border: none;
+  width: 100%;
+  height: 30px;
+  margin: 0 auto;
+  margin-top: 3px;
+  font-size: 25px;
+  letter-spacing: 5px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+.nextBtn:hover {
+  cursor: pointer;
+}
+
+p {
+  width: 30%;
+  height: 50px;
+  color: white;
+  font-size: 30px;
+  margin: 10px auto;
+  border-radius: 10px;
+  letter-spacing: 5px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  text-align: center;
+  line-height: 50px;
+}
+
+.nextBtn:hover {
+  background-color: mediumspringgreen;
+  color: #ffd400;
+}
+
+#resultContainer {
+  display: none;
+  margin: 30px auto;
+  width: 100%;
+}
+
+#resultBtn {
+  display: none;
+  background-color: #181818;
+  color: #ffd400;
+  border: none;
+  width: 100%;
+  height: 30px;
+  margin: 0 auto;
+  margin-top: 3px;
+  font-size: 25px;
+  letter-spacing: 5px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+#resultBtn:hover {
+  background-color: mediumspringgreen;
+  color: #ffd400;
+}
