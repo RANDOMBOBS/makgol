@@ -195,7 +195,7 @@
                         AND b.contents LIKE CONCAT('%', #{searchWord}, '%')
                     </when>
                     <when test="searchOption == 'titleContents'">
-                        AND b.title LIKE CONCAT('%', #{searchWord}, '%') OR b.contents LIKE CONCAT('%', #{searchWord}, '%')
+                        AND (b.title LIKE CONCAT('%', #{searchWord}, '%') OR b.contents LIKE CONCAT('%', #{searchWord}, '%'))
                     </when>
                 </choose>
             </select>

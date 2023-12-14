@@ -103,7 +103,7 @@ public class UsersService implements LogoutHandler {
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
-            usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
+            usersRequestVo.setPhoto_path("http://localhost:8080/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
