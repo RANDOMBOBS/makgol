@@ -54,7 +54,27 @@ public class StoreService {
             map.put("category", keyword);
             map.put("longitude", longitude);
             map.put("latitude", latitude);
-            result = storesRepository.findStoreList(map);
+
+            if("한식".equals(keyword)
+                    || "양식".equals(keyword)
+                    || "일식".equals(keyword)
+                    || "분식".equals(keyword)
+                    || "중식".equals(keyword)
+                    || "기타".equals(keyword)){
+
+                log.info("category --> {} :", keyword);
+                log.info("longitude --> {} :", longitude);
+                log.info("latitude--> {} :", latitude);
+                log.info("result = storesRepository.findStoreList(map);");
+                result = storesRepository.findStoreList(map);
+
+            } else {
+                log.info("category --> {} :", keyword);
+                log.info("longitude --> {} :", longitude);
+                log.info("latitude--> {} :", latitude);
+                log.info("result = storesRepository.findStoreListMenu(map);");
+                result = storesRepository.findStoreListMenu(map);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

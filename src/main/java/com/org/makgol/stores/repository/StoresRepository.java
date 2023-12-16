@@ -51,4 +51,5 @@ public interface StoresRepository {
     void saveStores(StoreRequestVo storeRequestVo);
 
 
+    List<ResponseStoreListDto> findStoreListMenu(Map<String, String> map);
 }
