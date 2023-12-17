@@ -49,13 +49,8 @@ public class BoardNoticeController {
     }
 
     @GetMapping("/noticeCreateForm")
-    public String noticeCreateForm(Model model, HttpSession session) {
+    public String noticeCreateForm() {
         String nextPage = "jsp/board/notice/notice_create_form";
-        UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
-        int userId = loginedUserVo.getId();
-        String grade = loginedUserVo.getGrade();
-        model.addAttribute("user_id", userId);
-        model.addAttribute("grade", grade);
         return nextPage;
     }
 

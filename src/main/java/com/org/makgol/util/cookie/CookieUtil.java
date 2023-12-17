@@ -19,7 +19,8 @@ public class CookieUtil {
     // 모든 경로에 쿠키 저장
     public static void setCookie(HttpServletResponse res, String key, String value) {
         String encodeValue = URLEncoder.encode(value, StandardCharsets.UTF_8);
-        String cookieValue = String.format("%s = %s; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Strict;", key, encodeValue);
+        //String cookieValue = String.format("%s = %s; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Strict;", key, encodeValue);
+        String cookieValue = String.format("%s = %s; Max-Age=1800; Path=/; HttpOnly; SameSite=lax;", key, encodeValue);
         res.addHeader("Set-Cookie", cookieValue);
     }
 

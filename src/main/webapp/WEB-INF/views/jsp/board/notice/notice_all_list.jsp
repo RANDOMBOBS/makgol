@@ -44,7 +44,7 @@
           </c:url>
           <a href="${detail_url}">${item.title}</a>
         </td>
-        <td>${item.grade}</td>
+        <td>관리자</td>
 
         <c:choose>
           <c:when test="${fn:contains(item.date, today)}">
@@ -64,7 +64,7 @@
 
 <!-- 괸리자로 로그인시 글쓰기 버튼 보여지며 누르면 페이지 이동 -->
     <%
-	    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+	    UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
 	    if (loginedUserVo != null) {
 	%>
 	    <c:if test="${loginedUserVo.grade == '관리자'}">

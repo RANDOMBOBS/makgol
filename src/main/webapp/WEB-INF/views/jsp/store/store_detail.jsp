@@ -46,6 +46,7 @@
                     <li><span>주소정보: </span><span></span></li>
                     <li><span>좋아요수: </span><span></span></li>
                 </ul>
+                <div id="is_liked" style="visibility: hidden">좋아요한 식당</div>
             </div>
             <div class="info_box" id="menu_info">
                 <div class="detail_category">
@@ -90,7 +91,7 @@
                 <div id="review_form">
                     <div class="review_profile">
                         <img class="user_image"
-                             src="http://3.35.166.212/resources/static/image/default/user_default.jpeg">
+                             src="http://3.34.140.239/resources/static/image/default/user_default.jpeg">
                         <c:choose>
                             <c:when test="${loginedUserVo == null}">
                                 <span class="user_name">사용자</span>
@@ -104,9 +105,9 @@
                         <textarea spellcheck="false" id="text_review" class="content"></textarea>
                         <button id="submit_review">작성</button>
                     </div>
-                    <div id="upload_image">
+                    <button id="upload_image">
                         <img class="review_image" src="https://budongsancanada.com/Images/no_image.jpg">
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>

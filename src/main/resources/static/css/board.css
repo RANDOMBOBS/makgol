@@ -224,10 +224,24 @@ body {
     height: 30px;
 }
 
+#board_write .write_board_form .column .category {
+    text-align: left;
+    text-indent: 1em;
+    width: 80px;
+    height: 30px;
+}
+
 #board_write .write_board_form .column .name {
     width: 200px;
     height: 30px;
     text-indent: 1em;
+}
+
+#board_write .write_board_form .column .admin {
+    text-align: left;
+    width: 80px;
+    height: 30px;
+    text-indent: 1.3em;
 }
 
 #board_write .write_board_form .board_contents {
@@ -331,9 +345,9 @@ body {
 }
 
 #board_write .write_board_form .buttons input.board_list {
-    position: absolute;
-    right: 0;
-    width: 80px;
+  position: absolute;
+  right: 0;
+  width: 80px;
 }
 
 #board_detail {
@@ -400,6 +414,12 @@ body {
     padding: 50px;
 }
 
+#board_detail .board_detail_table .content .content_td {
+    text-align: left;
+    padding: 50px;
+    border-bottom: 3px solid #000;
+}
+
 #board_detail .board_detail_table .image td img {
     max-width: 1000px;
     max-height: 800px;
@@ -416,11 +436,14 @@ body {
 }
 
 #board_detail .board_like label {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 2px solid #000;
     border-radius: 10px;
     font-size: 25px;
-    padding: 5px 20px;
+    width: 85px;
+    height: 45px;
     cursor: pointer;
 }
 

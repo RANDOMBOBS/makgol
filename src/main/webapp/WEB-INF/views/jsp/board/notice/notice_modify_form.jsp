@@ -30,7 +30,7 @@
 
 </head>
 <body>
-	
+	<jsp:include page="../../include/header.jsp"></jsp:include>
 	<section>
 		<div id="section_wrap">
 			<div class="word">
@@ -47,5 +47,7 @@
 			</div>
 		</div>
 	</section>
+
+	<jsp:include page="../../include/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -103,7 +103,7 @@ public class UsersService implements LogoutHandler {
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
-            usersRequestVo.setPhoto_path("/resources/static/image/default/user_default.jpeg");
+            usersRequestVo.setPhoto_path("http://3.34.140.239/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
@@ -120,7 +120,7 @@ public class UsersService implements LogoutHandler {
 
     public void loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
         String email = usersRequestVo.getEmail();
-        UsersResponseVo loginedUserVo = userDao.selectUser(email);
+        UsersResponseVo loginedUserVo = usersRepository.findUserByEmail(email);
         // 이메일과 일치하는 유저 정보가 있고, 비밀번호도 일치하면!
         if (loginedUserVo != null && BCrypt.checkpw(usersRequestVo.getPassword(), loginedUserVo.getPassword())) {
             List<String> coordinate = weatherInfo.findCoordinate(loginedUserVo.getAddress());
@@ -163,20 +163,28 @@ public class UsersService implements LogoutHandler {
             if (cookieName.equals("id")) {
                 loginedUserVo.setId(Integer.parseInt(cookieValue));
             } else if (cookieName.equals("name")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setName(cookieValue);
             } else if (cookieName.equals("photo_path")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setPhoto_path(cookieValue);
             } else if (cookieName.equals("grade")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setGrade(cookieValue);
             } else if (cookieName.equals("userX")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setLongitude(Double.parseDouble(cookieValue));
             } else if (cookieName.equals("userY")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setLatitude(Double.parseDouble(cookieValue));
             } else if (cookieName.equals("weatherAddr")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setWeatherAddr(cookieValue);
             } else if (cookieName.equals("valueX")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setValueX(Integer.parseInt(cookieValue));
             } else if (cookieName.equals("valueY")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setValueY(Integer.parseInt(cookieValue));
             }
         }
@@ -232,7 +240,6 @@ public class UsersService implements LogoutHandler {
             newUserVo.setValueY(Integer.parseInt(valueY));
             newUserVo.setWeatherAddr(weatherAddr);
             boolean cookieResult = CookieUtil.saveCookies(response, newUserVo);
-            System.out.println("쿠키저장결과?" + cookieResult);
             if (cookieResult) {
                 servletContext.setAttribute("loginedUserVo", newUserVo);
 

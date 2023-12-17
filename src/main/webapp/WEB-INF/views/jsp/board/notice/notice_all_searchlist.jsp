@@ -59,7 +59,7 @@
 </table>
 <!-- 글쓰기 버튼 클릭시 페이지 이동 -->
     <%
-	    UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
+	    UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
 	    if (loginedUserVo != null) {
 	%>
 	    <c:if test="${loginedUserVo.grade == '관리자'}">

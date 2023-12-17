@@ -33,7 +33,7 @@ public class MainDao {
 
     // 오늘의 메뉴 (no mybatis)
     public List<CategoryListVo> selectTodayMenu(String where) {
-        String sql = "SELECT DISTINCT menu_name FROM category_menu " + where;
+        String sql = "SELECT menu,photo,photoPath FROM menus " + where;
         List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
         try {
             RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);
@@ -50,7 +50,7 @@ public class MainDao {
 
     // Top5 메뉴
     public List<CategoryListVo> selectTopMenu() {
-        String sql = "SELECT menu_name FROM category_menu";
+        String sql = "SELECT name,photo FROM stores";
         List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
         try {
             RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);

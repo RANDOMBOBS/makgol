@@ -36,11 +36,6 @@ public class BoardNoticeService {
     // 게시글 글쓰기
     // Notice insert
     public int noticeAddList(BoardVo boardVo) {
-        MultipartFile file = boardVo.getPhotoFile();
-        System.out.println(file);
-        FileInfo fileInfo = fileUpload.fileUpload(file);
-        fileInfo.setPhotoName(boardVo.getPhoto());
-        fileInfo.setPhotoPath(boardVo.getPhoto_path());
         return boardNoticeDao.insertNotice(boardVo);
     }
 

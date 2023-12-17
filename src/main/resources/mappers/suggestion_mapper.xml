@@ -97,7 +97,7 @@
 
             <insert id="insertComment" parameterType="com.org.makgol.comment.vo.CommentRequestVo">
                 INSERT INTO comments(user_id, board_id, date, content, nickname)
-                VALUES (#{user_id}, #{board_id}, now(), #{content}, #{nickname})
+                VALUES (#{user_id}, #{board_id}, now(), #{content}, "관리자")
             </insert>
 
             <select id="selectCommentList" resultType="com.org.makgol.comment.vo.CommentResponseVo"
@@ -178,7 +178,7 @@
 
             <select id="selectSearchBoard" resultMap="boardResult"
                     parameterType="hashmap">
-                SELECT b.id AS b_id, b.user_id, b.hit, b.title, b.date, b.contents,
+                SELECT b.id AS id, b.user_id, b.hit, b.title, b.date, b.contents,
                 b.category, b.sympathy, u.name, u.photo
                 FROM boards AS b
                 JOIN users AS u
@@ -195,7 +195,7 @@
                         AND b.contents LIKE CONCAT('%', #{searchWord}, '%')
                     </when>
                     <when test="searchOption == 'titleContents'">
-                        AND b.title LIKE CONCAT('%', #{searchWord}, '%') OR b.contents LIKE CONCAT('%', #{searchWord}, '%')
+                        AND (b.title LIKE CONCAT('%', #{searchWord}, '%') OR b.contents LIKE CONCAT('%', #{searchWord}, '%'))
                     </when>
                 </choose>
             </select>

@@ -8,7 +8,6 @@
 
     <link href="<c:url value='/resources/static/css/main.css' />" rel="stylesheet"
           type="text/css"/>
-
     <link href="<c:url value='/resources/static/css/todaymenu.css' />" rel="stylesheet"
           type="text/css"/>
     <link href="<c:url value='/resources/static/css/topmenu.css' />" rel="stylesheet"
@@ -24,7 +23,7 @@
 <section>
 
     <article id="article1">
-        <p class="selectedCategory">오늘의 점심 메뉴는?</p>
+        <p class="selectedCategory">돌려돌려 돌림판!</p>
         <p class="roulette_pin"></p>
         <button id="spin">시작!</button>
         <div class="roulette_position">
@@ -80,7 +79,9 @@
             <div class="topmenu_main_div">
                 <span><img id="top5image" src="<c:url value='/resources/static/image/default/top5.png' />"></span>
                 <span>Top 5</span>
+                <span><img id="top5image" src="<c:url value='/resources/static/image/default/top5.png' />"></span>
             </div>
+
             <div class="topmenu_list">
                 <div class="topmenu_list_div">
                 </div>
@@ -89,21 +90,39 @@
     </div>
 
     <div id="event">
-        <div><img src="<c:url value='/resources/static/image/default/Christmas.png' />"></div>
+        <div class="img1"><img src="<c:url value='/resources/static/image/default/winter_1.png' />"></div>
+        <div class="img2"><img src="<c:url value='/resources/static/image/default/winter_2.png' />"></div>
+        <div class="img3"><img src="<c:url value='/resources/static/image/default/winter_3.png' />"></div>
+        <div class="img4"><img src="<c:url value='/resources/static/image/default/winter_4.png' />"></div>
     </div>
 
 
 </section>
-<footer id="footer">
-    <h1>Footer</h1>
-</footer>
 
+<jsp:include page="jsp/include/footer.jsp"></jsp:include>
 
 <jsp:include page="script/jsp/main.jsp"></jsp:include>
 
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
+
+    jQ(function(){
+              jQ('#event').slick({
+                  slide: 'div',
+                  infinite: true,
+                  slidesToShow : 1,
+                  slidesToScroll : 1,
+                  autoplaySpeed: 4000,
+                  autoplay : true,
+                  draggable : true,
+                  arrows: false,
+                  fade: true,
+                  pauseOnFocus: false,
+                 pauseOnHover: false
+              });
+    })
+
 
     function getAllcategory() {
         jQ.ajax({

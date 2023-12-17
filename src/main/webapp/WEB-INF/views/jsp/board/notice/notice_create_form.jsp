@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-
+<link href="<c:url value='/resources/static/css/board.css' />" rel="stylesheet" type="text/css" />
 <!-- 미 입력시 alert 문으로 빈공간 알려줌 -->
 <script type="text/javascript">
 
@@ -31,23 +31,34 @@
 <body>
     <jsp:include page="../../include/header.jsp"></jsp:include>
 	<section>
-		<div id="section_wrap">
-			<div class="word">
-				<h3>공지사항 작성</h3>
-			</div>
-			<div class="notice_create_form">
-				<form action="<c:url value='/board/noticeAddList'/>" name="notice_create_form" method="post" >
-					<span>카테고리</span><input type="text" name="category" value="공지사항" disabled> <br>
-					<span>제목</span><input type="text" name="title" placeholder="제목을 입력해주세요.">
-					<span>작성자</span><input type="text" name="grade" value="${grade}" disabled >
-					 <input type="hidden" name="user_id" value="${user_id}"><br>
-					<span>내용</span><textarea name="contents" placeholder="내용을 입력해주세요."></textarea> <br>
-					<input type="file" name="photoFile">
-					<input type="button" value="등록" onclick="noticeAddList()">
-					<input type="reset" value="취소" onclick="history.go(-1)">
+		<div id="board_write">
+				<form action="<c:url value='/board/noticeAddList'/>" name="notice_create_form" class="write_board_form" method="post" >
+				    <p class="write_board">공지사항 작성</p>
+				    <div class="column board_category">
+					    <span class="description">카테고리</span>
+					    <input type="text" name="category" class="category" value="공지사항" disabled>
+					</div>
+					<div class="column board_title">
+					    <span class="description">제목</span>
+					    <input type="text" name="title" class="title" placeholder="제목을 입력해주세요.">
+					</div>
+					<div class="column user_name">
+					    <span class="description">작성자</span>
+					    <input type="text" name="name" value="${loginedUserVo.grade}" class="admin" readonly disabled />
+                        <input type="hidden" name="user_id" value="${loginedUserVo.id}" />
+                    </div>
+                    <div class="column board_contents">
+					    <span class="description">내용</span>
+					    <textarea name="contents" placeholder="내용을 입력해주세요."></textarea>
+					</div>
+
+					<div class="buttons">
+					    <input type="button" class="ok_board" value="등록" onclick="noticeAddList()">
+					    <input type="reset" class="cancel" value="취소" onclick="history.go(-1)">
+					</div>
 				</form>
-			</div>
 		</div>
 	</section>
+	<jsp:include page="../../include/footer.jsp"></jsp:include>
 </body>
 </html>

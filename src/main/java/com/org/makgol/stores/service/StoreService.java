@@ -134,6 +134,51 @@ public class StoreService {
         }
     }
 
+    public boolean getLikesStatus(LikesDto likesDto) {
+        try {
+            StoreLikesDto result = storesRepository.getLikesStatus(likesDto);
+
+            return result == null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void increaseLikesWithId(LikesDto likesDto) {
+        try {
+            storesRepository.increaseLikesWithId(likesDto);
+            storesRepository.createStoreLikesRecord(likesDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void decreaseLikesWithId(LikesDto likesDto) {
+        try {
+            storesRepository.decreaseLikesWithId(likesDto);
+            storesRepository.removeStoreLikesRecord(likesDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void modifyReviewWithId(ModifyReviewDto modifyReviewDto) {
+        try {
+            storesRepository.modifyReviewWithId(modifyReviewDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteReviewWithId(int reviewId) {
+        try {
+            storesRepository.deleteReviewWithId(reviewId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public KakaoLocalResponseJSON callKakaoLocalAPI(KakaoLocalRequestVo searchRequestVo) {
         String x = searchRequestVo.getX();
         String y = searchRequestVo.getY();
@@ -166,7 +211,7 @@ public class StoreService {
 
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://3.35.166.212/api/v1/crawl/kakaoStoreCrwall";
+        String url = "http://3.34.140.239/api/v1/crawl/kakaoStoreCrwall";
 
         // HTTP 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();
@@ -304,7 +349,8 @@ public class StoreService {
 
             return true;
         } catch (Exception e) {
-            return false;
+            e.printStackTrace();
         }
+        return false;
     }
 }

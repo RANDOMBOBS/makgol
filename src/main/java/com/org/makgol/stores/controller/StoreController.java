@@ -128,6 +128,7 @@ public class StoreController {
                     responseStoreReviewDto.setContent(storeReviewDto.getContent());
                     responseStoreReviewDto.setDate(storeReviewDto.getDate());
                     responseStoreReviewDto.setReview_photo_path(storeReviewImages.get(storeReviewDto.getId()));
+                    responseStoreReviewDto.setUserId(storeReviewDto.getUser_id());
                     responseStoreReviewDto.setName(userInfoDto.getName());
                     responseStoreReviewDto.setUser_photo_path(userInfoDto.getPhoto_path());
                 });
@@ -161,6 +162,54 @@ public class StoreController {
         List<String> reviewImages = storeService.findStoreReviewImageWithId(review_id);
 
         KakaoLocalResponseVo<List<String>> response = new KakaoLocalResponseVo<>(true, "리뷰 이미지를 가져옵니다.", reviewImages);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/likes")
+    public ResponseEntity<?> getLikesStatus(LikesDto likesDto) {
+        boolean result = storeService.getLikesStatus(likesDto);
+
+        KakaoLocalResponseVo<Boolean> response = new KakaoLocalResponseVo<>(true, "좋아요 상태를 가져옵니다.", result);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/likes")
+    public ResponseEntity<?> increaseLikesWithId(LikesDto likesDto, @CookieValue(name = "id", required = false) Integer userId) {
+        if (userId == null) {
+            KakaoLocalResponseVo fail = new KakaoLocalResponseVo<>(false, "로그인되지 않았습니다.", null);
+            return new ResponseEntity<>(fail, HttpStatus.FORBIDDEN);
+        }
+
+        storeService.increaseLikesWithId(likesDto);
+        KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "좋아요를 하나 올렸습니다.", null);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/delikes")
+    public ResponseEntity<?> decreaseLikesWithId(LikesDto likesDto, @CookieValue(name = "id", required = false) Integer userId) {
+        if (userId == null) {
+            KakaoLocalResponseVo fail = new KakaoLocalResponseVo<>(false, "로그인되지 않았습니다.", null);
+            return new ResponseEntity<>(fail, HttpStatus.FORBIDDEN);
+        }
+
+        storeService.decreaseLikesWithId(likesDto);
+        KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "좋아요를 하나 내렸습니다.", null);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/review_id/{review_id}")
+    public ResponseEntity<?> modifyReviewWithId(@PathVariable int review_id, @RequestBody ModifyReviewDto modifiedReview) {
+        modifiedReview.setReviewId(review_id);
+        storeService.modifyReviewWithId(modifiedReview);
+        KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "리뷰를 수정하였습니다.", null);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    @DeleteMapping(value = "/review_id/{review_id}")
+    public ResponseEntity<?> deleteReviewWithId(@PathVariable int review_id) {
+        storeService.deleteReviewWithId(review_id);
+        KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "리뷰를 삭제하였습니다.", null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

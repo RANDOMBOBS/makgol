@@ -38,10 +38,10 @@
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.166.212/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
+                        <a href="http://3.34.140.239/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.166.212/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
+                        <a href="http://3.34.140.239/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
                     </c:otherwise>
                 </c:choose>
 
@@ -97,56 +97,56 @@
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.166.212/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
+                        <a href="http://3.34.140.239/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.166.212/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
+                        <a href="http://3.34.140.239/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.166.212/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
+                        <a href="http://3.34.140.239/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.166.212/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
+                        <a href="http://3.34.140.239/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
+                    </c:otherwise>
+                </c:choose>
+            </li>
+            <li>
+                <c:choose>
+                    <c:when test="${loginedUserVogit == null}">
+                        <a href="http://3.34.140.239/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="http://3.34.140.239/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.166.212/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
+                        <a href="http://3.34.140.239/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.166.212/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
+                        <a href="http://3.34.140.239/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.166.212/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
+                        <a href="http://3.34.140.239/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.166.212/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
-                    </c:otherwise>
-                </c:choose>
-            </li>
-            <li>
-                <c:choose>
-                    <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.166.212/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="http://3.35.166.212/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
+                        <a href="http://3.34.140.239/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
                     </c:otherwise>
                 </c:choose>
             </li>
         </ul>
     </div>
-    <p class="img"></p>
+    <a href="http://3.34.140.239"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
     <div class="userTab">
         <c:choose>
 
@@ -184,7 +184,7 @@
                     <li><a href="<c:url value='/board/notice'/>">공지사항</a></li>
                     <li><a href="<c:url value='/board/suggestion'/>">건의사항</a></li>
                     <li><a href="<c:url value='/board/vent'/>">하소연 게시판</a></li>
-                    <li><a href="<c:url value='/category/categoryMain'/>">카테고리 리스트</a></li>
+                    <li><a href="<c:url value='/playground'/>">놀이터</a></li>
                 </ul>
             </li>
 
@@ -453,13 +453,12 @@
                 } else {
                     jQ(".sky").text(sky);
                 }
-
                 if (sky == "맑음") {
                     jQ("section #article1").prop("style", "background-image: url(/resources/static/image/default/sunny.jpeg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-sun' style='color:#ffa500'></i>");
                 } else if (sky == "구름많음") {
-                    jQ("section #article1").prop("style", "background-image: url(/resources/static/image/default/Christmas.png)");
-                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun' style='color:#00e5ff' ></i>")
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/cloudy.jpg)");
+                    jQ(".emoticon").html("<i class='fa-solid fa-cloud-sun' style='color:#4bb4ff' ></i>")
                 } else if (sky == "흐림") {
                     jQ("section #article1").prop("style", "background-image: url(/resources/static/image/default/blur.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud'  style='color:#6f6f6f'></i>")
@@ -467,10 +466,10 @@
                     jQ("section #article1").prop("style", "background-image: url(/resources/static/image/default/rain.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud-showers-heavy'  style='color:#074dbb'></i>")
                 } else if (sky == "눈") {
-                    jQ("section #article1").prop("style", "background-image: url(/resources/static/image/default/snow1.jpg)");
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/snow.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-snowflake'  style='color:#7fb1ff'></i>")
                 } else if (sky == "진눈깨비(눈+비)") {
-                    jQ("section #article1").prop("style", "background-image: url(/resources/static/image/default/top5.png)");
+                    jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'  style='color:#8cb9ff'></i>")
                 }
 

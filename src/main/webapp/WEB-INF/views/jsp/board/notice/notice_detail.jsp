@@ -12,63 +12,53 @@
   </head>
   <body>
 
+    <c:url value="/board/modifyNotice" var="modify_url">
+      <c:param name="b_id" value="${boardVo.b_id}" />
+    </c:url>
+    <c:url value="/board/deleteNotice" var="delete_url">
+      <c:param name="b_id" value="${boardVo.b_id}" />
+    </c:url>
+
     <jsp:include page="../../include/header.jsp"></jsp:include>
 
     <section>
-      <div id="section_wrap">
-        <div class="word">
-          <h3>${boardVo.category}</h3>
+      <div id="board_detail">
+        <div class="board_detail_top">
+            <c:choose>
+              <c:when test="${boardVo.category == 'notice'}">
+                <h1 class="board_detail_title">공지사항</h1>
+              </c:when>
+            </c:choose>
+        <div class="board_detail_button">
+                <c:if test="${loginedUserVo.grade == '관리자'}">
+                  <a href="${modify_url}">수정</a>
+                  <a href="#javascript:;" onclick="deleteBoard(${boardVo.b_id},'${boardVo.title}')">삭제</a>
+                </c:if>
+                <a href="/board/notice">목록</a>
         </div>
-        <div class="notice_detail_div">
-          <ul class="notice_detail_ul">
-            <li>
-              <table>
-                <tr>
+        </div>
+              <table class="board_detail_table">
+                <tr class="text">
                   <td class="title">제목</td>
                   <td class="title_">${boardVo.title}</td>
                 </tr>
-                <tr>
+                <tr class="text">
                   <td class="title">작성자</td>
                   <td class="grade">${boardVo.grade}</td>
                 </tr>
-                <tr>
+                <tr class="text">
                   <td class="title">작성일</td>
                   <td class="date">${boardVo.date}</td>
                 </tr>
-                <tr>
-                  <td class="title">내용</td>
-                  <td class="contents">${boardVo.contents}</td>
+                <tr class="content">
+                  <td colspan="2" class="content_td">
+                  <pre width="100%" style="white-space: pre-wrap; word-wrap: break-word;">${boardVo.contents}</pre></td>
                 </tr>
               </table>
-            </li>
-          </ul>
-        </div>
 
-        <div class="buttons">
-           <button><a href="/board/notice">목록</a></button>
-        <%
-            UsersResponseVo loginedUserVo = (UsersResponseVo) session.getAttribute("loginedUserVo");
-        	if (loginedUserVo != null) {
-        %>
-            <c:if test="${loginedUserVo.grade == '관리자'}">
-                <c:url value="/board/modifyNotice" var="modify_url">
-                <c:param name="b_id" value="${boardVo.b_id}" />
-            </c:url>
-            <button><a class="modify_notice_button" href="${modify_url}">수정</a></button>
-
-          <c:url value="/board/deleteNotice" var="delete_url">
-            <c:param name="b_id" value="${boardVo.b_id}" />
-          </c:url>
-          <button
-          <a class="delete_notice_button" href="#javascript:;" onclick="deleteBoard(${boardVo.b_id},'${boardVo.title}')">삭제</a>
-          </button>
-          </c:if>
-          <%
-          }
-          %>
-        </div>
-      </div>
     </section>
+
+    <jsp:include page="../../include/footer.jsp"></jsp:include>
 
     <jsp:include page="../../../script/jsp/notice.jsp"></jsp:include>
 

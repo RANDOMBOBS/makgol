@@ -72,6 +72,7 @@ body {
 
 #my_page .my_page_content .my_info .info_table tr td img {
   border: 2px solid #ffa500;
+  background-color : #fff;
   width: 350px;
   height: 350px;
 }

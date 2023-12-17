@@ -42,11 +42,11 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
     // 허용된 도메인인지 확인
     private boolean isAllowedDomain(String referer) {
 
-        if (referer != null && referer.contains("http://3.35.166.212")) {
-            // "http://3.35.166.212/"가 포함되어 있다면 처리
+        if (referer != null && referer.contains("http://3.34.140.239")) {
+            // "http://3.34.140.239/"가 포함되어 있다면 처리
             return true;
         } else {
-            // "http://3.35.166.212/"가 포함되어 있지 않다면 처리
+            // "http://3.34.140.239/"가 포함되어 있지 않다면 처리
             return false;
         }
     }
