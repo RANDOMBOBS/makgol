@@ -96,6 +96,7 @@ public class UsersController {
     @GetMapping("/loginSucceed")
     public String getCookieValue(HttpServletRequest request) throws URISyntaxException {
         String urlString = request.getHeader("Referer");
+        System.out.println("system");
         log.info("urlString --> : {}", urlString);
         URI uri = new URI(urlString);
         String path = uri.getPath() + "?" + uri.getQuery();
