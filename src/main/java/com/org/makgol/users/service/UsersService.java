@@ -20,6 +20,8 @@ import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -40,7 +42,10 @@ import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@PropertySource("classpath:/application.properties")
 public class UsersService implements LogoutHandler {
+    @Value("${domain.address}")
+    private String domainAddress;
 
     private final JwtUtil jwtUtil;
     private final UserDao userDao;
@@ -103,7 +108,7 @@ public class UsersService implements LogoutHandler {
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
-            usersRequestVo.setPhoto_path("http://3.34.140.239/resources/static/image/default/user_default.jpeg");
+            usersRequestVo.setPhoto_path(domainAddress+"/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 

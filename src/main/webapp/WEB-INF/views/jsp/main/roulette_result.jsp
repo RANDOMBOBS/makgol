@@ -10,9 +10,9 @@
 </c:url>
 <c:choose>
     <c:when test="${loginedUserVo == null}">
-        <a href="http://3.34.140.239/store/list?x=127.028290548097&y=37.4998293543379&keyword=${menu}"> 근처 식당 보러가기 <i class="fa-solid fa-angles-right"></i></a>
+        <a href="http://13.125.132.243/store/list?x=127.028290548097&y=37.4998293543379&keyword=${menu}"> 근처 식당 보러가기 <i class="fa-solid fa-angles-right"></i></a>
     </c:when>
     <c:otherwise>
-        <a href="http://3.34.140.239/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=${menu}">근처 식당 보러가기 <i class="fa-solid fa-angles-right"></i></a>
+        <a href="http://13.125.132.243/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=${menu}">근처 식당 보러가기 <i class="fa-solid fa-angles-right"></i></a>
     </c:otherwise>
 </c:choose>

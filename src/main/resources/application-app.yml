@@ -4,4 +4,4 @@ app:
     token-expiration-time: 1209600000
   oauth2:
     authorized-redirect-uris:
-      - http://3.34.140.239/oauth/redirect
+      - http://13.125.132.243/oauth/redirect

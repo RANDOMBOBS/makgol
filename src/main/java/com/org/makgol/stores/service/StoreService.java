@@ -17,6 +17,8 @@ import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.kakaoMap.KakaoMap;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +37,6 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class StoreService {
-
     private final RestTemplate restTemplate;
     private final HttpHeaders headers;
     private final StoresRepository storesRepository;
@@ -211,7 +212,7 @@ public class StoreService {
 
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://3.34.140.239/api/v1/crawl/kakaoStoreCrwall";
+        String url = "http://13.125.132.243"+"/api/v1/crawl/kakaoStoreCrwall";
 
         // HTTP 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();
