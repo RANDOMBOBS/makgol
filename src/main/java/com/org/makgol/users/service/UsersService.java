@@ -20,6 +20,8 @@ import com.org.makgol.util.redis.RedisUtil;
 import com.org.makgol.util.service.WeatherInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -40,7 +42,10 @@ import static com.org.makgol.util.CompletableFuture.fetchDataAsync;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@PropertySource("classpath:/application.properties")
 public class UsersService implements LogoutHandler {
+    @Value("${domain.address}")
+    private String domainAddress;
 
     private final JwtUtil jwtUtil;
     private final UserDao userDao;
@@ -103,7 +108,7 @@ public class UsersService implements LogoutHandler {
             usersRequestVo.setPhoto_path(fileInfo.getPhotoPath());
             usersRequestVo.setPhoto(fileInfo.getPhotoName());
         } else {
-            usersRequestVo.setPhoto_path("http://localhost:8080/resources/static/image/default/user_default.jpeg");
+            usersRequestVo.setPhoto_path(domainAddress+"/resources/static/image/default/user_default.jpeg");
             usersRequestVo.setPhoto("user_default.jpeg");
         }
 
@@ -163,20 +168,28 @@ public class UsersService implements LogoutHandler {
             if (cookieName.equals("id")) {
                 loginedUserVo.setId(Integer.parseInt(cookieValue));
             } else if (cookieName.equals("name")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setName(cookieValue);
             } else if (cookieName.equals("photo_path")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setPhoto_path(cookieValue);
             } else if (cookieName.equals("grade")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setGrade(cookieValue);
             } else if (cookieName.equals("userX")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setLongitude(Double.parseDouble(cookieValue));
             } else if (cookieName.equals("userY")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setLatitude(Double.parseDouble(cookieValue));
             } else if (cookieName.equals("weatherAddr")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setWeatherAddr(cookieValue);
             } else if (cookieName.equals("valueX")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setValueX(Integer.parseInt(cookieValue));
             } else if (cookieName.equals("valueY")) {
+                log.info("cookieValue --> : {}", cookieValue);
                 loginedUserVo.setValueY(Integer.parseInt(cookieValue));
             }
         }
