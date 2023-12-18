@@ -3,7 +3,8 @@
 name: cicd-makgol
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ] # main branch로 push 될 때 실행됩니다.
 
 jobs:
   build:
@@ -19,7 +20,7 @@ jobs:
           java-version: 11
 
       - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+        run: chmod +x gradlew
         shell: bash
 
       - name: Build with Gradle
