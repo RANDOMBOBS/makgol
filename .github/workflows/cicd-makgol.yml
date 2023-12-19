@@ -1,0 +1,73 @@
+# logging-deploy.yml
+# https://wbluke.tistory.com/39
+name: cicd-makgol
+
+on:
+  push:
+    branches: [ main ] # main branch로 push 될 때 실행됩니다.
+
+
+env: # 새로 추가한 부분
+  S3_BUCKET_NAME: makgol-deploy
+  PROJECT_NAME: makgol
+
+  SERVER_PORT: 8080
+
+  SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+  SPRING_DATASOURCE_URL: jdbc:mysql://makgol-database.cexmqxba6xnq.ap-northeast-2.rds.amazonaws.com:3306/makgol?serverTimezone=UTC&characterEncoding=UTF-8
+  SPRING_DATASOURCE_USERNAME: root
+  SPRING_DATASOURCE_PASSWORD: 7J2064W467Kg7J207IWY7Lqg7ZSE7IiY6rCV7IOd
+
+  SPRING_MAIL_PORT: 587
+  SPRING_MAIL_HOST: smtp.gmail.com
+  SPRING_MAIL_ACCOUNT: tjsgus223@gmail.com
+  SPRING_MAIL_PASSWORD: jhdh spib xojr edbp
+
+  SPRING_REDIS_HOST: localhost
+  SPRING_REDIS_PORT: 6379
+
+  JWT_SECRET_KEY: 7J2064W467Kg7J207IWY7Lqg7ZSE7IiY6rCV7IOd67aE65Ok7ZmU7J207YyF7ZWY7IS47JqU7KKL7J2A7ZqM7IKs7JeQ66qo65GQ7Leo7JeF7ISx6rO17ZWY7Iuk6rGw652866+/7Iq164uI64uk65287J2067iM7IS47IWY65Ok7Ja07KO87IWU7ISc6rCQ7IKs7ZWp64uI64uk64+E7JuA7J2065CY7JeI7Jy866m07KKL6rKg7Iq164uI64uk
+
+  KAKAO_CLIENT_ID: ea9c5ca0eadd181729719237dba8ec77
+  KAKAO_CLIENT_SECRET: aFv4E0pqy4M9k1EbgQ4fYiyhHTLHPgpE
+
+  NAVER_CLIENT_ID: K0v1zQ21GI6Z9s3440e7
+  NAVER_CLIENT_SECRET: TrTuKKLUay
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+        shell: bash
+
+      - name: Build with Gradle
+        run: ./gradlew build
+        shell: bash
+
+      ### 새로 추가한 부분 ###
+      - name: Make zip file
+        run: zip -r ./$GITHUB_SHA.zip .
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+
+      - name: Code Deploy
+        run: aws deploy create-deployment --application-name makgol-CICD --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name develop --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
