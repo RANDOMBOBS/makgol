@@ -6,12 +6,9 @@ on:
   push:
     branches: [ main ] # main branch로 push 될 때 실행됩니다.
 
-
 env: # 새로 추가한 부분
   S3_BUCKET_NAME: makgol-deploy
   PROJECT_NAME: makgol
-
-  SERVER_PORT: 8080
 
 jobs:
   build:
@@ -30,21 +27,34 @@ jobs:
         run: chmod +x gradlew
         shell: bash
 
-      # 추가 작업: 애플리케이션 설정 파일 생성
       - name: Create Application Properties
         run: |
-          echo "domain.name=${{ secrets.DOMAIN_NAME }}" > src/main/resources/application.properties
+          echo "domain.name=${{ secrets.DOMAIN_NAME }}" >> src/main/resources/application.properties
           echo "domain.address=${{ secrets.DOMAIN_ADDRESS }}" >> src/main/resources/application.properties
-        shell: bash
+          echo "server.port=${{ secrets.SERVER_PORT }}" >> src/main/resources/application.properties
+          echo "spring.datasource.driver-class-name=${{ secrets.SPRING_DATASOURCE_DRIVER_CLASS_NAME }}" >> src/main/resources/application.properties
+          echo "spring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }}" >> src/main/resources/application.properties
+          echo "spring.datasource.username=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> src/main/resources/application.properties
+          echo "spring.datasource.password=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> src/main/resources/application.properties
+          echo "spring.mail.port=${{ secrets.SPRING_MAIL_PORT }}" >> src/main/resources/application.properties
+          echo "spring.mail.host=${{ secrets.SPRING_MAIL_HOST }}" >> src/main/resources/application.properties
+          echo "spring.mail.account=${{ secrets.SPRING_MAIL_ACCOUNT }}" >> src/main/resources/application.properties
+          echo "spring.redis.host=${{ secrets.SPRING_REDIS_HOST }}" >> src/main/resources/application.properties
+          echo "spring.redis.port=${{ secrets.SPRING_REDIS_PORT }}" >> src/main/resources/application.properties
+          echo "jwt.secret.key=${{ secrets.JWT_SECRET_KEY }}" >> src/main/resources/application.properties
+          echo "spring.security.oauth2.client.registration.kakao.clientId=${{ secrets.KAKAO_CLIENT_ID }}" >> src/main/resources/application.properties
+          echo "spring.security.oauth2.client.registration.kakao.clientSecret=${{ secrets.KAKAO_CLIENT_SECRET }}" >> src/main/resources/application.properties
+          echo "spring.security.oauth2.client.registration.naver.clientId=${{ secrets.NAVER_CLIENT_ID }}" >> src/main/resources/application.properties
+          echo "spring.security.oauth2.client.registration.naver.clientSecret=${{ secrets.NAVER_CLIENT_SECRET }}" >> src/main/resources/application.properties
 
       - name: Build with Gradle
         run: ./gradlew build
         shell: bash
 
-      # 추가 작업: S3에 업로드된 파일 삭제 (선택 사항)
       - name: Delete Uploaded File in S3
         run: aws s3 rm s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
 
+      ### 새로 추가한 부분 ###
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA.zip .
         shell: bash
