@@ -4,11 +4,14 @@ name: cicd-makgol
 
 on:
   push:
-    branches: [main]
+    branches: [ main ] # main branch로 push 될 때 실행됩니다.
 
-env:
+
+env: # 새로 추가한 부분
   S3_BUCKET_NAME: makgol-deploy
   PROJECT_NAME: makgol
+
+  SERVER_PORT: 8080
 
 jobs:
   build:
@@ -32,10 +35,8 @@ jobs:
         run: |
           echo "domain.name=${{ secrets.DOMAIN_NAME }}" > src/main/resources/application.properties
           echo "domain.address=${{ secrets.DOMAIN_ADDRESS }}" >> src/main/resources/application.properties
-          # 추가로 필요한 속성들도 동일한 방식으로 설정
         shell: bash
 
-      # 기존의 빌드 스크립트를 이어서 진행
       - name: Build with Gradle
         run: ./gradlew build
         shell: bash
