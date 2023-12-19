@@ -29,8 +29,6 @@ jobs:
 
       - name: Create Application Properties
         run: |
-          echo "domain.name=${{ secrets.DOMAIN_NAME }}" >> src/main/resources/application.properties
-          echo "domain.address=${{ secrets.DOMAIN_ADDRESS }}" >> src/main/resources/application.properties
           echo "server.port=${{ secrets.SERVER_PORT }}" >> src/main/resources/application.properties
           echo "spring.datasource.driver-class-name=${{ secrets.SPRING_DATASOURCE_DRIVER_CLASS_NAME }}" >> src/main/resources/application.properties
           echo "spring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }}" >> src/main/resources/application.properties
@@ -51,8 +49,8 @@ jobs:
         run: ./gradlew build
         shell: bash
 
-#      - name: Delete Uploaded File in S3
-#        run: aws s3 rm s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+      - name: Delete Uploaded File in S3
+        run: aws s3 rm s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
 
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA.zip .
