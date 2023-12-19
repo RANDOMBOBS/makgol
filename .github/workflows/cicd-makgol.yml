@@ -51,10 +51,9 @@ jobs:
         run: ./gradlew build
         shell: bash
 
-      - name: Delete Uploaded File in S3
-        run: aws s3 rm s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+#      - name: Delete Uploaded File in S3
+#        run: aws s3 rm s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
 
-      ### 새로 추가한 부분 ###
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA.zip .
         shell: bash
