@@ -13,7 +13,7 @@
 <c:forEach var="item" items="${commentVos}">
 	<div class="one_comment">
 		<ul>
-			<li class="photo"><img src="http://3.36.59.60/fileUpload/default/user_default.jpeg"/></li>
+			<li class="photo"><img src="http://3.35.176.200/fileUpload/default/user_default.jpeg"/></li>
 			<li class="nickname">${item.getNickname()}</li>
 			<li class="date">${item.getDate()}</li>
 			<c:if test="${item.getUser_id() == loginedUserVo.getId()}">

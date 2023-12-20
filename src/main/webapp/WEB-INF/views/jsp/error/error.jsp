@@ -47,7 +47,7 @@ a img {
     </style>
   </head>
   <body>
-  <a href="http://3.36.59.60"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
+  <a href="http://3.35.176.200"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
     <div class="errorpage">
       <img id="image" src="<c:url value='/resources/static/image/default/error.gif' />">
       <span>에러 페이지</span>
