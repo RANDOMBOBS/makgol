@@ -38,10 +38,10 @@
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.48.76/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
+                        <a href="http://3.36.97.2/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.48.76/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
+                        <a href="http://3.36.97.2/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
                     </c:otherwise>
                 </c:choose>
 
@@ -97,56 +97,56 @@
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.48.76/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
+                        <a href="http://3.36.97.2/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.48.76/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
+                        <a href="http://3.36.97.2/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.48.76/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
+                        <a href="http://3.36.97.2/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.48.76/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
+                        <a href="http://3.36.97.2/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVogit == null}">
-                        <a href="http://3.35.48.76/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
+                        <a href="http://3.36.97.2/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.48.76/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
+                        <a href="http://3.36.97.2/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.48.76/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
+                        <a href="http://3.36.97.2/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.48.76/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
+                        <a href="http://3.36.97.2/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://3.35.48.76/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
+                        <a href="http://3.36.97.2/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://3.35.48.76/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
+                        <a href="http://3.36.97.2/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
                     </c:otherwise>
                 </c:choose>
             </li>
         </ul>
     </div>
-    <a href="http://3.35.48.76"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
+    <a href="http://3.36.97.2"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
     <div class="userTab">
         <c:choose>
 
@@ -200,7 +200,7 @@
                 </c:when>
                 <c:otherwise>
                     <li><a href="#" id="register_modal">회원가입</a></li>
-                    <li><a href="#" id="login_modal">로그인</a></li>
+                    <li><a href="#" id="login_modal">로그인123</a></li>
                 </c:otherwise>
             </c:choose>
         </ul>
