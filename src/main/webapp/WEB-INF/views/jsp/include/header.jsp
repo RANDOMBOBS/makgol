@@ -200,7 +200,7 @@
                 </c:when>
                 <c:otherwise>
                     <li><a href="#" id="register_modal">회원가입</a></li>
-                    <li><a href="#" id="login_modal">로그인입니다</a></li>
+                    <li><a href="#" id="login_modal">로그인1</a></li>
                 </c:otherwise>
             </c:choose>
         </ul>
