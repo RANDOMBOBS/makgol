@@ -1,5 +1,3 @@
-# run_new_was.sh
-
 #!/bin/bash
 
 CURRENT_PORT=$(cat /home/ubuntu/service_url.inc | grep -Po '[0-9]+' | tail -1)
@@ -15,7 +13,7 @@ else
   echo "> No WAS is connected to nginx"
 fi
 
-TARGET_PID=$(lsof -Fp -i TCP:${TARGET_PORT} | grep -Po 'p[0-9]+' | grep -Po '[0-9]+')
+TARGET_PID=$(lsof -F -i TCP:${TARGET_PORT} | awk '/^p/ {print $1}')
 
 if [ ! -z ${TARGET_PID} ]; then
   echo "> Kill WAS running at ${TARGET_PORT}."
@@ -23,5 +21,11 @@ if [ ! -z ${TARGET_PID} ]; then
 fi
 
 nohup java -jar -Dserver.port=${TARGET_PORT} /home/ubuntu/service/makgol/build/libs/* > /home/ubuntu/nohup.out 2>&1 &
+
+if [ $? -ne 0 ]; then
+    echo "> Failed to start new WAS."
+    exit 1
+fi
+
 echo "> Now new WAS runs at ${TARGET_PORT}."
 exit 0
