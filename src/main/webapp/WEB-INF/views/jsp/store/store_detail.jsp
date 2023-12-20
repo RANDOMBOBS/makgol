@@ -91,7 +91,7 @@
                 <div id="review_form">
                     <div class="review_profile">
                         <img class="user_image"
-                             src="http://43.201.54.71/resources/static/image/default/user_default.jpeg">
+                             src="http://43.201.110.148 /resources/static/image/default/user_default.jpeg">
                         <c:choose>
                             <c:when test="${loginedUserVo == null}">
                                 <span class="user_name">사용자</span>

@@ -47,10 +47,10 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
     private boolean isAllowedDomain(String referer) {
 
         if (referer != null && referer.contains(domainAddress)) {
-            // "http://43.201.54.71/"가 포함되어 있다면 처리
+            // "http://43.201.110.148 /"가 포함되어 있다면 처리
             return true;
         } else {
-            // "http://43.201.54.71/"가 포함되어 있지 않다면 처리
+            // "http://43.201.110.148 /"가 포함되어 있지 않다면 처리
             return false;
         }
     }
