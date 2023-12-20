@@ -1,3 +1,5 @@
+# switch.sh
+
 #!/bin/bash
 
 # Crawl current connected port of WAS
