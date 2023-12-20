@@ -232,7 +232,7 @@ public class StoreService {
 
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://3.35.176.200"+"/api/v1/crawl/kakaoStoreCrwall";
+        String url = "http://13.209.85.63"+"/api/v1/crawl/kakaoStoreCrwall";
 
         // HTTP 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();

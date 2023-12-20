@@ -9,7 +9,6 @@ on:
 env: # 새로 추가한 부분
   S3_BUCKET_NAME: makgol-deploy
   PROJECT_NAME: makgol
-  SERVER_PORT: 8080
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,7 +23,7 @@ jobs:
           java-version: '11'
 
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: chmod +x ./gradlew
         shell: bash
 
       - name: Create Application Properties
