@@ -74,10 +74,6 @@ public class MainController {
 		return nextPage;
 	}
 
-	@GetMapping("/health")
-	public HttpStatus checkHealth() {
-		log.info("public String checkHealth() {");
-		return HttpStatus.OK;
-	}
+
 }
 
