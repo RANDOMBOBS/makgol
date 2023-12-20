@@ -70,5 +70,10 @@ public class MainController {
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
 	}
+
+	@GetMapping("/health")
+	public String checkHealth() {
+		return "healthy";
+	}
 }
 
