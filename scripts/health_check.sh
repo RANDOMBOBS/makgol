@@ -1,7 +1,6 @@
 # health_check.sh
-
+set -x
 #!/bin/bash
-
 # Crawl current connected port of WAS
 CURRENT_PORT=$(cat /home/ubuntu/service_url.inc | grep -Po '[0-9]+' | tail -1)
 TARGET_PORT=0
@@ -15,7 +14,6 @@ else
     echo "> No WAS is connected to nginx"
     exit 1
 fi
-
 
 echo "> Start health check of WAS at 'http://127.0.0.1:${TARGET_PORT}' ..."
 
