@@ -23,15 +23,7 @@ echo "set \$service_url http://127.0.0.1:${TARGET_PORT};" | tee /home/ubuntu/ser
 
 echo "> Now Nginx proxies to ${TARGET_PORT}."
 
-# WAS가 완전히 시작될 때까지 대기
-sleep 10
-
 # Reload nginx
 sudo service nginx reload
-
-if [ $? -ne 0 ]; then
-    echo "> Failed to reload Nginx."
-    exit 1
-fi
 
 echo "> Nginx reloaded."
