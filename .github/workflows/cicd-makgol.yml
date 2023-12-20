@@ -9,7 +9,7 @@ on:
 env: # 새로 추가한 부분
   S3_BUCKET_NAME: makgol-deploy
   PROJECT_NAME: makgol
-
+  SERVER_PORT: 8080
 jobs:
   build:
     runs-on: ubuntu-latest
