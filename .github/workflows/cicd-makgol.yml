@@ -51,5 +51,5 @@ jobs:
       - name: Code Deploy
         run: aws deploy create-deployment --application-name makgol-CICD --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name develop --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
 
-#      - name: Delete Uploaded File in S3
-#        run: aws s3 rm s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+      - name: Delete Uploaded File in S3
+        run: aws s3 rm s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip

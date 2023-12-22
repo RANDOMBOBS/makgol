@@ -56,8 +56,8 @@
                 <span>아이디 & 비밀번호 찾기</span>
             </div>
             <div class="social_login">
-                <a id="naver_login" href="/oauth2/authorization/naver">네이버 로그인</a>
-                <a id="kakao_login" href="/oauth2/authorization/kakao">카카오 로그인</a>
+                <a id="naver_login" href="http://makgol.com/oauth2/authorization/naver">네이버 로그인</a>
+                <a id="kakao_login" href="http://makgol.com/oauth2/authorization/kakao">카카오 로그인</a>
             </div>
         </div>
         <div class="modal_footer"></div>
