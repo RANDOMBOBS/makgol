@@ -28,22 +28,7 @@ jobs:
 
       - name: Create Application Properties
         run: |
-          echo "server.port=${{ secrets.SERVER_PORT }}" >> src/main/resources/application.properties
-          echo "spring.datasource.driver-class-name=${{ secrets.SPRING_DATASOURCE_DRIVER_CLASS_NAME }}" >> src/main/resources/application.properties
-          echo "spring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }}" >> src/main/resources/application.properties
-          echo "spring.datasource.username=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> src/main/resources/application.properties
-          echo "spring.datasource.password=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> src/main/resources/application.properties
-          echo "spring.mail.port=${{ secrets.SPRING_MAIL_PORT }}" >> src/main/resources/application.properties
-          echo "spring.mail.host=${{ secrets.SPRING_MAIL_HOST }}" >> src/main/resources/application.properties
-          echo "spring.mail.account=${{ secrets.SPRING_MAIL_ACCOUNT }}" >> src/main/resources/application.properties
-          echo "spring.mail.password=${{ secrets.SPRING_MAIL_PASSWORD }}" >> src/main/resources/application.properties
-          echo "spring.redis.host=${{ secrets.SPRING_REDIS_HOST }}" >> src/main/resources/application.properties
-          echo "spring.redis.port=${{ secrets.SPRING_REDIS_PORT }}" >> src/main/resources/application.properties
-          echo "jwt.secret.key=${{ secrets.JWT_SECRET_KEY }}" >> src/main/resources/application.properties
-          echo "spring.security.oauth2.client.registration.kakao.clientId=${{ secrets.KAKAO_CLIENT_ID }}" >> src/main/resources/application.properties
-          echo "spring.security.oauth2.client.registration.kakao.clientSecret=${{ secrets.KAKAO_CLIENT_SECRET }}" >> src/main/resources/application.properties
-          echo "spring.security.oauth2.client.registration.naver.clientId=${{ secrets.NAVER_CLIENT_ID }}" >> src/main/resources/application.properties
-          echo "spring.security.oauth2.client.registration.naver.clientSecret=${{ secrets.NAVER_CLIENT_SECRET }}" >> src/main/resources/application.properties
+          echo "${{ secrets.PROPERTIES }}" > src/main/resources/application.properties
 
       - name: Build with Gradle
         run: ./gradlew build
