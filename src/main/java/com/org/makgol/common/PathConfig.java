@@ -25,7 +25,7 @@ public class PathConfig implements WebMvcConfigurer {
 
         String currentDirectory = System.getProperty("user.dir");
         System.out.println("현재 디렉토리: " + currentDirectory);
-        String uploadFolder = currentDirectory+"/static/image/";
+        String uploadFolder = "/home/ubuntu/service/makgol/static/image";
         uploadFolder = uploadFolder.replace("\\","/");
 
         System.out.println(uploadFolder);
