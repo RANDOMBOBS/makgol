@@ -68,7 +68,7 @@
     border-radius: 200px;
     border: 3px solid #2c2b26;
     background: url("../../image/default/user_default.jpeg") no-repeat 0 center/175px 175px;
-    background-position: center;
+    cursor: pointer;
 }
 
 .register_modal .modal_body .register_wrapper #register_form td .key {
