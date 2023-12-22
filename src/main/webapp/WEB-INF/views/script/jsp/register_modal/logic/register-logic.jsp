@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
     const registerLogic = () => {
         const registerEmailEle = $("#register_email");
@@ -40,6 +41,7 @@
                     $("#send_number").css({display: "block"});
                 },
                 error(err) {
+                    console.error(err);
                     if (err.status >= 500) {
                         alert("서버 에러")
                         return;
