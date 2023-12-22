@@ -99,7 +99,7 @@
 }
 
 .register_modal .modal_body .register_wrapper #register_form td #check_auth {
-    /*display: none;*/
+    display: none;
     position: absolute;
     top: 165px;
     left: 108%;
