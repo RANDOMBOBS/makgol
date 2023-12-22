@@ -36,6 +36,7 @@ jobs:
           echo "spring.mail.port=${{ secrets.SPRING_MAIL_PORT }}" >> src/main/resources/application.properties
           echo "spring.mail.host=${{ secrets.SPRING_MAIL_HOST }}" >> src/main/resources/application.properties
           echo "spring.mail.account=${{ secrets.SPRING_MAIL_ACCOUNT }}" >> src/main/resources/application.properties
+          echo "spring.mail.password=${{ secrets.SPRING_MAIL_PASSWORD }}" >> src/main/resources/application.properties
           echo "spring.redis.host=${{ secrets.SPRING_REDIS_HOST }}" >> src/main/resources/application.properties
           echo "spring.redis.port=${{ secrets.SPRING_REDIS_PORT }}" >> src/main/resources/application.properties
           echo "jwt.secret.key=${{ secrets.JWT_SECRET_KEY }}" >> src/main/resources/application.properties
