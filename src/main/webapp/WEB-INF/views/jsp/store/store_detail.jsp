@@ -91,7 +91,7 @@
                 <div id="review_form">
                     <div class="review_profile">
                         <img class="user_image"
-                             src="http://localhost:8080/resources/static/image/default/user_default.jpeg">
+                             src="http://3.36.97.2/resources/static/image/default/user_default.jpeg">
                         <c:choose>
                             <c:when test="${loginedUserVo == null}">
                                 <span class="user_name">사용자</span>
@@ -114,7 +114,6 @@
         <div class="item_info_footer"></div>
     </div>
 </article>
-<jsp:include page="../include/footer.jsp"></jsp:include>
 <script
         type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5e40f301ec35188c140844617fdf45bf"

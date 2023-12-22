@@ -1,6 +1,8 @@
 package com.org.makgol.common.config.security.csrf;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -11,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
+@PropertySource("classpath:/application.properties")
 public class CsrfHeaderFilter extends OncePerRequestFilter {
-
+    @Value("${domain.address}")
+    private String domainAddress;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -42,11 +46,11 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
     // 허용된 도메인인지 확인
     private boolean isAllowedDomain(String referer) {
 
-        if (referer != null && referer.contains("http://localhost:8080")) {
-            // "http://localhost:8080/"가 포함되어 있다면 처리
+        if (referer != null && referer.contains(domainAddress)) {
+            // "http://3.36.97.2/"가 포함되어 있다면 처리
             return true;
         } else {
-            // "http://localhost:8080/"가 포함되어 있지 않다면 처리
+            // "http://3.36.97.2/"가 포함되어 있지 않다면 처리
             return false;
         }
     }

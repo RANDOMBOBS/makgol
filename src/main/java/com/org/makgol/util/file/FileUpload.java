@@ -37,10 +37,12 @@ public class FileUpload {
             String currentDirectory = System.getProperty("user.dir");
             System.out.println("현재 디렉토리: " + currentDirectory);
 
-            //mac 경로
-//            String uploadFolder = currentDirectory+"/src/main/resources/static/image";
+            //server path
+            String uploadFolder = currentDirectory+"/static/image";
+            //mac path
+            //String uploadFolder = currentDirectory+"/src/main/resources/static/image";
             //windows 경로
-            String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image";
+//            String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image";
 
 		/*
 		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
@@ -60,10 +62,10 @@ public class FileUpload {
 
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
 
-            //mac
-//            File saveFile = new File(uploadFolder+"/"+uniqueName + fileExtension);  // 적용 후
+            //linux
+            File saveFile = new File(uploadFolder+"/"+uniqueName + fileExtension);  // 적용 후
             //windows
-            File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
+//            File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
 
             try {
                 fileList.get(index).transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
@@ -95,10 +97,12 @@ public class FileUpload {
             String currentDirectory = System.getProperty("user.dir");
             System.out.println("현재 디렉토리: " + currentDirectory);
 
+            //server path
+            String uploadFolder = currentDirectory+"/static/image";
             //mac 경로
             //String uploadFolder = currentDirectory+"/src/main/resources/static/image";
             //windows 경로
-            String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image";
+//            String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image";
 
 		/*
 		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
@@ -118,12 +122,10 @@ public class FileUpload {
 
 
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-            File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
-
             //windows
             //File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
-            //mac
-//            File saveFile = new File(uploadFolder+"/"+uniqueName + fileExtension);  // 적용 후
+            //linux
+            File saveFile = new File(uploadFolder+"/"+uniqueName + fileExtension);  // 적용 후
 
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
@@ -160,7 +162,11 @@ public class FileUpload {
                 String currentDirectory = System.getProperty("user.dir");
                 System.out.println("현재 디렉토리: " + currentDirectory);
 
-                String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image";
+
+                //server path
+                String uploadFolder = currentDirectory+"/static/image";
+                //windows
+                //String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image";
 
 		/*
 		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
@@ -179,8 +185,9 @@ public class FileUpload {
 
 
                 // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-
-                File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
+                //File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
+                //linux
+                File saveFile = new File(uploadFolder+"/"+uniqueName + fileExtension);  // 적용 후
 
                 try {
                     fileList.get(index).transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
@@ -217,7 +224,9 @@ public class FileUpload {
         // oldImageNames배열의 값들에 하나씩 접근해서 파일을 삭제함
         for (int i = 0; i < oldImageNames.size(); i++) {
             String image = oldImageNames.get(i);
-            String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
+            //server path
+            String deleteFile = currentDirectory+"/static/image/" + image;
+            //String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
             File file = new File(deleteFile);
             file.delete();
         }
@@ -248,7 +257,9 @@ public class FileUpload {
         // oldImageNames배열의 값들에 하나씩 접근해서 파일을 삭제함
         for (int i = 0; i < oldImageNames.size(); i++) {
             String image = oldImageNames.get(i);
-            String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
+            //server path
+            String deleteFile = currentDirectory+"/static/image/" + image;
+            //String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
             File file = new File(deleteFile);
             file.delete();
         }
