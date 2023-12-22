@@ -71,17 +71,27 @@ li {
     width: 380px;
 }
 
-#map .shop_info_area .shop_info_head .head_box .buttons #search_keyword {
-    width: 180px;
+#map .shop_info_area .shop_info_head .head_box #search_keyword {
     font-size: 27px;
     color: #000000;
     text-align: center;
-    letter-spacing: 40px;
+    letter-spacing: 5px;
 }
 
-#map .shop_info_area .shop_info_head #option {
-    margin-left: 5px;
-    -webkit-appearance: none;
+#map .shop_info_area .shop_info_head .head_box #option {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 260px;
+    height: 45px;
+    background: white;
+    border: 2px solid #a9954e;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+#map .shop_info_area .shop_info_head .head_box #option .buttons {
+    display: block;
 }
 
 #map .shop_info_area .shop_info_list {

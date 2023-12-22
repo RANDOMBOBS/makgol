@@ -19,13 +19,16 @@
         <div class="shop_info_head">
             <div class="head_box">
                 <h1 id="search_keyword"></h1>
-                <div class="buttons">
-                    <%--                    <button class="button_style">다른 메뉴</button>--%>
-                    <select class="button_style" id="option" name="option">
-                        <option value="">찾기 옵션</option>
-                        <option value="distance">거리순</option>
-                        <option value="like">좋아요순</option>
-                    </select>
+                <div id="option">
+                    <p>찾기 옵션</p>
+                    <div class="buttons">
+                        <label for="find_default">기본</label>
+                        <input id="find_default" type="radio" name="check_info" value="기본" checked="checked">
+                        <label for="find_distance">거리순</label>
+                        <input id="find_distance" type="radio" name="check_info" value="거리순">
+                        <label for="find_likes">좋아요순</label>
+                        <input id="find_likes" type="radio" name="check_info" value="좋아요순">
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,7 +55,6 @@
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5e40f301ec35188c140844617fdf45bf"
 ></script>
 <jsp:include page="../../script/jsp/store_list/event/page-init.jsp"></jsp:include>
-<jsp:include page="../../script/jsp/store_list/event/select-option.jsp"></jsp:include>
 <script
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"
         integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ=="
