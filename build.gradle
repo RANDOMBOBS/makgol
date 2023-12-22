@@ -104,7 +104,7 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 
     // 핫리로딩 종속성
-//    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
