@@ -17,6 +17,8 @@ import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.kakaoMap.KakaoMap;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +37,6 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class StoreService {
-
     private final RestTemplate restTemplate;
     private final HttpHeaders headers;
     private final StoresRepository storesRepository;
@@ -54,7 +55,27 @@ public class StoreService {
             map.put("category", keyword);
             map.put("longitude", longitude);
             map.put("latitude", latitude);
-            result = storesRepository.findStoreList(map);
+
+            if("한식".equals(keyword)
+                    || "양식".equals(keyword)
+                    || "일식".equals(keyword)
+                    || "분식".equals(keyword)
+                    || "중식".equals(keyword)
+                    || "기타".equals(keyword)){
+
+                log.info("category --> {} :", keyword);
+                log.info("longitude --> {} :", longitude);
+                log.info("latitude--> {} :", latitude);
+                log.info("result = storesRepository.findStoreList(map);");
+                result = storesRepository.findStoreList(map);
+
+            } else {
+                log.info("category --> {} :", keyword);
+                log.info("longitude --> {} :", longitude);
+                log.info("latitude--> {} :", latitude);
+                log.info("result = storesRepository.findStoreListMenu(map);");
+                result = storesRepository.findStoreListMenu(map);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -211,7 +232,7 @@ public class StoreService {
 
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8080/api/v1/crawl/kakaoStoreCrwall";
+        String url = "http://www.makgol.com"+"/api/v1/crawl/kakaoStoreCrwall";
 
         // HTTP 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();

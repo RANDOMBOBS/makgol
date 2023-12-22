@@ -37,7 +37,6 @@ import static com.org.makgol.common.oauth2.security.HttpCookieOAuth2Authorizatio
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final WeatherInfo weatherInfo;
-
     private final CookieUtil    cookieUtil;
     private final JwtUtil       jwtUtil;
     private final AppProperties appProperties;

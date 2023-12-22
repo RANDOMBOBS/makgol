@@ -184,11 +184,11 @@ Project Timeline
 <br>
 
 <details>
-<summary>배리어 프리 시설 및 가게 사진 데이터 수집</summary>
+<summary>위치 반경 2Km 식당 상세 데이터 수집</summary>
 <div markdown="1">
 
 <ul>
-&nbsp; &nbsp; &nbsp; &nbsp;<li>kakaoMap과 publicAPI를 활용하여 식당 데이터 수집</li>
+&nbsp; &nbsp; &nbsp; &nbsp;<li>kakaoMap과 크롤링을 활용하여 반경 2Km 식당 데이터 수집</li>
 &nbsp; &nbsp; &nbsp; &nbsp;<li>Selenium을 활용하여 가게 사진 데이터 크롤링</li>
 &nbsp; &nbsp; &nbsp; &nbsp;<li>Thread를 활용하여 Crawling 성능 개선</li>
 </ul>
@@ -226,12 +226,6 @@ Project Timeline
 <br>
 
 ### Trouble Shooting
-
-[공공 API의 정보 가공](https://planet-punishment-427.notion.site/API-8adec124d1fd4a11b1a06d3e4039871d)
-
-[Batch Reader Api 요청 속도](https://planet-punishment-427.notion.site/Batch-Reader-Api-188339e4d37a4186befd2980012a2512)
-
-[Batch 쿼리 줄이기](https://planet-punishment-427.notion.site/Batch-3ae16b43cf5c45318f84380d03454d21)
 
 <br>
 
