@@ -49,7 +49,7 @@ public class Crawller {
 
         // 드라이버 경로 윈도우
         //String driverPath = "src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
-        //String driverPath = "D:\\sunBoot\\mak_gol\\src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
+        //String driverPath = "D:\\sunBoot\\makgol\\src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
         // 드라이버 절대경로 맥
         //String driverPath = "src/main/java/com/org/makgol/driver/chromedriver_mac";
         // 드라이버 절대경로 linux(ubuntu)
