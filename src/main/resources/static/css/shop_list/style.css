@@ -148,12 +148,34 @@ li {
     font-weight: bolder;
     text-decoration: none;
     color: black;
+    flex-grow: 3;
 }
 
+#map .shop_info_area .shop_info_list .shop_info_item .dibs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background: #fffd9b;
+    color: #3a2102;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-right: 3px;
+    outline: none;
+    flex-grow: 0;
+    border: none;
+}
+
+#map .shop_info_area .shop_info_list .shop_info_item .dibs:hover {
+    background: #3a2102;
+    color: #fff100;
+}
 
 #map .shop_info_area .shop_info_list .shop_info_item #likes {
     color: red;
     font-size: 20px;
+    flex-grow: 0;
 }
 
 #map .shop_info_area .shop_info_list .shop_info_item #place_name:hover {
@@ -211,6 +233,97 @@ li {
     padding: 7px 7px 15px;
     width: 150px;
     border-radius: 6px;
+}
+
+#map .dibs_shop_area {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    z-index: 997;
+    width: 320px;
+    height: 540px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+}
+
+#map .dibs_shop_area .dibs_shop_head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background-color: #ffe286;
+    border-radius: 12px 12px 0 0;
+}
+
+#map .dibs_shop_area .dibs_shop_head .dibs_shop_count {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
+#map .dibs_shop_area .dibs_shop_list {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+
+#map .dibs_shop_area .dibs_shop_list::-webkit-scrollbar {
+    width: 12px;
+}
+
+#map .dibs_shop_area .dibs_shop_list::-webkit-scrollbar-thumb {
+    background-color: #debf5e;
+}
+
+#map .dibs_shop_area .dibs_shop_list::-webkit-scrollbar-track {
+    background-color: #f3e7d0;
+}
+
+#map .dibs_shop_area .dibs_shop_list .dibs_shop_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    width: 300px;
+    height: 40px;
+    background: #ffffff;
+    border: 3px solid #ffe286;
+    border-radius: 6px;
+}
+
+#map .dibs_shop_area .dibs_shop_list .dibs_shop_item:hover {
+    border: 3px solid #ffa500;
+    background: #fdf97e;
+}
+
+#map .dibs_shop_area .dibs_shop_list .dibs_shop_item .shop_name {
+    margin-left: 10px;
+}
+
+#map .dibs_shop_area .dibs_shop_list .dibs_shop_item .shop_name:hover {
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+#map .dibs_shop_area .dibs_shop_list .dibs_shop_item .delete_button {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    color: red;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+#map .dibs_shop_area .dibs_shop_footer {
+    height: 20px;
+    background-color: #ffe286;
+    border-radius: 0 0 12px 12px;
 }
 
 #map .guide_line {
