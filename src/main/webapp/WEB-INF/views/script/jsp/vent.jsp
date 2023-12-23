@@ -307,7 +307,7 @@
     }
 
     function returnToList() {
-        window.location.href = "http://localhost:8080/board/vent";
+        window.location.href = "http://www.makgol.com/board/vent";
     }
 
 </script>
