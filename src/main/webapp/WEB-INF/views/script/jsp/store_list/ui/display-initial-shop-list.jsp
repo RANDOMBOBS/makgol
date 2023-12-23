@@ -27,6 +27,8 @@
             shopInfoListEle.append(h3Ele1, h3Ele2);
         }
 
+        const userId = "${loginedUserVo.id}";
+
         shops.forEach((shop) => {
             const shopInfoItemEle = $("<div>").addClass("shop_info_item");
 
@@ -37,10 +39,17 @@
 
             shop.place_name.length >= 14 && placeNameEle.text(shop.place_name.substring(0, 14) + "...");
 
+            let dibsEle;
+            if (userId) {
+                dibsEle = $("<div>").addClass("dibs")
+                dibsEle.text("찜");
+            }
+
             const likeItemEle = $("<p>").attr("id", "likes").text("♥" + shop.likes)
 
-            const topItemComposition = [placeNameEle, likeItemEle];
+            const topItemComposition = [placeNameEle, dibsEle, likeItemEle];
             topItemComposition.forEach((composition) => topItemEle.append(composition));
+
 
             const middleItemEle = $("<div>").addClass("middle_item");
 

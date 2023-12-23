@@ -146,12 +146,32 @@ li {
     font-weight: bolder;
     text-decoration: none;
     color: black;
+    flex-grow: 3;
 }
 
+#map .shop_info_area .shop_info_list .shop_info_item .dibs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background: #fffd9b;
+    color: #3a2102;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-right: 3px;
+    flex-grow: 0;
+}
+
+#map .shop_info_area .shop_info_list .shop_info_item .dibs:hover {
+    background: #3a2102;
+    color: #fff100;
+}
 
 #map .shop_info_area .shop_info_list .shop_info_item #likes {
     color: red;
     font-size: 20px;
+    flex-grow: 0;
 }
 
 #map .shop_info_area .shop_info_list .shop_info_item #place_name:hover {
