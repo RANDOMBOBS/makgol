@@ -141,111 +141,111 @@ public class KakaoMap{
         storeRequestVoList = searchMenu(CategoryKoreaRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
 
 
-//        String[] CategoryKoreaSnasickMenu = Arrays.stream(Category.CategoryKoreaSnasickMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryKoreaSnasickMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryKoreaNoodleMenu = Arrays.stream(Category.CategoryKoreaNoodleMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryKoreaNoodleMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryWesternNoodleMenu = Arrays.stream(Category.CategoryWesternNoodleMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryWesternNoodleMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryWesternRiceMenu = Arrays.stream(Category.CategoryWesternRiceMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryWesternRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryWesternRoastMenu = Arrays.stream(Category.CategoryWesternRoastMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryWesternRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//        String[] CategoryWesternETCMenu = Arrays.stream(Category.CategoryWesternETCMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryWesternETCMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryChinaNoodleMenu = Arrays.stream(Category.CategoryChinaNoodleMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryChinaNoodleMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryChinaRiceMenu = Arrays.stream(Category.CategoryChinaRiceMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryChinaRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryChinaETCMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryChinaETCMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryChinaFriedMenu = Arrays.stream(Category.CategoryChinaFriedMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryChinaFriedMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryChinaRoastMenu = Arrays.stream(Category.CategoryChinaRoastMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryChinaRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryJapanRoastMenu = Arrays.stream(Category.CategoryJapanRoastMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryJapanRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryJapanFrideMenu = Arrays.stream(Category.CategoryJapanFrideMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryJapanFrideMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryJapanRiceMenu = Arrays.stream(Category.CategoryJapanRiceMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryJapanRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryJapanNoodleMenu = Arrays.stream(Category.CategoryJapanNoodleMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryJapanNoodleMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryGlobal_bMenu = Arrays.stream(Category.CategoryGlobal_bMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryGlobal_bMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryGlobal_tMenu = Arrays.stream(Category.CategoryGlobal_tMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryGlobal_tMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryGlobal_mMenu = Arrays.stream(Category.CategoryGlobal_mMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryGlobal_mMenu, kakaoLocalRequestVo, storeRequestVoList);
+        String[] CategoryKoreaSnasickMenu = Arrays.stream(Category.CategoryKoreaSnasickMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryKoreaSnasickMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryKoreaNoodleMenu = Arrays.stream(Category.CategoryKoreaNoodleMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryKoreaNoodleMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryWesternNoodleMenu = Arrays.stream(Category.CategoryWesternNoodleMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryWesternNoodleMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryWesternRiceMenu = Arrays.stream(Category.CategoryWesternRiceMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryWesternRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryWesternRoastMenu = Arrays.stream(Category.CategoryWesternRoastMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryWesternRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+        String[] CategoryWesternETCMenu = Arrays.stream(Category.CategoryWesternETCMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryWesternETCMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryChinaNoodleMenu = Arrays.stream(Category.CategoryChinaNoodleMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryChinaNoodleMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryChinaRiceMenu = Arrays.stream(Category.CategoryChinaRiceMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryChinaRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryChinaETCMenu = Arrays.stream(Category.CategoryChinaETCMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryChinaETCMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryChinaFriedMenu = Arrays.stream(Category.CategoryChinaFriedMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryChinaFriedMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryChinaRoastMenu = Arrays.stream(Category.CategoryChinaRoastMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryChinaRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryJapanRoastMenu = Arrays.stream(Category.CategoryJapanRoastMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryJapanRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryJapanFrideMenu = Arrays.stream(Category.CategoryJapanFrideMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryJapanFrideMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryJapanRiceMenu = Arrays.stream(Category.CategoryJapanRiceMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryJapanRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryJapanNoodleMenu = Arrays.stream(Category.CategoryJapanNoodleMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryJapanNoodleMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryGlobal_bMenu = Arrays.stream(Category.CategoryGlobal_bMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryGlobal_bMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryGlobal_tMenu = Arrays.stream(Category.CategoryGlobal_tMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryGlobal_tMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryGlobal_mMenu = Arrays.stream(Category.CategoryGlobal_mMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryGlobal_mMenu, kakaoLocalRequestVo, storeRequestVoList);
 
 
         int i=0;
