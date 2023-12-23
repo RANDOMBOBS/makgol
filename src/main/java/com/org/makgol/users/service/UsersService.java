@@ -249,11 +249,11 @@ public class UsersService implements LogoutHandler {
                 servletContext.setAttribute("loginedUserVo", newUserVo);
 
             }
-//            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
             // 비동기 작업이 완료되면 결과를 출력
-//            future.thenAccept(result_info -> {
-//                log.info("saveStoresInfo --> : {}", result_info);
-//            });
+            future.thenAccept(result_info -> {
+                log.info("saveStoresInfo --> : {}", result_info);
+            });
         }
         return result;
     }

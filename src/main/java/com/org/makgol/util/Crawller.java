@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Slf4j
 public class Crawller {
 
-    private int thread_count = 1;
+    private int thread_count = 10;
 	/**
 	 * @param storeRequestVos<StoreRequestVo> storeRequestVos
 	 * 				------StoreRequestVo---------
@@ -48,12 +48,12 @@ public class Crawller {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         // 드라이버 경로 윈도우
-        //String driverPath = "src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
+        String driverPath = "src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
         //String driverPath = "D:\\sunBoot\\makgol\\src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
         // 드라이버 절대경로 맥
         //String driverPath = "src/main/java/com/org/makgol/driver/chromedriver_mac";
         // 드라이버 절대경로 linux(ubuntu)
-        String driverPath = "/home/ubuntu/service/makgol/src/main/java/com/org/makgol/driver/chromedriver_linux";
+        //String driverPath = "/home/ubuntu/service/makgol/src/main/java/com/org/makgol/driver/chromedriver_linux";
 
 
         //스레드를 종료하기위한 List
