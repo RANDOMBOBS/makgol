@@ -126,12 +126,12 @@
     </insert>
 
     <insert id="saveMenus" parameterType="Map">
-        INSERT INTO Menus (store_id, menu, price, date)
+        INSERT INTO menus (store_id, menu, price, date)
         VALUES (#{store_id}, #{menu}, #{price}, now())
     </insert>
 
     <insert id="saveStores" parameterType="com.org.makgol.stores.vo.StoreRequestVo">
-        INSERT INTO Stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone,
+        INSERT INTO stores (name, likes, longitude, latitude, address, load_address, category, opening_hours, phone,
                             site, menu_update, place_url, update_date, photo)
         VALUES (#{name}, #{likes}, #{longitude}, #{latitude}, #{address}, #{load_address}, #{category},
                 #{opening_hours}, #{phone}, #{site}, #{menu_update}, #{place_url}, #{update_date}, #{photo})
