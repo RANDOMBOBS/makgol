@@ -23,7 +23,7 @@
 
         const dibsShopHeadEle = $(".dibs_shop_head");
         const dibsShopCountEle = $("<div>").addClass("dibs_shop_count")
-        dibsShopCountEle.text("10 / " + dibsShops.length);
+        dibsShopCountEle.text("8 / " + dibsShops.length);
 
         dibsShopHeadEle.append(dibsShopCountEle);
 

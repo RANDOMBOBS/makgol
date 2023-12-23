@@ -257,15 +257,13 @@ li {
 
 #map .dibs_shop_area .dibs_shop_head .dibs_shop_count {
     position: absolute;
-    top: 30px;
+    top: 20px;
     right: 10px;
 }
 
 #map .dibs_shop_area .dibs_shop_list {
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
-    overflow-x: hidden;
     height: 500px;
 }
 
@@ -286,7 +284,7 @@ li {
     justify-content: space-between;
     align-items: center;
     margin: 10px;
-    width: 288px;
+    width: 300px;
     height: 40px;
     background: #ffffff;
     border: 3px solid #ffe286;

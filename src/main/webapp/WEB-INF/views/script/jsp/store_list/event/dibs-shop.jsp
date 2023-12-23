@@ -9,7 +9,7 @@
             const dibsShops = JSON.parse(localStorage.getItem("dibsShops")) || [];
             const prevShops = [...dibsShops, shop]
 
-            if (prevShops.length > 10) {
+            if (prevShops.length > 8) {
                 return alert("더 이상 식당을 찜할수 없습니다.")
             }
 
