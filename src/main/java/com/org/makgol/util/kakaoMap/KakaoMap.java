@@ -129,18 +129,18 @@ public class KakaoMap{
         storeRequestVoList = searchMenu(CategoryKoreaStewMenu, kakaoLocalRequestVo, storeRequestVoList);
 
 
-//        String[] CategoryKoreaRoastMenu = Arrays.stream(Category.CategoryKoreaRoastMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryKoreaRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
-//        String[] CategoryKoreaRiceMenu = Arrays.stream(Category.CategoryKoreaRiceMenu.values())
-//                .map(Enum::name)
-//                .toArray(String[]::new);
-//        storeRequestVoList = searchMenu(CategoryKoreaRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
-//
-//
+        String[] CategoryKoreaRoastMenu = Arrays.stream(Category.CategoryKoreaRoastMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryKoreaRoastMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
+        String[] CategoryKoreaRiceMenu = Arrays.stream(Category.CategoryKoreaRiceMenu.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        storeRequestVoList = searchMenu(CategoryKoreaRiceMenu, kakaoLocalRequestVo, storeRequestVoList);
+
+
 //        String[] CategoryKoreaSnasickMenu = Arrays.stream(Category.CategoryKoreaSnasickMenu.values())
 //                .map(Enum::name)
 //                .toArray(String[]::new);
