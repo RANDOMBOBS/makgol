@@ -146,7 +146,8 @@
             </li>
         </ul>
     </div>
-    <a href="http://localhost:8080"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
+    <a href="http://localhost:8080"><img id="logoimage"
+                                         src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
     <div class="userTab">
         <c:choose>
 
@@ -196,7 +197,7 @@
                     <li>
                         <a href="<c:url value='/user/myPage'><c:param name="user_id" value="${loginedUserVo.id}" /></c:url>">마이페이지</a>
                     </li>
-                    <li><a href="<c:url value=''/>" id="logout_link">로그아웃</a></li>
+                    <li><a href="<c:url value=''/>" id="logout_link" onclick="deleteDibsShop()">로그아웃</a></li>
                 </c:when>
                 <c:otherwise>
                     <li><a href="#" id="register_modal">회원가입</a></li>
@@ -207,6 +208,11 @@
     </div>
 </header>
 
+<script>
+    function deleteDibsShop() {
+        localStorage.removeItem("dibsShops")
+    }
+</script>
 
 <script>
     $.noConflict();

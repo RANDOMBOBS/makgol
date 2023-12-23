@@ -41,7 +41,7 @@
 
             let dibsEle;
             if (userId) {
-                dibsEle = $("<div>").addClass("dibs")
+                dibsEle = $("<button>").addClass("dibs")
                 dibsEle.text("찜");
             }
 
@@ -86,7 +86,6 @@
             );
 
             shopInfoListEle.append(shopInfoItemEle);
-
             mouse(shop, shopInfoItemEle);
         });
     }
