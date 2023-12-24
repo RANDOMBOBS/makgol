@@ -24,7 +24,7 @@ Project Timeline
 <br>
 <br>
 
-👩‍🦼 [막내야골라봐 바로가기](https://makgol.com/)
+👩‍🦼 [막내야골라봐 바로가기](https://www.makgol.com/)
 
 <br>
 
@@ -139,6 +139,7 @@ Project Timeline
 - **Thread** : 크롤링을 병렬처리하기 위해 사용
 - **Redis**
 - Swagger
+- cookie
 - **RestTemplate** : Public API와 Kakao API를 호출하기 위해 사용
 
 ### Data Pipeline
