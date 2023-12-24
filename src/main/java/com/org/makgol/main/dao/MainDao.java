@@ -38,6 +38,7 @@ public class MainDao {
                 "INNER JOIN stores ON menus.store_id = stores.id \n" +
                 "WHERE stores.category = '"+ where +"' \n" +
                 "LIMIT 0, 1000;";
+
         List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
         try {
             RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);
@@ -49,7 +50,15 @@ public class MainDao {
     }
 
     public List<CategoryListVo> selectTodayMenu() {
-        return selectTodayMenu("");
+        String sql = "SELECT menu,photo,photoPath FROM menus ";
+        List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
+        try {
+            RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);
+            categorys = jdbcTemplate.query(sql, rowMapper);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categorys.size() > 0 ? categorys : null;
     }
 
     // Top5 메뉴
