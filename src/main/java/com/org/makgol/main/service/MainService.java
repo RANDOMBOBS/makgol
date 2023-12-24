@@ -19,6 +19,10 @@ public class MainService {
 		return mainDao.selectAllCategory();
 	}
 
+	public List<CategoryListVo> todayMenuList(String category) {
+		return mainDao.selectTodayMenu(category);
+	}
+
 	public List<CategoryListVo> todayMenuList() {
 		return mainDao.selectTodayMenu();
 	}

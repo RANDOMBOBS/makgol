@@ -80,8 +80,9 @@
   btn.addEventListener("click", handleButtonClick);
 
   function todayMenuList() {
+  var category = "";
     jQ.ajax({
-      url: "/main/todayMenuList",
+      url: "/main/todayMenuList/"+category,
       type: "GET",
       dataType: "html",
       success: function (rdata) {
@@ -97,8 +98,9 @@
 	btn.addEventListener("click", handleButtonClick);
 
 	   function todayMenuList() {
+	   var category = "";
         		jQ.ajax({
-        			url : "/main/todayMenuList",
+        			url : "/main/todayMenuList/"+category",
         			type : "GET",
         			dataType : "html",
         			success : function(rdata) {

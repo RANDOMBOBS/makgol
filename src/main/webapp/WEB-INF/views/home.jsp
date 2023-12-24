@@ -31,6 +31,8 @@
         </div>
     </article>
 
+
+
     <div id="article2">
         <div class="today_menu">
             <div class="todaymenu_main_div">
@@ -63,7 +65,7 @@
                     </li>
                     <li>
                         <button class="todayBtn" type="button"
-                                onclick="cafeToday()">카페
+                                onclick="etcToday()">기타
                         </button>
                     </li>
                 </ul>
@@ -106,6 +108,101 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
+
+function korToday() {
+var category = "한식";
+        jQ.ajax({
+            url: "/main/menusCategory/"+category,
+            type: "GET",
+            dataType: "html",
+            success: function (rdata) {
+                jQ(".todaymenu_list_div").html(rdata);
+                slickTodaySlider();
+            },
+            error: function (error) {
+                alert("리스트업오류");
+            },
+        });
+    }
+
+function westToday() {
+var category = "양식";
+        jQ.ajax({
+            url: "/main/menusCategory/"+category,
+            type: "GET",
+            dataType: "html",
+            success: function (rdata) {
+                jQ(".todaymenu_list_div").html(rdata);
+                slickTodaySlider();
+            },
+            error: function (error) {
+                alert("리스트업오류");
+            },
+        });
+    }
+function chiToday() {
+var category = "중식";
+        jQ.ajax({
+            url: "/main/menusCategory/"+category,
+            type: "GET",
+            dataType: "html",
+            success: function (rdata) {
+                jQ(".todaymenu_list_div").html(rdata);
+                slickTodaySlider();
+            },
+            error: function (error) {
+                alert("리스트업오류");
+            },
+        });
+    }
+function snackToday() {
+var category = "분식";
+        jQ.ajax({
+            url: "/main/menusCategory/"+category,
+            type: "GET",
+            dataType: "html",
+            success: function (rdata) {
+                jQ(".todaymenu_list_div").html(rdata);
+                slickTodaySlider();
+            },
+            error: function (error) {
+                alert("리스트업오류");
+            },
+        });
+    }
+
+function jpnToday() {
+var category = "일식";
+        jQ.ajax({
+            url: "/main/menusCategory/"+category,
+            type: "GET",
+            dataType: "html",
+            success: function (rdata) {
+                jQ(".todaymenu_list_div").html(rdata);
+                slickTodaySlider();
+            },
+            error: function (error) {
+                alert("리스트업오류");
+            },
+        });
+    }
+
+function etcToday() {
+var category = "기타";
+        jQ.ajax({
+            url: "/main/menusCategory/"+category,
+            type: "GET",
+            dataType: "html",
+            success: function (rdata) {
+                jQ(".todaymenu_list_div").html(rdata);
+                slickTodaySlider();
+            },
+            error: function (error) {
+                alert("리스트업오류");
+            },
+        });
+    }
+
 
     jQ(function(){
               jQ('#event').slick({

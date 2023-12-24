@@ -57,10 +57,18 @@ public class MainController {
 	}
 
 	// 오늘의 추천 메뉴
-	@RequestMapping(value = "/todayMenuList", method = { RequestMethod.GET, RequestMethod.POST })
-	public String todayMenuList(Model model) {
+	@RequestMapping(value = "/todayMenuList/{category}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String todayMenuList(@PathVariable("category") String category, Model model) {
 		String nextPage = "jsp/main/todayMenu";
-		List<CategoryListVo> categoryVo = mainService.todayMenuList();
+		List<CategoryListVo> categoryVo = mainService.todayMenuList(category);
+		model.addAttribute("categoryVo",categoryVo);
+		return nextPage;
+	}
+
+	@RequestMapping(value = "/menusCategory/{category}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String menusCategory(@PathVariable("category") String category, Model model) {
+		String nextPage = "jsp/main/todayMenu";
+		List<CategoryListVo> categoryVo = mainService.todayMenuList(category);
 		model.addAttribute("categoryVo",categoryVo);
 		return nextPage;
 	}

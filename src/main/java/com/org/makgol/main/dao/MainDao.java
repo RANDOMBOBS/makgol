@@ -33,7 +33,7 @@ public class MainDao {
 
     // 오늘의 메뉴 (no mybatis)
     public List<CategoryListVo> selectTodayMenu(String where) {
-        String sql = "SELECT menu,photo,photoPath FROM menus " + where;
+        String sql = "SELECT menu,photo,photoPath FROM menus where category = \'"+ where+"\'";
         List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
         try {
             RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);
