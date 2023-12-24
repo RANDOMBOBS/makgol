@@ -24,7 +24,7 @@ Project Timeline
 <br>
 <br>
 
-👩‍🦼 [막내야골라봐 바로가기](https://www.makgol.com/)
+👩‍🦼 [막내야골라봐 바로가기](http://www.makgol.com/)
 
 <br>
 
