@@ -151,7 +151,7 @@ Project Timeline
 <br>
 
 ### ERD
-<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/.readme/assets/105048235/3fadcd14-28cc-4c04-9e3a-5acd457badf7">
+<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/makgol/assets/105048235/e86b416f-777f-479b-ad8b-ea3135b90ad0">
 
 ### API
 
