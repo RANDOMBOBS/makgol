@@ -3,8 +3,14 @@
     const disabledDibsButton = (dibsShopNames) => {
         const shopInfoListEle = $(".shop_info_list");
         const topItems = shopInfoListEle.children().children(".top_item").toArray();
-        const dibsTopItems = topItems.filter((topItem) => dibsShopNames.includes($(topItem).children("#place_name").text()));
-        const dibsButtons = dibsTopItems.map((dibsTopItem) => $(dibsTopItem).children(".dibs"));
+
+        const dibsItems = topItems.filter((topItem) => {
+            const shopName = $(topItem).children("#place_name").text();
+            const completeShopNames = shopName.includes("...") ? shopName.replace("...", "") : shopName;
+            return dibsShopNames.some(dibsShopName => dibsShopName.includes(completeShopNames));
+        })
+
+        const dibsButtons = dibsItems.map((dibsItem) => $(dibsItem).children(".dibs"));
         dibsButtons.forEach((button) => {
             button.attr("disabled", true).css({background: "gray", color: "white", cursor: "default"})
         });
