@@ -28,7 +28,7 @@
         dibsShopHeadEle.append(dibsShopCountEle);
 
 
-        dibsShops.forEach((shop, idx) => {
+        dibsShops.forEach((shop) => {
             const dibsShopListEle = $(".dibs_shop_list");
 
             const dibsShopItemEle = $("<div>").addClass("dibs_shop_item");

@@ -4,8 +4,8 @@
         $(".dibs").click((event) => {
             const dibsbuttonEle = $(event.target);
             const shopName = dibsbuttonEle.prev().text();
-            const shop = shops.find((shop) => shop.place_name === shopName);
-
+            const completeShopName = shopName.includes("...") ? shopName.replace("...", "") : shopName;
+            const shop = shops.find((shop) => shop.place_name.includes(completeShopName));
             const dibsShops = JSON.parse(localStorage.getItem("dibsShops")) || [];
             const prevShops = [...dibsShops, shop]
 
@@ -14,8 +14,6 @@
             }
 
             localStorage.setItem("dibsShops", JSON.stringify(prevShops));
-
-            alert("식당을 찜했습니다!")
             location.reload();
         });
 
