@@ -146,7 +146,7 @@ Project Timeline
 ## Project Design
 
 ### Service Architecture
-<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/.readme/assets/105048235/b128a3d2-50e5-49d1-af88-0c5f18695f03">
+<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/makgol/assets/141618648/afd7b6be-e746-44a7-ad68-cea574528882">
 
 <br>
 
