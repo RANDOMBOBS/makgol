@@ -182,22 +182,26 @@ li {
 
 #map .shop_info_area .shop_info_list .shop_info_item .middle_item {
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     margin-top: 40px;
 }
 
-#map
-.shop_info_area
-.shop_info_list
-.shop_info_item
-.middle_item
-#address_name {
+#map .shop_info_area .shop_info_list .shop_info_item .middle_item #address_name {
+    display: flex;
+    justify-content: left;
     letter-spacing: -2px;
     color: #777747;
+    flex-grow: 1;
+}
+
+#map .shop_info_area .shop_info_list .shop_info_item #is_opened {
+    margin-right: 10px;
+    flex-grow: 0;
 }
 
 #map .shop_info_area .shop_info_list .shop_info_item .middle_item #distance {
     color: yellowgreen;
+    flex-grow: 0;
 }
 
 #map .shop_info_area .shop_info_list .shop_info_item .under_item {

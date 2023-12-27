@@ -55,8 +55,17 @@
 
             const addressNameEle = $("<p>").attr("id", "address_name").text(shop.address_name);
             const distanceEle = $("<p>").attr("id", "distance").text(shop.distance + "m");
+            const isOpenedEle = $("<p>").attr("id", "is_opened");
 
-            const middleItemComposition = [addressNameEle, distanceEle];
+            if (shop.opening_hours) {
+                const openStatus = isShopOpen(shop.opening_hours);
+
+                openStatus
+                    ? isOpenedEle.text("운영중").css({color: "red"})
+                    : isOpenedEle.text("영업종료").css({color: "gray"});
+            }
+
+            const middleItemComposition = [addressNameEle, isOpenedEle, distanceEle];
             middleItemComposition.forEach((composition) =>
                 middleItemEle.append(composition),
             );
