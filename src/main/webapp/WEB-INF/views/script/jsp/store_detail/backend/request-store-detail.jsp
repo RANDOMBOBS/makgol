@@ -4,7 +4,7 @@
         const url = "/store/detail_data/store_id/" + id;
         const {axios} = window;
         const {data} = await axios.get(url);
-
+        
         return data.result;
     }
 </script>

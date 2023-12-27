@@ -98,10 +98,6 @@ article #intro #user_interaction #head_office:hover {
     cursor: pointer;
 }
 
-article #intro .info_box {
-    margin-bottom: 20px;
-}
-
 article #intro .detail_category {
     height: 40px;
     display: flex;
@@ -136,6 +132,13 @@ article #intro ul span:nth-child(1) {
 
 article #intro ul span:nth-child(2) {
     color: chocolate;
+}
+
+
+article #intro #is_opened {
+    position: relative;
+    bottom: 42px;
+    left: 120px;
 }
 
 article #intro ul > li {
