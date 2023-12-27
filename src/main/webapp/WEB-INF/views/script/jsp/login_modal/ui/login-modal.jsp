@@ -5,10 +5,15 @@
             $(".modal_cover").css({display: "none"})
             $(".login_modal").css({display: "none"})
         })
-        
+
         $(".user_option span:nth-child(1)").click(() => {
             $(".login_modal").css({display: "none"});
             $(".register_modal").css({display: "block"});
+        })
+
+        $(".user_option span:nth-child(2)").click(() => {
+            $(".login_modal").css({display: "none"});
+            $(".find_password_modal").css({display: "block"});
         })
     };
 </script>
