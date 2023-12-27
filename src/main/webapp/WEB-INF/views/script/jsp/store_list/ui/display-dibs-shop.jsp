@@ -5,6 +5,25 @@
         const dibsShops = JSON.parse(localStorage.getItem("dibsShops")) || [];
         const dibsShopListEle = $(".dibs_shop_list");
 
+        const userId = "${loginedUserVo.id}";
+
+        if (!userId) {
+            const h3Ele = $("<h3>");
+            h3Ele.css({color: "#99958b"}).text("식당을 찜하려면 로그인해주세요.");
+
+
+            dibsShopListEle.css({
+                background: "#cccccc",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            });
+
+            dibsShopListEle.append(h3Ele);
+            return;
+        }
+
         if (!dibsShops.length) {
             const h3Ele = $("<h3>");
             h3Ele.css({color: "#99958b"}).text("아직 찜한 식당이 없습니다.");
@@ -19,6 +38,7 @@
             });
 
             dibsShopListEle.append(h3Ele);
+            return;
         }
 
         const dibsShopHeadEle = $(".dibs_shop_head");
