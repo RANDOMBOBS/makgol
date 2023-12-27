@@ -44,6 +44,8 @@ public interface StoresRepository {
 
     void deleteReviewWithId(int reviewId);
 
+    void deleteReviewImagesWithId(int reviewId);
+
     void saveCategoryMenu(Map<String, Object> map);
 
     void saveMenus(Map<String, Object> map);

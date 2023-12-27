@@ -117,6 +117,12 @@
         WHERE id = #{reviewId}
     </delete>
 
+    <delete id="deleteReviewImagesWithId" parameterType="Integer">
+        DELETE
+        FROM mak_gol.review_images
+        WHERE review_id = #{reviewId}
+    </delete>
+
     <insert id="saveCategoryMenu" parameterType="Map">
         INSERT INTO category_menu (store_id, category, menu_name, date)
         VALUES (#{store_id}, #{category}, #{menu_name}, now())

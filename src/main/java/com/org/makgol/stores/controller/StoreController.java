@@ -198,9 +198,15 @@ public class StoreController {
     }
 
     @PutMapping(value = "/review_id/{review_id}")
-    public ResponseEntity<?> modifyReviewWithId(@PathVariable int review_id, @RequestBody ModifyReviewDto modifiedReview) {
-        modifiedReview.setReviewId(review_id);
-        storeService.modifyReviewWithId(modifiedReview);
+    public ResponseEntity<?> modifyReviewWithId(@PathVariable int review_id, @ModelAttribute ModifyReviewDto modifyReviewDto) {
+        modifyReviewDto.setReviewId(review_id);
+
+        if (modifyReviewDto.getReviewImages() == null) {
+            modifyReviewDto.setReviewImages(new ArrayList<>());
+        }
+
+        storeService.modifyReviewWithId(modifyReviewDto);
+        
         KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "리뷰를 수정하였습니다.", null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

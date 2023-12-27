@@ -164,8 +164,14 @@ public class StoreService {
     }
 
     public void modifyReviewWithId(ModifyReviewDto modifyReviewDto) {
+        List<FileInfo> fileInfoList = fileUpload.fileListUpload(modifyReviewDto.getReviewImages());
         try {
+            storesRepository.deleteReviewImagesWithId(modifyReviewDto.getReviewId());
             storesRepository.modifyReviewWithId(modifyReviewDto);
+            fileInfoList.forEach((fileInfo -> {
+                UploadReviewImageDto uploadReviewImageDto = new UploadReviewImageDto(modifyReviewDto.getReviewId(), fileInfo.getPhotoName(), fileInfo.getPhotoPath());
+                storesRepository.uploadReviewImage(uploadReviewImageDto);
+            }));
         } catch (Exception e) {
             e.printStackTrace();
         }
