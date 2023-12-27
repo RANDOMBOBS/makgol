@@ -80,10 +80,17 @@
   btn.addEventListener("click", handleButtonClick);
 
   function todayMenuList() {
+
+  var userInfo = {
+    x = ${loginedUserVo.longitude},
+    y = ${loginedUserVo.latitude}
+  }
+
     jQ.ajax({
       url: "/main/todayMenuList/",
       type: "GET",
       dataType: "html",
+      data: JSON.stringify(userInfo),
       success: function (rdata) {
         jQ(".todaymenu_list_div").html(rdata);
         slickTodaySlider();
@@ -97,10 +104,15 @@
 	btn.addEventListener("click", handleButtonClick);
 
 	   function todayMenuList() {
+	   var userInfo = {
+           x = ${loginedUserVo.longitude},
+           y = ${loginedUserVo.latitude}
+         }
         		jQ.ajax({
         			url : "/main/todayMenuList/",
         			type : "GET",
         			dataType : "html",
+        			data: JSON.stringify(userInfo),
         			success : function(rdata) {
         				jQ(".todaymenu_list_div").html(rdata);
         				slickTodaySlider()
