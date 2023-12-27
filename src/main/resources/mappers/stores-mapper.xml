@@ -30,8 +30,15 @@
     </select>
 
     <select id="findStoreDetailWithId" resultType="com.org.makgol.stores.dto.StoreDetailDto" parameterType="Integer">
-        SELECT name, likes, address, category, phone, photo, site
-        FROM makgol.stores
+        SELECT name,
+               likes,
+               address,
+               category,
+               phone,
+               photo,
+               site,
+               opening_hours
+        FROM mak_gol.stores
         WHERE id = #{storeId}
     </select>
 
