@@ -61,7 +61,7 @@
                 const openStatus = isShopOpen(shop.opening_hours);
 
                 openStatus
-                    ? isOpenedEle.text("운영중").css({color: "red"})
+                    ? isOpenedEle.text("영업중").css({color: "red"})
                     : isOpenedEle.text("영업종료").css({color: "gray"});
             }
 
