@@ -57,7 +57,7 @@ public class MainDao {
                 "WHERE 1000 > ST_DISTANCE_SPHERE(\n" +
                 "    POINT((SELECT longitude FROM stores WHERE id = menus.store_id), (SELECT latitude FROM stores WHERE id = menus.store_id)),\n" +
                 "    POINT("+userXy.getX()+", "+userXy.getY()+")\n" +
-                ");";
+                ")";
         List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
         try {
             RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);

@@ -108,11 +108,12 @@
            x : ${loginedUserVo.longitude},
            y : ${loginedUserVo.latitude}
          }
+         var encodedUserInfo = encodeURIComponent(JSON.stringify(userInfo));
         		jQ.ajax({
         			url : "/main/todayMenuList/",
         			type : "GET",
         			dataType : "html",
-        			data: JSON.stringify(userInfo),
+        			data: JSON.stringify(encodedUserInfo),
         			success : function(rdata) {
         				jQ(".todaymenu_list_div").html(rdata);
         				slickTodaySlider()
