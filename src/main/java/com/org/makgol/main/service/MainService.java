@@ -28,7 +28,7 @@ public class MainService {
 		return mainDao.selectTodayMenu(userXy);
 	}
 
-	public List<CategoryListVo> topMenuList() {
-		return mainDao.selectTopMenu();
+	public List<CategoryListVo> topMenuList(UserXy userXy) {
+		return mainDao.selectTopMenu(userXy);
 	}
 }

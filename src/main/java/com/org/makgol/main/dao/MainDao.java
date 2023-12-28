@@ -69,7 +69,7 @@ public class MainDao {
     }
 
     // Top5 메뉴
-    public List<CategoryListVo> selectTopMenu() {
+    public List<CategoryListVo> selectTopMenu(UserXy userXy) {
         String sql = "SELECT name,photo FROM stores";
         List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
         try {

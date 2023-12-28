@@ -74,9 +74,9 @@ public class MainController {
 
 	// Top5 메뉴 
 	@RequestMapping(value = "/topMenuList", method = { RequestMethod.GET, RequestMethod.POST })
-	public String topMenuList(Model model) {
+	public String topMenuList(Model model, @RequestBody UserXy userXy) {
 		String nextPage = "jsp/main/topMenu";
-		List<CategoryListVo> categoryVo = mainService.topMenuList();
+		List<CategoryListVo> categoryVo = mainService.topMenuList(userXy);
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
 	}

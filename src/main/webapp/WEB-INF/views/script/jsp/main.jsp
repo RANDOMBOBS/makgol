@@ -82,8 +82,8 @@
   function todayMenuList() {
 
   var userInfo = {
-    x = ${loginedUserVo.longitude},
-    y = ${loginedUserVo.latitude}
+    x : ${loginedUserVo.longitude},
+    y : ${loginedUserVo.latitude}
   }
 
     jQ.ajax({
@@ -105,8 +105,8 @@
 
 	   function todayMenuList() {
 	   var userInfo = {
-           x = ${loginedUserVo.longitude},
-           y = ${loginedUserVo.latitude}
+           x : ${loginedUserVo.longitude},
+           y : ${loginedUserVo.latitude}
          }
         		jQ.ajax({
         			url : "/main/todayMenuList/",
@@ -124,6 +124,10 @@
         	}
 
 	function topMenuList() {
+	var userInfo = {
+               x : ${loginedUserVo.longitude},
+               y : ${loginedUserVo.latitude}
+             }
 	        var header = new
     		jQ.ajax({
     			url : "/main/topMenuList",
