@@ -88,13 +88,7 @@ public class UsersController {
     }
 
     @PostMapping("/loginConfirm")
-    public String loginConfirm(UsersRequestVo usersRequestVo, HttpServletResponse response) {
-        userService.loginConfirm(usersRequestVo, response);
-        return "redirect:/user/loginSucceed";
-    }
-
-    @GetMapping("/loginSucceed")
-    public String getCookieValue(HttpServletRequest request) throws URISyntaxException {
+    public String loginConfirm(HttpServletRequest request, UsersRequestVo usersRequestVo, HttpServletResponse response) throws URISyntaxException {
         String urlString = request.getHeader("Referer");
         log.info("urlString --> : {}", urlString);
         URI uri = new URI(urlString);
@@ -102,8 +96,14 @@ public class UsersController {
         // 경로 부분을 얻어옴
         String newPath = path.replaceAll("amp;", "");
         log.info("path --> : {}", newPath);
-        userService.getCookieValue(request);
+        userService.loginConfirm(usersRequestVo, response);
         return "redirect:" + newPath;
+    }
+
+    @GetMapping("/loginSucceed")
+    public UsersResponseVo getCookieValue(HttpServletRequest request, Model model) {
+        System.out.println("로그인성공!");
+        return userService.getCookieValue(request);
     }
 
 

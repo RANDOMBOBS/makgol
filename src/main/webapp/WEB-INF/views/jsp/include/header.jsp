@@ -2,6 +2,11 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.org.makgol.users.vo.UsersResponseVo" %>
+<%@page import="java.util.List" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="java.net.URLEncoder" %>
+<%@page import="java.net.URLDecoder" %>
+<%@page import="java.nio.charset.StandardCharsets" %>
 
 
 <link rel="stylesheet"
@@ -18,11 +23,45 @@
 
 <jsp:include page="./modal.jsp"></jsp:include>
 
-<%
-    if (application.getAttribute("loginedUserVo") != null) {
-        UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
 
-    }
+
+
+<%
+         HttpServletRequest req = request;
+         UsersResponseVo loginedUserVo = new UsersResponseVo();
+         List<String> names = new ArrayList<>();
+         List<String> values = new ArrayList<>();
+         Cookie[] cookies = req.getCookies(); // 쿠키들
+         if (cookies != null) {
+             for (Cookie cookie : cookies) {
+                names.add(cookie.getName());
+                values.add(URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8));
+             }
+         }
+
+        for (int i = 0; i < names.size(); i++) {
+            String name = names.get(i);
+            String value = values.get(i);
+            if (names.equals("id")) {
+                loginedUserVo.setId(Integer.parseInt(value));
+            } else if (names.equals("name")) {
+                loginedUserVo.setName(value);
+            } else if (names.equals("photo_path")) {
+                loginedUserVo.setPhoto_path(value);
+            } else if (names.equals("grade")) {
+                loginedUserVo.setGrade(value);
+            } else if (names.equals("userX")) {
+                loginedUserVo.setLongitude(Double.parseDouble(value));
+            } else if (names.equals("userY")) {
+                loginedUserVo.setLatitude(Double.parseDouble(value));
+            } else if (names.equals("weatherAddr")) {
+                loginedUserVo.setWeatherAddr(value);
+            } else if (names.equals("valueX")) {
+                loginedUserVo.setValueX(Integer.parseInt(value));
+            } else if (names.equals("valueY")) {
+                loginedUserVo.setValueY(Integer.parseInt(value));
+            }
+        }
 %>
 
 
@@ -116,7 +155,7 @@
             </li>
             <li>
                 <c:choose>
-                    <c:when test="${loginedUserVogit == null}">
+                    <c:when test="${loginedUserVo == null}">
                         <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
                     </c:when>
                     <c:otherwise>
@@ -220,10 +259,7 @@
     var jQ = jQuery;
     var currentURL = window.location.href;
 
-
-    if (${loginedUserVo != null} &&
-    ${loginedUserVo.grade == '블랙리스트'})
-    {
+    if (${loginedUserVo != null} && ${loginedUserVo.grade == '블랙리스트'}) {
         alert("접근이 제한된 사용자입니다.");
         jQ.ajax({
             url: "/user/blackList",
@@ -295,13 +331,13 @@
         let rainSnow = "";
 
         <c:if test="${not empty loginedUserVo}">
-        valueX = ${loginedUserVo.valueX}
+            valueX = ${loginedUserVo.valueX}
             valueY = ${loginedUserVo.valueY}
-                </c:if>
+        </c:if>
 
-                <c:if test="${empty loginedUserVo}">
-                valueX = 61;
-        valueY = 126;
+        <c:if test="${empty loginedUserVo}">
+            valueX = 61;
+            valueY = 126;
         </c:if>
 
         let date = new Date();
@@ -375,19 +411,6 @@
         let nowHour = nowHourMinute.substring(0, 2);
         let baseDate = year + month.toString() + day;
         let baseTime = nowHour + "30";
-        console.log("date" + date)
-        console.log("year" + year)
-        console.log("month" + month)
-        console.log("day" + day)
-        console.log("hour" + hour)
-        console.log("minute" + minute)
-        console.log("nowTime" + nowTime)
-        console.log("nowHourMinute" + nowHourMinute)
-        console.log("nowHour" + nowHour)
-        console.log("baseDate" + baseDate)
-        console.log("baseTime" + baseTime)
-        console.log(valueX);
-        console.log(valueY);
         jQ.ajax({
             method: "GET",
             url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst",
@@ -403,17 +426,13 @@
                 ny: valueY,
             },
             success: function (data) {
-                console.log(data)
                 let weatherDatas = data.response.body.items.item
                 let temp = weatherDatas.filter((item, index) => item.category === "T1H");
                 let T1H = temp[0].fcstValue;
-                console.log("기온은?" + T1H);
                 let precipitation = weatherDatas.filter((item, index) => item.category === "RN1")
                 let RN1 = precipitation[0].fcstValue;
-                console.log("강수량은?" + RN1);
                 let skyCondition = weatherDatas.filter((item, index) => item.category === "SKY")
                 let SKY = skyCondition[0].fcstValue;
-                console.log("하늘상태는?" + SKY);
                 switch (SKY) {
                     case "1" :
                         sky = "맑음";
@@ -428,9 +447,7 @@
                         sky = ""
                         break;
                 }
-                console.log("하늘 상태 한글로?" + sky);
                 let PTY = data.response.body.items.item[6].fcstValue;
-                console.log("눈이오나요 비가오나요?" + PTY);
                 switch (PTY) {
                     case "1" :
                     case "5" :
@@ -451,8 +468,6 @@
                 if (rainSnow != "") {
                     sky = rainSnow;
                 }
-                console.log("뭐가 오나요?" + rainSnow)
-                console.log("하늘 상태 한글로?" + sky);
 
                 jQ(".temp").text(T1H + "℃, ");
                 if (RN1 != "강수없음") {
@@ -486,6 +501,7 @@
             },
         });
     }
+
 
     getWeather();
 </script>
