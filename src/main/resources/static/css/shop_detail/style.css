@@ -98,6 +98,10 @@ article #intro #user_interaction #head_office:hover {
     cursor: pointer;
 }
 
+article #intro #basic_info {
+    height: 210px;
+}
+
 article #intro .detail_category {
     height: 40px;
     display: flex;
@@ -134,7 +138,6 @@ article #intro ul span:nth-child(2) {
     color: chocolate;
 }
 
-
 article #intro #is_opened {
     position: relative;
     bottom: 42px;
@@ -147,12 +150,23 @@ article #intro ul > li {
 
 article #intro #menu_wrapper {
     height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
+
 article #intro #menu_wrapper::-webkit-scrollbar {
-    width: 0;
+    width: 12px;
 }
+
+article #intro #menu_wrapper::-webkit-scrollbar-thumb {
+    background-color: #ffc100;
+}
+
+article #intro #menu_wrapper::-webkit-scrollbar-track {
+    background-color: #f3e7d0;
+}
+
 
 article #map {
     width: 600px;
