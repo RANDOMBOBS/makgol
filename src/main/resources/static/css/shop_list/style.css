@@ -68,7 +68,7 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 380px;
+    width: 420px;
 }
 
 #map .shop_info_area .shop_info_head .head_box #search_keyword {
@@ -82,7 +82,7 @@ li {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 260px;
+    width: 330px;
     height: 45px;
     background: white;
     border: 2px solid #a9954e;

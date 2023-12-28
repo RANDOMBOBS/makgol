@@ -27,7 +27,7 @@
                 latitude: item.latitude,
                 likes: item.likes,
                 category_name: keyword,
-                opening_hours: item.opening_hours
+                opening_hours: item.opening_hours,
             }
         });
     };
