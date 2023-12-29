@@ -223,6 +223,7 @@
         </div>
         <div class="modal_body">
             <form action="#" id="find_password_form" method="post">
+                <h4>귀하의 이메일로 임시 비밀번호를 보내드립니다.</h4>
                 <div id="email_area">
                     <div class="input_box">
                         <div class="key">이메일</div>
@@ -240,41 +241,6 @@
                         <input type="hidden" id="find_password_email_status">
                     </div>
                     <div id="find_password_email_input_error" class="input_error">이메일 형식을 지켜주세요!</div>
-                </div>
-                <div id="password_area">
-                    <div class="input_box">
-                        <div class="key">새 비밀번호</div>
-                        <label>
-                            <input
-                                    autocomplete="off"
-                                    class="input_area"
-                                    id="new_password"
-                                    name="newPassword"
-                                    placeholder="새 비밀번호를 입력해주세요"
-                                    type="password"
-                                    maxlength="25"
-                            />
-                        </label>
-                    </div>
-                    <div id="find_password_password_input_error" class="input_error">문자 숫자를 포함시켜주세요!</div>
-                </div>
-                <div id="password_confirm_area">
-                    <div class="input_box">
-                        <div class="key">새 비밀번호 확인</div>
-                        <label>
-                            <input
-                                    autocomplete="off"
-                                    class="input_area"
-                                    id="new_password_confirm"
-                                    name="newPasswordConfirm"
-                                    placeholder="새 비밀번호를 다시 입력해주세요"
-                                    type="password"
-                                    maxlength="25"
-                            />
-                        </label>
-                        <input type="hidden" id="find_password_password_status">
-                    </div>
-                    <div id="find_password_re_password_input_error" class="input_error">비밀번호가 일치하지 않아요!</div>
                 </div>
                 <input id="submit_find_password" type="submit" value="New Password"/>
             </form>
