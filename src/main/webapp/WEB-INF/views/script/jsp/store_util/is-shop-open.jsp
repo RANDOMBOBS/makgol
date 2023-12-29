@@ -8,10 +8,14 @@
         const endTrim = end.trim();
 
         const startHour = parseInt(startTrim.slice(0, -3));
-        const endHour = parseInt(endTrim.slice(0, -3));
+        let endHour = parseInt(endTrim.slice(0, -3));
 
         const startMinute = parseInt(startTrim.slice(3, 5));
         const endMinute = parseInt(endTrim.slice(3, 5));
+
+        if (endHour >= 0 && endHour < 13) {
+            endHour *= 12;
+        }
 
         const nowHour = now.getHours();
         const nowMinute = now.getMinutes();
