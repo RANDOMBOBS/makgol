@@ -38,9 +38,7 @@
         <div class="shop_info_footer"></div>
     </div>
     <div class="dibs_shop_area">
-        <div class="dibs_shop_head">
-            <h3>찜 목록</h3>
-        </div>
+        <div class="dibs_shop_head"></div>
         <div class="dibs_shop_list"></div>
         <div class="dibs_shop_footer"></div>
     </div>

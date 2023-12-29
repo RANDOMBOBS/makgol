@@ -252,7 +252,7 @@ li {
 
 #map .dibs_shop_area .dibs_shop_head {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     height: 60px;
     background-color: #ffe286;
@@ -260,9 +260,27 @@ li {
 }
 
 #map .dibs_shop_area .dibs_shop_head .dibs_shop_count {
-    position: absolute;
-    top: 20px;
-    right: 10px;
+    margin-left: 10px;
+    flex-grow: 1;
+    width: 25px;
+}
+
+#map .dibs_shop_area .dibs_shop_head .dibs_shop_header {
+    flex-grow: 3;
+}
+
+#map .dibs_shop_area .dibs_shop_head .delete_all_dibs {
+    margin-right: 10px;
+    visibility: hidden;
+    flex-grow: 1;
+    width: 30px;
+    height: 25px;
+    border: none;
+    outline: none;
+    background-color: #3a3a3a;
+    color: #ec6200;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 #map .dibs_shop_area .dibs_shop_list {
