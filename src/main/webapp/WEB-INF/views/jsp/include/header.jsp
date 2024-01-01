@@ -19,13 +19,30 @@
 <jsp:include page="./modal.jsp"></jsp:include>
 
 <%
+    String xValue = "127.028290548097";
+    String yValue = "37.4998293543379";
     if (application.getAttribute("loginedUserVo") != null) {
         UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
+        // 경도 처리
+            Double longitude = loginedUserVo.getLongitude();
+            if (longitude != null) {
+                xValue = String.valueOf(longitude);
+            }
 
+            // 위도 처리
+            Double latitude = loginedUserVo.getLatitude();
+            if (latitude != null) {
+                yValue = String.valueOf(latitude);
+            }
     }
+
+
 %>
 
-
+<script>
+var xValue = "<%= xValue %>";
+var yValue = "<%= yValue %>";
+</script>
 <header id="header">
     <div class="all_category">
         <div class="show_category">
@@ -38,10 +55,10 @@
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
                     </c:otherwise>
                 </c:choose>
 
@@ -97,57 +114,57 @@
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVogit == null}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo == null}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
+                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
+                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
                     </c:otherwise>
                 </c:choose>
             </li>
         </ul>
     </div>
 
-    <a href="http://www.makgol.com"><img id="logoimage"
+    <a href="http://localhost:8080"><img id="logoimage"
                                          src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
     <div class="userTab">
         <c:choose>

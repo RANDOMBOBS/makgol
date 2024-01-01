@@ -15,6 +15,8 @@ import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.category.vo.CategoryListVo;
 import com.org.makgol.main.service.MainService;
 
+import javax.servlet.RequestDispatcher;
+
 @Slf4j
 @Controller
 @RequestMapping("/main")
@@ -54,10 +56,9 @@ public class MainController {
 		return "jsp/main/roulette_result";
 		
 	}
-
 	// 오늘의 추천 메뉴
-	@RequestMapping(value = "/todayMenuList/", method = { RequestMethod.GET, RequestMethod.POST })
-	public String todayMenuList(Model model, @RequestBody UserXy userXy) {
+	@RequestMapping(value = "/todayMenuList/", method = { RequestMethod.GET, RequestMethod.POST})
+	public String todayMenuList(@RequestBody UserXy userXy, Model model) {
 		String nextPage = "jsp/main/todayMenu";
 		List<CategoryListVo> categoryVo = mainService.todayMenuList(userXy);
 		model.addAttribute("categoryVo",categoryVo);

@@ -77,63 +77,43 @@
     }, 4500);
   }
 
-  btn.addEventListener("click", handleButtonClick);
 
-  function todayMenuList() {
-
-  var userInfo = {
-    x : ${loginedUserVo.longitude},
-    y : ${loginedUserVo.latitude}
-  }
-
-    jQ.ajax({
-      url: "/main/todayMenuList/",
-      type: "GET",
-      dataType: "html",
-      data: JSON.stringify(userInfo),
-      success: function (rdata) {
-        jQ(".todaymenu_list_div").html(rdata);
-        slickTodaySlider();
-      },
-      error: function (error) {
-        alert("today 오류");
-      },
-    });
-  }
 
 	btn.addEventListener("click", handleButtonClick);
 
 	   function todayMenuList() {
-	   var userInfo = {
-           x : ${loginedUserVo.longitude},
-           y : ${loginedUserVo.latitude}
+
+	    let userInfo = {
+           x : xValue,
+           y : yValue
          }
-         var encodedUserInfo = encodeURIComponent(JSON.stringify(userInfo));
-        		jQ.ajax({
-        			url : "/main/todayMenuList/",
-        			type : "GET",
-        			dataType : "html",
-        			data: JSON.stringify(encodedUserInfo),
-        			success : function(rdata) {
-        				jQ(".todaymenu_list_div").html(rdata);
-        				slickTodaySlider()
-        			},
-        			error : function(error) {
-        				alert('today 오류');
-        			}
-        		});
+
+        jQ.ajax({
+        	url : "/main/todayMenuList/",
+        	type : "POST",
+        	data: JSON.stringify(userInfo),
+        	contentType: "application/json; charset=utf-8",
+        	success : function(rdata) {
+        		jQ(".todaymenu_list_div").html(rdata);
+        		slickTodaySlider()
+        	},
+        	error : function(error) {
+        		alert('today 오류');
         	}
+        });
+       }
 
 	function topMenuList() {
 	var userInfo = {
-               x : ${loginedUserVo.longitude},
-               y : ${loginedUserVo.latitude}
+               x : xValue,
+               y : yValue
              }
 	        var header = new
     		jQ.ajax({
     			url : "/main/topMenuList",
-    			type : "GET",
-    			dataType : "html",
+    			type : "POST",
+    			data: JSON.stringify(userInfo),
+    			contentType: "application/json; charset=utf-8",
     			success : function(rdata) {
     				jQ(".topmenu_list_div").html(rdata);
     				slickTopSlider()
