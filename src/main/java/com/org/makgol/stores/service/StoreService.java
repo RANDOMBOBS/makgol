@@ -238,7 +238,7 @@ public class StoreService {
 
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8080"+"/api/v1/crawl/kakaoStoreCrwall";
+        String url = "http://www.makgol.com"+"/api/v1/crawl/kakaoStoreCrwall";
 
         // HTTP 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();
