@@ -43,16 +43,16 @@ public class UsersController {
 
     @GetMapping("/join")
     public String userJoinPage() {
-
         String nextPage = "jsp/user/user_join";
         return nextPage;
     } // userJoinPage_END
 
 
     @PostMapping("/findPassword")
-    public void userFindPassword(@RequestParam("email") String email) {
-        userService.userFindPassword(email);
+    public ResponseEntity<?> userFindPassword(@RequestParam("email") String email) {
+        boolean result = userService.userFindPassword(email);
 
+        return result ? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     } // userFindPassword_END
 
     @PostMapping("/mailCheck")

@@ -20,12 +20,15 @@
             spanEle.innerText = detailInfos[idx];
         });
 
-        const openStatus = isShopOpen(openingHours);
-        const isOpenedEle = $("#is_opened");
+        if (openingHours) {
+            const openStatus = isShopOpen(openingHours);
+            const isOpenedEle = $("#is_opened");
 
-        openStatus
-            ? isOpenedEle.text("운영중").css({color: "red"})
-            : isOpenedEle.text("영업종료").css({color: "gray"});
+            openStatus
+                ? isOpenedEle.text("영업중").css({color: "red"})
+                : isOpenedEle.text("영업종료").css({color: "gray"});
+
+        }
 
         if (!userId) return;
         if (!await getLikesStatus({userId, shopId})) {

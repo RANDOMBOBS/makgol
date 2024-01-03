@@ -6,6 +6,8 @@
     <link href="<c:url value='/resources/static/css/modal/index.css' />" rel="stylesheet" type="text/css"/>
     <link href="<c:url value='/resources/static/css/modal/login_modal.css' />" rel="stylesheet" type="text/css"/>
     <link href="<c:url value='/resources/static/css/modal/register_modal.css' />" rel="stylesheet" type="text/css"/>
+    <link href="<c:url value='/resources/static/css/modal/find_password_modal.css' />" rel="stylesheet"
+          type="text/css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46bc308803f4e404bdf4521f4af2f32e&libraries=services"></script>
@@ -52,7 +54,7 @@
             </div>
             <div class="user_option">
                 <span>회원가입</span>
-                <span>아이디 & 비밀번호 찾기</span>
+                <span>비밀번호 찾기</span>
             </div>
             <div class="social_login">
                 <a id="naver_login" href="http://makgol.com/oauth2/authorization/naver">네이버 로그인</a>
@@ -214,9 +216,41 @@
             </div>
         </div>
     </div>
+    <div class="find_password_modal">
+        <div class="modal_head">
+            <h1>비밀번호 찾기</h1>
+            <button class="close_button">X</button>
+        </div>
+        <div class="modal_body">
+            <form action="#" id="find_password_form" method="post">
+                <h4>귀하의 이메일로 임시 비밀번호를 보내드립니다.</h4>
+                <div id="email_area">
+                    <div class="input_box">
+                        <div class="key">이메일</div>
+                        <label>
+                            <input
+                                    autocomplete="off"
+                                    class="input_area"
+                                    id="find_password_email"
+                                    name="userEmail"
+                                    placeholder="이메일을 입력해주세요"
+                                    type="text"
+                                    maxlength="30"
+                            />
+                        </label>
+                        <input type="hidden" id="find_password_email_status">
+                    </div>
+                    <div id="find_password_email_input_error" class="input_error">이메일 형식을 지켜주세요!</div>
+                </div>
+                <input id="submit_find_password" type="submit" value="New Password"/>
+            </form>
+        </div>
+        <div class="modal_footer"></div>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <jsp:include page="../../script/jsp/register_modal/event/register-modal-init.jsp"></jsp:include>
 <jsp:include page="../../script/jsp/login_modal/event/login-modal-init.jsp"></jsp:include>
+<jsp:include page="../../script/jsp/find_password_modal/event/find-password-modal.init.jsp"></jsp:include>
 </body>
 </html>

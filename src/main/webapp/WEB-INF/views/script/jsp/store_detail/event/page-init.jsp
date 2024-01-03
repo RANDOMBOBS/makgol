@@ -16,8 +16,7 @@
 <jsp:include page="./open-list-modal.jsp"></jsp:include>
 <jsp:include page="./submit-review.jsp"></jsp:include>
 <jsp:include page="../util/get-likes-status.jsp"></jsp:include>
-<%--<jsp:include page="../logic/convert-time-format.jsp"></jsp:include>--%>
-<jsp:include page="../logic/is-shop-open.jsp"></jsp:include>
+<jsp:include page="../../store_util/is-shop-open.jsp"></jsp:include>
 <script>
     const pageInit = async () => {
         const {shopId, shopX, shopY, myX, myY, distance} = getUrlParam();

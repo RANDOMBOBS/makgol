@@ -28,12 +28,24 @@
         // 파란색 연필 버튼을 다시 눌렀을 때 실행
         $(e.target).click(async () => {
             const modifiedReview = reviewModifyEle.val();
+            const modifiedReviewImages = reviewImageMap.get("reviewImages");
+
+            if (!modifiedReview.length) return alert("최소 한글자 이상 써주세요!");
+
+            const formData = new FormData();
+
+            formData.append("review", modifiedReview);
+
+            if (modifiedReviewImages) {
+                reviewImages.forEach((file) => formData.append("reviewImages", file))
+                reviewImageMap.clear();
+            }
 
             const url = "/store/review_id/" + reviewId;
             const {axios} = window;
 
             try {
-                await axios.put(url, {review: modifiedReview});
+                await axios.put(url, formData, {headers: {'Content-Type': 'multipart/form-data'}});
                 const reviewContentEle = $("<div>").addClass("content");
                 reviewContentEle.text(reviewModifyEle.val());
 
