@@ -225,7 +225,7 @@ public class FileUpload {
         for (int i = 0; i < oldImageNames.size(); i++) {
             String image = oldImageNames.get(i);
             //server path
-            String deleteFile = "/home/ubuntu/service/makgol/static/image/" + image;
+            String deleteFile = "/home/ubuntu/service/makgol/static/image" + image;
             //String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
             File file = new File(deleteFile);
             file.delete();
@@ -258,7 +258,7 @@ public class FileUpload {
         for (int i = 0; i < oldImageNames.size(); i++) {
             String image = oldImageNames.get(i);
             //server path
-            String deleteFile = "/home/ubuntu/service/makgol/static/image/" + image;
+            String deleteFile = "/home/ubuntu/service/makgol/static/image" + image;
             //String deleteFile = currentDirectory + "\\src\\main\\resources\\static\\image\\" + image;
             File file = new File(deleteFile);
             file.delete();
