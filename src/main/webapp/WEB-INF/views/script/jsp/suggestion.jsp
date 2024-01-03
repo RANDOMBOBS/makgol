@@ -9,6 +9,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   console.log(user_id, b_id);
 
   function allBoardList() {
+
     jQ.ajax({
       url: "/board/suggestion/showAllList",
       type: "GET",
@@ -68,7 +69,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         success: function (rdata) {
           if (rdata === 1) {
             comList();
-            jQ("input[name=nickname]").val("");
+            jQ("input[name=nickname]").val("관리자");
             jQ("textarea").val("");
           } else {
             return;

@@ -5,6 +5,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 
+
 <%
    Date currentDate = new Date();
    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -61,13 +62,4 @@
   </tbody>
 </table>
 
-
-	<%
-        UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
-	    if (loginedUserVo != null) {
-	%>
-	        <a href="<c:url value='/board/suggestion/create'/>"><i class="fa-regular fa-pen-to-square"></i> 글쓰기</a><br>
-	<%
-	    }
-	%>
-
+	    <a href="<c:url value='/board/suggestion/create'/>"><i class="fa-regular fa-pen-to-square"></i> 글쓰기</a><br>

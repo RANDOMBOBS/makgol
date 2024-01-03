@@ -100,11 +100,11 @@ public class UsersController {
         return "redirect:" + newPath;
     }
 
-    @GetMapping("/loginSucceed")
-    public UsersResponseVo getCookieValue(HttpServletRequest request, Model model) {
-        System.out.println("로그인성공!");
-        return userService.getCookieValue(request);
-    }
+//    @GetMapping("/loginSucceed")
+//    public UsersResponseVo getCookieValue(HttpServletRequest request, Model model) {
+//        System.out.println("로그인성공!");
+//        return userService.getCookieValue(request);
+//    }
 
 
     @GetMapping("/blackList")

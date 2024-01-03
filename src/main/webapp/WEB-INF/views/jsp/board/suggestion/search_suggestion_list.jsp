@@ -64,7 +64,7 @@
 <h4>검색된 정보가 없습니다.</h4>
 </c:otherwise>
 </c:choose>
-<a href="#" onclick="allBoardList()">전체목록보기</a><br>
+<a href="#" class="all_list_button" onclick="allBoardList()">전체목록보기</a><br>
 
 
 

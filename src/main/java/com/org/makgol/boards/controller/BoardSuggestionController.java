@@ -8,6 +8,7 @@ import java.util.Map;
 import com.org.makgol.boards.vo.BoardCreateRequestVo;
 import com.org.makgol.boards.vo.BoardDetailResponseVo;
 import com.org.makgol.comment.vo.CommentRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ import org.springframework.ui.Model;
 import com.org.makgol.boards.service.BoardSuggestionService;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,12 +38,9 @@ public class BoardSuggestionController {
 	}
 
 	@GetMapping("/showAllList")
-	public String showAllList(Model model) {
+	public String showAllList( Model model, HttpServletRequest request) {
 		List<BoardVo> boardVos = boardService.getSuggestionBoard();
-
-		if (boardVos != null) {
-			model.addAttribute("boardVos", boardVos);
-		}
+		model.addAttribute("boardVos", boardVos);
 		return "jsp/board/suggestion/all_suggestion_list";
 	}
 
