@@ -2,19 +2,20 @@ package com.org.makgol.main.controller;
 
 import java.util.List;
 
+import com.org.makgol.comment.vo.CommentRequestVo;
+import com.org.makgol.users.vo.UserXy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.category.vo.CategoryListVo;
 import com.org.makgol.main.service.MainService;
+
+import javax.servlet.RequestDispatcher;
 
 @Slf4j
 @Controller
@@ -55,12 +56,11 @@ public class MainController {
 		return "jsp/main/roulette_result";
 		
 	}
-
 	// 오늘의 추천 메뉴
-	@RequestMapping(value = "/todayMenuList/", method = { RequestMethod.GET, RequestMethod.POST })
-	public String todayMenuList(Model model) {
+	@RequestMapping(value = "/todayMenuList/", method = { RequestMethod.GET, RequestMethod.POST})
+	public String todayMenuList(@RequestBody UserXy userXy, Model model) {
 		String nextPage = "jsp/main/todayMenu";
-		List<CategoryListVo> categoryVo = mainService.todayMenuList();
+		List<CategoryListVo> categoryVo = mainService.todayMenuList(userXy);
 		model.addAttribute("categoryVo",categoryVo);
 		return nextPage;
 	}
@@ -75,9 +75,9 @@ public class MainController {
 
 	// Top5 메뉴 
 	@RequestMapping(value = "/topMenuList", method = { RequestMethod.GET, RequestMethod.POST })
-	public String topMenuList(Model model) {
+	public String topMenuList(Model model, @RequestBody UserXy userXy) {
 		String nextPage = "jsp/main/topMenu";
-		List<CategoryListVo> categoryVo = mainService.topMenuList();
+		List<CategoryListVo> categoryVo = mainService.topMenuList(userXy);
 		model.addAttribute("categoryVo", categoryVo);
 		return nextPage;
 	}

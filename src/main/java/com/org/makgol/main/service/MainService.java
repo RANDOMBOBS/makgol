@@ -2,6 +2,7 @@ package com.org.makgol.main.service;
 
 import java.util.List;
 
+import com.org.makgol.users.vo.UserXy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,11 @@ public class MainService {
 		return mainDao.selectTodayMenu(category);
 	}
 
-	public List<CategoryListVo> todayMenuList() {
-		return mainDao.selectTodayMenu();
+	public List<CategoryListVo> todayMenuList(UserXy userXy) {
+		return mainDao.selectTodayMenu(userXy);
 	}
 
-	public List<CategoryListVo> topMenuList() {
-		return mainDao.selectTopMenu();
+	public List<CategoryListVo> topMenuList(UserXy userXy) {
+		return mainDao.selectTopMenu(userXy);
 	}
 }

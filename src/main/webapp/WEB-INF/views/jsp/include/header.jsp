@@ -19,13 +19,30 @@
 <jsp:include page="./modal.jsp"></jsp:include>
 
 <%
+    String xValue = "127.028290548097";
+    String yValue = "37.4998293543379";
     if (application.getAttribute("loginedUserVo") != null) {
         UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
+        // 경도 처리
+            Double longitude = loginedUserVo.getLongitude();
+            if (longitude != null) {
+                xValue = String.valueOf(longitude);
+            }
 
+            // 위도 처리
+            Double latitude = loginedUserVo.getLatitude();
+            if (latitude != null) {
+                yValue = String.valueOf(latitude);
+            }
     }
+
+
 %>
 
-
+<script>
+var xValue = "<%= xValue %>";
+var yValue = "<%= yValue %>";
+</script>
 <header id="header">
     <div class="all_category">
         <div class="show_category">

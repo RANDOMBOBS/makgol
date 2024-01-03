@@ -264,10 +264,15 @@ public class Crawller {
                         storeRequestVo.setPhoto(editedURL);
                     } else {
                         // 찾은 매칭을 출력
-                        editedURL = n.group(1) + "?fname=" + n.group(2);
-                        System.out.println(editedURL);
-                        storeRequestVo.setPhoto(editedURL);
-                        System.out.println("매칭되는 부분을 찾을 수 없습니다.");
+                        pattern = "(img1.kakaocdn.net/cthumb/local/C320x320.q50/)(http[^\\s']+)";
+                        r_p = Pattern.compile(pattern);
+                        n = r_p.matcher(editedURL);
+
+                        if(n.find()){
+                            editedURL = n.group(1) + "?fname=" + n.group(2);
+                            System.out.println(editedURL);
+                            storeRequestVo.setPhoto(editedURL);
+                        } else { System.out.println("매칭되는 부분을 찾을 수 없습니다.");}
                     }
 
 

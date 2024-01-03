@@ -3,6 +3,7 @@ package com.org.makgol.main.dao;
 
 import com.org.makgol.category.vo.CategoryListVo;
 import com.org.makgol.main.repository.MainRepository;
+import com.org.makgol.users.vo.UserXy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -49,8 +50,14 @@ public class MainDao {
         return categorys.size() > 0 ? categorys : null;
     }
 
-    public List<CategoryListVo> selectTodayMenu() {
-        String sql = "SELECT menu,photo,photoPath FROM menus ";
+    public List<CategoryListVo> selectTodayMenu(UserXy userXy) {
+        //String sql = "SELECT menu,photo,photoPath FROM menus ";
+        String sql = "SELECT menu, photo, photoPath\n" +
+                "FROM menus\n" +
+                "WHERE 1000 > ST_DISTANCE_SPHERE(\n" +
+                "    POINT((SELECT longitude FROM stores WHERE id = menus.store_id), (SELECT latitude FROM stores WHERE id = menus.store_id)),\n" +
+                "    POINT("+userXy.getX()+", "+userXy.getY()+")\n" +
+                ")";
         List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
         try {
             RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);
@@ -62,8 +69,19 @@ public class MainDao {
     }
 
     // Top5 메뉴
-    public List<CategoryListVo> selectTopMenu() {
-        String sql = "SELECT name,photo FROM stores";
+    public List<CategoryListVo> selectTopMenu(UserXy userXy) {
+        String sql = "SELECT stores.name, stores.photo\n" +
+                "FROM stores\n" +
+                "LEFT JOIN (\n" +
+                "    SELECT store_id, COUNT(*) as like_count\n" +
+                "    FROM store_likes\n" +
+                "    GROUP BY store_id\n" +
+                ") like_counts ON stores.id = like_counts.store_id\n" +
+                "WHERE ST_DISTANCE_SPHERE(\n" +
+                "    POINT(stores.longitude, stores.latitude),\n" +
+                "    POINT("+userXy.getX()+", "+userXy.getY()+")\n" +
+                ") <= 1000\n" +
+                "ORDER BY like_counts.like_count DESC;";
         List<CategoryListVo> categorys = new ArrayList<CategoryListVo>();
         try {
             RowMapper<CategoryListVo> rowMapper = BeanPropertyRowMapper.newInstance(CategoryListVo.class);
