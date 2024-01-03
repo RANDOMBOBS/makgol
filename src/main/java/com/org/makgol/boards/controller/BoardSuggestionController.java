@@ -8,6 +8,7 @@ import java.util.Map;
 import com.org.makgol.boards.vo.BoardCreateRequestVo;
 import com.org.makgol.boards.vo.BoardDetailResponseVo;
 import com.org.makgol.comment.vo.CommentRequestVo;
+import com.org.makgol.users.vo.UsersResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ import org.springframework.ui.Model;
 import com.org.makgol.boards.service.BoardSuggestionService;
 import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,13 +37,11 @@ public class BoardSuggestionController {
 		return nextPage;
 	}
 
-	@GetMapping("/showAllList")
-	public String showAllList(Model model) {
+	@GetMapping("/showAllList/{login}")
+	public String showAllList(@PathVariable("login") boolean login, Model model, HttpServletRequest request) {
 		List<BoardVo> boardVos = boardService.getSuggestionBoard();
-
-		if (boardVos != null) {
-			model.addAttribute("boardVos", boardVos);
-		}
+		model.addAttribute("login", login);
+		model.addAttribute("boardVos", boardVos);
 		return "jsp/board/suggestion/all_suggestion_list";
 	}
 
@@ -254,7 +255,6 @@ public class BoardSuggestionController {
 	@ResponseBody
 	@PostMapping("/deleteMyBoard/{ids}")
 	public Map<String, Integer> deleteMyBoard(@PathVariable("ids") String ids){
-		System.out.println("보드ids = " + ids);
 		int result = boardService.deleteMyBoard(ids);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result",result);
@@ -264,7 +264,6 @@ public class BoardSuggestionController {
 	@ResponseBody
 	@PostMapping("/deleteMyComment/{comids}")
 	public Map<String, Integer> deleteMyComment(@PathVariable("comids") String comids){
-		System.out.println("댓글comids = " + comids);
 		int result = boardService.deleteMyComment(comids);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result",result);

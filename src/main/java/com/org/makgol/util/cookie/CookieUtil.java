@@ -26,11 +26,11 @@ public class CookieUtil {
 
 
     // 지정한 경로에 쿠키 저장
-    public static void setImportantCookie(HttpServletResponse res, String key, String value) {
-        String encodeValue = URLEncoder.encode(value, StandardCharsets.UTF_8);
-        String cookieValue = String.format("%s = %s; Max-Age=1800; Path=/user/**; HttpOnly; Secure; SameSite=Strict;", key, encodeValue);
-        res.addHeader("Set-Cookie", cookieValue);
-    }
+//    public static void setImportantCookie(HttpServletResponse res, String key, String value) {
+//        String encodeValue = URLEncoder.encode(value, StandardCharsets.UTF_8);
+//        String cookieValue = String.format("%s = %s; Max-Age=1800; Path=/user/**; HttpOnly; Secure; SameSite=Strict;", key, encodeValue);
+//        res.addHeader("Set-Cookie", cookieValue);
+//    }
 
     // 쿠키에 담겨있는 값 가져오기
     public static Map<String, List<String>> getCookie(HttpServletRequest req) {
