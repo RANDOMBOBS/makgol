@@ -163,9 +163,13 @@ var yValue = "<%= yValue %>";
             </li>
         </ul>
     </div>
+<<<<<<< HEAD
 
     <a href="http://www.makgol.com"><img id="logoimage"
                                          src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
+=======
+    <a href="http://www.makgol.com"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
+>>>>>>> ea94bc7e0a199f0e2e16d37ef695296dd04568d3
     <div class="userTab">
         <c:choose>
 
