@@ -14,7 +14,7 @@
     <select id="findStoreList" resultType="com.org.makgol.stores.dto.ResponseStoreListDto"
             parameterType="hashmap">
         SELECT *
-        FROM makgol.stores
+        FROM stores
         WHERE category = #{category}
         AND 1000 > ST_DISTANCE_SPHERE(POINT(longitude, latitude), POINT(#{longitude}, #{latitude}));
     </select>
@@ -38,83 +38,83 @@
                photo,
                site,
                opening_hours
-        FROM mak_gol.stores
+        FROM stores
         WHERE id = #{storeId}
     </select>
 
     <select id="findStoreMenuWithId" resultType="com.org.makgol.stores.dto.StoreMenuDto" parameterType="Integer">
         SELECT menu, price
-        FROM makgol.menus
+        FROM menus
         WHERE store_id = #{storeId}
     </select>
 
     <select id="findStoreReviewWithId" resultType="com.org.makgol.stores.dto.StoreReviewDto" parameterType="Integer">
         SELECT rv.id, rv.user_id, rv.content, rv.date
-        FROM makgol.reviews AS rv
+        FROM reviews AS rv
         WHERE store_id = #{storeId}
         ORDER BY rv.date DESC
     </select>
 
     <select id="findStoreReviewImageWithId" resultType="String" parameterType="Integer">
         SELECT photo_path
-        FROM makgol.review_images
+        FROM review_images
         WHERE review_id = #{reviewId}
     </select>
 
     <select id="findUserInfoWithId" resultType="com.org.makgol.stores.dto.UserInfoDto" parameterType="Integer">
         SELECT name, photo_path
-        FROM makgol.users
+        FROM users
         WHERE id = #{userId}
     </select>
 
     <insert id="createReview" parameterType="com.org.makgol.stores.dto.CreateReviewDto" useGeneratedKeys="true"
             keyProperty="id">
         INSERT
-        INTO makgol.reviews (user_id, store_id, content, date)
+        INTO reviews (user_id, store_id, content, date)
         VALUES (#{userId}, #{storeId}, #{review}, now())
     </insert>
 
     <insert id="uploadReviewImage" parameterType="com.org.makgol.stores.dto.UploadReviewImageDto">
         INSERT
-        INTO makgol.review_images (review_id, photo, photo_path, date)
+        INTO review_images (review_id, photo, photo_path, date)
         VALUES (#{reviewId}, #{photoName}, #{photoPath}, now())
     </insert>
 
     <select id="getLikesStatus" resultType="com.org.makgol.stores.dto.StoreLikesDto"
             parameterType="com.org.makgol.stores.dto.LikesDto">
         SELECT *
-        FROM makgol.store_likes
+        FROM store_likes
         WHERE user_id = #{user_id}
           AND store_id = #{shop_id}
     </select>
 
     <update id="increaseLikesWithId" parameterType="com.org.makgol.stores.dto.LikesDto">
-        UPDATE makgol.stores
+        UPDATE stores
         SET likes = likes + 1
         WHERE id = #{shop_id}
     </update>
 
     <insert id="createStoreLikesRecord" parameterType="com.org.makgol.stores.dto.LikesDto">
         INSERT
-        INTO makgol.store_likes (store_id, user_id)
+        INTO store_likes (store_id, user_id)
         VALUES (#{shop_id}, #{user_id})
     </insert>
 
     <update id="decreaseLikesWithId" parameterType="com.org.makgol.stores.dto.LikesDto">
-        UPDATE makgol.stores
+        UPDATE stores
         SET likes = likes - 1
         WHERE id = #{shop_id}
     </update>
 
     <delete id="removeStoreLikesRecord" parameterType="com.org.makgol.stores.dto.LikesDto">
         DELETE
-        FROM makgol.store_likes
+        FROM store_likes
         WHERE user_id = #{user_id}
           AND store_id = #{shop_id}
     </delete>
 
     <update id="modifyReviewWithId" parameterType="com.org.makgol.stores.dto.ModifyReviewDto">
-        UPDATE makgol.reviews
+        UPDATE reviews
         SET content = #{review},
             date    = now()
         WHERE id =
@@ -123,13 +123,13 @@
 
     <delete id="deleteReviewWithId" parameterType="Integer">
         DELETE
-        FROM makgol.reviews
+        FROM reviews
         WHERE id = #{reviewId}
     </delete>
 
     <delete id="deleteReviewImagesWithId" parameterType="Integer">
         DELETE
-        FROM mak_gol.review_images
+        FROM review_images
         WHERE review_id = #{reviewId}
     </delete>
 
