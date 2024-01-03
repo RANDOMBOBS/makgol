@@ -62,4 +62,6 @@
   </tbody>
 </table>
 
+<c:if test="${login == true}">
 	    <a href="<c:url value='/board/suggestion/create'/>"><i class="fa-regular fa-pen-to-square"></i> 글쓰기</a><br>
+</c:if>

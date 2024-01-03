@@ -37,9 +37,10 @@ public class BoardSuggestionController {
 		return nextPage;
 	}
 
-	@GetMapping("/showAllList")
-	public String showAllList( Model model, HttpServletRequest request) {
+	@GetMapping("/showAllList/{login}")
+	public String showAllList(@PathVariable("login") boolean login, Model model, HttpServletRequest request) {
 		List<BoardVo> boardVos = boardService.getSuggestionBoard();
+		model.addAttribute("login", login);
 		model.addAttribute("boardVos", boardVos);
 		return "jsp/board/suggestion/all_suggestion_list";
 	}
