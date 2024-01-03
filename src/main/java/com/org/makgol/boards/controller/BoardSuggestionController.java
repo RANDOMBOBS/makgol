@@ -255,7 +255,6 @@ public class BoardSuggestionController {
 	@ResponseBody
 	@PostMapping("/deleteMyBoard/{ids}")
 	public Map<String, Integer> deleteMyBoard(@PathVariable("ids") String ids){
-		System.out.println("보드ids = " + ids);
 		int result = boardService.deleteMyBoard(ids);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result",result);
@@ -265,7 +264,6 @@ public class BoardSuggestionController {
 	@ResponseBody
 	@PostMapping("/deleteMyComment/{comids}")
 	public Map<String, Integer> deleteMyComment(@PathVariable("comids") String comids){
-		System.out.println("댓글comids = " + comids);
 		int result = boardService.deleteMyComment(comids);
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result",result);

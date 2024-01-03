@@ -41,8 +41,6 @@
       for (int i = 0; i < names.size(); i++) {
           String name = names.get(i);
           String value = values.get(i);
-           out.println("이름: " + name);
-           out.println("값 :" + value);
           if (name.equals("id")) {
               userVo.setId(Integer.parseInt(value));
           } else if (name.equals("name")) {
@@ -65,7 +63,6 @@
       }
     request.setAttribute("loginedUserVo", userVo);
     UsersResponseVo loginedUserVo = (UsersResponseVo) request.getAttribute("loginedUserVo");
-    out.println("유저? " + loginedUserVo);
 
 %>
 
@@ -313,7 +310,6 @@
     registerModalButtonEle.addEventListener("click", () => {
         const modalCoverEle = document.querySelector(".modal_cover");
         const registerModalEle = document.querySelector(".register_modal");
-
         modalCoverEle.style.display = "block";
         registerModalEle.style.display = "block";
     })
@@ -336,22 +332,25 @@
         let sky = "";
         let rainSnow = "";
 
-        <c:if test="${not empty loginedUserVo}">
-            valueX = ${loginedUserVo.valueX}
-            valueY = ${loginedUserVo.valueY}
-        </c:if>
-
-        <c:if test="${empty loginedUserVo}">
-            valueX = 61;
-            valueY = 126;
-        </c:if>
+        <c:choose>
+            <c:when test="${loginedUserVo.valueX == 0}">
+                valueX = 61;
+                valueY = 126;
+            </c:when>
+            <c:otherwise>
+                valueX = ${loginedUserVo.valueX}
+                valueY = ${loginedUserVo.valueY}
+            </c:otherwise>
+        </c:choose>
 
         let date = new Date();
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
+
         if (month > 0 && month < 10) {
             month = "0" + month;
         }
+
         let day = date.getDate();
         if (day > 0 && day < 10) {
             day = "0" + day;
@@ -401,9 +400,7 @@
         } else if (nowHourMinute < 1000) {
             nowHourMinute = "0" + nowHourMinute
         }
-        if (month > 0 && month < 10) {
-            month = "0" + month;
-        }
+
         if (hour > 0 && hour < 10) {
             hour = "0" + hour;
         } else if (hour == 0) {
@@ -417,7 +414,6 @@
         let nowHour = nowHourMinute.substring(0, 2);
         let baseDate = year + month.toString() + day;
         let baseTime = nowHour + "30";
-
 
 
         jQ.ajax({
@@ -503,13 +499,7 @@
                     jQ("section #article1").prop("style", "background-image: url(../../../resources/static/image/default/rain.jpg)");
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'  style='color:#8cb9ff'></i>")
                 }
-                console.log("baseTime"+baseTime)
-                console.log("baseDate"+baseDate)
-                console.log("valueX"+valueX)
-                console.log("valueY"+valueY)
-                console.log("T1H"+T1H)
-                console.log("sky"+sky)
-                console.log("RN1"+RN1)
+
 
 
 
