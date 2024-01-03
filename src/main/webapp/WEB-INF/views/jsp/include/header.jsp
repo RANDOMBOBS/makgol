@@ -23,9 +23,6 @@
 
 <jsp:include page="./modal.jsp"></jsp:include>
 
-<<<<<<< HEAD
-
-
 
 <%
          UsersResponseVo userVo = new UsersResponseVo();
