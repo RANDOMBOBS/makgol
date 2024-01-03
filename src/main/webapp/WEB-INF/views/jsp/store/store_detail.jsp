@@ -45,8 +45,10 @@
                     <li><span>카테고리: </span><span></span></li>
                     <li><span>주소정보: </span><span></span></li>
                     <li><span>좋아요수: </span><span></span></li>
+                    <li><span>운영시간: </span><span></span></li>
                 </ul>
                 <div id="is_liked" style="visibility: hidden">좋아요한 식당</div>
+                <div id="is_opened"></div>
             </div>
             <div class="info_box" id="menu_info">
                 <div class="detail_category">

@@ -13,4 +13,5 @@ public class StoreDetailDto {
     private String phone;
     private String photo;
     private String site;
+    private String opening_hours;
 }

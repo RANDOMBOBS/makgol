@@ -146,81 +146,13 @@ Project Timeline
 ## Project Design
 
 ### Service Architecture
-<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/.readme/assets/105048235/b128a3d2-50e5-49d1-af88-0c5f18695f03">
+<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/makgol/assets/141618648/afd7b6be-e746-44a7-ad68-cea574528882">
 
 <br>
 
 ### ERD
-<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/.readme/assets/105048235/3fadcd14-28cc-4c04-9e3a-5acd457badf7">
+<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/makgol/assets/105048235/e86b416f-777f-479b-ad8b-ea3135b90ad0">
 
-### API
-
-[API 설계](https://planet-punishment-427.notion.site/API-829b965bd9ed4347ab51701fcf1d3896)
-
-
-<br>
-
-## Development
-
-### Core Tech
-
-<details>
-<summary>회원가입 / 로그인 / 사용자 인증</summary>
-<div markdown="1">
-
-<ul>
-&nbsp; &nbsp; &nbsp; &nbsp;<li>카카오, 네이버, 구글 소셜로그인으로 별도 회원가입 과정 없이 간편하게 가입</li>
-&nbsp; &nbsp; &nbsp; &nbsp;<li>JWT 토큰 인증방식을 통해 로그인 인증 관리 및 Access / Refresh Token을 활용하여 로그인 기간 관리, 보안 강화</li>
-</ul>
-
-</div>
-</details>
-
-<br>
-
-<details>
-<summary>위치 반경 2Km 식당 상세 데이터 수집</summary>
-<div markdown="1">
-
-<ul>
-&nbsp; &nbsp; &nbsp; &nbsp;<li>kakaoMap과 크롤링을 활용하여 반경 2Km 식당 데이터 수집</li>
-&nbsp; &nbsp; &nbsp; &nbsp;<li>Selenium을 활용하여 가게 사진 데이터 크롤링</li>
-&nbsp; &nbsp; &nbsp; &nbsp;<li>Thread를 활용하여 Crawling 성능 개선</li>
-</ul>
-
-</div>
-</details>
-
-<br>
-
-<details>
-<summary>대용량 데이터 관리</summary>
-<div markdown="1">
-
-<ul>
-&nbsp; &nbsp; &nbsp; &nbsp;<li>Spring Batch와 Scheduler를 활용하여 대용량 데이터를 주기적으로 수집 및 업데이트</li>
-</ul>
-
-</div>
-</details>
-
-<br>
-
-<details>
-<summary>CI / CD와 무중단 배포</summary>
-<div markdown="1">
-
-<ul>
-&nbsp; &nbsp; &nbsp; &nbsp;<li>Github Actions와 Code delpoy를 활용하여 CI/CD 구현</li>
-&nbsp; &nbsp; &nbsp; &nbsp;<li>Nginx를 활용하여 무중단 배포 구현</li>
-</ul>
-
-</div>
-</details>
-
-<br>
-
-### Trouble Shooting
 
 <br>
 
@@ -232,8 +164,8 @@ Project Timeline
 
 랜덤밥스 팀 소개!!
 
-| [김한울🔰](https://github.com/Anna-Jin) | [김효진](https://github.com/kokoa322) | [이승훈](https://github.com/JSoi) | [김선현](https://github.com/kokoa322) | [김성희](https://github.com/JSoi) |                                                                                                            
+| [김한울🔰](https://github.com/Anna-Jin) | [김효진](https://github.com/kokoa322) | [이승훈](https://github.com/Idooru) | [김선현](https://github.com/kokoa322) | [김성희](https://github.com/JSoi) |                                                                                                            
 | :---------------------------------: | :----------------------------------: | :-----------------------------: | :----------------------------------: | :-----------------------------: |
 | <img src="https://github.com/RANDOMBOBS/makgol/assets/105048235/0ded6f53-9063-4808-a165-669b990d420e" alt="김한울" width="200px"/> |  <img src="https://github.com/RANDOMBOBS/makgol/assets/105048235/0f462196-5701-4575-8b8f-974610c268aa" alt="김효진" width="200px"/> | <img src=https://github.com/RANDOMBOBS/makgol/assets/105048235/7ec262f5-a626-4d8a-88a4-0fecccdf2627 alt="이승훈" width="200px" /> | <img src="https://github.com/RANDOMBOBS/.readme/assets/105048235/89123810-53a2-4865-926b-598bac0fb825" alt="김선현" width="150px" /> | <img src="https://github.com/RANDOMBOBS/makgol/assets/105048235/45edd2e8-c191-460b-bdf6-46fa0d06c964" alt="김성희" width="200px" /> |
-| `Public API 미세먼지 정보` <br> `공지사항 게시판` <br> `랭킹별 업장, 식당 추천` <br> `카테코리 페이지` |  <br>`Public API 날씨정보 호출` <br> `로그인, 로그아웃`<br>`쿠키활용 로그인 유지`<br>`건의사항 페이지` <br> `마이페이지` <br> `관리자용 페이지` <br> `돌림판` | `Kakao Map API` <br> `업장리스트 페이지` <br> `상세페이지` <br> `회원가입 로그인 스타일링` | `데이터 수집, 가공` <br> `로그인, 로그아웃` <br>`회원가입, PW찾기`<br>`JWT`<br> `Spring security` <br> `oauth2 소셜로그인` | `공룡게임`<br>`사다리게임` <br>`하소연 게시판` <br>  |
-|조정석(아이디어뱅크!)|김성실(최고의팀원!)|기술반장<br>(무엇이든 물어보세요!)|캡틴(길라잡이!)|열정맨(할수있어!)|
+| `Public API 미세먼지 정보` <br> `공지사항 게시판` <br> `랭킹별 업장, 식당 추천` <br> `카테코리 페이지` |  <br>`Public API 날씨정보 호출` <br> `로그인, 로그아웃`<br>`쿠키활용 로그인 유지`<br>`건의사항 페이지` <br> `마이페이지` <br> `관리자용 페이지` <br> `돌림판` | `Kakao Map API` <br> `업장리스트 페이지` <br> `상세페이지` <br> `회원가입 로그인 아이디 비밀번호 찾기 모달` | `데이터 수집, 가공` <br> `로그인, 로그아웃` <br>`회원가입, PW찾기`<br>`JWT`<br> `Spring security` <br> `oauth2 소셜로그인` | `공룡게임`<br>`사다리게임` <br>`하소연 게시판` <br>  |
+

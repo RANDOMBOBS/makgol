@@ -7,6 +7,7 @@
 <jsp:include page="./dibs-shop.jsp"></jsp:include>
 <jsp:include page="../ui/display-dibs-shop.jsp"></jsp:include>
 <jsp:include page="../logic/disabled-dibs-button.jsp"></jsp:include>
+<jsp:include page="../../store_util/is-shop-open.jsp"></jsp:include>
 <script>
     const shopInfo = {
         shops: [],

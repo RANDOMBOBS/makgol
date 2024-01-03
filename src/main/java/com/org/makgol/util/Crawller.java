@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Slf4j
 public class Crawller {
 
-    private int thread_count = 1;
+    private int thread_count = 10;
 	/**
 	 * @param storeRequestVos<StoreRequestVo> storeRequestVos
 	 * 				------StoreRequestVo---------
@@ -48,12 +48,12 @@ public class Crawller {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         // 드라이버 경로 윈도우
-        //String driverPath = "src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
+        String driverPath = "src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
         //String driverPath = "D:\\sunBoot\\makgol\\src\\main\\java\\com\\org\\makgol\\driver\\chromedriver.exe";
         // 드라이버 절대경로 맥
         //String driverPath = "src/main/java/com/org/makgol/driver/chromedriver_mac";
         // 드라이버 절대경로 linux(ubuntu)
-        String driverPath = "/home/ubuntu/service/makgol/src/main/java/com/org/makgol/driver/chromedriver_linux";
+        //String driverPath = "/home/ubuntu/service/makgol/src/main/java/com/org/makgol/driver/chromedriver_linux";
 
 
         //스레드를 종료하기위한 List
@@ -264,10 +264,15 @@ public class Crawller {
                         storeRequestVo.setPhoto(editedURL);
                     } else {
                         // 찾은 매칭을 출력
-                        editedURL = n.group(1) + "?fname=" + n.group(2);
-                        System.out.println(editedURL);
-                        storeRequestVo.setPhoto(editedURL);
-                        System.out.println("매칭되는 부분을 찾을 수 없습니다.");
+                        pattern = "(img1.kakaocdn.net/cthumb/local/C320x320.q50/)(http[^\\s']+)";
+                        r_p = Pattern.compile(pattern);
+                        n = r_p.matcher(editedURL);
+
+                        if(n.find()){
+                            editedURL = n.group(1) + "?fname=" + n.group(2);
+                            System.out.println(editedURL);
+                            storeRequestVo.setPhoto(editedURL);
+                        } else { System.out.println("매칭되는 부분을 찾을 수 없습니다.");}
                     }
 
 

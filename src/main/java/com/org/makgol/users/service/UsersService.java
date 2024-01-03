@@ -57,24 +57,19 @@ public class UsersService implements LogoutHandler {
     private final ServletContext servletContext;
 
     //userFindPassword
-    public String userFindPassword(String userEmail) {
-
-        if (usersRepository.findUserEmail(userEmail)) {
-
+    public boolean userFindPassword(String userEmail) {
+        if (usersRepository.findUserEmail(userEmail) != null) {
             int randomNumber = mailSendUtil.makeRandomNumber();
-            String newPassword = String.valueOf(randomNumber);
+            String newPassword = BCrypt.hashpw(String.valueOf(randomNumber), BCrypt.gensalt());
             Map<String, String> map = new HashMap<>();
             map.put("newPassword", newPassword);
             map.put("userEmail", userEmail);
-            if (usersRepository.updatePassword(map)) {
-                mailSendUtil.sendMail(randomNumber, userEmail, false);
-            }
-            return newPassword;
-
+            usersRepository.updatePassword(map);
+            mailSendUtil.sendMail(randomNumber, userEmail, false);
+            return true;
         } else {
-            return "회원가입된 이메일이 아닙니다.";
+            return false;
         }
-
     }// userFindPassword_END
 
 
@@ -114,9 +109,9 @@ public class UsersService implements LogoutHandler {
 
         if (usersRepository.saveUser(usersRequestVo)) {
 
-            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+            //CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
             // 비동기 작업이 완료되면 결과를 출력
-            future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
+            //future.thenAccept(result_info -> { log.info("saveStoresInfo --> : {}", result_info); });
         }
 
         return true;
@@ -250,11 +245,11 @@ public class UsersService implements LogoutHandler {
                 servletContext.setAttribute("loginedUserVo", newUserVo);
 
             }
-//            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
+            CompletableFuture<String> future = fetchDataAsync(usersRequestVo.getEmail());
             // 비동기 작업이 완료되면 결과를 출력
-//            future.thenAccept(result_info -> {
-//                log.info("saveStoresInfo --> : {}", result_info);
-//            });
+            future.thenAccept(result_info -> {
+                log.info("saveStoresInfo --> : {}", result_info);
+            });
         }
         return result;
     }

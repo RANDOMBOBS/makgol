@@ -15,4 +15,5 @@ public class ResponseStoreListDto {
     private String phone;
     private String address;
     private int distance;
+    private String opening_hours;
 }

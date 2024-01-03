@@ -23,11 +23,16 @@
 
 <jsp:include page="./modal.jsp"></jsp:include>
 
+<<<<<<< HEAD
 
 
 
 <%
          UsersResponseVo userVo = new UsersResponseVo();
+
+         userVo.setLongitude(127.028290548097);
+         userVo.setLatitude(37.4998293543379);
+
          List<String> names = new ArrayList<>();
          List<String> values = new ArrayList<>();
          Cookie[] cookies = request.getCookies(); // 쿠키들
@@ -63,11 +68,13 @@
       }
     request.setAttribute("loginedUserVo", userVo);
     UsersResponseVo loginedUserVo = (UsersResponseVo) request.getAttribute("loginedUserVo");
-
 %>
 
 
-
+<script>
+var xValue = "<%= userVo.getLongitude() %>";
+var yValue = "<%= userVo.getLatitude() %>";
+</script>
 <header id="header">
     <div class="all_category">
         <div class="show_category">
@@ -188,9 +195,7 @@
             </li>
         </ul>
     </div>
-
-    <a href="http://www.makgol.com"><img id="logoimage"
-                                         src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
+    <a href="http://www.makgol.com"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
     <div class="userTab">
         <c:choose>
 
