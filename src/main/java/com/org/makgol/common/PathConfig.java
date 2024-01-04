@@ -17,7 +17,7 @@ public class PathConfig implements WebMvcConfigurer {
         String uploadFolder = "/home/ubuntu/service/makgol/static/image";
         uploadFolder = uploadFolder.replace("\\","/");
         registry.addResourceHandler(filePathMatcher+"**")
-                .addResourceLocations("file:"+uploadFolder);
+                .addResourceLocations("file://"+uploadFolder);
     }
 
 //    @Override
