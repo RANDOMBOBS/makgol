@@ -14,10 +14,10 @@ public class PathConfig implements WebMvcConfigurer {
 
         String currentDirectory = System.getProperty("user.dir");
         System.out.println("현재 디렉토리: " + currentDirectory);
-        String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image\\";
+        String uploadFolder = "/home/ubuntu/service/makgol/static/image";
         uploadFolder = uploadFolder.replace("\\","/");
         registry.addResourceHandler(filePathMatcher+"**")
-                .addResourceLocations("file://"+uploadFolder);
+                .addResourceLocations("file:"+uploadFolder);
     }
 
 //    @Override
