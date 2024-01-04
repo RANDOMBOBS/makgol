@@ -17,7 +17,7 @@ public class PathConfig implements WebMvcConfigurer {
         String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image\\";
         uploadFolder = uploadFolder.replace("\\","/");
         registry.addResourceHandler(filePathMatcher+"**")
-                .addResourceLocations("file:"+uploadFolder);
+                .addResourceLocations("file://"+uploadFolder);
     }
 
 //    @Override
