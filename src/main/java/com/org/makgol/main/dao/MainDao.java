@@ -25,14 +25,25 @@ public class MainDao {
 
     private final MainRepository mainRepository;
 
+    /**
+     * 모든 카테고리를 조회하는 메서드입니다.
+     *
+     * @return 카테고리 목록
+     * @throws DataAccessException 데이터 액세스 예외가 발생할 경우
+     */
     public List<CategoryListVo> selectAllCategory() throws DataAccessException {
         List<CategoryListVo> categoryVos = null;
         categoryVos = mainRepository.selectAllCategory();
         return categoryVos;
     }
 
-
-    // 오늘의 메뉴 (no mybatis)
+    /**
+     * 특정 카테고리의 오늘의 메뉴를 조회하는 메서드입니다.
+     * (MyBatis를 사용하지 않은 버전)
+     *
+     * @param where 특정 카테고리 조건
+     * @return 오늘의 메뉴 목록
+     */
     public List<CategoryListVo> selectTodayMenu(String where) {
         String sql = "SELECT menus.menu, menus.photo, menus.photoPath \n" +
                 "FROM menus \n" +
@@ -50,8 +61,13 @@ public class MainDao {
         return categorys.size() > 0 ? categorys : null;
     }
 
+    /**
+     * 사용자의 위치를 기반으로 오늘의 메뉴를 조회하는 메서드입니다.
+     *
+     * @param userXy 사용자의 위치 정보를 담은 객체
+     * @return 오늘의 메뉴 목록
+     */
     public List<CategoryListVo> selectTodayMenu(UserXy userXy) {
-        //String sql = "SELECT menu,photo,photoPath FROM menus ";
         String sql = "SELECT menu, photo, photoPath\n" +
                 "FROM menus\n" +
                 "WHERE 1000 > ST_DISTANCE_SPHERE(\n" +
@@ -68,7 +84,12 @@ public class MainDao {
         return categorys.size() > 0 ? categorys : null;
     }
 
-    // Top5 메뉴
+    /**
+     * 사용자의 위치를 기반으로 Top5 메뉴를 조회하는 메서드입니다.
+     *
+     * @param userXy 사용자의 위치 정보를 담은 객체
+     * @return Top5 메뉴 목록
+     */
     public List<CategoryListVo> selectTopMenu(UserXy userXy) {
         String sql = "SELECT stores.name, stores.photo\n" +
                 "FROM stores\n" +

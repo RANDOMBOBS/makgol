@@ -8,5 +8,11 @@ import java.util.List;
 
 @Mapper
 public interface MainRepository {
-    List<CategoryListVo> selectAllCategory();
+
+    /**
+     * 모든 카테고리를 조회하는 메서드입니다.
+     *
+     * @return 카테고리 목록
+     */
+    public List<CategoryListVo> selectAllCategory();
 }
