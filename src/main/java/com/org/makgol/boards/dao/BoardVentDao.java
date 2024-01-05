@@ -27,9 +27,12 @@ public class BoardVentDao {
     private SqlSessionTemplate sqlSession;
 
 
-
-    /*
-    게시판 페이징
+    /**
+     * 게시판 페이징을 위한 모든 후기 게시글 목록을 조회하는 메서드입니다.
+     *
+     * @param pNum  현재 페이지 번호를 나타내는 정수
+     * @param scale 한 페이지에 표시될 게시글 수를 나타내는 정수
+     * @return 페이징된 후기 게시글 목록을 담은 List 객체를 반환합니다.
      */
     public List<BoardDetailResponseVo> boardVentAll(int pNum, int scale) {
         System.out.println(pNum);
@@ -40,6 +43,11 @@ public class BoardVentDao {
         return boardventRepository.boardVentAll(map);
     }
 
+    /**
+     * 게시판 페이징을 위한 모든 후기 게시글의 총 수를 조회하는 메서드입니다.
+     *
+     * @return 모든 후기 게시글의 총 수를 나타내는 정수를 반환합니다.
+     */
     public int boardVentAll() {
         return boardventRepository.boardVentCount();
     }

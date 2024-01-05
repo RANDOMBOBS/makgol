@@ -193,12 +193,18 @@ public class BoardSuggestionController {
 		return nextPage;
 	}
 
-	/** suggestion 글 검색 **/
+	/**
+	 * 게시글을 검색하는 메서드입니다.
+	 *
+	 * @param map   검색 매개변수를 담은 Map 객체
+	 * @param model Model 객체
+	 * @return "jsp/board/suggestion/search_suggestion_list" 뷰를 반환하고, 모델에 검색된 게시글 목록 및 검색어를 추가합니다.
+	 */
 	@RequestMapping(value = "/search", method = { RequestMethod.GET, RequestMethod.POST })
 	public String search(@RequestBody Map<String, String> map, Model model) {
 		String nextPage = "jsp/board/suggestion/search_suggestion_list";
-		String searchOption = (String) map.get("searchOption");
-		String searchWord = (String) map.get("searchWord");
+		String searchOption = map.get("searchOption");
+		String searchWord = map.get("searchWord");
 		List<BoardVo> boardVos = boardService.searchBoard(searchOption, searchWord);
 		if (boardVos != null) {
 			model.addAttribute("boardVos", boardVos);
@@ -207,7 +213,12 @@ public class BoardSuggestionController {
 		return nextPage;
 	}
 
-	
+	/**
+	 * 사용자의 게시글 좋아요 상태를 확인하는 메서드입니다.
+	 *
+	 * @param boardVo BoardVo 객체
+	 * @return 사용자의 게시글 좋아요 상태를 나타내는 정수를 포함한 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@RequestMapping(value="/userLikeStatus", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Integer> userLikeStatus(@RequestBody BoardVo boardVo) {
@@ -216,10 +227,13 @@ public class BoardSuggestionController {
 		map.put("status", status);
 		return map;
 	}
-	
-	
-	
-	/** suggestion 글 좋아요 **/
+
+	/**
+	 * 게시글에 좋아요를 추가하는 메서드입니다.
+	 *
+	 * @param boardVo BoardVo 객체
+	 * @return 좋아요 추가 결과와 게시글의 총 좋아요 수를 나타내는 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/likeBoard", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Integer> likeBoard(@RequestBody BoardVo boardVo) {
@@ -235,7 +249,13 @@ public class BoardSuggestionController {
 		}
 		return map;
 	}
-	
+
+	/**
+	 * 게시글 좋아요를 취소하는 메서드입니다.
+	 *
+	 * @param boardVo BoardVo 객체
+	 * @return 좋아요 취소 결과와 게시글의 총 좋아요 수를 나타내는 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/unlikeBoard", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Integer> unlikeBoard(@RequestBody BoardVo boardVo) {
@@ -252,24 +272,42 @@ public class BoardSuggestionController {
 		return map;
 	}
 
+	/**
+	 * 사용자의 게시글을 삭제하는 메서드입니다.
+	 *
+	 * @param ids 삭제할 게시글의 식별자를 담은 문자열
+	 * @return 삭제 결과를 나타내는 정수를 포함한 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@PostMapping("/deleteMyBoard/{ids}")
 	public Map<String, Integer> deleteMyBoard(@PathVariable("ids") String ids){
 		int result = boardService.deleteMyBoard(ids);
 		Map<String, Integer> map = new HashMap<>();
-		map.put("result",result);
+		map.put("result", result);
 		return map;
 	}
 
+	/**
+	 * 사용자의 댓글을 삭제하는 메서드입니다.
+	 *
+	 * @param comids 삭제할 댓글의 식별자를 담은 문자열
+	 * @return 삭제 결과를 나타내는 정수를 포함한 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@PostMapping("/deleteMyComment/{comids}")
 	public Map<String, Integer> deleteMyComment(@PathVariable("comids") String comids){
 		int result = boardService.deleteMyComment(comids);
 		Map<String, Integer> map = new HashMap<>();
-		map.put("result",result);
+		map.put("result", result);
 		return map;
 	}
 
+	/**
+	 * 사용자의 좋아요를 삭제하는 메서드입니다.
+	 *
+	 * @param data 삭제할 좋아요 정보를 담은 Map 객체
+	 * @return 삭제 결과를 나타내는 정수를 포함한 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@PostMapping("/deleteMyLike")
 	public Map<String, Integer> deleteMyLike(@RequestBody Map<String, String> data) {
@@ -278,5 +316,4 @@ public class BoardSuggestionController {
 		map.put("result", result);
 		return map;
 	}
-
 }

@@ -25,21 +25,26 @@ public class BoardSuggestionService {
 
 
     /**
-     * suggestion 게시판 가져오기
-     **/
+     * suggestion 게시판의 모든 글을 가져오는 메서드입니다.
+     *
+     * @return suggestion 게시판의 모든 글을 담은 List 객체를 반환합니다. 글이 없을 경우 null을 반환합니다.
+     */
     public List<BoardVo> getSuggestionBoard() {
-        List<BoardVo> boardVos = null;
-        boardVos = boardSuggestionRepository.selectAllSuggestionBoard();
+        List<BoardVo> boardVos = boardSuggestionRepository.selectAllSuggestionBoard();
         return boardVos.size() > 0 ? boardVos : null;
     }
 
     /**
-     * suggestion 글 쓰기 폼 제출
-     **/
+     * suggestion 게시판에 새로운 글을 등록하는 메서드입니다.
+     *
+     * @param boardCreateRequestVo 새로 등록할 글의 정보를 담은 BoardCreateRequestVo 객체
+     * @return 등록 결과를 나타내는 정수를 반환합니다.
+     */
     public int createBoardConfirm(BoardCreateRequestVo boardCreateRequestVo) {
         List<MultipartFile> files = new ArrayList<MultipartFile>();
         int result = -1;
 
+        // 업로드된 파일들을 리스트에 추가
         if (boardCreateRequestVo.getFile1() != null && !boardCreateRequestVo.getFile1().isEmpty()) {
             files.add(boardCreateRequestVo.getFile1());
         }
@@ -56,44 +61,54 @@ public class BoardSuggestionService {
             files.add(boardCreateRequestVo.getFile5());
         }
 
-        // if(파일이 1개이상일때), else(파일이 0개일때)
+        // 파일이 1개 이상일 때
         if (files.size() > 0) {
             try {
+                // 파일 업로드 후 정보를 리스트에 담음
                 List<FileInfo> fileList = fileUpload.fileListUpload(files);
                 int boardImageListResult = -1;
+
+                // 글 등록 후 등록된 글의 ID를 받아와 이미지를 등록
                 boardSuggestionRepository.insertSuggestionBoard(boardCreateRequestVo);
                 int board_id = boardCreateRequestVo.getId();
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", board_id);
                 map.put("fileList", fileList);
                 boardSuggestionRepository.insertSuggestionBoardImages(map);
+
                 return 1;
             } catch (Exception e) {
                 throw e;
             }
-        } else {
+        } else {  // 파일이 없을 때
             return boardSuggestionRepository.insertSuggestionBoard(boardCreateRequestVo);
         }
     }
 
-
     /**
-     * suggestion 글 상세보기
-     **/
+     * suggestion 게시판에서 글을 상세히 조회하는 메서드입니다.
+     *
+     * @param id 조회할 글의 식별자
+     * @return 조회된 글의 상세 정보를 담은 BoardDetailResponseVo 객체를 반환합니다.
+     */
     public BoardDetailResponseVo readSuggestionBoard(int id) {
-        List<BoardDetailResponseVo> boardVos = null;
+        List<BoardDetailResponseVo> boardVos = boardSuggestionRepository.showDetailImageBoard(id);
         BoardDetailResponseVo boardVo = null;
-        boardVos = boardSuggestionRepository.showDetailImageBoard(id);
-        if(boardVos.size() == 0){
+
+        // 이미지 글인 경우
+        if (boardVos.size() == 0) {
             boardVos = boardSuggestionRepository.showDetailBoard(id);
             boardVo = boardVos.get(0);
         } else {
             List<String> images = new ArrayList<String>();
+
+            // 이미지 URL을 리스트에 추가
             if (boardVos.get(0).getBoard_photo_path() != null) {
                 for (int i = 0; i < boardVos.size(); i++) {
                     images.add(boardVos.get(i).getBoard_photo_path());
                 }
             }
+
             boardVo = boardVos.get(0);
             boardVo.setImages(images);
         }
@@ -101,61 +116,80 @@ public class BoardSuggestionService {
     }
 
     /**
-     * suggestion 조회수
-     **/
+     * suggestion 게시판에서 글의 조회수를 증가시키는 메서드입니다.
+     *
+     * @param id 조회수를 증가시킬 글의 식별자
+     * @return 조회수 증가 결과를 나타내는 정수를 반환합니다.
+     */
     public int addHit(int id) {
-        int result = -1;
-        result = boardSuggestionRepository.updateHit(id);
-        return result;    }
+        int result = boardSuggestionRepository.updateHit(id);
+        return result;
+    }
+
 
     /**
-     * suggestion 댓글 INSERT
-     **/
+     * suggestion 글에 댓글을 추가하는 메서드입니다.
+     *
+     * @param commentRequestVo 추가할 댓글 정보를 담은 CommentRequestVo 객체
+     * @return 댓글 추가 결과를 나타내는 정수를 반환합니다.
+     */
     public int addComment(CommentRequestVo commentRequestVo) {
-        int result = -1;
-        result = boardSuggestionRepository.insertComment(commentRequestVo);
+        int result = boardSuggestionRepository.insertComment(commentRequestVo);
         return result;
     }
 
     /**
-     * suggestion 댓글 SELECT
-     **/
+     * suggestion 글에 달린 댓글을 조회하는 메서드입니다.
+     *
+     * @param board_id 조회할 글의 식별자
+     * @return 조회된 댓글의 목록을 담은 List<CommentResponseVo> 객체를 반환합니다. 댓글이 없을 경우 null을 반환합니다.
+     */
     public List<CommentResponseVo> getCommentList(int board_id) {
-        List<CommentResponseVo> commentResponseVos = null;
-        commentResponseVos = boardSuggestionRepository.selectCommentList(board_id);
+        List<CommentResponseVo> commentResponseVos = boardSuggestionRepository.selectCommentList(board_id);
         return commentResponseVos.size() > 0 ? commentResponseVos : null;
     }
 
     /**
-     * suggestion 댓글 수정 폼 제출
-     **/
+     * suggestion 글에 댓글을 수정하는 메서드입니다.
+     *
+     * @param commentResponseVo 수정할 댓글 정보를 담은 CommentResponseVo 객체
+     * @return 댓글 수정 결과를 나타내는 정수를 반환합니다.
+     */
     public int modifyCommentConfirm(CommentResponseVo commentResponseVo) {
-        int result = -1;
-        result = boardSuggestionRepository.updateComment(commentResponseVo);
+        int result = boardSuggestionRepository.updateComment(commentResponseVo);
         return result;
     }
 
     /**
-     * suggestion 댓글 DELETE
-     **/
+     * suggestion 글에 달린 댓글을 삭제하는 메서드입니다.
+     *
+     * @param id 삭제할 댓글의 식별자
+     * @return 댓글 삭제 결과를 나타내는 정수를 반환합니다.
+     */
     public int delComment(int id) {
-        int result = -1;
-        result = boardSuggestionRepository.deleteComment(id);
+        int result = boardSuggestionRepository.deleteComment(id);
         return result;
     }
 
     /**
-     * suggestion 글 수정하러가기 버튼
-     **/
+     * suggestion 글 수정 페이지로 이동하기 위해 해당 글의 정보를 조회하는 메서드입니다.
+     *
+     * @param b_id   조회할 글의 식별자
+     * @param name   수정을 요청한 사용자의 이름
+     * @return 수정 페이지에 필요한 글 정보를 담은 BoardVo 객체를 반환합니다.
+     */
     public BoardVo modifyBoard(int b_id, String name) {
         List<BoardVo> boardVos = null;
         BoardVo boardVo = null;
         List<String> images = new ArrayList<String>();
+
+        // 이미지 글인 경우
         boardVos = boardSuggestionRepository.selectImageBoard(b_id);
         if (boardVos.size() == 0) {
+            // 일반 글인 경우
             boardVos = boardSuggestionRepository.selectBoard(b_id);
             boardVo = boardVos.get(0);
-        } else{
+        } else {
             for (int i = 0; i < boardVos.size(); i++) {
                 images.add(boardVos.get(i).getPhoto_path());
             }
@@ -168,9 +202,16 @@ public class BoardSuggestionService {
 
 
 
+
     /**
-     * suggestion 글 수정 폼 제출
-     **/
+     * suggestion 글 수정 폼에서 제출된 내용을 처리하는 메서드입니다.
+     * 파일 업로드 및 DB 업데이트를 수행합니다.
+     *
+     * @param boardCreateRequestVo 수정된 글 정보를 담은 BoardCreateRequestVo 객체
+     * @param oldImages            수정 전 기존 이미지 파일 경로들을 담은 문자열
+     * @return 수정 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     * @throws Exception 파일 업로드 및 DB 업데이트 중 발생한 예외를 던집니다.
+     */
     @Transactional(rollbackFor = Exception.class)
     public int modifyBoardConfirm(BoardCreateRequestVo boardCreateRequestVo, String oldImages) {
         List<MultipartFile> files = new ArrayList<MultipartFile>(); // 새로 추가된 파일을 담을 변수
@@ -285,13 +326,19 @@ public class BoardSuggestionService {
     }
 
     /**
-     * suggestion 글 DELETE
-     **/
+     * suggestion 글을 삭제하는 메서드입니다.
+     * 게시글 ID와 함께 삭제를 수행하며, 연결된 이미지 파일도 삭제합니다.
+     *
+     * @param b_id    삭제할 글의 ID
+     * @param images  삭제할 글에 연결된 이미지 파일들의 경로를 담은 문자열
+     * @return 삭제 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int deleteBoard(int b_id, String images) {
         int result = -1;
         result = boardSuggestionRepository.deleteBoard(b_id);
+        // 쿼리문 실행이 성공했을 경우, 연결된 이미지 파일 삭제 수행
         if (result > 0) {
-            if(images.length() >0) {
+            if (images.length() > 0) {
                 FileUpload.deleteFileList(images);
             }
         }
@@ -300,8 +347,13 @@ public class BoardSuggestionService {
 
 
     /**
-     * suggestion 글 검색
-     **/
+     * suggestion 글을 검색하는 메서드입니다.
+     * 검색 옵션과 검색어를 매개변수로 받아 검색을 수행합니다.
+     *
+     * @param searchOption 검색 옵션
+     * @param searchWord   검색어
+     * @return 검색 결과를 담은 BoardVo 리스트를 반환합니다. 결과가 없으면 null을 반환합니다.
+     */
     public List<BoardVo> searchBoard(String searchOption, String searchWord) {
         List<BoardVo> boardVos = null;
         Map<String, String> map = new HashMap<>();
@@ -311,62 +363,106 @@ public class BoardSuggestionService {
         return boardVos.size() > 0 ? boardVos : null;
     }
 
+    /**
+     * 사용자가 특정 글에 대한 좋아요 상태를 조회하는 메서드입니다.
+     *
+     * @param boardVo 좋아요 상태를 조회할 글의 정보를 담은 BoardVo 객체
+     * @return 사용자의 좋아요 상태를 나타내는 정수를 반환합니다. 좋아요가 눌려있으면 1, 없으면 0을 반환합니다.
+     */
     public int userLikeStatus(BoardVo boardVo) {
-        int status = boardSuggestionRepository.selectUserLikeStatus(boardVo);
-        return status;
+        return boardSuggestionRepository.selectUserLikeStatus(boardVo);
     }
 
+    /**
+     * suggestion 글에 좋아요를 추가하는 메서드입니다.
+     *
+     * @param boardVo 좋아요를 추가할 글의 정보를 담은 BoardVo 객체
+     * @return 좋아요 추가 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int addLikeBoard(BoardVo boardVo) {
-        int result = -1;
-        result = boardSuggestionRepository.insertBoardLike(boardVo);
-        return result;
+        return boardSuggestionRepository.insertBoardLike(boardVo);
     }
 
+    /**
+     * suggestion 글에 좋아요를 취소하는 메서드입니다.
+     *
+     * @param boardVo 좋아요를 취소할 글의 정보를 담은 BoardVo 객체
+     * @return 좋아요 취소 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int removeLikeBoard(BoardVo boardVo) {
-        int result = -1;
-        result = boardSuggestionRepository.deleteBoardLike(boardVo);
-        return result;
+        return boardSuggestionRepository.deleteBoardLike(boardVo);
     }
 
+    /**
+     * suggestion 글의 전체 좋아요 수를 조회하는 메서드입니다.
+     *
+     * @param b_id 좋아요 수를 조회할 글의 ID
+     * @return 좋아요 수를 나타내는 정수를 반환합니다.
+     */
     public int countLike(int b_id) {
-        int totalLike = boardSuggestionRepository.selectLikeCount(b_id);
-        return totalLike;
+        return boardSuggestionRepository.selectLikeCount(b_id);
     }
 
+    /**
+     * suggestion 글에 대한 공감(좋아요) 정보를 업데이트하는 메서드입니다.
+     *
+     * @param map 공감 정보를 담은 Map 객체
+     */
     public void addBoardSympathy(Map<String, Integer> map) {
         boardSuggestionRepository.updateBoardSympathy(map);
     }
 
-    public int deleteMyBoard(String ids){
+    /**
+     * 사용자가 작성한 suggestion 글들을 삭제하는 메서드입니다.
+     * 글 ID 목록을 받아와 해당 글들을 삭제하며, 연결된 이미지 파일도 삭제합니다.
+     *
+     * @param ids 삭제할 글들의 ID 목록을 쉼표로 구분하여 전달
+     * @return 삭제 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
+    public int deleteMyBoard(String ids) {
         String[] id = ids.split(",");
         List<Integer> idList = new ArrayList<>();
         List<String> imageList = new ArrayList<>();
         int result = -1;
 
-        for(String item : id) {
+        for (String item : id) {
             idList.add(Integer.parseInt(item));
         }
         imageList = boardSuggestionRepository.selectBoardImages(idList);
         result = boardSuggestionRepository.deleteHistoryBoard(idList);
-        if(result>0){
-         FileUpload.deleteFileList(imageList.toString());
+        // 쿼리문 실행이 성공했을 경우, 연결된 이미지 파일 삭제 수행
+        if (result > 0) {
+            FileUpload.deleteFileList(imageList.toString());
         }
         return result;
     }
 
-
-    public int deleteMyComment(String comids){
+    /**
+     * 사용자가 작성한 suggestion 댓글들을 삭제하는 메서드입니다.
+     * 댓글 ID 목록을 받아와 해당 댓글들을 삭제합니다.
+     *
+     * @param comids 삭제할 댓글들의 ID 목록을 쉼표로 구분하여 전달
+     * @return 삭제 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
+    public int deleteMyComment(String comids) {
         String id[] = comids.split(",");
         List<Integer> idList = new ArrayList<>();
         int result = -1;
-        for(String item : id) {
+        for (String item : id) {
             idList.add(Integer.parseInt(item));
         }
         result = boardSuggestionRepository.deleteHistoryComment(idList);
         return result;
     }
 
-    public int deleteMyLike(Map<String, String> data){
+    /**
+     * 사용자가 작성한 suggestion 좋아요 기록을 삭제하는 메서드입니다.
+     * 좋아요 기록 ID 목록과 해당되는 글들의 ID 목록을 받아와 해당 기록들을 삭제합니다.
+     *
+     * @param data 삭제할 좋아요 기록들의 ID 목록과 해당되는 글들의 ID 목록을 포함한 Map 객체
+     * @return 삭제 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
+    public int deleteMyLike(Map<String, String> data) {
         String boardids = data.get("boardids");
         String likeids = data.get("likeids");
         String[] id = likeids.split(",");
@@ -374,12 +470,13 @@ public class BoardSuggestionService {
         List<Integer> idList = new ArrayList<>();
         List<Integer> boardidList = new ArrayList<>();
         int result = -1;
-        for(String item : id) {
+        for (String item : id) {
             idList.add(Integer.parseInt(item));
         }
         result = boardSuggestionRepository.deleteHistoryLike(idList);
-        if(result>0){
-            for(String item : boardid) {
+        // 쿼리문 실행이 성공했을 경우, 해당되는 글들의 좋아요 기록도 삭제
+        if (result > 0) {
+            for (String item : boardid) {
                 boardidList.add(Integer.parseInt(item));
             }
             boardSuggestionRepository.deleteLikes(boardidList);
