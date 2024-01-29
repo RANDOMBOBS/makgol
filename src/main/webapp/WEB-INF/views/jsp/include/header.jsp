@@ -23,11 +23,9 @@
 
 <jsp:include page="./modal.jsp"></jsp:include>
 
-<<<<<<< HEAD
-
-
 
 <%
+    // 쿠키 저장
          UsersResponseVo userVo = new UsersResponseVo();
 
          userVo.setLongitude(127.028290548097);
