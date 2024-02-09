@@ -58,57 +58,41 @@ public class StoreService {
      * @return 업장 목록 또는 메뉴 포함 목록
      */
     public List<ResponseStoreListDto> findStoreListData(RequestStoreListDto requestStoreListDto) {
-        // 캐시 키 생성
-        String cacheKey = generateCacheKey(requestStoreListDto);
+        List<ResponseStoreListDto> result = null;
+        try {
+            Map<String, String> map = new HashMap<>();
+            String keyword = requestStoreListDto.getKeyword();
+            String longitude = requestStoreListDto.getLongitude();
+            String latitude = requestStoreListDto.getLatitude();
+            map.put("category", keyword);
+            map.put("longitude", longitude);
+            map.put("latitude", latitude);
 
-        // 캐시된 데이터 가져오기
-        List<ResponseStoreListDto> cachedResult = (List<ResponseStoreListDto>) cacheService.getCachedQueryResult(cacheKey);
+            if("한식".equals(keyword)
+                    || "양식".equals(keyword)
+                    || "일식".equals(keyword)
+                    || "분식".equals(keyword)
+                    || "중식".equals(keyword)
+                    || "기타".equals(keyword)){
 
-        if (cachedResult != null) {
-            // 캐시된 데이터가 존재하는 경우
-            return cachedResult;
-        } else {
-            // 캐시된 데이터가 없는 경우
-            // 실제로 DB에서 데이터를 조회하고 결과를 캐시에 저장하는 로직 수행
-            List<ResponseStoreListDto> result = null;
-            try {
-                Map<String, String> map = new HashMap<>();
-                String keyword = requestStoreListDto.getKeyword();
-                String longitude = requestStoreListDto.getLongitude();
-                String latitude = requestStoreListDto.getLatitude();
-                map.put("category", keyword);
-                map.put("longitude", longitude);
-                map.put("latitude", latitude);
+                log.info("category --> {} :", keyword);
+                log.info("longitude --> {} :", longitude);
+                log.info("latitude--> {} :", latitude);
+                log.info("result = storesRepository.findStoreList(map);");
+                result = storesRepository.findStoreList(map);
 
-                if ("한식".equals(keyword)
-                        || "양식".equals(keyword)
-                        || "일식".equals(keyword)
-                        || "분식".equals(keyword)
-                        || "중식".equals(keyword)
-                        || "기타".equals(keyword)) {
-
-                    log.info("category --> {} :", keyword);
-                    log.info("longitude --> {} :", longitude);
-                    log.info("latitude--> {} :", latitude);
-                    log.info("result = storesRepository.findStoreList(map);");
-                    result = storesRepository.findStoreList(map);
-
-                } else {
-                    log.info("category --> {} :", keyword);
-                    log.info("longitude --> {} :", longitude);
-                    log.info("latitude--> {} :", latitude);
-                    log.info("result = storesRepository.findStoreListMenu(map);");
-                    result = storesRepository.findStoreListMenu(map);
-                }
-
-                // 캐시 저장
-                cacheService.cacheQueryResult(cacheKey, result);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
+                log.info("category --> {} :", keyword);
+                log.info("longitude --> {} :", longitude);
+                log.info("latitude--> {} :", latitude);
+                log.info("result = storesRepository.findStoreListMenu(map);");
+                result = storesRepository.findStoreListMenu(map);
             }
-            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return result;
     }
 
     private String generateCacheKey(RequestStoreListDto requestStoreListDto) {
