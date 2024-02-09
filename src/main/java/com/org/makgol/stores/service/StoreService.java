@@ -15,8 +15,10 @@ import com.org.makgol.users.vo.UsersResponseVo;
 import com.org.makgol.util.file.FileInfo;
 import com.org.makgol.util.file.FileUpload;
 import com.org.makgol.util.kakaoMap.KakaoMap;
+import com.org.makgol.util.redis.CacheService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.ParameterizedTypeReference;
@@ -37,6 +39,9 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class StoreService {
+    @Autowired
+    private CacheService cacheService;
+
     private final RestTemplate restTemplate;
     private final HttpHeaders headers;
     private final StoresRepository storesRepository;
@@ -83,10 +88,19 @@ public class StoreService {
                 log.info("result = storesRepository.findStoreListMenu(map);");
                 result = storesRepository.findStoreListMenu(map);
             }
+            // 캐시 키 생성
+            String cacheKey = generateCacheKey(requestStoreListDto);
+
+            // 캐시 저장
+            cacheService.cacheQueryResult(cacheKey, result);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private String generateCacheKey(RequestStoreListDto requestStoreListDto) {
+        return "storeList:" + requestStoreListDto.getKeyword() + ":" + requestStoreListDto.getLongitude() + ":" + requestStoreListDto.getLatitude();
     }
 
     /**
