@@ -139,7 +139,8 @@
 ## Project Design
 
 ### Service Architecture
-<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/makgol/assets/141618648/afd7b6be-e746-44a7-ad68-cea574528882">
+<img width="890" alt="스크린샷 2024-02-09 17 09 00" src="https://github.com/RANDOMBOBS/makgol/assets/105048235/7e5321d1-65c5-4be4-b8a0-f7f7b753cbdc">
+
 
 <br>
 
