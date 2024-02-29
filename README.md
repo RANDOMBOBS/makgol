@@ -121,12 +121,11 @@
 - **Xss filter** : Xss 대응을 위해 사용
 - **OAuth2.0** : 소셜 로그인을 위해 사용
 - **Spring Batch** : 대용량 데이터 처리를 위해 사용
-- **mybatis**
+- **mybatis** : 자체 캐싱을 지원하기에 사용
 - **Selenium** : 상세 데이터를 수집하기 위해 사용
 - **Thread** : 크롤링을 병렬처리하기 위해 사용
-- **Redis**
-- Swagger
-- cookie
+- **Redis** : DB 리소스와 요청속도 개선을위해 사용
+- **cookie** : 토큰의 정보를 담기위해 상용
 - **RestTemplate** : Public API와 Kakao API를 호출하기 위해 사용
 
 ### Data Pipeline
@@ -139,7 +138,8 @@
 ## Project Design
 
 ### Service Architecture
-<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/makgol/assets/141618648/afd7b6be-e746-44a7-ad68-cea574528882">
+<img width="890" alt="스크린샷 2024-02-09 17 09 00" src="https://github.com/RANDOMBOBS/makgol/assets/105048235/7e5321d1-65c5-4be4-b8a0-f7f7b753cbdc">
+
 
 <br>
 
