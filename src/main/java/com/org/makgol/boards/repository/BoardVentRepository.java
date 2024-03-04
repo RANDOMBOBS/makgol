@@ -140,7 +140,7 @@ public interface BoardVentRepository {
      * @param map 검색 조건을 담은 Map 객체
      * @return 조회된 vent 게시글 목록을 담은 List 객체를 반환합니다.
      */
-    List<BoardDetailResponseVo> selectSearchBoard(Map<String, String> map);
+    List<BoardDetailResponseVo> selectSearchBoard(String searchOption, String searchWord, int pNum, int scale);
 
     /**
      * 주어진 vent 게시글에 대한 사용자의 좋아요 상태를 조회하는 메서드입니다.
@@ -240,5 +240,5 @@ public interface BoardVentRepository {
      */
     int boardVentCount();
 
-
+    int boardVentOptionCount(Map<String, String> map);
 }

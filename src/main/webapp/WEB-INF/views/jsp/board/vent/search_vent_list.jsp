@@ -36,7 +36,7 @@
 					<td>${item.sympathy}</td>
 					<td>${item.name}</td>
 					<td>${item.date}</td>
-					<td>${item.hit}</td>
+					<td>${item.hit}</tdz>
 				</tr>
 			</c:forEach>
 			</tbody>

@@ -47,6 +47,10 @@ public class BoardVentService {
         return boardDao.boardVentAll();
     }
 
+    public int boardVentAll(String searchOption, String searchKeywork) {
+        return boardDao.boardVentAll(searchOption, searchKeywork);
+    }
+
     /**
      * vent 게시판에 글을 작성하는 메서드입니다.
      *
@@ -353,12 +357,15 @@ public class BoardVentService {
      * @param searchWord    검색 키워드를 나타내는 문자열
      * @return              검색 결과를 담은 BoardDetailResponseVo 객체의 리스트를 반환합니다. 검색 결과가 없을 경우 null을 반환합니다.
      */
-    public List<BoardDetailResponseVo> searchBoard(String searchOption, String searchWord) {
+    public List<BoardDetailResponseVo> searchBoard(int pNum, int scale, String searchOption, String searchWord) {
         List<BoardDetailResponseVo> boardVos = null;
         Map<String, String> map = new HashMap<>();
         map.put("searchOption", searchOption);
         map.put("searchWord", searchWord);
-        boardVos = boardVentRepository.selectSearchBoard(map);
+        map.put("pNum", String.valueOf(pNum));
+        map.put("scale", String.valueOf(scale));
+        System.out.println(String.valueOf(pNum)+String.valueOf(scale));
+        boardVos = boardVentRepository.selectSearchBoard(searchOption, searchWord, pNum, scale);
         return boardVos.size() > 0 ? boardVos : null;
     }
 

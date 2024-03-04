@@ -52,4 +52,10 @@ public class BoardVentDao {
         return boardventRepository.boardVentCount();
     }
 
+    public int boardVentAll(String searchOption, String searchKeywork) {
+        Map<String, String> map = new HashMap<>();
+        map.put("searchOption", searchOption);
+        map.put("searchWord", searchKeywork);
+        return boardventRepository.boardVentOptionCount(map);
+    }
 }

@@ -245,16 +245,27 @@ public class BoardVentController {
 	 */
 	@RequestMapping(value = "/search", method = { RequestMethod.GET, RequestMethod.POST })
 	public String search(@RequestBody Map<String, String> map, Model model) {
-		String nextPage = "jsp/board/vent/search_vent_list";
+
+		System.out.println("search");
+		int pGroup = Integer.parseInt(map.get("pageGroup"));
+		int pNum = Integer.parseInt(map.get("pageNum"));
 		String searchOption = map.get("searchOption");
 		String searchWord = map.get("searchWord");
-		System.out.println("searchWord = " + searchWord);
-		System.out.println("searchOption = " + searchOption);
-		List<BoardDetailResponseVo> boardVos = boardService.searchBoard(searchOption, searchWord);
-		System.out.println("boardVos = " + boardVos);
-		if (boardVos != null) {
-			model.addAttribute("boardVos", boardVos);
+		int amount = 10;
+
+		List<BoardDetailResponseVo> reviewListAll = boardService.searchBoard((pNum-1)*amount , amount, searchOption, searchWord);
+		int totArticles = boardService.boardVentAll(searchOption, searchWord);
+		System.out.println(totArticles);
+		PageVo pageVo = new PageVo(totArticles, pNum, pGroup);
+
+		if (reviewListAll != null && totArticles!=0) {
+			model.addAttribute("reviewListAll", reviewListAll);
+			model.addAttribute("pageVo", pageVo);
 		}
+		System.out.println(reviewListAll);
+
+		String nextPage = "jsp/board/vent/all_vent_list";
+
 		return nextPage;
 	}
 

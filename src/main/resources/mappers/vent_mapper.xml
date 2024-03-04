@@ -163,28 +163,42 @@
         DELETE FROM board_images  WHERE board_id = #{board_id}
     </delete>
 
-    <select id="selectSearchBoard" resultMap="boardResult"
-            parameterType="hashmap">
-        SELECT b.id AS id, b.user_id, b.hit, b.title, b.date, b.contents,
-        b.category, b.sympathy, u.name, u.photo
-        FROM boards AS b
-        JOIN users AS u
-        ON b.user_id = u.id
-        WHERE category = 'vent'
-        <choose>
-            <when test="searchOption == 'name'">
-                AND u.name = #{searchWord}
-            </when>
-            <when test="searchOption == 'title'">
-                AND b.title LIKE CONCAT('%', #{searchWord}, '%')
-            </when>
-            <when test="searchOption == 'contents'">
-                AND b.contents LIKE CONCAT('%', #{searchWord}, '%')
-            </when>
-            <when test="searchOption == 'titleContents'">
-                AND b.title LIKE CONCAT('%', #{searchWord}, '%') OR b.contents LIKE CONCAT('%', #{searchWord}, '%')
-            </when>
-        </choose>
+    <select id="selectSearchBoard" resultType="com.org.makgol.boards.vo.BoardDetailResponseVo" parameterType="hashmap">
+
+            SELECT b.id, b.user_id, b.hit, b.title, b.date, b.category, b.sympathy, bu_sub.name
+                FROM boards AS b
+                INNER JOIN (
+                	SELECT b_sub2.id, u_sub.name
+                	FROM(
+                		SELECT b_sub1.id, b_sub1.user_id
+                			FROM (
+                				SELECT id, user_id
+                				FROM boards
+                				<choose>
+                                    <when test='searchOption == "title"'> FORCE INDEX(idx_category_title) </when>
+                                    <when test='searchOption == "contents"'> FORCE INDEX(idx_contents_category) </when>
+                                    <when test='searchOption == "titleContents"'> FORCE INDEX(idx_contents_category) </when>
+                                    <when test='searchOption == "name"'></when>
+                                </choose>
+                				WHERE category = 'vent'
+                				<choose>
+                                    <when test='searchOption == "title"'> AND title LIKE CONCAT('%', #{searchWord}, '%') </when>
+                                    <when test='searchOption == "contents"'> AND contents LIKE CONCAT('%', #{searchWord}, '%') </when>
+                                    <when test='searchOption == "titleContents"'> AND CONCAT(title, contents) LIKE CONCAT('%', #{searchWord}, '%') </when>
+                                    <when test='searchOption == "name"'></when>
+                                </choose>
+                				ORDER BY id DESC
+                				LIMIT #{scale} OFFSET #{pNum}) AS b_sub1
+                		    ) AS b_sub2
+                    INNER JOIN (
+                        SELECT id, name
+                        FROM users FORCE INDEX(idx_name)
+                        <choose>
+                            <when test="searchOption == 'name'"> </when>
+                        </choose>
+                    ) AS u_sub ON b_sub2.user_id = u_sub.id
+                ) AS bu_sub ON b.id = bu_sub.id ORDER BY id DESC;
+
     </select>
 
     <select id="selectUserLikeStatus" resultType="int" parameterType="com.org.makgol.boards.vo.BoardVo">
@@ -266,24 +280,24 @@
     <!-- boardVentAll -->
     <select id="boardVentAll" resultType="com.org.makgol.boards.vo.BoardDetailResponseVo" parameterType="hashmap">
         <![CDATA[
-                SELECT b.id, b.user_id, b.hit, b.title, b.date, b.category, b.sympathy, bu_sub.name
-                FROM boards AS b
-                INNER JOIN (
-                    SELECT b_sub2.id, u_sub.name
-                    FROM(
-                        SELECT b_sub1.id, b_sub1.user_id
-                            FROM (
-                                SELECT id, user_id
-                                FROM boards IGNORE INDEX(idx_category)
-                                WHERE category = 'vent'
-                                ORDER BY id DESC
-                                LIMIT #{scale} OFFSET #{pNum}) AS b_sub1
-                        ) AS b_sub2
-                            INNER JOIN (
-                                SELECT id, name
-                                FROM users FORCE INDEX(idx_name)
-                                ) AS u_sub ON b_sub2.user_id = u_sub.id
-                    ) AS bu_sub ON b.id = bu_sub.id ORDER BY id DESC;
+            SELECT b.id, b.user_id, b.hit, b.title, b.date, b.category, b.sympathy, bu_sub.name
+            FROM boards AS b
+            INNER JOIN (
+                SELECT b_sub2.id, u_sub.name
+                FROM(
+                    SELECT b_sub1.id, b_sub1.user_id
+                        FROM (
+                            SELECT id, user_id
+                            FROM boards IGNORE INDEX(idx_category_title, idx_category, idx_category_contents)
+                            WHERE category = 'vent'
+                            ORDER BY id DESC
+                            LIMIT #{scale} OFFSET #{pNum}) AS b_sub1
+                    ) AS b_sub2
+                        INNER JOIN (
+                            SELECT id, name
+                            FROM users FORCE INDEX(idx_name)
+                            ) AS u_sub ON b_sub2.user_id = u_sub.id
+                ) AS bu_sub ON b.id = bu_sub.id ORDER BY id DESC;
         ]]>
 
     </select>
@@ -295,4 +309,28 @@
         where category='vent'
     </select>
 
+    <select id="boardVentOptionCount" resultType="int" parameterType="hashmap">
+        SELECT COUNT(*) FROM boards
+        <choose>
+            <when test='searchOption == "title"'> FORCE INDEX(idx_category_title) </when>
+            <when test='searchOption == "contents"'> FORCE INDEX(idx_contents_category) </when>
+            <when test='searchOption == "titleContents"'> FORCE INDEX(idx_contents_category) </when>
+            <when test="searchOption == 'name'"></when>
+        </choose>
+        where category='vent'
+        <choose>
+            <when test='searchOption == "title"'>
+                AND title LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test='searchOption == "contents"'>
+                AND contents LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test='searchOption == "titleContents"'>
+                AND CONCAT(title, contents) LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+            <when test='searchOption == "name"'>
+                AND name like CONCAT('%', #{searchWord}, '%');
+            </when>
+        </choose>
+    </select>
 </mapper>
