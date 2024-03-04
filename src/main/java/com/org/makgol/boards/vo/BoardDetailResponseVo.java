@@ -18,4 +18,6 @@ public class BoardDetailResponseVo {
     String board_photo_path;
     List<String> images;
 
+
+
 }

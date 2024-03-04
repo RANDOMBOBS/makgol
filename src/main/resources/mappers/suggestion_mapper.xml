@@ -39,19 +39,50 @@
 
 
     <select id="selectAllSuggestionBoard" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
-                SELECT b.id,
-                b.user_id,
-                b.hit,
-                b.title,
-                b.date,
-                b.category,
-                b.sympathy,
-                u.name
+        <![CDATA[
+                SELECT b.id, b.user_id, b.hit, b.title, b.date, b.category, b.sympathy, bu_sub.name
                 FROM boards AS b
-                JOIN users AS u ON b.user_id = u.id
-                WHERE category = 'suggestion'
-                ORDER BY date DESC
-            </select>
+                INNER JOIN (
+                    SELECT b_sub2.id, u_sub.name
+                    FROM(
+                        SELECT b_sub1.id, b_sub1.user_id
+                            FROM (
+                                SELECT id, user_id
+                                FROM boards
+                                WHERE category = 'vent'
+                                ORDER BY id DESC
+                                LIMIT #{pageSize} OFFSET #{offset}) AS b_sub1
+                        ) AS b_sub2
+                            INNER JOIN (
+                                SELECT id, name
+                                FROM users FORCE INDEX(idx_name)
+                                ) AS u_sub ON b_sub2.user_id = u_sub.id
+                    ) AS bu_sub ON b.id = bu_sub.id ORDER BY id DESC;
+        ]]>
+    </select>
+
+    <select id="boardSuggestionAll" resultType="com.org.makgol.boards.vo.BoardDetailResponseVo" parameterType="hashmap">
+        <![CDATA[
+                SELECT b.id, b.user_id, b.hit, b.title, b.date, b.category, b.sympathy, bu_sub.name
+                FROM boards AS b
+                INNER JOIN (
+                    SELECT b_sub2.id, u_sub.name
+                    FROM(
+                        SELECT b_sub1.id, b_sub1.user_id
+                            FROM (
+                                SELECT id, user_id
+                                FROM boards
+                                WHERE category = 'vent'
+                                ORDER BY id DESC
+                                LIMIT #{pageSize} OFFSET #{offset}) AS b_sub1
+                        ) AS b_sub2
+                            INNER JOIN (
+                                SELECT id, name
+                                FROM users FORCE INDEX(idx_name)
+                                ) AS u_sub ON b_sub2.user_id = u_sub.id
+                    ) AS bu_sub ON b.id = bu_sub.id ORDER BY id DESC;
+        ]]>
+    </select>
 
             <insert id="insertSuggestionBoard" parameterType="com.org.makgol.boards.vo.BoardCreateRequestVo" useGeneratedKeys="true" keyProperty="id">
                 INSERT INTO boards (user_id, title, date, contents, category, mod_date)
@@ -274,7 +305,11 @@
                 </foreach>
             </update>
 
-
+    <!-- boardVentCount -->
+    <select id="boardSuggestionCount" resultType="int">
+        SELECT COUNT(*) FROM boards
+        where category='vent'
+    </select>
         </mapper>
 
 

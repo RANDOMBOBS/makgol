@@ -115,7 +115,7 @@
 	</div>
 </div>
 
-<c:if test="${not empty loginedUserVo}">
-	<a href="<c:url value='/board/vent/create'/>">글쓰기</a>
+<c:if test="${login == true}">
+	    <a href="<c:url value='/board/suggestion/create'/>"><i class="fa-regular fa-pen-to-square"></i> 글쓰기</a><br>
 	<br>
 </c:if>

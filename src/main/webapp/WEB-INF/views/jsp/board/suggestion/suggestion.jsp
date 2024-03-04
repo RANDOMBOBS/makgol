@@ -36,11 +36,9 @@
 
 
     <jsp:include page="../../include/footer.jsp"></jsp:include>
-
 	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>
 
 	<script>
-
 		allBoardList();
 	</script>
 

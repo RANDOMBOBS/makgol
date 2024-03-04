@@ -265,20 +265,33 @@
 
     <!-- boardVentAll -->
     <select id="boardVentAll" resultType="com.org.makgol.boards.vo.BoardDetailResponseVo" parameterType="hashmap">
-        SELECT boards.*, users.name
-        FROM boards
-        INNER JOIN users ON boards.user_id = users.id
-        WHERE boards.category = 'vent'
-
-        ORDER BY boards.id DESC
-        LIMIT #{scale} OFFSET #{pNum};
+        <![CDATA[
+                SELECT b.id, b.user_id, b.hit, b.title, b.date, b.category, b.sympathy, bu_sub.name
+                FROM boards AS b
+                INNER JOIN (
+                    SELECT b_sub2.id, u_sub.name
+                    FROM(
+                        SELECT b_sub1.id, b_sub1.user_id
+                            FROM (
+                                SELECT id, user_id
+                                FROM boards IGNORE INDEX(idx_category)
+                                WHERE category = 'vent'
+                                ORDER BY id DESC
+                                LIMIT #{scale} OFFSET #{pNum}) AS b_sub1
+                        ) AS b_sub2
+                            INNER JOIN (
+                                SELECT id, name
+                                FROM users FORCE INDEX(idx_name)
+                                ) AS u_sub ON b_sub2.user_id = u_sub.id
+                    ) AS bu_sub ON b.id = bu_sub.id ORDER BY id DESC;
+        ]]>
 
     </select>
 
 
     <!-- boardVentCount -->
     <select id="boardVentCount" resultType="int">
-        SELECT COUNT(*) FROM boards
+        SELECT COUNT(*) FROM boards FORCE INDEX(idx_category)
         where category='vent'
     </select>
 

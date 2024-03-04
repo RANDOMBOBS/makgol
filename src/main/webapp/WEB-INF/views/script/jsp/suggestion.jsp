@@ -3,6 +3,9 @@ pageEncoding="UTF-8"%> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
+    let pageGroup = 1;   // (1~10, 11~20)
+    	let pageNum = 1;	 // 최초 페이지 번호
+
   let b_id = jQ("#like").attr("data-b-id");
   let user_id = ${loginedUserVo.id};
   let likeData = { b_id: b_id, user_id: user_id };
@@ -15,7 +18,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
   function allBoardList() {
     jQ.ajax({
-      url: "/board/suggestion/showAllList/"+login,
+      url: "/board/suggestion/showAllList?pageNum="+pNum+"&pageGroup="+pGroup+"&login=" + login,
       type: "GET",
       dataType: "html",
       success: function (rdata) {
@@ -28,6 +31,27 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       },
     });
   }
+
+  function pageGrouping(pGroup, direct, total_page_group_num, total_page) {
+  		let pNum = 0
+  		if (direct==1 && pGroup==1) {
+  			pNum = 1
+  		} else if (direct==1 && pGroup>1) {
+  			pGroup = pGroup - 1
+  			pNum = pGroup*10-9
+  		} else if (direct==2 && pGroup<total_page_group_num) {
+  			pGroup = pGroup + 1;
+  			pNum = pGroup*10-9
+  		} else if (direct==2 && pGroup==total_page_group_num) {
+  			pNum = total_page
+
+  		}
+
+  		console.log(pGroup, pNum)
+
+  		allBoardList(pGroup, pNum)
+
+  	}
 
   function comList() {
     let board_id = parseInt(jQ("input[name=board_id]").val());

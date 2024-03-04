@@ -7,6 +7,7 @@ import com.org.makgol.comment.vo.CommentRequestVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.util.file.FileInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public interface BoardSuggestionRepository {
      *
      * @return 모든 건의사항 게시글 목록을 담은 List 객체를 반환합니다.
      */
-    List<BoardVo> selectAllSuggestionBoard();
+    List<BoardVo> selectAllSuggestionBoard(@Param("offset") int offset, @Param("pageSize") int pageSize);
 
     /**
      * 건의사항 게시글을 추가하는 메서드입니다.
@@ -232,4 +233,7 @@ public interface BoardSuggestionRepository {
     void deleteLikes(List<Integer> boardidList);
 
 
+    List<BoardDetailResponseVo> boardSuggestionAll(Map<String, Integer> map);
+
+    int boardSuggestionCount();
 }

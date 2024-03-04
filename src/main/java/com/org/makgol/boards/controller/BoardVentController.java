@@ -50,15 +50,18 @@ public class BoardVentController {
 	 * @return "jsp/board/vent/all_vent_list" 뷰를 반환하고, 모델에 후기 게시글 목록과 페이징 정보를 추가합니다.
 	 */
 	@GetMapping("/showAllList")
-	public String showAllList(@RequestParam("pageGroup") String pageGroup, @RequestParam("pageNum") String pageNum, Model model) {
+	public String showAllList(@RequestParam("pageGroup") String pageGroup,
+							  @RequestParam("pageNum") String pageNum, Model model) {
 		System.out.println("확인");
 		List<BoardDetailResponseVo> reviewListAll = new ArrayList<>();
 		int pGroup = Integer.parseInt(pageGroup);
 		int pNum = Integer.parseInt(pageNum);
 		int amount = 10;
+
 		System.out.println(reviewListAll);
-		System.out.println(pNum);
-		System.out.println(amount);
+		System.out.println(pNum + "pNum");
+		System.out.println(amount + "amount");
+
 		reviewListAll = boardService.boardVentAll((pNum-1)*amount , amount);
 		int totArticles = boardService.boardVentAll();
 		PageVo pageVo = new PageVo(totArticles, pNum, pGroup);
