@@ -3,8 +3,12 @@
     const requestStoreReview = async (id) => {
         const url = "/store/review_data/store_id/" + id;
         const {axios} = window;
-        const {data} = await axios.get(url);
-        
-        return data.result;
+
+        try {
+            const {data} = await axios.get(url);
+            return data.result;
+        } catch (err) {
+            console.error(err)
+        }
     }
 </script>

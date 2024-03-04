@@ -27,17 +27,32 @@ public class BoardVentService {
     private final BoardVentDao boardDao;
     private final BoardVentRepository boardVentRepository;
     // 페이징 처리하기
+    /**
+     * 페이징된 vent 게시판의 글 목록을 가져오는 메서드입니다.
+     *
+     * @param pNum  현재 페이지 번호
+     * @param scale 한 페이지에 표시될 글의 개수
+     * @return 페이징된 vent 게시판의 글 목록을 반환합니다.
+     */
     public List<BoardDetailResponseVo> boardVentAll(int pNum, int scale) {
         return boardDao.boardVentAll(pNum, scale);
     }
 
+    /**
+     * vent 게시판의 총 글 개수를 반환하는 메서드입니다.
+     *
+     * @return vent 게시판의 총 글 개수
+     */
     public int boardVentAll() {
         return boardDao.boardVentAll();
     }
 
     /**
-     * vent 글 쓰기 폼 제출
-     **/
+     * vent 게시판에 글을 작성하는 메서드입니다.
+     *
+     * @param boardCreateRequestVo vent 게시판에 작성된 글의 정보를 담은 객체
+     * @return 글 작성 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int createBoardConfirm(BoardCreateRequestVo boardCreateRequestVo) {
         List<MultipartFile> files = new ArrayList<MultipartFile>();
         int result = -1;
@@ -78,16 +93,18 @@ public class BoardVentService {
         }
     }
 
-
     /**
-     * vent 글 상세보기
-     **/
+     * 특정한 vent 글의 상세 정보를 가져오는 메서드입니다.
+     *
+     * @param id 조회할 vent 글의 ID
+     * @return 특정한 vent 글의 상세 정보를 담은 객체를 반환합니다.
+     */
     public BoardDetailResponseVo readVentBoard(int id) {
         System.out.println("서비스id = " + id);
         List<BoardDetailResponseVo> boardVos = null;
         BoardDetailResponseVo boardVo = null;
         boardVos = boardVentRepository.showDetailImageBoard(id);
-        if(boardVos.size() == 0){
+        if (boardVos.size() == 0) {
             boardVos = boardVentRepository.showDetailBoard(id);
             boardVo = boardVos.get(0);
         } else {
@@ -104,16 +121,23 @@ public class BoardVentService {
     }
 
     /**
-     * Vent 조회수
-     **/
+     * Vent 글 조회수를 증가시키는 메서드입니다.
+     *
+     * @param id 조회수를 증가시킬 Vent 글의 ID
+     * @return 조회수 증가 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int addHit(int id) {
         int result = -1;
         result = boardVentRepository.updateHit(id);
-        return result;    }
+        return result;
+    }
 
     /**
-     * Vent 댓글 INSERT
-     **/
+     * Vent 글에 댓글을 추가하는 메서드입니다.
+     *
+     * @param commentRequestVo 추가할 댓글 정보를 담은 객체
+     * @return 댓글 추가 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int addComment(CommentRequestVo commentRequestVo) {
         int result = -1;
         result = boardVentRepository.insertComment(commentRequestVo);
@@ -121,8 +145,11 @@ public class BoardVentService {
     }
 
     /**
-     * Vent 댓글 SELECT
-     **/
+     * Vent 글의 댓글 목록을 조회하는 메서드입니다.
+     *
+     * @param board_id 조회할 Vent 글의 ID
+     * @return Vent 글의 댓글 목록을 담은 리스트를 반환합니다. 목록이 없을 경우 null을 반환합니다.
+     */
     public List<CommentResponseVo> getCommentList(int board_id) {
         List<CommentResponseVo> commentResponseVos = null;
         commentResponseVos = boardVentRepository.selectCommentList(board_id);
@@ -130,8 +157,11 @@ public class BoardVentService {
     }
 
     /**
-     * Vent 댓글 수정 폼 제출
-     **/
+     * Vent 글의 댓글을 수정하는 메서드입니다.
+     *
+     * @param commentResponseVo 수정할 댓글 정보를 담은 객체
+     * @return 댓글 수정 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int modifyCommentConfirm(CommentResponseVo commentResponseVo) {
         int result = -1;
         result = boardVentRepository.updateComment(commentResponseVo);
@@ -139,8 +169,11 @@ public class BoardVentService {
     }
 
     /**
-     * Vent 댓글 DELETE
-     **/
+     * Vent 글의 댓글을 삭제하는 메서드입니다.
+     *
+     * @param id 삭제할 댓글의 ID
+     * @return 댓글 삭제 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int delComment(int id) {
         int result = -1;
         result = boardVentRepository.deleteComment(id);
@@ -148,8 +181,12 @@ public class BoardVentService {
     }
 
     /**
-     * Vent 글 수정하러가기 버튼
-     **/
+     * Vent 글 수정을 위해 해당 글의 정보를 가져오는 메서드입니다.
+     *
+     * @param b_id  수정하려는 Vent 글의 ID
+     * @param name  수정하려는 Vent 글의 작성자 이름
+     * @return      Vent 글 수정 폼에 필요한 정보를 담은 BoardVo 객체를 반환합니다.
+     */
     public BoardVo modifyBoard(int b_id, String name) {
         List<BoardVo> boardVos = null;
         BoardVo boardVo = null;
@@ -158,7 +195,7 @@ public class BoardVentService {
         if (boardVos.size() == 0) {
             boardVos = boardVentRepository.selectBoard(b_id);
             boardVo = boardVos.get(0);
-        } else{
+        } else {
             for (int i = 0; i < boardVos.size(); i++) {
                 images.add(boardVos.get(i).getPhoto_path());
             }
@@ -172,8 +209,12 @@ public class BoardVentService {
 
 
     /**
-     * Vent 글 수정 폼 제출
-     **/
+     * Vent 글 수정을 확인하고 해당 글의 정보를 업데이트하는 메서드입니다.
+     *
+     * @param boardCreateRequestVo 수정된 Vent 글의 정보를 담은 객체
+     * @param oldImages            수정 전 이미지 파일의 정보를 담은 문자열
+     * @return                     Vent 글 수정 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     @Transactional(rollbackFor = Exception.class)
     public int modifyBoardConfirm(BoardCreateRequestVo boardCreateRequestVo, String oldImages) {
         List<MultipartFile> files = new ArrayList<MultipartFile>(); // 새로 추가된 파일을 담을 변수
@@ -288,23 +329,30 @@ public class BoardVentService {
     }
 
     /**
-     * Vent 글 DELETE
-     **/
+     * Vent 글을 삭제하는 메서드입니다.
+     *
+     * @param b_id    삭제하려는 Vent 글의 ID
+     * @param images  삭제되는 Vent 글에 연결된 이미지 파일의 정보를 담은 문자열
+     * @return        Vent 글 삭제 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int deleteBoard(int b_id, String images) {
         int result = -1;
         result = boardVentRepository.deleteBoard(b_id);
         if (result > 0) {
-            if(images.length() >0) {
+            if (images.length() > 0) {
                 FileUpload.deleteFileList(images);
             }
         }
         return result;
     }
 
-
     /**
-     * Vent 글 검색
-     **/
+     * Vent 글을 검색하는 메서드입니다.
+     *
+     * @param searchOption  검색 옵션을 나타내는 문자열
+     * @param searchWord    검색 키워드를 나타내는 문자열
+     * @return              검색 결과를 담은 BoardDetailResponseVo 객체의 리스트를 반환합니다. 검색 결과가 없을 경우 null을 반환합니다.
+     */
     public List<BoardDetailResponseVo> searchBoard(String searchOption, String searchWord) {
         List<BoardDetailResponseVo> boardVos = null;
         Map<String, String> map = new HashMap<>();
@@ -314,62 +362,108 @@ public class BoardVentService {
         return boardVos.size() > 0 ? boardVos : null;
     }
 
+    /**
+     * 사용자가 특정 Vent 글에 대한 좋아요 상태를 확인하는 메서드입니다.
+     *
+     * @param boardVo  사용자가 좋아요 상태를 확인할 Vent 글 정보를 담은 객체
+     * @return         좋아요 상태를 나타내는 정수를 반환합니다. 좋아요한 경우 1, 아닌 경우 0을 반환합니다.
+     */
     public int userLikeStatus(BoardVo boardVo) {
         int status = boardVentRepository.selectUserLikeStatus(boardVo);
         return status;
     }
 
+    /**
+     * Vent 글에 좋아요를 추가하는 메서드입니다.
+     *
+     * @param boardVo  좋아요를 추가할 Vent 글 정보를 담은 객체
+     * @return         좋아요 추가 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int addLikeBoard(BoardVo boardVo) {
         int result = -1;
         result = boardVentRepository.insertBoardLike(boardVo);
         return result;
     }
 
+    /**
+     * Vent 글에 좋아요를 제거하는 메서드입니다.
+     *
+     * @param boardVo  좋아요를 제거할 Vent 글 정보를 담은 객체
+     * @return         좋아요 제거 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
     public int removeLikeBoard(BoardVo boardVo) {
         int result = -1;
         result = boardVentRepository.deleteBoardLike(boardVo);
         return result;
     }
 
+    /**
+     * Vent 글에 대한 전체 좋아요 수를 반환하는 메서드입니다.
+     *
+     * @param b_id  좋아요 수를 조회할 Vent 글의 ID
+     * @return      Vent 글에 대한 전체 좋아요 수를 나타내는 정수를 반환합니다.
+     */
     public int countLike(int b_id) {
         int totalLike = boardVentRepository.selectLikeCount(b_id);
         return totalLike;
     }
 
+    /**
+     * Vent 글에 대한 공감(조언)을 추가하는 메서드입니다.
+     *
+     * @param map  Vent 글 ID와 사용자 ID를 담은 맵 객체
+     */
     public void addBoardSympathy(Map<String, Integer> map) {
         boardVentRepository.updateBoardSympathy(map);
     }
 
-    public int deleteMyBoard(String ids){
+    /**
+     * 사용자가 작성한 Vent 글을 삭제하는 메서드입니다.
+     *
+     * @param ids  삭제하려는 Vent 글의 ID 목록을 담은 문자열
+     * @return     Vent 글 삭제 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
+    public int deleteMyBoard(String ids) {
         String[] id = ids.split(",");
         List<Integer> idList = new ArrayList<>();
         List<String> imageList = new ArrayList<>();
         int result = -1;
 
-        for(String item : id) {
+        for (String item : id) {
             idList.add(Integer.parseInt(item));
         }
         imageList = boardVentRepository.selectBoardImages(idList);
         result = boardVentRepository.deleteHistoryBoard(idList);
-        if(result>0){
+        if (result > 0) {
             FileUpload.deleteFileList(imageList.toString());
         }
         return result;
     }
 
-
-    public int deleteMyComment(String comids){
+    /**
+     * 사용자가 작성한 Vent 글에 달린 댓글을 삭제하는 메서드입니다.
+     *
+     * @param comids  삭제하려는 댓글의 ID 목록을 담은 문자열
+     * @return        댓글 삭제 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
+    public int deleteMyComment(String comids) {
         String id[] = comids.split(",");
         List<Integer> idList = new ArrayList<>();
         int result = -1;
-        for(String item : id) {
+        for (String item : id) {
             idList.add(Integer.parseInt(item));
         }
         result = boardVentRepository.deleteHistoryComment(idList);
         return result;
     }
 
-    public int deleteMyLike(Map<String, String> data){
+    /**
+     * 사용자가 작성한 Vent 글에 대한 좋아요를 삭제하는 메서드입니다.
+     *
+     * @param data  Vent 글 및 좋아요 ID 목록을 담은 맵 객체
+     * @return      좋아요 삭제 결과를 나타내는 정수를 반환합니다. 성공 시 1, 실패 시 -1을 반환합니다.
+     */
+    public int deleteMyLike(Map<String, String> data) {
         String boardids = data.get("boardids");
         String likeids = data.get("likeids");
         String[] id = likeids.split(",");
@@ -377,18 +471,17 @@ public class BoardVentService {
         List<Integer> idList = new ArrayList<>();
         List<Integer> boardidList = new ArrayList<>();
         int result = -1;
-        for(String item : id) {
+        for (String item : id) {
             idList.add(Integer.parseInt(item));
         }
         result = boardVentRepository.deleteHistoryLike(idList);
-        if(result>0){
-            for(String item : boardid) {
+        if (result > 0) {
+            for (String item : boardid) {
                 boardidList.add(Integer.parseInt(item));
             }
             boardVentRepository.deleteLikes(boardidList);
         }
         return result;
     }
-
 
 }

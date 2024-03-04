@@ -19,100 +19,36 @@ import java.util.Map;
 @Component
 public class StoresDao {
 
-    private final JdbcTemplate jdbcTemplate;
     private final StoresRepository storesReposiory;
 
-    public void insertStore(HashMap<String, Object> storeMap) throws Exception {
-        StoreResponseVo storeResponseVo;
-        for (int index = 0; index < storeMap.size() / 2; index++) {
-            System.out.println("------" + index + "-------");
-
-            StoreRequestVo storeRequestVo = (StoreRequestVo) storeMap.get("store_info_" + index);
-            List<StoreRequestMenuVo> storeRequestMenuVoList = (List<StoreRequestMenuVo>) storeMap.get("store_menu_" + index);
-
-            //store에 정보가 없을 경우
-            if (storeRequestVo == null) {
-                System.out.println("storeRequestVo == null");
-                continue;
-            }
-
-            storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
-
-
-            if (storeResponseVo != null) {
-                log.info("이미 존제 함. storeRequestVo.getPlace_url() --> : {} ", storeRequestVo.getPlace_url());
-
-                storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
-
-                if (!storeRequestVo.getMenuName().equals("empty")) {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("store_id", storeResponseVo.getId());
-                    map.put("category", storeRequestVo.getKeyword());
-                    map.put("menu_name", storeRequestVo.getKeyword());
-
-                    storesReposiory.saveCategoryMenu(map);
-                }
-
-                for (int menuIndex = 0; menuIndex < storeRequestMenuVoList.size(); menuIndex++) {
-                    if (storeRequestMenuVoList.get(menuIndex).getMenu() == null) {
-                        continue;
-                    }
-
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("store_id", storeResponseVo.getId());
-                    map.put("menu", storeRequestMenuVoList.get(menuIndex).getMenu());
-                    map.put("price", storeRequestMenuVoList.get(menuIndex).getPrice());
-                    storesReposiory.saveMenus(map);
-                }
-                continue;
-            }
-
-            storesReposiory.saveStores(storeRequestVo);
-            log.info("insert storeInfo --> : {}", storeRequestVo.getPlace_url());
-
-            storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVo.getPlace_url());
-
-
-            if (!storeRequestVo.getMenuName().equals("empty")) {
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("store_id", storeResponseVo.getId());
-                map.put("category", storeRequestVo.getKeyword());
-                map.put("menu_name", storeRequestVo.getKeyword());
-                storesReposiory.saveCategoryMenu(map);
-
-            }
-
-            for (int menuIndex = 0; menuIndex < storeRequestMenuVoList.size(); menuIndex++) {
-                if (storeRequestMenuVoList.get(menuIndex).getMenu() == null) {
-                    continue;
-                }
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("store_id", storeResponseVo.getId());
-                map.put("menu", storeRequestMenuVoList.get(menuIndex).getMenu());
-                map.put("price", storeRequestMenuVoList.get(menuIndex).getPrice());
-                storesReposiory.saveMenus(map);
-            }
-        }
-    }
-
+    /**
+     * 중복된 가게를 체크하고 제거하는 메서드입니다.
+     *
+     * @param storeRequestVos 중복 체크를 수행할 가게 정보를 담은 VO 리스트
+     * @return 중복된 가게의 수
+     * @throws Exception 중복 체크 중 발생한 예외
+     */
     public int checkStore(List<StoreRequestVo> storeRequestVos) throws Exception {
-
-
+        // 중복된 가게의 수를 저장할 변수 초기화
         int count = 0;
+
+        // 리스트를 뒤에서부터 순회하여 중복 체크 수행
         for (int i = storeRequestVos.size() - 1; i >= 0; i--) {
             try {
+                // 가게의 place_url을 사용하여 저장소에서 해당 가게 정보를 조회
                 StoreResponseVo storeResponseVo = storesReposiory.findByIdPlaceUrl(storeRequestVos.get(i).getPlace_url());
 
+                // 조회된 가게 정보가 존재하면 중복으로 간주하고 리스트에서 제거
                 if (storeResponseVo != null) {
                     storeRequestVos.remove(i);
                     count++;
                 }
             } catch (Exception e) {
+                // 예외 발생 시 출력하고 계속 진행
                 e.printStackTrace();
             }
         }
+        // 중복된 가게의 수 반환
         return count;
     }
 }

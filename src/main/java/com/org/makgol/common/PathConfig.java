@@ -9,17 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class PathConfig implements WebMvcConfigurer {
     @Value("${file.path.matcher}")
     private String filePathMatcher;
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//
-//        String currentDirectory = System.getProperty("user.dir");
-//        System.out.println("현재 디렉토리: " + currentDirectory);
-//        String uploadFolder = currentDirectory+"\\src\\main\\resources\\static\\image\\";
-//        uploadFolder = uploadFolder.replace("\\","/");
-//        registry.addResourceHandler(filePathMatcher+"**")
-//                .addResourceLocations("file:"+uploadFolder);
-//    }
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
@@ -27,12 +16,23 @@ public class PathConfig implements WebMvcConfigurer {
         System.out.println("현재 디렉토리: " + currentDirectory);
         String uploadFolder = "/home/ubuntu/service/makgol/static/image/";
         uploadFolder = uploadFolder.replace("\\","/");
-
-        System.out.println(uploadFolder);
-
         registry.addResourceHandler(filePathMatcher+"**")
                 .addResourceLocations("file://"+uploadFolder);
     }
+
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//
+//        String currentDirectory = System.getProperty("user.dir");
+//        System.out.println("현재 디렉토리: " + currentDirectory);
+//        String uploadFolder = "/home/ubuntu/service/makgol/static/image/";
+//        uploadFolder = uploadFolder.replace("\\","/");
+//
+//        System.out.println(uploadFolder);
+//
+//        registry.addResourceHandler(filePathMatcher+"**")
+//                .addResourceLocations("file://"+uploadFolder);
+//    }
 
     // 리눅스 경우 root에서 시작하는 폴더 경로 지정 할 경우
 //.addResourceLocations("file:///usr/download/")

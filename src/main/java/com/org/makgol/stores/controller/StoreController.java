@@ -29,6 +29,13 @@ public class StoreController {
     private final StoreService storeService;
     private final HttpTransactionLogger logger;
 
+    /**
+     * 룰렛 결과 페이지로 이동하는 메서드입니다.
+     *
+     * @param category 카테고리 정보
+     * @param model    Spring의 Model 객체
+     * @return 업장 리스트 페이지의 뷰 이름
+     */
     @GetMapping("/rouletteResult")
     public String rouletteResult(@RequestParam("category") String category, Model model) {
         System.out.println("category = " + category);
@@ -37,11 +44,25 @@ public class StoreController {
         return nextPage;
     }
 
+    /**
+     * 테스트 페이지로 이동하는 메서드입니다.
+     *
+     * @return 테스트 페이지의 뷰 이름
+     */
     @GetMapping(value = "/test")
     public String test() {
         return "jsp/store/test";
     }
 
+    /**
+     * 업장 리스트 페이지로 이동하는 메서드입니다.
+     *
+     * @param x       경도 정보
+     * @param y       위도 정보
+     * @param keyword 검색 키워드
+     * @param model   Spring의 Model 객체
+     * @return 업장 리스트 페이지의 뷰 이름
+     */
     @GetMapping(value = "/list")
     public String listPage(
             @RequestParam String x,
@@ -55,12 +76,24 @@ public class StoreController {
         return "jsp/store/store_list";
     }
 
+    /**
+     * 업장 상세 페이지로 이동하는 메서드입니다.
+     *
+     * @return 업장 상세 페이지의 뷰 이름
+     */
     @GetMapping(value = "/detail")
     public String detailPage() {
         return "jsp/store/store_detail";
     }
 
-
+    /**
+     * 업장 리스트 데이터를 조회하는 메서드입니다.
+     *
+     * @param longitude 경도 정보
+     * @param latitude  위도 정보
+     * @param keyword   검색 키워드
+     * @return ResponseEntity 객체
+     */
     @GetMapping(value = "/list_data")
     @ResponseBody
     public ResponseEntity<?> findStoreListData(
@@ -81,6 +114,12 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 업장 상세 데이터를 조회하는 메서드입니다.
+     *
+     * @param store_id 업장 아이디
+     * @return ResponseEntity 객체
+     */
     @GetMapping(value = "/detail_data/store_id/{store_id}")
     @ResponseBody
     public ResponseEntity<?> findStoreDetailData(@PathVariable int store_id) {
@@ -90,6 +129,12 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 업장 메뉴 데이터를 조회하는 메서드입니다.
+     *
+     * @param store_id 업장 아이디
+     * @return ResponseEntity 객체
+     */
     @GetMapping(value = "/menu_data/store_id/{store_id}")
     @ResponseBody
     public ResponseEntity<?> findStoreMenuData(@PathVariable int store_id) {
@@ -99,6 +144,12 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 업장 리뷰 데이터를 조회하는 메서드입니다.
+     *
+     * @param store_id 업장 아이디
+     * @return ResponseEntity 객체
+     */
     @GetMapping(value = "/review_data/store_id/{store_id}")
     @ResponseBody
     public ResponseEntity<?> findStoreReviewData(@PathVariable int store_id) {
@@ -137,6 +188,13 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 리뷰를 생성하는 메서드입니다.
+     *
+     * @param createReviewDto 생성할 리뷰 정보를 담은 DTO 객체
+     * @param userId          현재 로그인한 사용자의 아이디 (쿠키에서 추출)
+     * @return ResponseEntity 객체
+     */
     @PostMapping(value = "/review")
     public ResponseEntity<?> createReview(@ModelAttribute CreateReviewDto createReviewDto, @CookieValue(name = "id", required = false) Integer userId) {
         if (userId == null) {
@@ -157,6 +215,12 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 리뷰 이미지를 조회하는 메서드입니다.
+     *
+     * @param review_id 리뷰 아이디
+     * @return ResponseEntity 객체
+     */
     @GetMapping(value = "/review_image/review_id/{review_id}")
     public ResponseEntity<?> findStoreReviewImageWithId(@PathVariable int review_id) {
         List<String> reviewImages = storeService.findStoreReviewImageWithId(review_id);
@@ -165,6 +229,12 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 좋아요 상태를 가져오는 메서드입니다.
+     *
+     * @param likesDto 좋아요 정보를 담은 DTO 객체
+     * @return ResponseEntity 객체
+     */
     @GetMapping(value = "/likes")
     public ResponseEntity<?> getLikesStatus(LikesDto likesDto) {
         boolean result = storeService.getLikesStatus(likesDto);
@@ -173,6 +243,13 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 좋아요 수를 증가시키는 메서드입니다.
+     *
+     * @param likesDto 좋아요 정보를 담은 DTO 객체
+     * @param userId   현재 로그인한 사용자의 아이디 (쿠키에서 추출)
+     * @return ResponseEntity 객체
+     */
     @PutMapping(value = "/likes")
     public ResponseEntity<?> increaseLikesWithId(LikesDto likesDto, @CookieValue(name = "id", required = false) Integer userId) {
         if (userId == null) {
@@ -185,6 +262,13 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 좋아요 수를 감소시키는 메서드입니다.
+     *
+     * @param likesDto 좋아요 정보를 담은 DTO 객체
+     * @param userId   현재 로그인한 사용자의 아이디 (쿠키에서 추출)
+     * @return ResponseEntity 객체
+     */
     @PutMapping(value = "/delikes")
     public ResponseEntity<?> decreaseLikesWithId(LikesDto likesDto, @CookieValue(name = "id", required = false) Integer userId) {
         if (userId == null) {
@@ -197,15 +281,33 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 리뷰를 수정하는 메서드입니다.
+     *
+     * @param review_id       수정할 리뷰의 아이디
+     * @param modifyReviewDto 수정할 리뷰 정보를 담은 DTO 객체
+     * @return ResponseEntity 객체
+     */
     @PutMapping(value = "/review_id/{review_id}")
-    public ResponseEntity<?> modifyReviewWithId(@PathVariable int review_id, @RequestBody ModifyReviewDto modifiedReview) {
-        modifiedReview.setReviewId(review_id);
-        storeService.modifyReviewWithId(modifiedReview);
+    public ResponseEntity<?> modifyReviewWithId(@PathVariable int review_id, @ModelAttribute ModifyReviewDto modifyReviewDto) {
+        modifyReviewDto.setReviewId(review_id);
+
+        if (modifyReviewDto.getReviewImages() == null) {
+            modifyReviewDto.setReviewImages(new ArrayList<>());
+        }
+
+        storeService.modifyReviewWithId(modifyReviewDto);
+
         KakaoLocalResponseVo response = new KakaoLocalResponseVo<>(true, "리뷰를 수정하였습니다.", null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
+    /**
+     * 리뷰를 삭제하는 메서드입니다.
+     *
+     * @param review_id 삭제할 리뷰의 아이디
+     * @return ResponseEntity 객체
+     */
     @DeleteMapping(value = "/review_id/{review_id}")
     public ResponseEntity<?> deleteReviewWithId(@PathVariable int review_id) {
         storeService.deleteReviewWithId(review_id);
@@ -213,17 +315,25 @@ public class StoreController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
+    /**
+     * 카카오 로컬 API를 호출하는 메서드입니다.
+     *
+     * @param kakaoLocalRequestVo 카카오 로컬 API에 전달할 요청 정보를 담은 VO 객체
+     * @return 업장 정보를 담은 카카오 로컬 API 응답 JSON 객체
+     */
     @GetMapping(value = "/kakao-local-api")
     public String callKakaoLocalApi(KakaoLocalRequestVo kakaoLocalRequestVo) {
+        // 요청 데이터를 로그에 기록
         logger.logRequestDto(kakaoLocalRequestVo);
 
+        // 카카오 로컬 API 호출 및 응답 데이터를 받아옴
         KakaoLocalResponseJSON kakaoResponseJSON = storeService.callKakaoLocalAPI(kakaoLocalRequestVo);
 
-        // ShopInfo 리스트를 가져온다
+        // ShopInfo 리스트를 가져옴
         List<KakaoLocalResponseJSON.ShopInfo> shopInfoList = kakaoResponseJSON.documents;
 
-
-        //logger.logResponseJson(kakaoResponseJSON);
+        // HTTP 트랜잭션 로그 기록
         HttpTransactionLogger httpTransactionLogger = new HttpTransactionLogger();
         httpTransactionLogger.logResponseJson(kakaoResponseJSON);
 
@@ -233,13 +343,14 @@ public class StoreController {
                 .collect(Collectors.toList());
 
         try {
+            // 업장 메뉴 정보를 가져오는 메서드 호출
             storeService.getMenu(storeRequestVoList);
         } catch (Exception e) {
-
+            // 예외 처리
         }
 
+        // 카카오 로컬 API로부터 받은 업장 정보를 뷰로 전달
         List<KakaoLocalResponseJSON.ShopInfo> shops = kakaoResponseJSON.documents;
-
         return "store/store_list";
     }
 

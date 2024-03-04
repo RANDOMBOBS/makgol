@@ -147,11 +147,7 @@
     margin-bottom: 75px;
 }
 
-.register_modal
-> .modal_body
-> .register_wrapper
-> #register_form
-> #submit_register:hover {
+.register_modal > .modal_body > .register_wrapper > #register_form > #submit_register:hover {
     color: #ffe286;
     background-color: darkgray;
     cursor: pointer;

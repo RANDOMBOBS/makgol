@@ -1,11 +1,4 @@
-![배너]()
-Project Timeline
-`2022-06-24` ~  `2022-08-01` (6주)
-<br>
-<br>
-# 막내야골라봐! (makgol)
 
-<br>
 
 
 
@@ -24,7 +17,7 @@ Project Timeline
 <br>
 <br>
 
-👩‍🦼 [막내야골라봐 바로가기](http://localhost:8080/)
+👩‍🦼 [막내야골라봐 바로가기](http://www.makgol.com/)
 
 <br>
 
@@ -128,12 +121,11 @@ Project Timeline
 - **Xss filter** : Xss 대응을 위해 사용
 - **OAuth2.0** : 소셜 로그인을 위해 사용
 - **Spring Batch** : 대용량 데이터 처리를 위해 사용
-- **mybatis**
+- **mybatis** : 자체 캐싱을 지원하기에 사용
 - **Selenium** : 상세 데이터를 수집하기 위해 사용
 - **Thread** : 크롤링을 병렬처리하기 위해 사용
-- **Redis**
-- Swagger
-- cookie
+- **Redis** : DB 리소스와 요청속도 개선을위해 사용
+- **cookie** : 토큰의 정보를 담기위해 상용
 - **RestTemplate** : Public API와 Kakao API를 호출하기 위해 사용
 
 ### Data Pipeline
@@ -146,7 +138,8 @@ Project Timeline
 ## Project Design
 
 ### Service Architecture
-<img width="2228" alt="randombobs Architecture" src="https://github.com/RANDOMBOBS/makgol/assets/141618648/afd7b6be-e746-44a7-ad68-cea574528882">
+<img width="890" alt="스크린샷 2024-02-09 17 09 00" src="https://github.com/RANDOMBOBS/makgol/assets/105048235/7e5321d1-65c5-4be4-b8a0-f7f7b753cbdc">
+
 
 <br>
 
@@ -168,4 +161,4 @@ Project Timeline
 | :---------------------------------: | :----------------------------------: | :-----------------------------: | :----------------------------------: | :-----------------------------: |
 | <img src="https://github.com/RANDOMBOBS/makgol/assets/105048235/0ded6f53-9063-4808-a165-669b990d420e" alt="김한울" width="200px"/> |  <img src="https://github.com/RANDOMBOBS/makgol/assets/105048235/0f462196-5701-4575-8b8f-974610c268aa" alt="김효진" width="200px"/> | <img src=https://github.com/RANDOMBOBS/makgol/assets/105048235/7ec262f5-a626-4d8a-88a4-0fecccdf2627 alt="이승훈" width="200px" /> | <img src="https://github.com/RANDOMBOBS/.readme/assets/105048235/89123810-53a2-4865-926b-598bac0fb825" alt="김선현" width="150px" /> | <img src="https://github.com/RANDOMBOBS/makgol/assets/105048235/45edd2e8-c191-460b-bdf6-46fa0d06c964" alt="김성희" width="200px" /> |
 | `Public API 미세먼지 정보` <br> `공지사항 게시판` <br> `랭킹별 업장, 식당 추천` <br> `카테코리 페이지` |  <br>`Public API 날씨정보 호출` <br> `로그인, 로그아웃`<br>`쿠키활용 로그인 유지`<br>`건의사항 페이지` <br> `마이페이지` <br> `관리자용 페이지` <br> `돌림판` | `Kakao Map API` <br> `업장리스트 페이지` <br> `상세페이지` <br> `회원가입 로그인 아이디 비밀번호 찾기 모달` | `데이터 수집, 가공` <br> `로그인, 로그아웃` <br>`회원가입, PW찾기`<br>`JWT`<br> `Spring security` <br> `oauth2 소셜로그인` | `공룡게임`<br>`사다리게임` <br>`하소연 게시판` <br>  |
-|조정석(아이디어뱅크!)|김성실(최고의팀원!)|기술반장<br>(무엇이든 물어보세요!)|캡틴(길라잡이!)|열정맨(할수있어!)|
+

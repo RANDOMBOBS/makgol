@@ -2,6 +2,11 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.org.makgol.users.vo.UsersResponseVo" %>
+<%@page import="java.util.List" %>
+<%@page import="java.util.ArrayList" %>
+<%@page import="java.net.URLEncoder" %>
+<%@page import="java.net.URLDecoder" %>
+<%@page import="java.nio.charset.StandardCharsets" %>
 
 
 <link rel="stylesheet"
@@ -18,30 +23,54 @@
 
 <jsp:include page="./modal.jsp"></jsp:include>
 
+
 <%
-    String xValue = "127.028290548097";
-    String yValue = "37.4998293543379";
-    if (application.getAttribute("loginedUserVo") != null) {
-        UsersResponseVo loginedUserVo = (UsersResponseVo) application.getAttribute("loginedUserVo");
-        // 경도 처리
-            Double longitude = loginedUserVo.getLongitude();
-            if (longitude != null) {
-                xValue = String.valueOf(longitude);
-            }
+         UsersResponseVo userVo = new UsersResponseVo();
 
-            // 위도 처리
-            Double latitude = loginedUserVo.getLatitude();
-            if (latitude != null) {
-                yValue = String.valueOf(latitude);
-            }
-    }
+         userVo.setLongitude(127.028290548097);
+         userVo.setLatitude(37.4998293543379);
 
+         List<String> names = new ArrayList<>();
+         List<String> values = new ArrayList<>();
+         Cookie[] cookies = request.getCookies(); // 쿠키들
+         if (cookies != null) {
+             for (Cookie cookie : cookies) {
+                names.add(cookie.getName());
+                values.add(URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8));
+             }
+         }
 
+      for (int i = 0; i < names.size(); i++) {
+          String name = names.get(i);
+          String value = values.get(i);
+          if (name.equals("id")) {
+              userVo.setId(Integer.parseInt(value));
+          } else if (name.equals("name")) {
+              userVo.setName(value);
+          } else if (name.equals("photo_path")) {
+              userVo.setPhoto_path(value);
+          } else if (name.equals("grade")) {
+              userVo.setGrade(value);
+          } else if (name.equals("userX")) {
+              userVo.setLongitude(Double.parseDouble(value));
+          } else if (name.equals("userY")) {
+              userVo.setLatitude(Double.parseDouble(value));
+          } else if (name.equals("weatherAddr")) {
+              userVo.setWeatherAddr(value);
+          } else if (name.equals("valueX")) {
+              userVo.setValueX(Integer.parseInt(value));
+          } else if (name.equals("valueY")) {
+              userVo.setValueY(Integer.parseInt(value));
+          }
+      }
+    request.setAttribute("loginedUserVo", userVo);
+    UsersResponseVo loginedUserVo = (UsersResponseVo) request.getAttribute("loginedUserVo");
 %>
 
+
 <script>
-var xValue = "<%= xValue %>";
-var yValue = "<%= yValue %>";
+var xValue = "<%= userVo.getLongitude() %>";
+var yValue = "<%= userVo.getLatitude() %>";
 </script>
 <header id="header">
     <div class="all_category">
@@ -54,11 +83,11 @@ var yValue = "<%= yValue %>";
         <ul class="main_category">
             <li>
                 <c:choose>
-                    <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
+                    <c:when test="${loginedUserVo.longitude == 0.0}">
+                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
+                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
                     </c:otherwise>
                 </c:choose>
 
@@ -113,74 +142,72 @@ var yValue = "<%= yValue %>";
             </li>
             <li>
                 <c:choose>
-                    <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
+                    <c:when test="${loginedUserVo.longitude == 0.0}">
+                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
+                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
-                    <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
+                    <c:when test="${loginedUserVo.longitude == 0.0}">
+                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
+                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
-                    <c:when test="${loginedUserVogit == null}">
-                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
+                    <c:when test="${loginedUserVo.longitude == 0.0}">
+                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
+                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
-                    <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
+                    <c:when test="${loginedUserVo.longitude == 0.0}">
+                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
+                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
                     </c:otherwise>
                 </c:choose>
             </li>
             <li>
                 <c:choose>
-                    <c:when test="${loginedUserVo == null}">
-                        <a href="http://localhost:8080/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
+                    <c:when test="${loginedUserVo.longitude == 0.0}">
+                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="http://localhost:8080/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
+                        <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
                     </c:otherwise>
                 </c:choose>
             </li>
         </ul>
     </div>
-
-    <a href="http://localhost:8080"><img id="logoimage"
-                                         src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
+    <a href="http://www.makgol.com"><img id="logoimage" src="<c:url value='/resources/static/image/default/mainLogo.png' />"></a>
     <div class="userTab">
         <c:choose>
 
-            <c:when test="${not empty loginedUserVo}">
+            <c:when test="${loginedUserVo.name != null}">
                 <div class="welcome">
                     <div class="weather_info">
                         <span class="address"><i
-                                class="fa-solid fa-location-dot"></i> ${loginedUserVo.weatherAddr}</span>
+                                class="fa-solid fa-location-dot"></i><c:out value="${loginedUserVo.weatherAddr}"/></span>
                         <span class="temp"></span>
                         <span class="sky"></span>
                         <span class="emoticon"></span>
                     </div>
                     <div class="user_info">
-                        <span>${loginedUserVo.name}</span>
-                        <img src="${loginedUserVo.photo_path}" alt="프로필사진"/>
+                        <span><c:out value="${loginedUserVo.name}"/></span>
+                        <img src="<c:out value='${loginedUserVo.photo_path}'/>" alt="프로필사진"/>
                     </div>
                 </div>
             </c:when>
@@ -208,7 +235,7 @@ var yValue = "<%= yValue %>";
             </li>
 
             <c:choose>
-                <c:when test="${loginedUserVo != null}">
+                <c:when test="${loginedUserVo.name != null}">
                     <c:if test="${loginedUserVo.grade == '관리자'}">
                         <li><a href="<c:url value='/admin/userManagement'/>">회원관리</a></li>
                     </c:if>
@@ -237,10 +264,7 @@ var yValue = "<%= yValue %>";
     var jQ = jQuery;
     var currentURL = window.location.href;
 
-
-    if (${loginedUserVo != null} &&
-    ${loginedUserVo.grade == '블랙리스트'})
-    {
+    if (${loginedUserVo != null} && ${loginedUserVo.grade == '블랙리스트'}) {
         alert("접근이 제한된 사용자입니다.");
         jQ.ajax({
             url: "/user/blackList",
@@ -288,7 +312,6 @@ var yValue = "<%= yValue %>";
     registerModalButtonEle.addEventListener("click", () => {
         const modalCoverEle = document.querySelector(".modal_cover");
         const registerModalEle = document.querySelector(".register_modal");
-
         modalCoverEle.style.display = "block";
         registerModalEle.style.display = "block";
     })
@@ -311,22 +334,25 @@ var yValue = "<%= yValue %>";
         let sky = "";
         let rainSnow = "";
 
-        <c:if test="${not empty loginedUserVo}">
-        valueX = ${loginedUserVo.valueX}
-            valueY = ${loginedUserVo.valueY}
-                </c:if>
-
-                <c:if test="${empty loginedUserVo}">
+        <c:choose>
+            <c:when test="${loginedUserVo.valueX == 0}">
                 valueX = 61;
-        valueY = 126;
-        </c:if>
+                valueY = 126;
+            </c:when>
+            <c:otherwise>
+                valueX = ${loginedUserVo.valueX}
+                valueY = ${loginedUserVo.valueY}
+            </c:otherwise>
+        </c:choose>
 
         let date = new Date();
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
+
         if (month > 0 && month < 10) {
             month = "0" + month;
         }
+
         let day = date.getDate();
         if (day > 0 && day < 10) {
             day = "0" + day;
@@ -376,9 +402,7 @@ var yValue = "<%= yValue %>";
         } else if (nowHourMinute < 1000) {
             nowHourMinute = "0" + nowHourMinute
         }
-        if (month > 0 && month < 10) {
-            month = "0" + month;
-        }
+
         if (hour > 0 && hour < 10) {
             hour = "0" + hour;
         } else if (hour == 0) {
@@ -392,19 +416,8 @@ var yValue = "<%= yValue %>";
         let nowHour = nowHourMinute.substring(0, 2);
         let baseDate = year + month.toString() + day;
         let baseTime = nowHour + "30";
-        console.log("date" + date)
-        console.log("year" + year)
-        console.log("month" + month)
-        console.log("day" + day)
-        console.log("hour" + hour)
-        console.log("minute" + minute)
-        console.log("nowTime" + nowTime)
-        console.log("nowHourMinute" + nowHourMinute)
-        console.log("nowHour" + nowHour)
-        console.log("baseDate" + baseDate)
-        console.log("baseTime" + baseTime)
-        console.log(valueX);
-        console.log(valueY);
+
+
         jQ.ajax({
             method: "GET",
             url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst",
@@ -420,17 +433,13 @@ var yValue = "<%= yValue %>";
                 ny: valueY,
             },
             success: function (data) {
-                console.log(data)
                 let weatherDatas = data.response.body.items.item
                 let temp = weatherDatas.filter((item, index) => item.category === "T1H");
                 let T1H = temp[0].fcstValue;
-                console.log("기온은?" + T1H);
                 let precipitation = weatherDatas.filter((item, index) => item.category === "RN1")
                 let RN1 = precipitation[0].fcstValue;
-                console.log("강수량은?" + RN1);
                 let skyCondition = weatherDatas.filter((item, index) => item.category === "SKY")
                 let SKY = skyCondition[0].fcstValue;
-                console.log("하늘상태는?" + SKY);
                 switch (SKY) {
                     case "1" :
                         sky = "맑음";
@@ -445,9 +454,7 @@ var yValue = "<%= yValue %>";
                         sky = ""
                         break;
                 }
-                console.log("하늘 상태 한글로?" + sky);
                 let PTY = data.response.body.items.item[6].fcstValue;
-                console.log("눈이오나요 비가오나요?" + PTY);
                 switch (PTY) {
                     case "1" :
                     case "5" :
@@ -468,8 +475,6 @@ var yValue = "<%= yValue %>";
                 if (rainSnow != "") {
                     sky = rainSnow;
                 }
-                console.log("뭐가 오나요?" + rainSnow)
-                console.log("하늘 상태 한글로?" + sky);
 
                 jQ(".temp").text(T1H + "℃, ");
                 if (RN1 != "강수없음") {
@@ -497,12 +502,16 @@ var yValue = "<%= yValue %>";
                     jQ(".emoticon").html("<i class='fa-solid fa-cloud-meatball'  style='color:#8cb9ff'></i>")
                 }
 
+
+
+
             },
             error: function (xhr, status, error) {
                 console.error(xhr, status, error);
             },
         });
     }
+
 
     getWeather();
 </script>

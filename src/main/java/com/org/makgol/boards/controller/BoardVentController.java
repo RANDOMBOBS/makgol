@@ -41,6 +41,14 @@ public class BoardVentController {
 		return nextPage;
 	}
 
+	/**
+	 * 모든 후기 게시글 목록을 보여주는 메서드입니다.
+	 *
+	 * @param pageGroup 페이지 그룹을 나타내는 문자열
+	 * @param pageNum   페이지 번호를 나타내는 문자열
+	 * @param model     Model 객체
+	 * @return "jsp/board/vent/all_vent_list" 뷰를 반환하고, 모델에 후기 게시글 목록과 페이징 정보를 추가합니다.
+	 */
 	@GetMapping("/showAllList")
 	public String showAllList(@RequestParam("pageGroup") String pageGroup, @RequestParam("pageNum") String pageNum, Model model) {
 		System.out.println("확인");
@@ -55,18 +63,14 @@ public class BoardVentController {
 		int totArticles = boardService.boardVentAll();
 		PageVo pageVo = new PageVo(totArticles, pNum, pGroup);
 
-
 		if (reviewListAll != null && totArticles!=0) {
 			model.addAttribute("reviewListAll", reviewListAll);
-//            model.addAttribute("pageGroup", pGroup);
-//            model.addAttribute("pageNum", pNum);
-//            model.addAttribute("totArticles", totArticles);
-//            model.addAttribute("scale", amount);
 			model.addAttribute("pageVo", pageVo);
 		}
 		System.out.println(reviewListAll);
 		return "jsp/board/vent/all_vent_list";
 	}
+
 
 	/**
 	 * vent 글 쓰기 버튼
@@ -229,35 +233,50 @@ public class BoardVentController {
 		return nextPage;
 	}
 
-	/** vent 글 검색 **/
+	/**
+	 * 후기 게시글을 검색하는 메서드입니다.
+	 *
+	 * @param map   검색 매개변수를 담은 Map 객체
+	 * @param model Model 객체
+	 * @return "jsp/board/vent/search_vent_list" 뷰를 반환하고, 모델에 검색된 후기 게시글 목록을 추가합니다.
+	 */
 	@RequestMapping(value = "/search", method = { RequestMethod.GET, RequestMethod.POST })
 	public String search(@RequestBody Map<String, String> map, Model model) {
 		String nextPage = "jsp/board/vent/search_vent_list";
-		String searchOption = (String) map.get("searchOption");
-		String searchWord = (String) map.get("searchWord");
+		String searchOption = map.get("searchOption");
+		String searchWord = map.get("searchWord");
 		System.out.println("searchWord = " + searchWord);
 		System.out.println("searchOption = " + searchOption);
 		List<BoardDetailResponseVo> boardVos = boardService.searchBoard(searchOption, searchWord);
 		System.out.println("boardVos = " + boardVos);
 		if (boardVos != null) {
 			model.addAttribute("boardVos", boardVos);
-
 		}
 		return nextPage;
 	}
 
 
+	/**
+	 * 사용자의 게시글 좋아요 상태를 확인하는 메서드입니다.
+	 *
+	 * @param boardVo BoardVo 객체
+	 * @return 사용자의 게시글 좋아요 상태를 나타내는 정수를 포함한 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@RequestMapping(value="/userLikeStatus", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Integer> userLikeStatus(@RequestBody BoardVo boardVo) {
 		Map<String, Integer> map = new HashMap<>();
 		int status = boardService.userLikeStatus(boardVo);
 		map.put("status", status);
-		return map;	}
+		return map;
+	}
 
-
-
-	/** vent 글 좋아요 **/
+	/**
+	 * 게시글에 좋아요를 추가하는 메서드입니다.
+	 *
+	 * @param boardVo BoardVo 객체
+	 * @return 좋아요 추가 결과와 게시글의 총 좋아요 수를 나타내는 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/likeBoard", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Integer> likeBoard(@RequestBody BoardVo boardVo) {
@@ -274,6 +293,12 @@ public class BoardVentController {
 		return map;
 	}
 
+	/**
+	 * 게시글 좋아요를 취소하는 메서드입니다.
+	 *
+	 * @param boardVo BoardVo 객체
+	 * @return 좋아요 취소 결과와 게시글의 총 좋아요 수를 나타내는 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/unlikeBoard", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Integer> unlikeBoard(@RequestBody BoardVo boardVo) {
@@ -290,6 +315,12 @@ public class BoardVentController {
 		return map;
 	}
 
+	/**
+	 * 사용자의 게시글을 삭제하는 메서드입니다.
+	 *
+	 * @param ids 삭제할 게시글의 식별자를 담은 문자열
+	 * @return 삭제 결과를 나타내는 정수를 포함한 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@PostMapping("/deleteMyBoard/{ids}")
 	public Map<String, Integer> deleteMyBoard(@PathVariable("ids") String ids){
@@ -300,6 +331,12 @@ public class BoardVentController {
 		return map;
 	}
 
+	/**
+	 * 사용자의 댓글을 삭제하는 메서드입니다.
+	 *
+	 * @param comids 삭제할 댓글의 식별자를 담은 문자열
+	 * @return 삭제 결과를 나타내는 정수를 포함한 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@PostMapping("/deleteMyComment/{comids}")
 	public Map<String, Integer> deleteMyComment(@PathVariable("comids") String comids){
@@ -310,6 +347,12 @@ public class BoardVentController {
 		return map;
 	}
 
+	/**
+	 * 사용자의 좋아요를 삭제하는 메서드입니다.
+	 *
+	 * @param data 삭제할 좋아요 정보를 담은 Map 객체
+	 * @return 삭제 결과를 나타내는 정수를 포함한 Map 객체를 반환합니다.
+	 */
 	@ResponseBody
 	@PostMapping("/deleteMyLike")
 	public Map<String, Integer> deleteMyLike(@RequestBody Map<String, String> data) {

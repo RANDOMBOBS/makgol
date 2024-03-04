@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
     const displayMenu = (menus) => {
-        const menuListEle= $("#menu_list");
+        const menuListEle = $("#menu_list");
 
         menus.forEach((item) => {
             const liEle = $("<li>");
@@ -9,7 +9,10 @@
             const priceEle = $("<span>").addClass("price");
 
             menuNameELe.text(item.menu);
-            priceEle.text(item.price + "₩");
+
+            const price = item.price ? item.price + "₩" : "";
+
+            priceEle.text(price)
 
             liEle.append(menuNameELe);
             liEle.append(priceEle);

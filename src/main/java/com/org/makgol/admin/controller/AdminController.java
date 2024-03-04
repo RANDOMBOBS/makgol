@@ -21,11 +21,22 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 
+	/**
+	 * 사용자 관리 페이지를 처리하는 메서드입니다.
+	 *
+	 * @return "jsp/admin/user_management" 뷰를 반환합니다.
+	 */
 	@RequestMapping(value = "/userManagement", method = { RequestMethod.GET, RequestMethod.POST })
 	public String userManagement(){
 		return "jsp/admin/user_management";
 	}
 
+	/**
+	 * 사용자 목록을 처리하는 메서드입니다.
+	 *
+	 * @param model Model 객체
+	 * @return "jsp/admin/user_list" 뷰를 반환합니다.
+	 */
 	@RequestMapping(value = "/userList", method = { RequestMethod.GET, RequestMethod.POST })
 	public String userList(Model model){
 		String nextPage = "jsp/admin/user_list";
@@ -34,9 +45,14 @@ public class AdminController {
 			model.addAttribute("userVos", userVos);
 		}
 		return nextPage;
-
 	}
 
+	/**
+	 * 사용자 등급을 수정하는 메서드입니다.
+	 *
+	 * @param userVo 사용자 요청 정보를 담은 객체
+	 * @return 수정 결과를 나타내는 정수를 반환합니다.
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/modifyGrade", method = { RequestMethod.GET, RequestMethod.POST })
 	public int modifyGrade(@RequestBody UsersRequestVo userVo) {
@@ -44,11 +60,15 @@ public class AdminController {
 		return result;
 	}
 
-
+	/**
+	 * 검색을 처리하는 메서드입니다.
+	 *
+	 * @param map   검색 매개변수를 담은 Map 객체
+	 * @param model Model 객체
+	 * @return "jsp/admin/search_user_list" 뷰를 반환합니다.
+	 */
 	@RequestMapping(value = "/search", method = {RequestMethod.POST})
 	public String search(@RequestBody Map<String, String> map, Model model){
-
-
 		String nextPage = "jsp/admin/search_user_list";
 		List<UsersResponseVo> userVos = adminService.getSearchUser(map);
 		if(userVos != null){
@@ -56,7 +76,6 @@ public class AdminController {
 			model.addAttribute("value", map.get("searchValue"));
 		}
 		return nextPage;
-
 	}
 
 }

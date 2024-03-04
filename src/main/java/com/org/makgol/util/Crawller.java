@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Slf4j
 public class Crawller {
 
-    private int thread_count = 1;
+    private int thread_count = 10;
 	/**
 	 * @param storeRequestVos<StoreRequestVo> storeRequestVos
 	 * 				------StoreRequestVo---------

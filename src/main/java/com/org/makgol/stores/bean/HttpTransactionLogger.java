@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class HttpTransactionLogger {
 
+	/**
+	 * KakaoLocalRequestVo 객체의 검색 요청 데이터를 출력하는 메서드입니다.
+	 *
+	 * @param vo KakaoLocalRequestVo 객체
+	 */
 	public void logRequestDto(KakaoLocalRequestVo vo) {
 		System.out.println("검색 요청 데이터");
 		System.out.println("[위도]: " + vo.getX());
@@ -18,6 +23,11 @@ public class HttpTransactionLogger {
 		System.out.println("[페이지 개수]: " + vo.getPage());
 	}
 
+	/**
+	 * KakaoLocalResponseJSON 객체의 검색 응답 데이터를 출력하는 메서드입니다.
+	 *
+	 * @param json KakaoLocalResponseJSON 객체
+	 */
 	public void logResponseJson(KakaoLocalResponseJSON json) {
 		System.out.println("검색 응답 데이터");
 		System.out.println("[총 응답 개수]: " + json.documents.size());
