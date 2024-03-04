@@ -175,6 +175,8 @@
         let form = document.search_board_form;
         let searchOption = jQ("select[name=search]").val();
         let searchWord = jQ("input[name=searchWord]").val();
+
+
         if (searchWord == "") {
             alert("검색어를 입력해주세요");
             form.searchWord.focus();
@@ -182,6 +184,8 @@
             let data = {
                 searchOption: searchOption,
                 searchWord: searchWord,
+                pageNum: pageNum,
+                pageGroup: pageGroup
             };
             jQ.ajax({
                 url: "/board/vent/search",

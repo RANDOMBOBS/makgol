@@ -267,7 +267,11 @@
                 </foreach>
             </update>
 
-
+    <!-- boardVentCount -->
+    <select id="boardSuggestionCount" resultType="int">
+        SELECT COUNT(*) FROM boards
+        where category='vent'
+    </select>
         </mapper>
 
 

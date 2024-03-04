@@ -20,8 +20,8 @@
       <div class="board_list_contents">
         <form name="search_board_form">
           <select name="search">
-            <option value="titleContents">제목+내용</option>
             <option value="title">제목</option>
+            <option value="titleContents">제목+내용</option>
             <option value="contents">내용</option>
             <option value="name">작성자</option>
           </select>
@@ -36,11 +36,9 @@
 
 
     <jsp:include page="../../include/footer.jsp"></jsp:include>
-
 	<jsp:include page="../../../script/jsp/suggestion.jsp"></jsp:include>
 
 	<script>
-
 		allBoardList();
 	</script>
 

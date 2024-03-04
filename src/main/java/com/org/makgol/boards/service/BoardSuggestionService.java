@@ -29,8 +29,9 @@ public class BoardSuggestionService {
      *
      * @return suggestion 게시판의 모든 글을 담은 List 객체를 반환합니다. 글이 없을 경우 null을 반환합니다.
      */
-    public List<BoardVo> getSuggestionBoard() {
-        List<BoardVo> boardVos = boardSuggestionRepository.selectAllSuggestionBoard();
+    public List<BoardVo> getSuggestionBoard(int pageNum, int pageSize) {
+        int offset = pageNum * pageSize;
+        List<BoardVo> boardVos = boardSuggestionRepository.selectAllSuggestionBoard(offset, pageSize);
         return boardVos.size() > 0 ? boardVos : null;
     }
 
@@ -485,4 +486,21 @@ public class BoardSuggestionService {
     }
 
 
+    public List<BoardDetailResponseVo> boardSuggestionAll(int pNum, int size) {
+        System.out.println(pNum);
+        System.out.println(size);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("offset", pNum);
+        map.put("pageSize", size);
+        return boardSuggestionRepository.boardSuggestionAll(map);
+    }
+
+    /**
+     * vent 게시판의 총 글 개수를 반환하는 메서드입니다.
+     *
+     * @return vent 게시판의 총 글 개수
+     */
+    public int boardSuggestionAll() {
+        return boardSuggestionRepository.boardSuggestionCount();
+    }
 }
