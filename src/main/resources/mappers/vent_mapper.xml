@@ -263,8 +263,9 @@
 
     <!-- boardVentAll -->
     <select id="boardVentAll" resultType="com.org.makgol.boards.vo.BoardDetailResponseVo" parameterType="hashmap">
-        SELECT b.id, b.user_id, b.hit, b.title, b.date, b.category, b.sympathy, bu_sub.name
-        FROM boards AS b
+        <![CDATA[
+            SELECT b.id, b.user_id, b.hit, b.title, b.date, b.category, b.sympathy, bu_sub.name
+                FROM boards AS b
         INNER JOIN (
         SELECT b_sub2.id, u_sub.name
         FROM(
@@ -281,7 +282,7 @@
         FROM users FORCE INDEX(idx_name)
         ) AS u_sub ON b_sub2.user_id = u_sub.id
         ) AS bu_sub ON b.id = bu_sub.id ORDER BY id DESC;
-
+        ]]>
 
     </select>
 
