@@ -39,28 +39,11 @@
 
 
     <select id="selectAllSuggestionBoard" resultMap="boardResult" parameterType="com.org.makgol.boards.vo.BoardVo">
-        <![CDATA[
-        SELECT b.id, b.user_id, b.hit, b.title, b.date, b.category, b.sympathy, u.name AS user_name
-        FROM boards AS b
-        INNER JOIN (
-            SELECT b_sub2.id, u_sub.name
-            FROM (
-                SELECT b_sub1.id, b_sub1.user_id
-                FROM (
-                    SELECT id, user_id
-                    FROM boards
-                    WHERE category = 'vent'
-                    ORDER BY id DESC
-                    LIMIT #{pageSize} OFFSET #{pageNum}
-                ) AS b_sub1
-            ) AS b_sub2
-            INNER JOIN (
-                SELECT id, name
-                FROM users FORCE INDEX(idx_name)
-            ) AS u_sub ON b_sub2.user_id = u_sub.id
-        ) AS bu_sub ON b.id = bu_sub.id
-        ORDER BY b.id DESC
-        ]]>
+        SELECT boards.*, users.name
+        FROM boards
+        INNER JOIN users ON boards.user_id = users.id
+        WHERE boards.category = 'suggestion'
+        ORDER BY boards.id DESC;
     </select>
 
             <insert id="insertSuggestionBoard" parameterType="com.org.makgol.boards.vo.BoardCreateRequestVo" useGeneratedKeys="true" keyProperty="id">
