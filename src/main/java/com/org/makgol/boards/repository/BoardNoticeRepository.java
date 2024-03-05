@@ -2,11 +2,13 @@ package com.org.makgol.boards.repository;
 
 import com.org.makgol.boards.vo.BoardLikeVo;
 import com.org.makgol.boards.vo.BoardVo;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
+@CacheNamespace(flushInterval = 1000, size = 1024)
 public interface BoardNoticeRepository {
 
 

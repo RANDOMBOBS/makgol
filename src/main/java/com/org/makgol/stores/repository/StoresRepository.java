@@ -3,12 +3,14 @@ package com.org.makgol.stores.repository;
 import com.org.makgol.stores.dto.*;
 import com.org.makgol.stores.vo.StoreRequestVo;
 import com.org.makgol.stores.vo.StoreResponseVo;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
 @Mapper
+@CacheNamespace(flushInterval = 100000, size = 1024)
 public interface StoresRepository {
     /**
      * place_url을 사용하여 가게 정보를 조회하는 메서드입니다.

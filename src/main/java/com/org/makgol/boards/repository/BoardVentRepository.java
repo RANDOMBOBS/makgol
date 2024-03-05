@@ -6,12 +6,14 @@ import com.org.makgol.boards.vo.BoardVo;
 import com.org.makgol.comment.vo.CommentRequestVo;
 import com.org.makgol.comment.vo.CommentResponseVo;
 import com.org.makgol.util.file.FileInfo;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
 @Mapper
+@CacheNamespace(flushInterval = 1000, size = 1024)
 public interface BoardVentRepository {
 
 
