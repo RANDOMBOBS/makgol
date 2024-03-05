@@ -3,9 +3,12 @@ package com.org.makgol.stores.dto;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @ToString()
 @Data
-public class ResponseStoreListDto {
+public class ResponseStoreListDto implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String name;
     private int likes;

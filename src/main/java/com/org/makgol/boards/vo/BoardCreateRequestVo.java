@@ -4,9 +4,11 @@ import com.org.makgol.util.file.FileInfo;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.util.List;
 @Data
-public class BoardCreateRequestVo {
+public class BoardCreateRequestVo implements Serializable {
+    private static final long serialVersionUID = 1L;
     int id;
     int user_id;
     String title;

@@ -2,8 +2,11 @@ package com.org.makgol.comment.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class CommentResponseVo {
+public class CommentResponseVo implements Serializable {
+	private static final long serialVersionUID = 1L;
 	int id;
 	
 	int user_id;

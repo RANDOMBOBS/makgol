@@ -4,13 +4,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @NoArgsConstructor
 @Data
-public class StoreRequestVo {
+public class StoreRequestVo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     //식당이름
     private String    name;

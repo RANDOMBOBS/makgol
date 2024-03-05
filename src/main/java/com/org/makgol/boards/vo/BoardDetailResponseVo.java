@@ -2,9 +2,12 @@ package com.org.makgol.boards.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 @Data
-public class BoardDetailResponseVo {
+public class BoardDetailResponseVo implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     int id;
     int user_id;
     int hit;
