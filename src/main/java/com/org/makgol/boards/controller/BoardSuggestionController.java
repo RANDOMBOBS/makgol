@@ -39,8 +39,8 @@ public class BoardSuggestionController {
 		return nextPage;
 	}
 
-	@GetMapping("/showAllList")
-	public String showAllList(@RequestParam("login") boolean login,
+	@GetMapping("/showAllList/{login}")
+	public String showAllList(@PathVariable("login") boolean login,
 							  Model model,
 							  HttpServletRequest request,
 							  @RequestParam("pageGroup") String pageGroup, @RequestParam("pageNum") String pageNum) {
