@@ -18,7 +18,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
   function allBoardList() {
     jQ.ajax({
-      url: "/board/suggestion/showAllList?pageNum="+pNum+"&pageGroup="+pGroup+"&login=" + login,
+      url: "/board/suggestion/showAllList/"+ login,
       type: "GET",
       dataType: "html",
       success: function (rdata) {
