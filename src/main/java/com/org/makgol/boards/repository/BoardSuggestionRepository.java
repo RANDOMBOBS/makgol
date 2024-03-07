@@ -22,7 +22,7 @@ public interface BoardSuggestionRepository {
      *
      * @return 모든 건의사항 게시글 목록을 담은 List 객체를 반환합니다.
      */
-    List<BoardVo> selectAllSuggestionBoard(@Param("offset") int offset, @Param("pageSize") int pageSize);
+    List<BoardVo> selectAllSuggestionBoard();
 
     /**
      * 건의사항 게시글을 추가하는 메서드입니다.

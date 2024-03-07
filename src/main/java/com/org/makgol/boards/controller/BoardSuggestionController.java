@@ -42,35 +42,11 @@ public class BoardSuggestionController {
 	@GetMapping("/showAllList/{login}")
 	public String showAllList(@PathVariable("login") boolean login,
 							  Model model,
-							  HttpServletRequest request,
-							  @RequestParam("pageGroup") String pageGroup, @RequestParam("pageNum") String pageNum) {
+							  HttpServletRequest request) {
 
-		List<BoardDetailResponseVo> reviewListAll = new ArrayList<>();
-		int pGroup = Integer.parseInt(pageGroup);
-		int pNum = Integer.parseInt(pageNum);
-		int amount = 10;
-
-		System.out.println(reviewListAll);
-		System.out.println(pNum + "pNum");
-		System.out.println(amount + "amount");
-		System.out.println(login + "login");
-
-		reviewListAll = boardService.boardSuggestionAll((pNum-1)*amount , amount);
-		int totArticles = boardService.boardSuggestionAll();
-		PageVo pageVo = new PageVo(totArticles, pNum, pGroup);
-
-		if (reviewListAll != null && totArticles!=0) {
-			//model.addAttribute("login", true);
-			model.addAttribute("boardVos", reviewListAll);
-			model.addAttribute("pageVo", pageVo);
-		}
-		System.out.println(reviewListAll);
-
-//		List<BoardVo> boardVos = boardService.getSuggestionBoard(pNum, pGroup);
-//		model.addAttribute("login", true);
-//		model.addAttribute("boardVos", boardVos);
-//		System.out.println("showAllList");
-//		System.out.println(boardVos.size());
+		List<BoardVo> boardVos = boardService.getSuggestionBoard();
+		model.addAttribute("login", login);
+		model.addAttribute("boardVos", boardVos);
 		return "jsp/board/suggestion/all_suggestion_list";
 	}
 
