@@ -14,7 +14,7 @@
 
 	function allBoardList(pGroup, pNum) {
 		jQ.ajax({
-			var url = "/board/vent/showAllList/"+login+"?pageNum="+pNum+"&pageGroup="+pGroup
+			url : "/board/vent/showAllList/"+login+"?pageNum="+pNum+"&pageGroup="+pGroup
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
