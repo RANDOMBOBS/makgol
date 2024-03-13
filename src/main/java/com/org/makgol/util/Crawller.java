@@ -338,8 +338,11 @@ public class Crawller {
             // HashMap에 결과 저장
                 //log.info("before hash put : " + thread_count + " : " + storeRequestVo.getName());
 
-                hashMap.put("store_menu_" + index, storeRequestMenuVos);
-                hashMap.put("store_info_" + index, storeRequestVo);
+                synchronized (this){
+                    hashMap.put("store_menu_" + index, storeRequestMenuVos);
+                    hashMap.put("store_info_" + index, storeRequestVo);
+                }
+
                 log.info("hashMap.size() --> : " + hashMap.size()/2);
 
                 try{Thread.sleep(500);}catch(Exception e){}
