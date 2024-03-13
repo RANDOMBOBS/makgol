@@ -6,12 +6,12 @@
 	let pageGroup = 1;   // (1~10, 11~20)
 	let pageNum = 1;	 // 최초 페이지 번호
 	// 한페이지에 보여질 글의 양
-
+    let login = false;
 	allBoardList(pageGroup, pageNum);
 
 	function allBoardList(pGroup, pNum) {
 		jQ.ajax({
-			url : "/board/vent/showAllList?pageNum="+pNum+"&pageGroup="+pGroup,
+			var url = "/board/vent/showAllList/"+login+"?pageNum="+pNum+"&pageGroup="+pGroup;
 			type : "GET",
 			dataType : "html",
 			success : function(rdata) {
