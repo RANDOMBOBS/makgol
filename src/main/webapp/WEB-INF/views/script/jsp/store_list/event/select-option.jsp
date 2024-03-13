@@ -7,10 +7,10 @@
 
             if (option === "기본") {
                 displayOtherShopList(shops);
-            } else if (option === "거리순") {
+            } else if (option === "좋아요순") {
                 const nearDistanceShop = shops.slice().sort((before, after) => before.distance - after.distance);
                 displayOtherShopList(nearDistanceShop);
-            } else if (option === "좋아요순") {
+            } else if (option === "거리순") {
                 const moreLikeShop = shops.slice().sort((before, after) => after.likes - before.likes);
                 displayOtherShopList(moreLikeShop);
             } else if (option === "영업순") {
