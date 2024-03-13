@@ -7,6 +7,9 @@
 	let pageNum = 1;	 // 최초 페이지 번호
 	// 한페이지에 보여질 글의 양
     let login = false;
+    if(user_id){
+        login = true;
+      }
 	allBoardList(pageGroup, pageNum);
 
 	function allBoardList(pGroup, pNum) {
