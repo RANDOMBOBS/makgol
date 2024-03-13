@@ -24,9 +24,9 @@
                     <div class="buttons">
                         <label for="find_default">기본</label>
                         <input id="find_default" type="radio" name="check_info" value="기본" checked="checked">
-                        <label for="find_distance">거리순</label>
+                        <label for="find_distance">좋아요순</label>
                         <input id="find_distance" type="radio" name="check_info" value="거리순">
-                        <label for="find_likes">좋아요순</label>
+                        <label for="find_likes">거리순</label>
                         <input id="find_likes" type="radio" name="check_info" value="좋아요순">
                         <label for="find_open">영업여부</label>
                         <input id="find_open" type="radio" name="check_info" value="영업순">
