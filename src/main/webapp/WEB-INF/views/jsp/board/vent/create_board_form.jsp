@@ -24,7 +24,7 @@
 			<select name="category">
 				<option value="">카테고리 선택</option>
 				<option value="notice">공지사항 게시판</option>
-				<option value="suggestion" selected>건의사항 게시판</option>
+				<%-- <option value="suggestion" selected>건의사항 게시판</option> --%>
 				<option value="vent">하소연 게시판</option>
 			</select>
 		</div>
