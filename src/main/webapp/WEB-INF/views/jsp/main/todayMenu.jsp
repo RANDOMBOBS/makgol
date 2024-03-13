@@ -18,7 +18,7 @@
         <li class="todaymenu_list">
         <c:choose>
         		  <c:when test="${loginedUserVo == null}">
-        		  <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=${item.menu}"><span class="today_menu_name">${item.menu}</span></a>
+        		  <a href="http://www.makgol.com/store/list?x=126.886418278694&y=37.4810758439164&keyword=${item.menu}"><span class="today_menu_name">${item.menu}</span></a>
         		    <span class="today_menu_gogo">해당메뉴 검색하기></span>
         		    <img class="img" src="<c:url value='/resources/static/image/default/todayMenu_${loop.index + 1}.jpg'/>">
         		  </c:when>

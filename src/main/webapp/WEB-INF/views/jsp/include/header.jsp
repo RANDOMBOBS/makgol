@@ -27,8 +27,8 @@
 <%
          UsersResponseVo userVo = new UsersResponseVo();
 
-         userVo.setLongitude(127.028290548097);
-         userVo.setLatitude(37.4998293543379);
+         userVo.setLongitude(126.886418278694);
+         userVo.setLatitude(37.4810758439164);
 
          List<String> names = new ArrayList<>();
          List<String> values = new ArrayList<>();
@@ -84,7 +84,7 @@ var yValue = "<%= userVo.getLatitude() %>";
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo.longitude == 0.0}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=한식">한식</a>
+                        <a href="http://www.makgol.com/store/list?x=126.886418278694&y=37.4810758439164&keyword=한식">한식</a>
                     </c:when>
                     <c:otherwise>
                         <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=한식">한식</a>
@@ -143,7 +143,7 @@ var yValue = "<%= userVo.getLatitude() %>";
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo.longitude == 0.0}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=중식">중식</a>
+                        <a href="http://www.makgol.com/store/list?x=126.886418278694&y=37.4810758439164&keyword=중식">중식</a>
                     </c:when>
                     <c:otherwise>
                         <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=중식">중식</a>
@@ -153,7 +153,7 @@ var yValue = "<%= userVo.getLatitude() %>";
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo.longitude == 0.0}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=일식">일식</a>
+                        <a href="http://www.makgol.com/store/list?x=126.886418278694&y=37.4810758439164&keyword=일식">일식</a>
                     </c:when>
                     <c:otherwise>
                         <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=일식">일식</a>
@@ -163,7 +163,7 @@ var yValue = "<%= userVo.getLatitude() %>";
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo.longitude == 0.0}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=양식">양식</a>
+                        <a href="http://www.makgol.com/store/list?x=126.886418278694&y=37.4810758439164&keyword=양식">양식</a>
                     </c:when>
                     <c:otherwise>
                         <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=양식">양식</a>
@@ -173,7 +173,7 @@ var yValue = "<%= userVo.getLatitude() %>";
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo.longitude == 0.0}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=분식">분식</a>
+                        <a href="http://www.makgol.com/store/list?x=126.886418278694&y=37.4810758439164&keyword=분식">분식</a>
                     </c:when>
                     <c:otherwise>
                         <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=분식">분식</a>
@@ -183,7 +183,7 @@ var yValue = "<%= userVo.getLatitude() %>";
             <li>
                 <c:choose>
                     <c:when test="${loginedUserVo.longitude == 0.0}">
-                        <a href="http://www.makgol.com/store/list?x=127.028290548097&y=37.4998293543379&keyword=카페">카페</a>
+                        <a href="http://www.makgol.com/store/list?x=126.886418278694&y=37.4810758439164&keyword=카페">카페</a>
                     </c:when>
                     <c:otherwise>
                         <a href="http://www.makgol.com/store/list?x=${loginedUserVo.longitude}&y=${loginedUserVo.latitude}&keyword=카페">카페</a>
