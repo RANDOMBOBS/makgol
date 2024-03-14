@@ -58,7 +58,7 @@
 
 			<c:choose>
 				<c:when test="${fn:contains(item.date, today)}">
-					<td>${item.date.substring(11,16)}</td>
+					<td>${item.date.substring(0,10)}</td>
 				</c:when>
 				<c:otherwise>
 					<td>${item.date.substring(0,10)}</td>
