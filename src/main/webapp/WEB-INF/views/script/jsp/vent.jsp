@@ -4,7 +4,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
 	let b_id = jQ('#like').attr("data-b-id");
-	let user_id = jQ('#like').attr("data-user-id");
+	let user_id = ${loginedUserVo.id};
     let likeData = { b_id: b_id, user_id: user_id };
 
 	let pageGroup = 1;   // (1~10, 11~20)
