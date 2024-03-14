@@ -68,7 +68,6 @@ public class BoardVentController {
 		PageVo pageVo = new PageVo(totArticles, pNum, pGroup);
 
 		if (reviewListAll != null && totArticles!=0) {
-			login = true;
 			model.addAttribute("login", login);
 			model.addAttribute("reviewListAll", reviewListAll);
 			model.addAttribute("pageVo", pageVo);
