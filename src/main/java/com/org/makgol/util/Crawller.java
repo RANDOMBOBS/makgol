@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,7 +57,6 @@ public class Crawller {
         // 드라이버 절대경로 linux(ubuntu)
         String driverPath = "/home/ubuntu/service/makgol/src/main/java/com/org/makgol/driver/chromedriver_linux";
 
-
         //스레드를 종료하기위한 List
     	List<Thread> jobThreads = new ArrayList<>();
 
@@ -63,56 +64,64 @@ public class Crawller {
             thread_count = storeRequestVos.size();
         }
         int storesSize = storeRequestVos.size() / thread_count;
-
-            //storeRequestVos의 사이즈 많금스레드를 생성하겠다.
+        // 쓰레드 풀 생성
+        ExecutorService executor = Executors.newFixedThreadPool(thread_count);
+            //storeRequestVos의 사이즈 만큼스레드를 생성하겠다.
             for (int i = 1; i <= thread_count; i++) {
-                //스레드에 주소값을 넘겨줌
-                Runnable target = new JobThread(driverPath, storeRequestVos, hashMap, i, storesSize);
-                Thread jobThread = new Thread(target);
-                //JobThread jobThread = new JobThread(driverPath, storeRequestVos.get(i).getPlace_url(), storeRequestVos.get(i), hashMap, i);
-                jobThread.start();
-                jobThreads.add(jobThread);
+                int startIndex = i * (storeRequestVos.size() / thread_count);
+                int endIndex = (i + 1) * (storeRequestVos.size() / thread_count) - 1;
+
+                // 마지막 스레드는 남은 작업을 모두 처리
+                if (i == thread_count - 1) {
+                    endIndex = storeRequestVos.size() - 1;
+                }
+
+                // 스레드에 작업을 할당하고 실행
+                Runnable worker = new WorkerThread(startIndex, endIndex, storeRequestVos, hashMap, driverPath);
+                executor.execute(worker);
 
             }
 
-            // 스레드 종료
-            for (Thread jobThread : jobThreads) {
-                jobThread.join();
-            }
+        // 쓰레드 풀 종료
+        executor.shutdown();
 
-            Runnable target = new JobThread(driverPath, storeRequestVos, hashMap, thread_count+1, storesSize);
-            Thread lastThread = new Thread(target);
+        // 모든 작업이 완료될 때까지 대기
+        while (!executor.isTerminated()) {
+            // 대기
+        }
 
-            lastThread.join();
+
 
         return hashMap;
     }
-    
-    private class JobThread implements Runnable {
-    	
-    	private String driverPath;
-    	private List<StoreRequestVo> storeRequestVos;
-    	private HashMap<String, Object> hashMap;
-    	private int thread_num;
-        private int storeSize;
-    	
-    	public JobThread(String driverPath, List<StoreRequestVo> storeRequestVos, HashMap<String, Object> hashMap,int thread_num, int storeSize) {
-    		
-    		this.driverPath = driverPath;
-    		this.storeRequestVos = storeRequestVos;
-    		this.hashMap = hashMap;
-    		this.thread_num = thread_num;
-            this.storeSize = storeSize;
-    	}
-    	
+
+    private class WorkerThread implements Runnable {
+        private int startIndex;
+        private int endIndex;
+        private List<StoreRequestVo> storeRequestVos;
+        private HashMap<String, Object> hashMap;
+        private String driverPath;
+
+        public WorkerThread(int startIndex, int endIndex, List<StoreRequestVo> storeRequestVos, HashMap<String, Object> hashMap, String driverPath) {
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
+            this.storeRequestVos = storeRequestVos;
+            this.hashMap = hashMap;
+            this.driverPath = driverPath;
+        }
     	@Override
         public void run(){
-            processCawller();}
-    	
-    	
-    	public void processCawller() {
-            int index = storeSize*(thread_num-1);
-            for(; index<=storeSize*thread_num; index++){
+            try {
+                // 각 스레드가 처리할 작업을 실행
+                processCrawler(startIndex, endIndex);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    	 private void processCrawler(int startIndex, int endIndex) {
+            for (int i = startIndex; i <= endIndex; i++){
             Random r = new Random();
 
     		//chrome driver 경로 세팅
@@ -133,7 +142,7 @@ public class Crawller {
                 // 식당의 메뉴들를 저장할 List
                 List<StoreRequestMenuVo> storeRequestMenuVos = new ArrayList<StoreRequestMenuVo>();
 
-                StoreRequestVo storeRequestVo = storeRequestVos.get(index);
+                StoreRequestVo storeRequestVo = storeRequestVos.get(i);
 
                 String detailPage = storeRequestVo.getPlace_url();
             // 웹 페이지로 이동 후 코드 가져옴
@@ -283,16 +292,16 @@ public class Crawller {
 
 
             //데이터 확인
-            log.info("thread "+ thread_num +": 이름 : "+ storeRequestVo.getName());
-            log.info("thread "+ thread_num +": 주소 : "+ storeRequestVo.getAddress());
-            log.info("thread "+ thread_num +": 도로명 : "+ storeRequestVo.getLoad_address());
-            log.info("thread "+ thread_num +": 전화번호 : "+ storeRequestVo.getPhone());
-            log.info("thread "+ thread_num +": 카테고리 : "+ storeRequestVo.getCategory());
-            log.info("thread "+ thread_num +": 상세페이지 : "+ storeRequestVo.getPlace_url());
-            log.info("thread "+ thread_num +": 업데이트 : "+ storeRequestVo.getUpdate_date());
-            log.info("thread "+ thread_num +": 영업시간 : "+ storeRequestVo.getOpening_hours());
-            log.info("thread "+ thread_num +": 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
-            log.info("thread "+ thread_num +": 이미지 : "+ storeRequestVo.getPhoto());
+            log.info(" 이름 : "+ storeRequestVo.getName());
+            log.info(" 주소 : "+ storeRequestVo.getAddress());
+            log.info(" 도로명 : "+ storeRequestVo.getLoad_address());
+            log.info(" 전화번호 : "+ storeRequestVo.getPhone());
+            log.info(" 카테고리 : "+ storeRequestVo.getCategory());
+            log.info(" 상세페이지 : "+ storeRequestVo.getPlace_url());
+            log.info(" 업데이트 : "+ storeRequestVo.getUpdate_date());
+            log.info(" 영업시간 : "+ storeRequestVo.getOpening_hours());
+            log.info(" 메뉴 업데이트 : "+ storeRequestVo.getMenu_update());
+            log.info(" 이미지 : "+ storeRequestVo.getPhoto());
 
 
             // 메뉴 정보 가져오기
@@ -339,8 +348,8 @@ public class Crawller {
                 //log.info("before hash put : " + thread_count + " : " + storeRequestVo.getName());
 
                 synchronized (this){
-                    hashMap.put("store_menu_" + index, storeRequestMenuVos);
-                    hashMap.put("store_info_" + index, storeRequestVo);
+                    hashMap.put("store_menu_" + i, storeRequestMenuVos);
+                    hashMap.put("store_info_" + i, storeRequestVo);
                 }
 
                 log.info("hashMap.size() --> : " + hashMap.size()/2);
