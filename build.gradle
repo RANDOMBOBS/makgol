@@ -119,6 +119,9 @@ dependencies {
     // xss 대응
     implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1'
     implementation 'org.jsoup:jsoup:1.14.3'
+
+    // AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 }
 
 tasks.named('test') {

@@ -1,5 +1,6 @@
 package com.org.makgol.boards.controller;
 
+import com.org.makgol.annotation.LogExcutionTime;
 import com.org.makgol.boards.service.BoardVentService;
 import com.org.makgol.boards.vo.BoardCreateRequestVo;
 import com.org.makgol.boards.vo.BoardDetailResponseVo;
@@ -50,10 +51,12 @@ public class BoardVentController {
 	 * @return "jsp/board/vent/all_vent_list" 뷰를 반환하고, 모델에 후기 게시글 목록과 페이징 정보를 추가합니다.
 	 */
 	@GetMapping("/showAllList/{login}")
+	@LogExcutionTime
 	public String showAllList(@PathVariable("login") boolean login,
 							  @RequestParam("pageGroup") String pageGroup,
 							  @RequestParam("pageNum") String pageNum, Model model) {
-		System.out.println("확인");
+
+
 		List<BoardDetailResponseVo> reviewListAll = new ArrayList<>();
 		int pGroup = Integer.parseInt(pageGroup);
 		int pNum = Integer.parseInt(pageNum);
@@ -72,7 +75,9 @@ public class BoardVentController {
 			model.addAttribute("reviewListAll", reviewListAll);
 			model.addAttribute("pageVo", pageVo);
 		}
-		System.out.println(reviewListAll);
+
+
+
 		return "jsp/board/vent/all_vent_list";
 	}
 
