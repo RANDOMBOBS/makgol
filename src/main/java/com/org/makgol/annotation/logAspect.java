@@ -11,10 +11,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class logAspect {
 
-    @Around("com.org.makgol.annotation.LogExecutionTime")
+    @Around("@annotation(com.org.makgol.annotation.LogExcutionTime)")
     public Object logExcutionTimeAnno(ProceedingJoinPoint joinPoint) throws Throwable{
-
-
 
         try {
             long startTime = System.currentTimeMillis();
@@ -28,17 +26,10 @@ public class logAspect {
         } finally {
             log.info("execute error{}", 1);
         }
-
-
-
-
     }
 
     @Around("execution(* com.org.makgol.controller.*.*(..))")
     public Object logExcutionTimeVent(ProceedingJoinPoint joinPoint) throws Throwable{
-
-
-
         try {
             long startTime = System.currentTimeMillis();
 
@@ -51,7 +42,5 @@ public class logAspect {
         } finally {
             log.info("execute error{}", 1);
         }
-
-
     }
 }
