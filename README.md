@@ -105,9 +105,9 @@
 
 ### Deploy
 
-- **Github Actions** : CI/CD
-- **AWS Code Deploy** : CI/CD
-- **Nginx** : 무중단 배포
+- **Github Actions** : 
+- **AWS Code Deploy** : 
+- **Nginx** : 이벤트방식과 로드벨런싱 활용을 위해서 도입
 - AWS EC2
 - AWS S3
 - AWS RDS
